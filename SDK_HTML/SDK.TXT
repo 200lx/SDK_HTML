@@ -1,0 +1,166 @@
+THE HP 100LX/HP 200LX DEVELOPER'S GUIDE
+=========================================
+This developer's guide is a HTML version which is formatted to
+be used on the palmtop with Andreas Garzotto's HTML viewer- HV.
+We do not guarantee that you will get the same good result with
+any other HTML browser and/or on a desktop PC.
+
+
+Legal Stuff
+------------------
+The original HP 100LX/HP 200LX Developer's Guide has already 
+some errors (which we have tried to correct) and we do not
+guarantee that this HTML version is free from errors. So you 
+use this version at your own risk. We are not responsible for 
+any software/hardware problems that may occur when you use 
+this guide.
+
+FIles Included
+------------------
+An installation of the developer's guide will take about 1.9MB
+of storage space.
+
+SDK.TXT -This file which you are reading now.
+SDK.ZIP -Zip file which contains the the SDK- this file must be
+         unzipped with the "-d" (without quotes) option since 
+         then the following directories will be created
+         (assuming that you install it in the A:\ drive):
+
+         A:\SDK\ (Main Directory) with:
+                895 HTML files
+                ESC.COM  (Sending an ESC key to return to HV).
+                PICKIT.EXE (The search menu)
+                \IMAGE\    (Sub Directory)
+                       55 graphic files (*.GIF)
+
+         A:\SDKTEMP\
+                    DOIT.BAT
+                    PICKIT.C (Source code to the Search Engine)
+                    XGREP103.ZIP (By Robert Nordier)
+                    _SDKMAIN.HTM
+
+
+Installation
+------------------
+Since this SDK contains information for software/hardware 
+development for HP 100LX and HP 200LX Palmtop PC's, we assume 
+that users of this information collection will be highly 
+computer literate. With other words- we will not give detailed
+installation instructions. So here we go:
+
+1) Install the HV HTML viewer (http://www.dasoft.com). If you
+   run HV from the SysMgr, you must run it under MaxDOS
+   (http://www.palmtop.net) with the following command line:
+
+   c:\bin\maxdos.com -df:\www f:\WWW\HV.EXE|
+ 
+   (Please change according to your installations).
+
+2) Get LXPIC by Stefan Peichl (http://www.palmtop.net) and
+   install it as an external viewer for HV.
+
+3) Open HV.CFG (using Memo for example) and add following
+   line under services:
+
+   [Services]
+   search=d:\dos\command.com /c %s 
+
+4) Unzip the SDK.ZIP file, with the command:
+   "PKUNZIP -D SDK.ZIP" in the drive/dir you want to install 
+   the SDK- and the 2 directories A:\SDK and A:\SDKTEMP will 
+   be created (these instructions are using the A: drive).
+
+5) Unzip XGREP103.ZIP which can be found in the A:\SDKTEMP 
+   directory and copy XGREP.COM to a directory in your path.
+
+6) Open A:\SDKTEMP\DOIT.BAT and edit the path according to your 
+   installation. 
+
+7) Edit A:\SDKTEMP\_SDKMAIN.HTM, so the following line has the 
+   correct path for your installation:
+
+   <a href="search://A:\SDK\DOIT.BAT">Search the SDK</a>......
+
+8) Then copy DOIT.BAT and _SDKMAIN.HTM to the directory in 
+   which you have all the HTML files installed (e.g. A:\SDK).   
+
+9) If you want the source code for the search engine- PICKIT.C,
+   then save this file before you delete the A:\SDKTEMP 
+   directory.
+ 
+
+READY TO USE! After you have started HV, open the local file- 
+A:\SDK\_SDKMAIN.HTM and you can now browse The HP 100LX/
+HP 200LX Developer's Guide.
+
+In the main page, you can do a search and when the search is 
+done, you will be back at the main page. Then you can look at 
+the search results which has a link from the main page. 
+However, if you use EXKey by Yoshihiro Hanaoka (available at
+http://www.palmtop.net)- you can come directly to the result 
+page after the search is done. We have tried several programs 
+that stuff keystrokes into the keyboard buffer, but only EXKey 
+works together with HV. Please look in DOIT.BAT for the command
+line EXKey should use.
+
+Please observe that a seach through all chapters takes some 
+time (about 2 minutes on a double speed HP 200LX) and this
+is due to the amount of files and the size of all the files
+(895 HTML files which takes about 1.9MB of storage space). 
+
+
+
+The Team
+------------------
+This HTML version of The HP 100LX/HP 200LX Developer's Guide 
+has been created from basic material provided by Thaddeus 
+Computing. We have put in a lots of effort to format the files
+to fit HP 100LX/HP 200LX palmtop PC's and it has been a great
+team work with following people involved:
+
+PROJECT COORDINATOR:
+Jorgen Wallgren  , Singapore - Singapore
+
+HTML EDITING:
+Darryl W. Daniell, Savannah  - USA
+David Lawrence   , Auckland  - New Zealand
+Mike Little      , Stockport - England
+Gary Spiers      , Huntsville- USA
+Jaime Viehweg    , Naperville- USA
+Jorgen Wallgren  , Singapore - Singapore
+
+CREATION OF NEW GRAPHIC FILES:
+Darryl W. Daniell, Savannah- USA
+
+SEARCH ENGINE PROGRAMMING:
+David Sargeant, Boulder City- USA
+
+
+SPECIAL THANKS TO:
+------------------
+Andreas Garzotto and D&A Software for the excellent freeware-
+HV HTML viewer (http://www.dasoft.com).
+
+Stefan Peichl for the great freeware- LXPIC graphic file viewer
+(can for example be found at: http://www.palmtop.net).
+
+Robert Nordier for the fast search program- XGREP.
+
+George Coleman and Daniel Z. Sands- which helped us to get 
+started with the HTML search engine.
+
+
+Final Word
+------------------
+We in the team, hope that you will find this HTML version of
+The HP 100LX/HP 200LX Developer's Guide useful- enjoy!
+
+On the behalf of the whole team-
+
+Best Regards,
+
+
+Jorgen Wallgren
+jorgen@palmtop.net
+Singapore, 14th of November 1998.
+

@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Repeating Appointment Data Record </TITLE></HEAD>
+<BODY>
+<H3>Repeating Appointment Data Record </H3><P>
+<pre>
+Offset   Name                     Type           Contents 
+-------  -----------------------  -------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)*** 
+0        Item Length              int 
+2        Offset to Category       int 
+4        Offset to Location       int 
+6        Offset to Repeat         int            offset to Repeat Factor 
+8        Note record#             int            Record Number or -1 
+10       Prev Multi-Item Record#  int 
+12       Next Multi-Item Record#  int 
+14       ApptState unsigned       char           Flags<a href="#one_star">*</a>
+15       Start Date: 
+          (1st occurrence) Year   unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+18       Start Time               int            Minutes since midnight 
+20       End Date                 unsigned int   Days since start date (0-98)<a href="#three_stars">***</a>
+22       End Time                 int            Minutes since midnight 
+24       Lead-Time                int            Minutes (0-1439) 
+26       RepeatType               char           RadioButton Field<a href="#two_stars">**</a>
+27       Description              Text           ASCII 
+27+....  Category                 Text           ASCII 
+27+....  Location                 Text           ASCII 
+27+....  Repeat Factor:
+          Frequency               char
+          Days                    int 
+          Months                  int            Appropriate bits set 
+32+....  Duration Start Date:
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+35+....  Duration End Date:
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+38+....  #Deleted Appts           char           0-255 
+39+....  Deleted Occurrences:
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+          flag                    unsigned char 
+
+<a name="one_star">* Bit 0 set -> Alarm Enable
+  Bit 1 set -> Display in monthly view
+  Bit 2 set -> Display in weekly view
+  Bit 5 set -> Event (also StartTime=-1 and EndTime=-1)
+  Bit 7 set -> Appointment
+
+<a name="two_stars">**2-> Daily Repeat
+  4-> Weekly Repeat
+  8-> Monthly Repeat
+ 16-> Yearly Repeat
+ 32-> Custom Repeat
+
+<a name="three_stars">***0-> 1 day duration
+
+End Date is computed as = StartDate+StoredDuration
+</pre>
+</BODY>

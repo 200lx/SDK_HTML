@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Manager Memory Maps (Sequenced by Time) </TITLE></HEAD>
+<BODY>
+<H1>System Manager Memory Maps (Sequenced by Time) </H1><P>
+<OL>
+<A HREF="image\__dg0501.gif">Graphic</A><P>
+<LI> System Manager starts and loads all Persistent Apps (applications that cannot be terminated).  These are the alarm management app, Filer, DosTask (Ctrl+123 launching stub), and JTASK0 (Top card task).  </LI><P>
+<P>
+<A HREF="image\__dg0502.gif">Graphic</A><P>
+<LI> Launch some ROM applications.  Application Data areas include the application's Static data and stack (DS and SS), and any far memory allocations.  All memory belonging to one application is contained in one DOS Memory Control Block (MCB).  Application Code for ROM applications is bank mapped in above C000:0.  </LI><P>
+<P>
+<A HREF="image\__dg0503.gif">Graphic</A><P>
+<LI> Launch 123.  123 takes all free memory from the top down.  As memory is freed by apps closing, that memory is returned to 123.  If more memory is needed by apps or SysMgr, the SysMgr asks 123 to release a portion.  </LI><P>
+<A HREF="image\__dg0504.gif">Graphic</A><P>
+<LI> Launch DOS.  DOS requiring a fixed space is loaded at the lowest possible address.  In addition to the block allocated for DOS, is the State Save Buffer (36K total: 16K CGA screen, interrupt vector table, BIOS Font stack, and other misc info), for restoring the state when swapping to/from the DOS task.  </LI><P>
+<LI> Launch a System Manager Compliant RAM application or EXM (called EXM1).  Like DOS, the EXM requires fixed space--if DOS is present, a chunk of the DOS task memory is moved out of low memory.  </LI><P>
+<A HREF="image\__dg0505.gif">Graphic</A><P>
+<LI> Launch EXM2.  Only one EXM Code segment is retained--any others are loaded from disk as needed.  </LI><P>
+</OL><P>
+<P>
+</BODY>
+</HTML>

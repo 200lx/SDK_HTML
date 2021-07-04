@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_GetKeyLabel </TITLE></HEAD>
+<BODY>
+<H3>m_GetKeyLabel </H3>
+Given a scancode, m_GetKeyLabel returns a string (mnemonic) representing the key. 
+<PRE><UL>
+<LI>Syntax:         int far m_GetKeyLabel(char far *szLabelBuffer, int iScanCode) </LI>
+<LI>Parameters:     char far *szLabelBuffer - Pointer to location to post translated key
+                                          information 
+                int iScanCode - Scan code to be translated to key label </LI>
+<LI>Returns:        KEY_MAP_OK (0) - for success 
+                KEY_MAP_ERROR (-1) - Init resource file results </LI>
+<LI>Related Calls:  <A HREF="c70000df.htm">m_GetScanCode</A>, <A HREF="c70000e0.htm">m_InitKeyLabels</A> </LI>
+</UL></PRE>
+</BODY>
+</HTML>

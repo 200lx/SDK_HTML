@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 63h - Memory Mapping Functions </TITLE></HEAD>
+<BODY>
+<H1>Int 63h - Memory Mapping Functions </H1><P>
+WARNING: These functions are for use by built-in software only.  They are documented for completeness, but they should not be used by applications since they are subject to change.  <P>
+The Int 63h Memory Mapping services provide low-level program location and bank switching capabilities for the HP palmtop operating system.  <P>
+The HP palmtop has eight 16Kbyte banks and one 64Kbyte bank.  The banks are referenced by a 16Kbyte page#.  The term physical page refers to memory in the address space of the CPU.  The term logical page refers to memory in an external device, like a memory chip.  <P>
+Memory on an external device is viewed as a sequence of 16-KB logical pages.  The logical pages start on successive 16-KB boundaries starting with logical page 0 which starts at device address 0. 
+<PRE>
+Physical Page    Starting    Size
+Number           Address
+===================================
+0Bh              EC000h      16 KB 
+-----------------------------------
+0Ah              E8000h      16 KB 
+-----------------------------------
+09h              E4000h      16 KB 
+-----------------------------------
+08h              E0000h      16 KB 
+-----------------------------------
+07h              DC000h      16 KB 
+-----------------------------------
+06h              D8000h      16 KB 
+-----------------------------------
+05h              D4000h      16 KB 
+-----------------------------------
+04h              D0000h      16 KB 
+-----------------------------------
+00h              C0000h      64 KB 
+-----------------------------------
+</PRE>
+The Memory Mapping Services interrupt (Int 63h) functions are described in the tables which follow.  Specify the desired function code in register AH, with additional parameters passed in other registers as indicated in the table.  <P>
+<H2><A HREF="c30000d2.htm">Int 63 Function 00 - Map/Unmap Pages </A></H2><P>
+<H2><A HREF="c30000d3.htm">Int 63 Function 01 - Get/Set Page Map </A></H2><P>
+<H2><A HREF="c30000d4.htm">Int 63 Function 02 - Get Single Physical Page's Mapping State </A></H2><P>
+</BODY>
+</HTML>

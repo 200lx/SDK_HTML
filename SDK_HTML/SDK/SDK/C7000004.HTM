@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Function Table Header </TITLE></HEAD>
+<BODY>
+<H3>Function Table Header </H3><P>
+The structure of the function table header is described below.
+<PRE>
+        typedef struct 
+        {  
+        unsigned char  FTH_Num;      /* Class number */ 
+        unsigned char  FTH_StartAbs; /* Constant start position */ 
+        void far *     FTH_NextTbl;  /* far pointer to next table */ 
+        unsigned int   FTH_CS;       /* code segment of functions in table*/ 
+        unsigned char  FTH_RamPg;    /* ram page */ 
+        unsigned char  FTH_RomPg;    /* rom page */ 
+        unsigned char  FTH_RomDev;   /* rom device id */ 
+        unsigned char  FTH_Pages;    /* pages to map */ 
+        unsigned char  FTH_Start;    /* first function number in table*/ 
+        unsigned char  FTH_End;      /* last function number in table*/ 
+        } FNCTTBLHEADER; 
+</PRE>
+<P>
+<UL><LI><DL>
+<DT>FTH_Num 
+<DD>Identifies the class to which this function table belongs.  The
+System Manager doesn't currently use this field, since the Class number
+is passed to the functions that require it.</DL><P>
+<LI><DL>
+<DT>FTH_StartAbs
+<DD>This field holds the FTH_Start value when a function table is
+disabled and a value of 255 is placed in the FTH_Start field. 
+FTH_StartAbs need not be initialized to any value when inserting a
+function table.</DL><P>
+<LI><DL>
+<DT>FTH_NextTbl
+<DD>In the event of a class having multiple function tables, the next
+function table is accessed using FTH_NextTbl, a far pointer to the next
+function table.  A value of 0 here indicates no more function
+tables.</DL><P>
+<LI><DL>
+<DT>FTH_CS 
+<DD>All functions accessed by a function table need to be in the same
+code segment.  The common CS value is stored here.<P> Note that the
+CS is common only for a function table.  Multiple Function tables for
+the same class may have the functions in separate segments.</DL><P>
+<LI><DL>
+<DT>FTH_RamPg 
+<DD>This field gives the page in RAM where the code needs to be
+bank-switched in.  If the sign bit is set, it signals that no bank
+switching is required.</DL><P>
+<LI><DL>
+<DT>FTH_RomPg 
+<DD>Gives the page in ROM where the code needs to be bank-switched in
+from.  This field is ignored if bank switching is not
+required.</DL><P>
+<LI><DL>
+<DT>FTH_RomDev 
+<DD>The device from which bank switching is performed.  This field is
+ignored if bank switching is not required.  </DL><P>
+<LI><DL>
+<DT>FTH_Pages 
+<DD>This field defines the number of pages that need to be bank-switched.  FTH_RomDev is
+ignored if bank-switching is not required.</DL><P>
+<LI><DL>
+<DT>FTH_Start 
+<DD>Gives the number of the first function available in the function table.<P>  Note that
+function number 0 is reserved as the class identifying function.  Function number 255 is
+reserved to indicate a disabled function table, and should not be used. These
+restrictions allow a maximum of 254 (1 to 254) usable functions per class.</DL><P>
+<LI><DL>
+<DT>FTH_End 
+<DD>Gives the number of the last function available in the function table.</DL><P>
+</UL><P>
+</BODY>
+</HTML>

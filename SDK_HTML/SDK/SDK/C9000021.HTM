@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MultiEdit </TITLE></HEAD>
+<BODY>
+<H3>MultiEdit </H3><P>
+MultiEdit behaves similar to the single-line Edit, except that the edit window contains multiple lines which the user can move between.  If there are more lines of text in the edit buffer than will fit inside the window at any one time, vertical scrolling of the text is enabled.  Each text line in the edit window is automatically word-wrapped, such that words that will not fit on a previous line will be written in their entirety on the next line.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: If STYLE_XYRELATIVE is being used, MultiEdit calculates the physical coordinates of the start of the window by using the x and y fields as an offset from the current position of the parent window.  If STYLE_WHCHAR is not being used, h equals the total height of the title plus the height of the edit box (including borders), and w equals the width of the edit box (including borders).  If STYLE_WHCHAR is being used, w specifies the width, in text characters, of the editable text area (the client portion of the window).  In this case, the total height of the window is automatically calculated to be the (height of the title + h) * CHAR_HEIGHT (the window's Font) + the total height of any borders; the width is automatically computed to be (w)* CHAR_WIDTH (the window's Font) + the total width of any borders.  </LI><P>
+<LI>PLHRES Title: Pointer to the text label appearing above the edit box.  </LI><P>
+<LI>PLHDATA Data: Pointer to a LHEDITDATA structure which contains fields specific to the multi-line edit window (see below for more information on this structure).  </LI><P>
+<LI>UINT LogicalSize: The size (in bytes) of the edit buffer.  Compared to the size of the field on the screen, the logical size of an edit buffer may be larger (so that the text scrolls up &amp; down within the window) or smaller (so that the user is restricted to a specified area).  Note that the size of the buffer includes the ASCII 0 End-of-String character, so the number of characters the user can actually enter is LogicalSize-1.  </LI><P>
+<LI>UINT Style: The style EDIT_MULTI is automatically set by the Multi-Edit handler (it is used to internally distinguish between a multi-line and single-line edit in some cases).  The following local styles (in addition to the global styles) are interpreted by the Multi-Edit handler: </LI><BR>
+EDIT_INSERT / EDIT_OVERWRITE: If the style is set to either EDIT_INSERT or EDIT_OVERWRITE, the edit box begins editing in the specified mode (the state of the edit is reset to this style each time the window recieves a SETFOCUS message).  The default mode if one is not specified is EDIT_INSERT.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>BYTE Status: The following status bits are used by the Edit class.  They can be used by subclasses to monitor the internal state of the edit.  These flags should be considered read only unless otherwise noted.  </LI><BR>
+STATUS_INSERT: Set if the edit is in insert mode; if it is clear, the edit is in overwrite mode.  This bit can be changed by the application.  <P>
+STATUS_NOT_EDITED: Set if the field has not yet been edited.  This flag will be cleared after the first editing key is pressed.  The &lt;Tab&gt;, &lt;BackTab&gt;, &lt;Function keys&gt;, and &lt;Alt+Letter&gt; key sequences do not modify this flag.  <P>
+</UL>
+<UL><LI>UINT Selection: The offset into the edit text buffer of the current cursor position.  </LI><P>
+<LI>UINT WindowTop: The offset into the LineStarts array (a field in the multi-line edit addendum structure) of first line being displayed in the edit box.  </LI><P>
+</UL>Multi-Line Edit Structure Details <P>
+<UL><LI>PLHFARDATA Buffer: Pointer to the text data buffer which will actually be edited.  </LI><P>
+<LI>PLHFARDATA SaveBuffer: Pointer to the text data buffer in which a copy of the original edit buffer text will be saved when the user begins editing the text.  If this pointer is set to NULL, the original edit text will not be saved, and thus it cannot be restored by the multi-line edit window handler when the Esc key is pressed.  </LI><P>
+<LI>UINT _far * _near *LineStarts: `Near&quot; pointer to a &quot;far&quot; pointer to the unsigned integer array which will hold the offset into the edit text buffer of the start of each of the lines in the multi-line buffer.  If all of the available entries in this array are used, the user will be unable to enter any data past the end of the last line.  An entry in this array is used for each line, regardless of whether or not that line is currently visible on the screen (the multi-line edit buffer can contain more data than is visible at any one time with the edit window being scrollable up and down).  </LI><P>
+<LI>UINT MaxLines: The maximum number of lines possible in the entire edit text.  This number is different than the number of lines which can be seen in the edit window at any one time.  This field is also the total size, in entries, of the LineStarts array.  </LI><P>
+<LI>UINT WrapLen: The number of text characters to word wrap each line in the multi-line edit window at.  If this field is initialized to 0 by an application before a CREATE message is issued, it will automatically be adjusted it to the total width of the multi-line edit window box by the multi-line edit window handler when it receives the CREATE message.  The word wrap can be changed on-the-fly by an application by first updating this field to the desired value and then issuing a NOTIFY,NOTIFY_UPDATE message to the multi-line edit window handler.  </LI><P>
+<LI>UINT CurrentCol: The text column the cursor is currently on, relative to left side of the edit box.  A CurrentCol value of 0 signifies that the cursor is currently on the left-most character on current the line.  This field is initialized and maintained by the multi-line edit handler.  </LI><P>
+<LI>UINT CurrentLine: The text line the cursor is currently on, relative to the top edge of the edit box.  A CurrentLine value of 0 signifies that the cursor is on the first line that is currently being displayed in the edit box.  This field is initialized and maintained by the multi-line edit handler.  </LI><P>
+<LI>UINT NumLines: The number of lines of text currently in the edit buffer.  This field has a value in the range of 1 to MaxLines and is initialized and maintained by the multi-line edit handler.  </LI><P>
+<LI>UINT TextLen: Current length, in characters, of the text string being edited, not including the null-termination character.  This also represents the character offset into the edit text buffer of the null-termination character.  Please note that this field is not the total size of the edit text buffer, rather, it is the number of valid characters which are currently in the buffer.  This field is initialized and maintained by the multi-line edit window handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComHayesCommand </TITLE></HEAD>
+<BODY>
+<H3>ComHayesCommand </H3>
+This function issues a complete command sequence to the modem connected to the specified port.  ComHayesCommand will terminate the caller's command with a &lt;CR&gt;, so the caller's function should not have a final &lt;CR&gt;.  <P>
+After issuing the command, this function waits until all of the characters in the command are sent, or 2 seconds elapse, whichever comes first.  It does not await a reply from the modem, though the receive interrupt routine would buffer it and any command echo.
+<PRE><UL>
+<LI>Syntax:          err_t far ComHayesCommand(handle_t Handle, char *Commandp, 
+                                           int CommandLen); 
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.
+                 char *Commandp - Pointer to the command string to send.  String does
+                                  not have to be null terminated.  
+                 int CommandLen - Length of the command to send.
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_far_block </TITLE></HEAD>
+<BODY>
+<H3>m_get_far_block </H3>
+This call allocates a block of data of <I>block_size</I> bytes.  This is the preferred method to allocate dynamic RAM in the 100LX/200LX.  The System Manager automatically selects the first free entry in the indirect far pointer table and sets the entry to point to the start of the newly allocated memory block.  m_get_far_block assumes that the pointer <I>ptr</I> is defined in DS segment, and that the far pointer table has been registered with <A HREF="c70000ae.htm">m_reg_far</A>.
+<PRE><UL>
+<LI>Syntax:         int m_get_far_block(void far ***ptr, unsigned long block_size) </LI>
+<LI>Parameters:     void far ***ptr - Takes the address of a near pointer, which will be
+                                  filled in with the address of a far pointer table 
+                                  entry.
+                unsigned long block_size - Size (in bytes) of the desired block of 
+                                           memory</LI>
+<LI>Returns:        0 if the block was sucessfully allocated, otherwise an error 
+                  value (see below).  ptr is set to an entry in the user's far pointer 
+                  table: a near offset to Far pointer entry pointing to the actual 
+                  block.
+                ERROR_TABLE_NOT_REGISTERED - Table not registered 
+                ERROR_TABLE_FULL - No room in far table
+                ERROR_BLOCK_SIZE_ZERO - Null size not supported 
+                ERROR_INSUFFICIENT_MEMORY - No room </LI>
+<LI>Related Calls:  <A HREF="c70000b1.htm">m_set_far_block</A> </LI>
+<LI>Comments:       The far pointer table must be registered first.  See m_reg_far</LI>
+<LI>Example:        Since dealing with hordes of stars can sometimes be confusing, 
+                here is a example of how to allocate, use, and free a block of memory.
+
+                typedef struct { 
+                    char name[10]; 
+                    int id; 
+                } PHONY; 
+
+                char far *FarPtrTable[20]; // Allocate arbitrary number of far pointers
+
+                int main() {
+                
+                     PHONY far **phonyblock; 
+                     ...                          // m_init_app, other initialize stuff
+                     m_reg_far(FarPtrTable,20,0); // Tell SysMgr how many far pointers
+                     //Allocate 800 phonies 
+                     m_get_far_block(&amp;phonyblock, 800L*sizeof(PHONY)); 
+                     (*phonyblock)[0].id = 0;     // Access the 1st PHONY in the block
+                     strcpy( (*phonyblock)[0].name, &quot;Jolly&quot;); 
+                     m_set_far_block(phonyblock,0); // Free the block (set to 0 size) 
+                } </LI>
+</UL></PRE>
+</BODY>
+</HTML>

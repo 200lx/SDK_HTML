@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 09h: Get the Current Alarm Setting </TITLE></HEAD>
+<BODY>
+<H3>AH = 09h: Get the Current Alarm Setting </H3><P>
+This function returns the alarm setting currently in the real-time clock.  See &quot;AH = 0Eh: Get the Current Alarm Setting&quot; on <A HREF="C30000C5.HTM">page 3-130</A> for more information.  <P>
+<UL><LI>Input: AH = 09h </LI><P>
+<LI>Output: CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <BR>
+DL = Status of the alarm: <BR>
+0h: The alarm is not enabled.  <Br>
+01h: The alarm is enabled but will not power on the system <BR>
+02h: The alarm is enabled and will power on the system.  <P>
+</UL>
+<UL><LI>Error conditions: Carry Set iff RTC data invalid, or Alarm data invalid </LI><P>
+<LI>Registers modified: AX, CX, DX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

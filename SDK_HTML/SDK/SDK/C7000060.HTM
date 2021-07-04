@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_no_fini </TITLE></HEAD>
+<BODY>
+<H3>m_no_fini </H3>
+If, in response to an E_TERM event, an application discerns that the user wishes to abort the shutdown procedure, it should call m_no_fini().  This call releases the system locks (allowing context switching) and breaks the shutdown sequence.  The application making the call continues to be the active application.  <P>
+An event structure must be passed, but its fields will be undefined on return, and may be safely ignored.  <P>
+Instead of calling this function, you should use <A HREF="c700005d.htm">m_action</A> with the do_event = DO_NO_FINI which provides the identical service. 
+<PRE><UL>
+<LI>Syntax:      m_no_fini(EVENT far * pEvent) </LI>
+<LI>Parameters:  EVENT far * pEvent </LI>
+<LI>Returns:     Always returns with E_NONE.  </LI>
+<LI>Comments:    This function should only be called after E_TERM has previously 
+             been returned to the application.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

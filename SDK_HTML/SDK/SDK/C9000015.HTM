@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DateEdit </TITLE></HEAD>
+<BODY>
+<H3>DateEdit </H3><P>
+DateEdit is a subclass of Edit that parses dates specially.  DateEdit passes most keys through to the Edit class.  It provides support for parsing a date upon the window losing focus, and for converting the date from a DTM structure to a string.  The window's Menu field should point to a valid DTM structure (a DTM structure is defined in SMTIME.H, and consists of a date and a time).  When the window is created, the DTM struct pointed at by the menu is formatted as a string in the current System Manager date format into the buffer pointed at by Data.  When the windowloses focus, that string is parsed into a date in the DTM structure.  <P>
+<B>Window Structure Details And Messages </B><P>
+<UL><LI>See the Edit class.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

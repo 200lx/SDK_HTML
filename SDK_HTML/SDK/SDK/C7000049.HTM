@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_dtinfo </TITLE></HEAD>
+<BODY>
+<H3>m_dtinfo </H3>
+This function fills in the current system-wide values for time and date display formats.  The call to set the format is non-public.
+<PRE><UL>
+<LI>Syntax:      void far m_dtinfo(DTINFO *dti) 
+<LI>Parameters:  DTINFO far *dti - Pointer to the location to post the time and date 
+                               display formats 
+<LI>Returns:     None
+<LI>Comments:    The values returned by this function are not used for general purpose 
+             display of date and time.  They should be used only in displaying file 
+             dates and times, in the same manner as DOS in a particular country, as 
+             selected by the user at very cold boot.  
+</UL></PRE>
+</BODY>
+</HTML>

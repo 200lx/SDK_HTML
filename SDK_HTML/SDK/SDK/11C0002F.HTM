@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_CheckCategory </TITLE></HEAD>
+<BODY>
+<H3>DB_CheckCategory </H3><P>
+This function checks to see if a category typed into a category box is present in the category record for that box.  If not, it is added.  The string passed may consist of multiple categories, separated by ';'.  <P>
+<UL><LI><Pre>* Syntax:           DB_CheckCategory(DBBLOCK *dblk, RECORDNUM categoryrecord, 
+                    char far *CategoryString) </LI><P>
+<LI>* Returns:          0..32767       Category record written to.  <P>
+                    DB_OVERFLOW    Category record exceeded 256 characters.  <P>
+                    Other error returns are as DB_WriteRecord.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_AutoGoto </TITLE></HEAD>
+<BODY>
+<H3>DB_AutoGoto </H3><P>
+This function performs an &quot;autogoto&quot; search (one executed by typing the first couple of characters of a field) in the first column indicated by the column arrangment.  <P>
+If the first column happens to be the same as the first sort key in the viewpoint, an efficient binary search is used to find the string; otherwise, the search is sequential.  <P>
+<I>Begin</I> and <I>end</I> give the range of records allowed for the search.  <P>
+<UL><LI><Pre>Syntax:             DB_AutoGoto(DBBLOCK *dblk, unsigned char far *searchstring, 
+                    int begin, int end) </LI><P>
+<LI>Returns:            0..32767       First record that matched the search.  <P>
+                    DB_NOTFOUND    Record not found.  <P>
+                    DB_OVERFLOW    Goto string is too long for autogo to 
+                                   search.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

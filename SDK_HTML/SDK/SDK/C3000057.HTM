@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D0h: Text Zoom </TITLE></HEAD>
+<BODY>
+<H3>AH = D0h: Text Zoom </H3><P>
+This function is provided for &quot;zooming&quot; in Text video Modes.  If the requested zoom state is valid, the display controller hardware is reprogrammed to use the necessary font size, and the zoom state (CRTZOOM) is updated.  The video mode (CRTMODE) is not changed, and the screen data is not cleared.  Only certain text mode transitions are supported.  The location of the window in zoomed modes will maintain the cursor in view.  <P>
+<UL><LI>Input: AH = D0h <BR>
+AL = 02h = Text, 80x25, 8x8 char, B&amp;W <BR>
+03h = Text, 80x25, 8x8 char, Color (MDA) <BR>
+07h = Text, 40x16 HP95LX, 16x12 char, B&amp;W Zoom into 80x25 (MDA) <BR>
+21h = Text, 80x25, 8x8 char, B&amp;W <BR>
+80h = Text, 64x18, 10x11 char, B&amp;W Zoom into 80x25 <BR>
+81h = Text, 64x18, 10x11 char, Color Zoom into 80x25 <BR>
+82h = Text, 40x25, 16x8 char, B&amp;W Zoom into 80x25 <BR>
+83h = Text, 40x25, 16x8 char, Color Zoom into 80x25 <BR>
+84h = Text, 40x16, 16x12 char, B&amp;W Zoom into 80x25 <BR>
+85h = Text, 40x16, 16x12 char, Color Zoom into 80x25 <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P></UL>
+Supported Zoom mode transitions: <BR>
+<UL><LI>Mode 02h &lt;--&gt; Mode 80h &lt;--&gt; Mode 82h &lt;--&gt; Mode 84h </LI><P>
+<LI>Mode 03h &lt;--&gt; Mode 81h &lt;--&gt; Mode 83h &lt;--&gt; Mode 85h </LI><P>
+<LI>Mode 07h &lt;--&gt; Mode 21h </LI><P>
+</UL><P>
+</BODY>
+</HTML>

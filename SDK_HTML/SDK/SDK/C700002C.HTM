@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Acquiring the Communication Port </TITLE></HEAD>
+<BODY>
+<H3>Acquiring the Communication Port </H3><P>
+Once a communication port is opened by a process in most multi-tasking operating systems,
+attempts by other processes to open the port fail due to a sharing violation.  The
+opposite extreme would be to allow any application to take over the communication port
+whenever it desires.  The HP palmtop provides a middle-ground solution that allows the
+hand-off (on demand) of communication port facilities, using the ComAcquire/ComRelease
+function calls.  <P> If an application needs to override an exclusive open for some
+reason, it has the option to seize the communication port unconditionally.  The
+application should first try to acquire access without seizing, but if another process
+has the port exclusively, a dialog box should give the user the option of overriding the
+other application.  Based on the response, the application then may acquire the port
+unconditionally.  <P> Well-behaved applications should only hold the communication port
+exclusively while using it, and release it immediately when finished.  <P> A number of
+calls listed in the INTERFAC.H file do not apply to applications designed for HP palmtop
+System Manager compliance (they remain listed for compatibility with HP 95LX System
+Manager).  Do not use the following calls when designing applications for the HP palmtop:
+<P>
+<UL><LI>ComAnswer.  </LI><P>
+<LI>ComCommand.  </LI><P>
+<LI>ComConfigure.  </LI><P>
+<LI>ComDial.  </LI><P>
+<LI>ComGet.  </LI><P>
+<LI>ComGetModem.  </LI><P>
+<LI>ComHangUp.  </LI><P>
+<LI>ComInit.  </LI><P>
+<LI>ComSet.  </LI><P>
+<LI>ComSetDtr.  </LI><P>
+<LI>ComStatus.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

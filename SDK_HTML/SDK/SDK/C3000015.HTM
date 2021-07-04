@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>A Brief Int 09h Overview </TITLE></HEAD>
+<BODY>
+<H3>A Brief Int 09h Overview </H3><P>
+The BIOS Int 09h interrupt service routine processes the incoming scancode as follows: <P>
+<OL><LI>The routine reads the scancode from the keyboard I/O port (060h).  </LI><P>
+<LI>Interrupts are enabled, the CARRY is set, and the Keyboard Translation Hook function (Int 15h, Fcn 4Fh) is called.  An application can take over this hook and insert its own handler.  If this call returns with carry clear, Int 09h stops processing and returns.  If the carry is set, Int 09h proceeds with step 3.  </LI><P>
+<LI>The routine checks for a Break (MENU Make ScanCode with CTRL Active).  If the Break is detected, Int 09h clears the keyboard input buffer and calls Int 1Bh, described on <A HREF="C30000C6.HTM">page 3-130</A>.  (A &quot;dummy&quot; scancode of &quot;00h/00h&quot; is entered into the keyboard input buffer.) </LI><P>
+<LI>The Int 09h routine translates the scancode and enters the scancode and its ASCII equivalent into the keyboard input buffer.  Some scancodes have no ASCII equivalent.  In this case, Int 09h does one of the following: </LI><P>
+</OL><UL><LI>Discard the scancode (enter no data into the keyboard input buffer).  If [LSHFT], [RSHFT], [Ctrl], [Alt], [Caps Lock], or [Scroll Lock] is detected, the state of the keyboard is updated, but the scancode is discarded.  </LI><P>
+<LI>Enter a two-byte pair &quot;00h/XXh&quot; into the keyboard input buffer.  &quot;XXh&quot; may be the original scancode, or it may be a translated hexadecimal code for the key or key combination pressed.  </LI><P>
+</UL>Once a scancode/ASCII pair has been entered into the keyboard input buffer, an application can read the data by calling Int 16h.  Depending on which Int 16h function is called, a further translation (or even a keycode discard) is possible.  <P>
+<H2><A HREF="c3000016.htm">Fn Key </A></H2><P>
+<H2><A HREF="c3000017.htm">Sticky Shift </A></H2><P>
+<H2><A HREF="c3000018.htm">Annunciators </A></H2><P>
+<H2><A HREF="c3000019.htm">Key Cap Legends </A></H2><P>
+<H2><A HREF="c300001a.htm">Scancode Conversion Tables </A></H2><P>
+<H2><A HREF="c300001b.htm">Shift Priority </A></H2><P>
+<H2><A HREF="c300001c.htm">Scancodes When Fn Function is Off </A></H2><P>
+<H2><A HREF="c300001d.htm">Scancodes When Fn Function is On </A></H2><P>
+<H2><A HREF="c300001e.htm">NumPad Scancodes (Menu Key Held Down) </A></H2><P>
+<H2><A HREF="c300001f.htm">Mute Key Sequences </A></H2><P>
+<H2><A HREF="c3000020.htm">Key Sequences For Char Codes 80h-8Fh </A></H2><P>
+</BODY>
+</HTML>

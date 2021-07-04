@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_help2_getmetrics </TITLE></HEAD>
+<BODY>
+<H3>m_help2_getmetrics </H3>
+This routine gets the help screen coordinates based on the Helpmetrics structure dimensional information.  m_help2_getmetrics must be called after m_help2_init. 
+<PRE><UL>
+<LI>Syntax:        int far m_help2_getmetrics(char far * &amp;HelpStruct, 
+                                              char far * &amp;HelpMetrics) </LI>
+<LI>Parameters:    char far * &amp;HelpStruct - Pointer to the help structure 
+               char far * &amp;HelpMetrics - Pointer to the HelpMetrics structure 
+<LI>Returns:       H_RC_OK (0) - Success 
+               H_RC_FILE_ERR (1) - File could not be opened 
+               H_RC_REV_ERR (2) - Help file revision mismatch 
+<LI>Related Calls: This routine must be called after <A HREF="c700008a.htm">m_help2_init</A>.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Clipboard Structures </TITLE></HEAD>
+<BODY>
+<H3>Clipboard Structures </H3>
+Structures placed within clipboard data to manage representations include: <P>
+<UL><LI>A clipboard header, consisting of an offset to the first representation's header,
+length of author name, and author name (null terminated string).  </LI>
+</UL>
+<PRE>
+typedef struct cb_header { 
+            unsigned first_offs; /* offset to 1st representation; 0 if none */ 
+            char author;         /* start of null-terminated author name */ 
+} cb_header; /* struct cb_header */ </PRE><P>
+<UL><LI>Representation headers, chained together by forward links.  </LI>
+</UL>
+<PRE>
+typedef struct rep_header { 
+            unsigned next_offs; /* offset to next representation */ 
+            unsigned data_offs; /* offset from header to data */ 
+            unsigned rep_len;   /* length of representation data in total */ 
+                                /* (includes the size in all ext.  blocks) */ 
+            unsigned valid;     /* # of times rep has been &quot;finished&quot; */ 
+            char rep_name[1];   /* start of null-terminated representation name */
+                                /* data follows name @ data_offs */ 
+} rep_header; /* struct rep_header */ </PRE><P>
+<B>Note:</B> All offsets are from the start of the clipboard.  <P>
+<H2><A HREF="c7000015.htm">Example of Clipboard Management Services Calls </A></H2>
+<H2><A HREF="c7000016.htm">Clipboard Status Codes </A></H2>
+</BODY>
+</HTML>

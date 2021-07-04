@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_fini_rep </TITLE></HEAD>
+<BODY>
+<H3>m_fini_rep </H3>
+This call signals to the clipboard that no further data will be sent for the current
+representation and closes the representation and terminates writes to the last
+representation opened by <A HREF="c700001d.htm">m_new_rep</A>.  If it was a new representation, the number of
+available representations is incremented.
+<PRE><UL>
+<LI>Syntax:         int far m_fini_rep()
+<LI>Parameters:     None
+<LI>Returns:        CB_OK - if successful
+                CB_NOT_OPEN - if clipboard access is denied
+                CB_NO_REP - if no representation is currently open
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>File Input/Output Services </TITLE></HEAD>
+<BODY>
+<H1>File Input/Output Services </H1>
+The System Manager's File Input/Output (I/O) services include operations relating to disk file maintenance.  These calls use the data structure FILE described below.  Since this structure is not compatible with the structure FILE defined in a Standard C Library include file, STDIO.H, modules using the System Manager File Services must not include STDIO.H.  <P>
+An application is not required to use the System Manager File IO; direct DOS calls may be used instead.  If direct DOS IO calls are mixed with System Manager file IO calls, the application should call m_reset_DOS_error before calling the System Manager IO calls.  DOS critical errors are handled by the System Manager by setting an error flag within the System Manager.  Any of the SysMgr file IO calls check this error and return.  If a critical error happens when directly calling DOS, the very next SysMgr file IO call will fail unless m_reset_DOS_error is called.
+<PRE>
+typedef struct { 
+      int f_handle;          /* DOS file handle */ 
+      int f_flag;            /* see below for flag values */ 
+      long pseek;            /* physical seek address */ 
+      long lseek;            /* logical seek address */ 
+      long vseek;            /* virtual seek address */ 
+      int f_len;             /* length of valid portion of buffer */ 
+      char f_buf[FBUFSIZ];   /* 512 bytes, i/o buffer */ 
+} FILE;
+ 
+</PRE>
+Applications may use either buffered or unbuffered operations.  If only unbuffered operations are used, the structure NBFILE can be used in place of FILE to save the RAM that would be used for the file buffer. 
+<PRE>
+typedef struct { 
+     char file_info[sizeof(FILE)-FBUFSIZE]; 
+} NBFILE; 
+/* this is shorthand to create a structure like FILE, but without the buffer */
+</PRE> 
+Applications that use File I/O services must include the header files FILEIO.H and INTERFAC.H, and may want to include M_ERROR.H for file error codes.  <P>
+<H2><A HREF="c7000064.htm">Call Descriptions </A></H2><P>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 09h: Write Character and Attribute at Cursor Position </TITLE></HEAD>
+<BODY>
+<H3>AH = 09h: Write Character and Attribute at Cursor Position </H3><P>
+If the display is in a text mode, this function writes the character and attribute bytes at the current cursor location on the specified page.  The value in BL determines the character attributes.  <P>
+If the display is in graphics mode, no page number is required and the value in BH is ignored.  This function assumes the default character cell size associated with the current graphics mode.  In graphics mode, the attribute byte in BL has a different meaning.  If bit 7 of BL is set, an exclusive OR (XOR) of the pixel data is performed with existing display data.  If bit 7 is clear, the pixel data overwrites the existing display data.  This feature can be used to write and then &quot;erase&quot; text in the standard font to the graphics display.  <P>
+For both text and graphics modes, more than one copy of a single character (with attribute) can be written to the display by specifying the replication factor in CX.  In text modes this function will cause line wrap and screen wrap to occur if too many characters are specified.  In graphics modes, no wrap-around will occur.  All values of AL result in some sort of display (no special characters).  <P>
+<B>Note:</B> This function does not move the cursor.  <P>
+In CGA Graphics Modes (4,5,6), the address of the bit map used for ASCII characters 80h-FFh is stored at 0:7Ch (Int Vector 1Fh).  By resetting the vector, an alternative bit map can be selected for these characters.  <P>
+<UL><LI>Input: AH = 09h <BR>
+AL = Character to write <BR>
+BH = Page <BR>
+BL = Attribute byte if in alphanumeric mode (Bit 7 set means XOR pixel data if in graphics mode) <BR>
+CX = Number of characters to write <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

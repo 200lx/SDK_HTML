@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bank Switching </TITLE></HEAD>
+<BODY>
+<H3>Bank Switching</H3>
+
+Hornet implements a bank-switching scheme that allows up to 32 MB of memory to be
+addressed on each of the NRAS[3:0] signals and up to 64 MB of memory to be addressed on
+each of the NRCE and NCS[1:0] signals.  This allows up to 320 MB to be accessed in the
+1-MB address space of the 80C186 CPU.  There is no provision to prevent one section of
+memory from being accessed both in the normal CPU address space and via bank switching.<P>
+
+The bank-switching scheme supports one 64-KB bank and eight 16-KB banks.  It is intended
+to allow support of LIM EMS 3.2 and also to support the need for a 64-KB page of ROM code
+to be swapped in and out of upper memory.  Bank switching is totally independent of the
+external chip select configuration defined above.<P>
+
+Each of the nine banks is accessed at a fixed location in the CPU address space.  There
+are registers associated with each bank.  These registers must be initialized to specify
+the section of memory that will be mapped into the bank.  All banks are disabled
+following a reset and should be initialized before being enabled.<P>
+
+</BODY>
+</HTML>

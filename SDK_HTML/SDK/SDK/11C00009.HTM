@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Reactivate </TITLE></HEAD>
+<BODY>
+<H3>DB_Reactivate </H3><P>
+This function is used upon returning from a E_ACTIV event to reopen the application's database(s).  If the database file has been closed with DB_Deactivate, no calls should be issued to the engine with that database until it has been DB_Reactivated.  This call reopens the DOS file handle and removes the write protection from the file.  <P>
+<UL><LI><Pre>Syntax:             int DB_Reactivate(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          File was reactivated or file was already 
+                                   reactivated.  <P>
+                    DB_OPEN        File cannot be reopened (does not exist, 
+                                   bad name, no DOS handles, etc.).  <P>
+                    DB_SIGNATURE   File is no longer a database file.  <P>
+                    DB_FILETYPE    Type of file is different than expected.  <P>
+                    DB_RELEASE     Database engine release is now different.
+                                   See &quot;DB_Open&quot; on <A HREF="11C00005.HTM">page 11-423</A> for more details.  <P>
+                    DB_SORTCHANGE  The system sort order has changed, 
+                                   invalidating all viewpoints in memory.  The
+                                   database must be reopened to correct this 
+                                   condition.</Pre></UL>  <P>
+<B>Note:</B> If the reactivate fails, the database has been shut down.  Either the same database can be attempted to be reopened, or the user must specify another file.  <P>
+<UL><LI><Pre>May Move Memory:    Yes </Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

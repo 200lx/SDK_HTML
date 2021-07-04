@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6001h: Measure Backup Battery Voltage </TITLE></HEAD>
+<BODY>
+<H3>AX = 6001h: Measure Backup Battery Voltage </H3><P>
+This function measures the voltage of the backup battery.  This battery is not used until the main batteries are depleted.  Its primary function is to maintain the System RAM disk data.  The measurement details and interpretation of the returned value are identical to function 6000h.  <P>
+<UL><LI>Input: AX = 6001h </LI><P>
+<LI>Output: AX = Measured value (0-63) <BR>
+CARRY set iff one or more samples is &quot;Out-Of-Range&quot; <P>
+</UL>
+<UL><LI>Registers modified: AX,FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

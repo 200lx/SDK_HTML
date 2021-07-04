@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CheckBox </TITLE></HEAD>
+<BODY>
+<H3>CheckBox </H3><P>
+A CheckBox designates a boolean option.  A box appears to the left of the window title.  If the CheckBox is selected, the box contains an X (or Check on the 200LX).  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: </LI><BR>
+The coordinates (x,y) specify the display point to begin the CheckBox at.  The title extends to the right of that.  CheckBox automatically calculates the window size (w,h) based on the length of the window title and the size of the CheckBox symbol when an APPEAR message is received.  The Object class handler uses w and h are used to save the screen underneath the window when STYLE_SAVEUNDER is being used.  CheckBox does not actually use w and h itself.  <P>
+</UL>
+<UL><LI>PLHRES Title: </LI><BR>
+Title defines the label appearing to the right of the CheckBox.  <P>
+</UL>
+<UL><LI>PLHDATA Data: </LI><BR>
+Data points to the unsigned integer variable that will be modified by selecting this CheckBox.  See LogicalSize.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: </LI><BR>
+LogicalSize defines the bitmask to set/clear in the word at Data to signify the selection of this CheckBox.  For most CheckBoxes, this value will be a single bit (1,2,4,8,...).  The CheckBox handler XORs this value with the word at Data when the CheckBox toggles state.  In this way, a number of checkboxes in a dialog box can all use the same variable pointed to by the Data field.  <P>
+</UL>
+<UL><LI>UINT Style: Used by the Object class handler.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>KEYSTROKE: Responds to the following keys: </LI><BR>
+<UL>
+<LI>A space selects or deselects the CheckBox.  The CheckBox handler XORs the word pointed to by the Data field with the LogicalSize value and sends a DRAW message to the CheckBox handler.  <P>
+<LI>CheckBox passes all other keys to the Object class handler.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+The CheckBox handler draws the CheckBox, and shows it selected (with an X inside it) if the variable at (Data AND LogicalSize) is non-zero.  The CheckBox handler responds to the Data bits DRAW_CLIENT and DRAW_TITLE to display the checkbox and title respectively.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+The CheckBox handler sets the w and h coordinates to the width and height of the entire CheckBox window by using the length of the title string and the size of the checkbox symbol.  CheckBox passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>SETFOCUS: </LI><BR>
+CheckBox displays the highlighted title.  If the Data parameter of the message is SETFOCUS_SELECT, the CheckBox toggles state before displaying.  <P>
+</UL>
+<UL><LI>LOSEFOCUS: Displays the title normally.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>CREATE: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+</BODY>
+</HTML>

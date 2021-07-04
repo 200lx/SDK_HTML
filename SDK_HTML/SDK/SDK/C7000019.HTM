@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_cb_write </TITLE></HEAD>
+<BODY>
+<H3>m_cb_write </H3>
+Writes <I>length</I> bytes from <I>data</I> to the representation opened by <A
+HREF="c700001d.htm">m_new_rep</A>.  Multiple calls
+may be made to m_cb_write if needed to append data to a single representation before the
+representation is closed with an <A HREF="c700001b">m_fini_rep</A>.
+<PRE><UL>
+<LI>Syntax:         int far m_cb_write(char far *data, unsigned length)
+<LI>Parameters:     char far *dat - Pointer to the data to be written
+                unsigned length - Length of the data to be written
+<LI>Returns:        CB_OK - if write is successful
+                CB_NOT_OPEN - if clipboard access is denied
+                CB_NO_REP - if no representation is currently open
+</UL></PRE>
+</BODY>
+</HTML>

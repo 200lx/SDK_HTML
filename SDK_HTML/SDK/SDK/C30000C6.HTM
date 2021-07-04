@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 1Bh: Keyboard Break Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 1Bh: Keyboard Break Interrupt </H1><P>
+The Keyboard Break interrupt is called when [Ctrl] [Break] is pressed.  It is called from the Keyboard Hardware interrupt (Int 09h) via an Int 1Bh instruction.  Applications may chain into the Keyboard Break interrupt.  Interrupts are enabled when Int 1Bh is called, that is when the BIOS points the Int 1Bh vector to an IRET instruction.  Just prior to calling Int 1Bh, the Int 09h routine clears the keyboard buffer.  When the Int 1Bh routine returns, the Int 09h routine puts the pseudo scancode/ASCII pair &quot;00h/00h&quot; into the keyboard buffer, then returns.  <P>
+When the Int 1Bh routine is entered, the BIOS has established a stack frame as shown below:
+<PRE>
+                ------------------------
+                Saved Flags 
+                ------------------------
+                Saved CS 
+                ------------------------
+                Saved IP from Int 9h 
+                ------------------------
+                Saved AX 
+                ------------------------
+                Saved BX 
+                ------------------------
+                Saved CX 
+                ------------------------
+                Saved DX 
+                ------------------------
+                Saved SI 
+                ------------------------
+                Saved DI 
+                ------------------------
+                Saved DS 
+                ------------------------
+                Saved ES 
+                ------------------------
+                Saved Flags 
+                ------------------------
+                Saved CS 
+                ------------------------
+           SP-> Saved IP (from Int 1Bh) 
+                ------------------------
+</PRE>
+The register contents are as shown below when Int 1Bh is called: <P>
+<UL><LI>AH = Undefined.  </LI><P>
+<LI>AL = Break scancode (46h).  </LI><P>
+<LI>BX = copy of Keyboard buffer read pointer word at 40h:1Ah.  </LI><P>
+<LI>DS = 40h.  </LI><P>
+<LI>ES = Undefined.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>GPIO[24:26] Interrupt Source Bits </TITLE></HEAD>
+<BODY>
+<H3>GPIO[24:26] Interrupt Source Bits </H3><P>
+The GPIO[24:26] Interrupt Source (ISR) bits located at index -5B are different from other Hornet ISR bits.  It is not necessary to clear these bits before another interrupt occurs.  This was done to allow standard applications to operate without knowledge of the Hornet ISR bits.  This difference can cause problems if GPIO[24:26] pins are configured to cause interrupts on an IRQ line that is shared with other sources.  The easiest work around is to simply not share interrupts on GPIO[24:26] and ignore the co rresponding ISR bits.  <P>
+The problem of using GPIO[24:26] on shared IRQ lines is described below.  For this problem description, &quot;GPIO active&quot; means that the GPIO interrupt is enabled and it's level matches the sense bit.  Note that this could occur due to changes in the GPIO level or changes to these bits.  <P>
+<OL><LI> The GPIO goes to the active state and causes an interrupt.  </LI><P>
+<LI> The GPIO line then goes inactive before or after the interrupt service routine begins.  </LI><P>
+<LI> The PIC interrupt pending bit will be cleared when the interrupt service routine begins.  This readies the PIC for another interrupt on the same IRQ line.  </LI><P>
+<LI> The GPIO line then goes active for a second time.  This sets the PIC interrupt pending bit, but has no effect on the Hornet ISR bit since it is still set from the first time it went active.  </LI><P>
+<LI> Software in the interrupt service routine clears the Hornet ISR bit and returns from interrupt.  </LI><P>
+<LI> Since the PIC has a second interrupt pending for the same IRQ line, another interrupt occurs.  Since the Hornet ISR bit is not set, the interrupt service routine does not know which interrupt to service.  Even worse, if the GPIO line stays active (due to not being serviced), it masks all other sources on the IRQ line.  No more interrupts will occur on this IRQ line until the GPIO line goes inactive.  </LI><P>
+</OL>To solve this problem, the software within the interrupt service routine should disable the interrupt before clearing the ISR bit.  The interrupt can then be re-enabled afterwards.  This will guarantee that the ISR bit will be set when a second interrupt occurs.  <P>
+<P>
+</BODY>
+</HTML>

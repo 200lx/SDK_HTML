@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Hardware Needs </TITLE></HEAD>
+<BODY>
+<H3>Hardware Needs </H3><P>
+In text modes, the hardware Display controller requires the font to be loaded word wide, starting on a 256-word page with the scan lines for a given character 256 words apart (noncontiguous format).  This font must be in RAM (for performance reasons) but does not have to be in the CPU address space (and won't be).  The previously mentioned 8x8 byte-wide font is not used by the hardware, but a word-wide version of the same font will have been loaded in the Bitmap buffer and is used.  The BIOS call (Int 10h, Function 00h) to set the Video mode will ensure that the required font(s) are made available to the Display controller.  It is the responsibility of the application on entry (or re-entry) to ensure that the hardware has the appropriate font.  Generally, this will be accomplished transparently through the appropriate BIOS calls.  <P>
+</BODY>
+</HTML>

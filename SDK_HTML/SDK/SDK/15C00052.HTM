@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>PC-Compatible I/O Registers </TITLE></HEAD>
+<BODY>
+<H1>PC-Compatible I/O Registers </H1><P>
+The I/O Register block contains 3 bytes of PC-compatible I/O registers (8255 PPI).  These registers are defined as follows:<P>
+<PRE>
+PORT    BIT(S)  MODE    DESCRIPTION
+==========================================================================================
+60h     0-7     R/W     If port 61h bit7 = 0: Scratch location for keyboard scan code
+                        See &quot;Keyboard Controller&quot; on <A HREF="15C0002F.HTM">page 15-543</A> for more information.
+        0-7     R/W     If port 61h bit = 1: Scratch location for SW1 configuration
+                        switch settings
+------------------------------------------------------------------------------------------
+61h     0       R/W     TIMER 2 gate
+        1       R/W     PC-compatible speaker data
+        2       R/W     Ignored, always reads 0
+        3       R/W     Select source/destination for port 62h bits 0-3
+        4-5     R/W     Ignored, always read 0
+        6       R/W     0 = disable keyboard
+        7       R/W     Select source/destination for port 60h
+------------------------------------------------------------------------------------------
+62h     0-3     R/W     If port 61 bit 3 = 0: Scratch location for 4 MSBs of SW2
+                        switch settings
+        0-3     R/W     If port 61 bit 3 = 1: Scratch location for 4 LSBs of SW2
+                        switch settings
+        4       R       Unused (reads 0)
+        5       R       TIMER 2 output
+        6-7     R       Unused (read 0)
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

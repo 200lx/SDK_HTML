@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Attribute Memory </TITLE></HEAD>
+<BODY>
+<H3>Attribute Memory</H3>
+
+Each bank has an attribute memory select bit associated with it which allows for the
+control of NREG.  NREG is used to select between attribute memory and common memory on
+plug-in cards (NCS0 and NCS1).  When NREG is high, common memory is accessed.  When NREG
+is low, attribute memory is accessed.  If the attribute memory select bit is set for a
+given memory bank and that bank is selected, attribute memory will be accessed.  If the
+attribute memory select bit is reset for that bank, common memory will be ac cessed.
+Therefore the state of the NREG signal is just the inverse of the state of the attribute
+memory select bit.  The attribute memory select bit for Bank C is located in C Reg1 at
+index -99h.  The bit is C Reg1[4].<P>
+
+The attribute memory select bits for the four E banks and the four D banks are located in
+a separate register called the Attribute Memory Select register located at index -9E.
+The register is defined as follows:<P>
+
+<PRE>
+Index   Name                        Bits    Comments
+==========================================================================================
+-9Eh    Attribute Memory Select     [7]     Attribute memory select for Bank E3
+                                    [6]     Attribute memory select for Bank E2
+                                    [5]     Attribute memory select for Bank E1
+                                    [4]     Attribute memory select for Bank E0
+                                    [3]     Attribute memory select for Bank D3
+                                    [2]     Attribute memory select for Bank D2
+                                    [1]     Attribute memory select for Bank D1
+                                    [0]     Attribute memory select for Bank D0
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

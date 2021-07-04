@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_fini </TITLE></HEAD>
+<BODY>
+<H3>m_fini </H3>
+This call signals the System Manager that the current application is done.  Control never returns to the application.  The System Manager marks the task's TCB as exited and QBTASK cleans up.  
+<PRE><UL>
+<LI>Syntax:      void m_fini(void) </LI>
+<LI>Parameters:  None </LI>
+<LI>Returns:     None </LI>
+<LI>Comments:    100LX/200LX applications should use <A HREF="c700005d.htm">m_action</A> with the do_event field 
+             set to DO_FINI.   </LI>
+</UL></PRE>
+</BODY>
+</HTML>

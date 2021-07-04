@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Using the FileOpenDialogBox class </TITLE></HEAD>
+<BODY>
+<H3>Using the FileOpenDialogBox class </H3><P>
+The FileOpen dialog box is one of the more difficult LHAPI classes to use, since it involves a window that has a complex interation with other windows.  This section will try to explain how to use a FileOpenDialogBox.  For a concrete example, see the file FILEDLGS.C provided with the ISV disk.  <P>
+FileOpenDialogBox requires that the control windows in its window array start with these six windows: Edit, PathText, FileListBox,DirListBox,Ok PushButton, Cancel PushButton.  There may be more than these windows, but there must be at least these six.  The FileOpenDialogBox coordinates with the Edit, PathText, FileListBox and the DirListBox via NOTIFY messages.  The children have the STYLE_NOTIFY bit set so that they will send NOTIFY_CHILDCHANGED messages to the F.O.D.B.  The DialogBox will then change directories in the FileListBox and the DirListBox by sending them NOTIFY, NOTIFY_UPDATE messages with the Extra field set to the new directory path.  <P>
+Various information about the status of the file operation is scattered throughout the controls in the file dialog array.  In some cases, the Menu field of a control is usurped to function specially for FileOpenDialog.  <P>
+<UL><LI>The buffer that is pointed to by the first Edit control is the buffer where the resulting filename will reside.  If the buffer contains a non-null string when the dialog is created, that will be used as the wildcard specification.  In the FILEDLGS example, this buffer is called FileSpec.  </LI><P>
+<LI>The Menu field of the Edit control points to a default wildcard, e.g.  &quot;*.PDB&quot; </LI><P>
+<LI>The buffer that is pointed to by the Directory static text (the PathText control) is the directory where files will initially be displayed.  The directory should not end in a backslash unless the directory is the root.  In the FILEDLGS example, this buffer is called Directory.  </LI><P>
+<LI>The FileListBox points to an array of pointers--these pointers must point to buffers that are used to fill in the filenames read from disk.  While the window is active, the LogicalSize field will be the current number of files in the list (i.e., the total number of pointers currently being used); the Menu field contains the total size of the list (i.e., the total number of pointers allocated).  In the FILEDLGS example, the pointer array is called FileList; the buffer space allocated to fill the names is called FileSpace.  During InitializeFileDialogs(), the pointers in FileList are pointed into FileSpace.  </LI><P>
+<LI>The DirListBox points to an array of pointers--these pointers must point to buffers that are used to fill in the directories read from disk.  While the window is active, the LogicalSize field will be the current number of directories in the list (i.e., the total number of pointers currently being used); the Menu field contains the total size of the list (i.e., the total number of pointers allocated).  In the FILEDLGS example, the pointer array is called DirList; the buffer space allocated to fill the names is called DirSpace.  During InitializeFileDialogs(), the pointers in DirList are pointed into DirSpace.  </LI><P>
+</UL>The example in FILEDLGS has subclassed the FileOpenDialogBox handler.  This is to make sure that the two ways to acknowledge the dialog, either by pressing F10 or by pressing Enter, both perform some post-processing on the filename to add a default extension if necessary.  <P>
+<P>
+</BODY>
+</HTML>

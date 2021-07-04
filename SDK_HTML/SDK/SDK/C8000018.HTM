@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>NOTIFY Submessages (Passed in Data) </TITLE></HEAD>
+<BODY>
+<H3>NOTIFY Submessages (Passed in Data) </H3><P>
+<UL><LI>NOTIFY_CHILDKILLED (0): This submessage is sent to a parent window when a child is killed if it needs to report something in particular.  NOTE: the Window parameter which the parent window's handler receives actually points to the child window that was destroyed.  Normally, this points to the window itself.  </LI><P>
+<LI>NOTIFY_UPDATE (1): This submessage is sent to a window handler by an application to tell the window to notice a change in its data.  This forces the handler to reinitialize any pertinent variables and redraw itself.  </LI><P>
+<LI>NOTIFY_CHILDCHANGED (2): This submessage is sent to a parent window when a child changes state.  In this way the parent can keep track of a child window's processing.  Note that the extra parameter of this message is set to the address of the child window's LHWINDOW structure.  </LI><P>
+<LI>NOTIFY_SORT (3): This submessage is sent to ListBox windows to have them sort their contents.  The extra field specifies the sort order (=0 : ascending, !=0 : descending).  The window redraws itself as a result.  </LI><P>
+<LI>NOTIFY_USER (256): Any applicaton defined submessages should have values starting at NOTIFY_USER.  Application defined submessages can be used for inter-window communications, i.e., as a way for various window handlers to converse with one another.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

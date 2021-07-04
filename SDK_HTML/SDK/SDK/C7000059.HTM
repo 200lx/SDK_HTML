@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_telltime </TITLE></HEAD>
+<BODY>
+<H3>m_telltime </H3>
+This function displays the current date or time, according to content, at the given row and column coordinates.  m_telltime uses the current system date and time formats.
+<PRE><UL>
+<LI>Syntax:      void m_telltime(int content, int row, int col) 
+<LI>Parameters:  int content - Flag defining content and display of date/time stamp: 
+                           Bit 1,2 0 = date only in default format
+                           1 = time only in default format 
+                           2 = date and time in default format 
+                           3 = date prefixed with day of week 
+                           Bit 4 If set, suppress AM/PM, even if format calls for it.  
+                           Bit 5 If set, suppress seconds display, even if format 
+                                         calls for it.  
+                           Bit 6 If set, display year, even if format does not 
+                                         call for it.  
+             int row - Horizontal location of first character of date/time stamp 
+             int col - Vertical location of first character of date/time stamp 
+<LI>Returns:     None 
+</UL></PRE>
+</BODY>
+</HTML>

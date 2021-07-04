@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_ColLicsStr </TITLE></HEAD>
+<BODY>
+<H3>m_ColLicsStr </H3>
+This call compares two LICS strings according to the selected sort type.  m_ColLicsStr is
+only used by applications which run with LICS.
+<PRE><UL>
+<LI>Syntax:         m_ColLicsStr
+<LI>Parameters:     es:si     Pointer to string 1
+                cx        Length of string 1
+                ax:dx     Pointer to string 2
+                bx        Length of string 2
+<LI>Returns:        0  - if strings are equal
+                +1 - if string 1 characters precede string 2 (alpha-numerically)
+                -1 - if string 2 characters precede string 1 (alpha-numerically)
+<LI>Comments:       m_ColLicsStr is designed for easy access in assembly language from 
+                the 1-2-3 driver.  This call does not conform to the C interface 
+                structure.  Although it is available for ISV applications, it is 
+                not recommended.
+</UL></PRE>
+</BODY>
+</HTML>

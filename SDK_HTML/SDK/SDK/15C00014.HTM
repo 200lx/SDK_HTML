@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Take Over ROM/EPROM/FLASH </TITLE></HEAD>
+<BODY>
+<H3>Take Over ROM/EPROM/FLASH</H3>
+The NTKO pin in the card port is normally left floating.  A ROM, EPROM, or FLASH card may
+be manufactured as a take-over device if the NTKO pin is connected to ground.  This pin
+is sampled each time the system is turned on.  If the pin is low, it will cause a swap in
+functionality between the NRCE and NCS[0] pads.  This makes the plug-in card look like
+the system ROM and the system ROM look like plug-in port 0.<P>
+
+The following rules apply to write protection:<P>
+<UL>
+    <LI>The write protect switch on the plug-in card always write protects the card
+        (NCS[1:0]).<P>
+    <LI>The write protect bit at index -86h is associated with NRCE in normal operation.  In
+        take-over mode this bit is associated with NCS[0].<P>
+    <LI>NRCE cannot be hardware write-protected in take-over mode.<P>
+</UL>
+</BODY>
+</HTML>

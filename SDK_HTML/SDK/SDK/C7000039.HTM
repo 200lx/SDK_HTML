@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComMdmStatus </TITLE></HEAD>
+<BODY>
+<H3>ComMdmStatus </H3>
+This function returns the current modem status and settings from the UART's Modem Status and Control Registers.  <P>
+ComMdmStatus permits a UART and modem aware application to read the modem control signal settings and status signals on a port.  Note that the bits that are returned are directly from the UART, no interpretation or state stabilization is performed.  This means that the values returned may no longer reflect reality since the signals may have changed state.  <P>
+The one concession to stability is that for a more accurate view of the registers, interrupts are turned off while both registers are being read.  <P>
+<PRE><UL>
+<LI>Syntax:          err_t far ComMdmStatus(handle_t Handle, int far *ModemStatusp, 
+                                        int far *ModemControlp) 
+<LI>Parameters:      handle_t Handle  - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 ModemStatusp - Pointer to an integer that will receive the current 
+                                contents of the UART's modem status register 
+                                (offset 6 from the base of the UART) The bits are the 
+                                raw bits as read from the UART.  
+                 ModemControlp - Pointer to an integer that will receive the current 
+                                 contents of the UART's modem control register 
+                                 (offset 4 from the base of the UART) The bits are the
+                                 raw bits as read from the UART.  
+<LI>Returns:        0 - if successful
+                Any other value indicates an error condition. 
+                ENOTYOURS - The specified port has not been acquired by the calling 
+                            application.  
+<LI>Comments:       ComOpen() must first be called in order to get a valid handle to 
+                the communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

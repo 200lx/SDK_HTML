@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_rep_index </TITLE></HEAD>
+<BODY>
+<H3>m_rep_index </H3>
+This call retrieves the index number and length of a particular representation in the
+clipboard, given a name.  The index number and length are used by <A HREF="c7000018.htm">m_cb_read</A>. 
+Applications attempting to respond to a Paste command should call this function with the
+appropriate representation name (&quot;TEXT&quot; as default). 
+<PRE><UL>
+<LI>Syntax:         int far m_rep_index(char far *name, int far *index, 
+                                    unsigned far *length)
+<LI>Parameters:     char far *name - Name of the representation (&quot;TEXT&quot; is the default)
+                int far *index - Destination for representation index number
+                unsigned far *length - Destination for length (in bytes) of the 
+                                       specified representation
+<LI>Returns:        CB_OK with pointers updated - if successful
+                CB_NO_SUCH - if no such representation is in the index
+                CB_NOT_OPEN - if access to the clipboard is denied
+<LI>Related Calls:  The name of a representation is specified in the <A HREF="c700001d.htm">m_new_rep</A> call.
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ReactivateLHAPI </TITLE></HEAD>
+<BODY>
+<H3>ReactivateLHAPI </H3><P>
+Using this function, the application reestablishes LHAPI's LHAPIBLOCK data structure after being switched back in.  This routine first sends a REACTIVATE message to all the currently defined windows, followed by an APPEAR message.  <P>
+<UL><LI>Syntax: void DISTANCE ReactivateLHAPI(LHAPIBLOCK *LHAPIData) </LI><P>
+<LI>Parameters:           *LHAPIData           Pointer to the application's LHAPI block (should be the same block that was called for InitializeLHAPI).  </LI><P>
+<LI>Returns: None </LI><P>
+<LI>Related Calls: DeactivateLHAPI(), SendAllMsg() </LI><P>
+<LI>Comments: ReactivateLHAPI() actually makes a SendAllMsg(APPEAR, 0, 0) call.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

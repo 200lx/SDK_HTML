@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D7h: BitBlt Graphics Write String </TITLE></HEAD>
+<BODY>
+<H3>AH = D7h: BitBlt Graphics Write String </H3><P>
+This function uses the BitBlt hardware (Bit Block Transfer) to write bit patterns into CGA graphics memory corresponding to a string of characters.  It is faster than the usual Write String BIOS functions, can output text bitmaps of various sizes, and also supports output modes other than simply overwrite.  The BitBlt hardware is repeatedly invoked for each of the characters in the string using the currently active bitmap table.  <P>
+<UL><LI>Input: AH = D7h <BR>
+ES:BP = Pointer to start of string <BR>
+BH = m (Output Mode (0-15)) <BR>
+BL = k (String Length Bytes) <BR>
+CX = c (Pixel Column#;even) <BR>
+DX = r (Pixel Row#) <P>
+</UL>
+<UL><LI>Output: CC - Display memory is updated <BR>
+CS - Error <P>
+</UL>
+<UL><LI>Error conditions: Invalid CRTMODE (not 4,5, or 6 <BR>
+Invalid Inputs <BR>
+No Active Bitmap Table <BR>
+Invalid Active Bitmap Table <P>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI></UL><P>
+If the existing Display Data is D, the Source Data is S, and the resulting Display Data is Z, then the table below gives Z as a function of m, D, and S.  Modes 2,4,11, and 13 are not supported.
+<PRE>
+     Mode   Result       Comments  
+     ==================================================
+     0      0            Clears all destination bits
+     --------------------------------------------------
+     1      -(S OR D)    OR in source, then complement
+     --------------------------------------------------
+     3      -S           Write source, then complement
+     --------------------------------------------------
+     5      -D           Complement destination
+     --------------------------------------------------
+     6      S XOR D      XOR in source 
+     --------------------------------------------------
+     7      -(S AND D)   AND in source, then complement
+     --------------------------------------------------
+     8      S AND D      AND in source 
+     --------------------------------------------------
+     9      -(S XOR D)   XOR in source, then complement 
+     --------------------------------------------------
+     10     NOP          No Change 
+     --------------------------------------------------
+     12     S            Write source
+     --------------------------------------------------
+     14     S OR D       OR in source.  
+     --------------------------------------------------
+     15     1            Set all destination bits
+     --------------------------------------------------
+</PRE>
+<UL><LI>This service does not handle clipping at the display boundary.  </LI><P>
+<LI>The Active Bitmap cell width must be even (2-16).  </LI><P>
+<LI>The Active Bitmap cell height must be 1-32.  </LI><P>
+<LI>The destination must start on an even Pixel Column# (Hardware limitation).  </LI><P>
+<LI>If the Active Bitmap format is 8, characters not found are skipped.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>TIMER1 </TITLE></HEAD>
+<BODY>
+<H3>TIMER1</H3>
+The PC dedicates TIMER1 to generating DMA requests for dynamic RAM refresh.  This is not needed in a Hornet system.  In the Hornet system TIMER1 is a general purpose timer.  It's output is ORed with other sources to cause an IRQ2 interrupt.  It is intended to be used for generating keyscan interrupts (see the chapter entitled KEYBOARD).  <P>
+<PRE>
+    SIGNAL  CONNECTION
+    ================================
+    CLK1    1.193182MHz (nominal)
+    GATE1   VDD (always enabled)
+    OUT1    causes IRQ2 interrupt
+</PRE>
+</BODY>
+</HTML>

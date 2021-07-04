@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Example of Clipboard Management Services Calls </TITLE></HEAD>
+<BODY>
+<H3>Example of Clipboard Management Services Calls </H3><P>
+An example of some of these functions used in an application program is listed below. <P>
+<PRE>
+m_rep_index(&quot;TEST&quot;, &amp;Index, &amp;Len); /* get index and length for rep &quot;TEST&quot; */
+m_cb_read(Index, 0, FullRead, Len);    /* read complete rep into FullRead (offset = 0) */
+m_cb_read(Index, 0, PartRead, 20);     /* read first 20 bytes into PartRead */ 
+m_cb_read(Index, 20, NextPartRead, 30);/* read next 30 bytes into NextPartRead */
+m_cb_read(Index, 50, RestRead, Len - 50); /* read remaining bytes into RestRead */
+</PRE>
+</BODY>
+</HTML>

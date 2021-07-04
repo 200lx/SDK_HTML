@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Clipboard Management Services </TITLE></HEAD>
+<BODY>
+<H1>Clipboard Management Services </H1><P>
+The System Manager's Clipboard Management Services provide a user-controlled means of
+passing information between applications.  Applications can only copy to or from the
+clipboard; there is no provision for forcing information in the clipboard through to
+another application.  Data on the clipboard is named, allowing applications to establish
+regimes of communication as needed.  <P> The System Manager begins the clipboard at a
+default fixed size of 8 KB.  The user may adjust this size from 2 KB to 10 KB through the
+Setup application, or an application can adjust this size using the ClipMemory field in
+the Settings data structure.  A system reboot is necessary for a change in clipboard
+memory size to take effect.  <P> The maximum size of a clipboard author or
+representation name is 40 characters.  <P> The default representation of data is Text. 
+All applications using the clipboard should write a Text representation, and read a Text
+representation, if no other known representation is found.  Data in the Text form should
+be ASCII characters, with a single carriage return (0x0d) used to mark the end of lines. 
+<P> Note that the application's data space may be moved during any of these calls. 
+Applications must make sure that no far references are preserved across one of these
+calls.  <P> Clipboard return codes are contained in CBCODES.H.  <P>
+<H2><A HREF="c7000014.htm">Clipboard Structures </A></H2><P>
+<H2><A HREF="c7000017.htm">Call Descriptions </A></H2><P>
+</BODY>
+</HTML>

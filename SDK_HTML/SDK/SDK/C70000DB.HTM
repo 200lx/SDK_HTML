@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>get_rsrc_tab_ptr </TITLE></HEAD>
+<BODY>
+<H3>get_rsrc_tab_ptr </H3>
+This call returns a special entry point for TASK0, so that it may inspect the resource table to find out what languages, etc., are available.  Note that the pointer is mapped-bank, but it will become invalid as soon as the state of the mappings is otherwise changed, such as after any event call.  It is safe to call this only during initialization in TASK0.
+<PRE><UL>
+<LI>Syntax:      get_rsrc_tab_ptr() </LI>
+<LI>Parameters:  None </LI>
+<LI>Returns:     Special entry point for TASK0 </LI>
+<LI>Comments:    Not to be called by RAM applications.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DOS External Commands </TITLE></HEAD>
+<BODY>
+<H1>DOS External Commands </H1><P>
+A subset of the DOS external commands resides on the ROM disk in D:\DOS.  In general these are unchanged from the standard DOS 5.0 versions.  The special situations are: <P>
+<UL><LI>Executables were compressed with PKLITE to save ROM space.  </LI><P>
+<LI>COMMAND.COM is a disk based stub for the command processor and is present for possible compatibility needs.  </LI><P>
+<LI>FORMAT.COM was modified in two ways.  One modification was to restrict the number of root directory entries on cards of 2MB or less to a maximum of 240.  This is because there is a 240 root directory entry limit on the 95LX, which was also limited to 2MB cards, and this change will keep us from formatting a card that will not work on the 95LX.  The other modification was to issue a &quot;Format not supported&quot; message if an attempt is made to format drive C or drive D.  </LI><P>
+<LI>MODE.COM was modified so that the cursor definition used for monochrome mode would be appropriate.  The standard cursor definition was for a system with more scan lines than on the HP palmtop.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

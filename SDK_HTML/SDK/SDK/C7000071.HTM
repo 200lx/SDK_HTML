@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_getfdt </TITLE></HEAD>
+<BODY>
+<H3>m_getfdt </H3>
+This call gets the last modified date/time of the file <I>fp</I> and returns it to <I>dateval</I>. 
+<PRE><UL>
+<LI>Syntax:      int far m_getfdt(FCB far *fp, long far *pdateval) </LI>
+<LI>Parameters:  FCB far *fp - Pointer to the file to obtain last modified date/time </LI>
+             long far *pdateval - Pointer to the location containing the format of 
+                                  the date/time stamps in a DOS directory entry </LI>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

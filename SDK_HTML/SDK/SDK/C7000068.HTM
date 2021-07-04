@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_create </TITLE></HEAD>
+<BODY>
+<H3>m_create </H3>
+m_create creates a new file to be identified by <I>filespec</I>.  The file is created and opened only if it does not already exist.
+<PRE><UL>
+<LI>Syntax:      int far m_create(FCB far *fp, char far *filespec, 
+                              int len, int sys, int nobuf) </LI>
+<LI>Parameters:  FCB far *fp - Pointer to location to post new file information 
+             char far *filespec - Path and filename of file to be created
+             int len - Length of the filespec
+             int sys - Unused value - set to 0 
+             int nobuf - 0 = file will be buffered
+                         non-zero = no buffering will be performed </LI>
+<LI>Returns:     0 - if successful </LI>
+             Any other value indicates an error condition.
+</UL></PRE>
+</BODY>
+</HTML>

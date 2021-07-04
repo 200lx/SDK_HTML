@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>KBD Interrupt </TITLE></HEAD>
+<BODY>
+<H3>KBD Interrupt </H3><P>
+The Int 0Ah Keyboard interrupt is invoked by the hardware after keydown is detected on a keyboard that was in the Reset state.  This means that <P>
+<UL><LI>All Output key lines are active.  </LI><P>
+<LI>No other keys are held down.  </LI><P>
+</UL>Generally, interrupts on key-break are not provided by the hardware.  Instead, it is up to the TIMER1 service to detect keyboard changes and perform appropriate processing.  See Int 09h on <A HREF="C3000010.HTM">page 3-31</A> for additional detail.  <P>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>RegisterFont </TITLE></HEAD>
+<BODY>
+<H3>RegisterFont </H3><P>
+This function registers the given font as one of those which will be used by the application.  This routine is used by LHAPI to arrange the font bitmap stack such that the fonts to be used by an application are on the top of the stack, thereby avoiding the problem of fonts being constantly removed and added to the bitmap stack.  This service should be called immediately after InitializeLHAPI().  <P>
+If FONT_DEFAULTS is not used, RegisterFont must be called for each font that will be used by the application (including the menu font).  <P>
+<UL><LI>Syntax: void DISTANCE RegisterFont(UINT Font) </LI><P>
+<LI>Parameters:           UINT Font           Font value to be added to the font bitmap stack.  The possible Font values are: </LI>
+</UL>
+<PRE>
+    FONT_DEFAULTS      - causes all of the default system
+                       fonts-FONT_SMALL, FONT_NORMAL FONT_LARGE (if there's enough 
+                       room) - to be placed on the font bitmap stack.  
+    FONT_SMALL 
+    FONT_NORMAL 
+    FONT_LARGE 
+</PRE>
+<UL><LI>Returns: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Control Register </TITLE></HEAD>
+<BODY>
+<H3>System Control Register </H3><P>
+The System Control register controls the system mode and also contains several miscellaneous control bits.  The System Control register is located at index -1Eh and is defined as follows: <P>
+<PRE>
+Bit   Reset Value   R/W Mode   Description
+----------------------------------------------------------------------------------------
+[0]   0             W          SHT - CPU shutdown; Setting this bit stops clocks to 
+                               the CPU.  The system enters light sleep mode if the 
+                               DON bit is set and will enter deep sleep mode if the
+                               DON bit is clear.  This bit is set only, it is 
+                               automatically cleared by a wakeup.
+
+[1]   0             R/W        BUP - Backup; This status bit is set when the system
+                               has been in backup mode.  It should be cleared by software
+
+[2]   0             R/W        DON - Display ON; Setting this bit turns on the display.
+
+[3]   -             -          unused
+
+[4:5] 00            R/W        SPD[0:1] - Speed bits; Should be set for crystal used
+                               00 - 10.738636 MHz
+                               01 - 15.836774 MHz
+                               10 - 21.477272 MHz
+                               11 - 31.673550 MHz
+
+[6:7] 00            R/W        VOL[0:1] - Speaker volume bits
+                               00 - off (0V)
+                               01 - soft (3V)
+                               10 - medium (5V)
+                               11 - loud (8V)
+</PRE>
+<H4></H4><P>
+</BODY>
+</HTML>

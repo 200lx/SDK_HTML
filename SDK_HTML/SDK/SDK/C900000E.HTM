@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComboBox </TITLE></HEAD>
+<BODY>
+<H3>ComboBox </H3><P>
+The combo box is an edit field with an associated drop down list box to select from.  Note that ComboBox itself is a subclass of Edit that has a child ListBox window.  That is, what is really to the user a single ComboBox is actually an edit field and a list field that communicate with eachother.  The dropdown is enacted by the user by pressing &lt;Alt+DownArrow&gt;.  ComboBox has an option to provide for selection only (i.e.  no free form text entry of the edit field); this option corresponds to the CUA drop-down list.  <P>
+Note: With a ComboBox in a Dialog Box, you should reserve a ListBox window in the array of dialog window, immediately after the ComboBox window itself.  Although the ComboBox itself allows the attached Listboxes to be anywhere in the application's data segment (as pointed to by the Menu field), the Dialog Box handler assumes the listbox immediately follows the combobox in the array of window controls.  <P>
+<B>Window Structure Details</B> <P>
+<UL><LI>int x,y,w,h: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>PLHRES Title: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>PLHDATA Data: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>UINT LogicalSize: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>UINT Style: If the COMBO_NOEDIT is bit set, the user can only change the text of the Edit box by selecting an entry from the ListBox, not by editing.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>PLHFKEYS FKeys;: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>PLHMENU Menu: Menu is a pointer to the ListBox window structure to be created when &lt;Alt+DownArrow&gt; is pressed.  The fields of the ListBox that are automatically filled in by the ComboBox handler are x, y, Parent, Title, and Style.  The application should fill in the w, h, Data and LogicalSize fields of the ListBox window structure.  </LI><P>
+<LI>UINT Selection: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+<LI>UINT WindowTop: Used by the Edit subclass; refer to Edit for details.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>KEYSTROKE: Responds to the following keys: </LI><BR>
+<UL>
+<LI>ESC: If the list box is currently shown, ComboBox sends it a DISAPPEAR message.  Otherwise, ComboBox sends the key to the Edit class handler (see Edit for further details), and ListBox is sent a NOTIFY_UPDATE to reposition itself.  <P>
+<LI>Up Arrow, Down Arrow, PgUp, or PgDn send the keystrokes to the associated ListBox.  ComboBox changes the text of the Edit field to reflect the newly selected (highlighted) item.  <P>
+<LI>Alt+DownArrow sends the ListBox an APPEAR message.  <P>
+<LI>Alt+UpArrow sends the ListBox a DISAPPEAR message.  <P>
+<LI>Home, End: If the style COMBO_NOEDIT is set, ComboBox sends the key to the associated ListBox handler.  If it is not set, the Edit subclass handler processes the key.  <P>
+<LI>All other keys: If the style COMBO_NOEDIT is set, ComboBox sends the key to the associated ListBox handler.  If it is not set, the Edit subclass handler processes the key, and ComboBox sends the ListBox a NOTIFY_UPDATE to reposition itself.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW:  </LI><BR>
+The ComboBox handler displays the Edit field, and displays the Underlined Arrow icon to the field's right. <P>
+</UL>
+<UL>
+<LI>CREATE: </LI><BR>
+ComboBox sends the CREATE message to the Edit class handler.  The ComboBox handler automatically adjusts the ListBox (pointed to by the Menu field) by: Style |= STYLE_NOTIFY | STYLE_INVISIBLE | STYLE_SAVEUNDER; Title = NULL; Parent = ComboBox; x = Left justified with edit field; y = Directly underneath edit field; ComboBox sends a NOTIFY message with the NOTIFY_UPDATE submessage to the ListBox class to position it's list to the element corresponding to the current edit field. <P>
+</UL>
+<UL>
+<LI>LOSEFOCUS: The ComboBox handler sends the list child a DISAPPEAR message to become invisible.  </LI><P>
+<LI>NOTIFY: If the submessage is NOTIFY_CHILDCHANGED, the ComboBox updates the Edit field to the newly selected line in the ListBox.  </LI><P>
+<LI>DESTROY: ComboBox destroys the attached ListBox, then destroys itself.  </LI><P>
+<LI>APPEAR: ComboBox converts the window size (w,h) fields when STYLE_WHCHAR is being used.  The ComboBox handler then passes the message to the Edit class handler.  </LI><P>
+<LI>DISAPPEAR: ComboBox converts the window size (w,h) fields when STYLE_WHCHAR is being used.  ComboBox then passes the message to the Edit class handler.  </LI><P>
+<LI>SETFOCUS: Passed to Edit class handler.  </LI><P>
+<LI>NULLEVENT: Passed to Edit class handler.  </LI><P>
+<LI>TERMINATE: Passed to Edit class handler.  </LI><P>
+<LI>ACTIVATE: Passed to Edit class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to Edit class handler.  </LI><P>
+<LI>COMMAND: Passed to Edit class handler.  </LI><P>
+</UL>
+</UL><P>
+</BODY>
+</HTML>

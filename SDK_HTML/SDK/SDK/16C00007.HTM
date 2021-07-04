@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Backup </TITLE></HEAD>
+<BODY>
+<H3>Backup </H3><P>
+The external power supply indicates the state of the VDD and VCC supplies on the VDDOK and VCCOK lines.  If either of these lines goes low while in light sleep or operating modes, Hornet will cause an NMI.  The operating system must use this NMI to quickly shut the system down in deep sleep.  Once in deep sleep with VDDOK or VCCOK low, Hornet will force the power supply into backup mode.  <P>
+If the system is in deep sleep or in the process of powering up, and VDDOK or VCCOK go low, Hornet will immediately force backup mode.  The system will remain in backup mode until the ON key is pressed.  <P>
+VDDOK and VCCOK are de-glitched internally using the 32KHz oscillator.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DirListBox </TITLE></HEAD>
+<BODY>
+<H3>DirListBox </H3><P>
+DirListBox is a subclass of ListBox that is aware of the disk directory tree.  The ListBox shows a sorted list of directories below the specified one, (including &quot;..&quot; for the parent directory).  DirListBox displays a list of all accessible drives below the directory list.  DirListBox displays the directories as [DIRNAME], and the drives are displayed as [-C-].  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>PLHMENU Menu: <BR>
+Menu is used as a UINT which specifies the maximum number of elements possible in the list.  Note that this differs from the ListBoxes LogicalSize field because the number of elements that the list contains at any one time (LogicalSize) will be less than or equal to the maximum (Menu).  Use this maximum while refreshing the list contents with the directories underneath the current directory so the list is not overflowed.  </LI><P>
+<LI>All other details: See the ListBox class.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>NOTIFY: <BR>
+If the subclass is (i.e.  Data set to) NOTIFY_UPDATE, the DirBox refreshes its directory list for the directory path specified in Extra.  DirListBox sorts the directory list, and the list is DRAWn.  </LI><P>
+<LI>KEYSTROKE: Passed to the ListBox class handler.  </LI><P>
+<LI>DRAW: Passed to the ListBox class handler.  </LI><P>
+<LI>CREATE: Passed to the ListBox class handler.  </LI><P>
+<LI>SETFOCUS: Passed to the ListBox class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the ListBox class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the ListBox class handler.  </LI><P>
+<LI>DESTROY: Passed to the ListBox class handler.  </LI><P>
+<LI>TERMINATE: Passed to the ListBox class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the ListBox class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the ListBox class handler.v </LI><P>
+<LI>COMMAND: Passed to the ListBox class handler.  </LI><P>
+<LI>APPEAR: Passed to the ListBox class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the ListBox class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Pin Features </TITLE></HEAD>
+<BODY>
+<H3>Pin Features</H3>
+Each of the GPIO pins has several possible features.  These include:<P>
+<PRE>
+Input               The value at the pad is always available to be read.  The input value
+                    is read from the GPIO data register.
+Pullup/Pulldown     Each pin has a resistive pullup and a pulldown that can be enabled or
+                    disabled.  Upon reset, the pulldown is enabled and the pullup is
+                    disabled on all pads.
+Interrupt           GPIO[6:13] and GPIO[24:26] have interrupt capability.  The interrupt
+                    sense is programmable (i.e.  interrupt when input level is high or
+                    low).  The IRQ line driven with the interrupt request is programmable
+                    for GPIO[24:26].
+Output              A pin can be configured as an output.  The output value is written to
+                    the GPIO data register.  Upon reset, all pins are configured as
+                    inputs only.
+Control Output      Most pins have a control function.  This is a predefined control
+                    signal that will be driven if the pin is configured as a control
+                    output.
+XCPU Function       In XCPU mode, most of the GPIO pins are dedicated to providing the
+                    interface for the external CPU.  In this mode, external hardware will
+                    be used to provide the GPIO functionality.
+</PRE>
+The following table summarizes interrupt capabilities, control output capabilities, and XCPU function of each GPIO pad.<P>
+
+<PRE>
+GPIO    SUPPLY  INTERRUPT   CONTROL     XCPU
+                            FUNCTION    FUNCTION
+==========================================================================================
+0       VDD     -           IA[0] (o)   IA[0] (o)
+1       VDD     -           IA[1] (o)   IA[1] (o)
+2       VDD     -           IA[2] (o)   IA[2] (o)
+3       VDD     -           &amp;SON (o)    HOLD (o)
+4       VDD     -           &amp;SON (o)    HLDA (o)
+5       VDD     -           &amp;SON (o)    INT (o)
+6       VDD     IRQ2        &amp;SON (o)    NMI (o)
+7       VDD     IRQ2        &amp;SON (o)    GIRQ2 (i)
+8       VCC     NMI         NS[0] (o)   NS[0] (i)
+9       VCC     NMI         NS[1] (o)   NS[1] (i)
+10      VCC     IRQ2        NS[2] (o)   NS[2] (i)
+11      VCC     IRQ2        NBHE (o)    NBHE (i)
+12      VCC     IRQ2        SPK1 (i)    SPK1 (i)
+13      VCC     IRQ2        SPK2 (i)    SPK2 (i)
+14      VCC     -           &amp;SON (o)    READY (o)
+15      VCC     -           &amp;SON (o)    GNMI (i)
+16      VCC     -           NIOCS (o)   NIOCS (o)
+17      VCC     -           NREG (o)    NREG (o)
+18      VCC     -           CCLK (o)    CCLK (o)
+19      VCC     -           ALE (o)     PRES (o)
+20      VCC     -           NMEMR (o)   AS16 (i)
+21      VCC     -           NMEMW (o)   AS17 (i)
+22      VCC     -           NIORD (o)   AS18 (i)
+23      VCC     -           NIOWR (o)   AS19 (i)
+24      VCC     IRQ2-7,NMI      -   no change
+25      VCC     IRQ2-7,NMI      -   no change
+26      VCC     IRQ2-7,NMI      -   no change
+------------------------------------------------------------------------------------------
+</PRE>
+
+The control signals available are defined as:<P>
+<PRE>
+IA[0:2]     -       Index Address; these are the 3 LSBs of the Hornet index register.
+                    These bits are all forced high if the index register is outside of the
+                    GPIO operational register range.
+&amp;SON        -       This designation indicates that if the pad is configured as a control
+                    output, the GPIO pad will become an output that is ANDed with the SON
+                    signal (i.e.  forced low in deep sleep).  In normal operation, the
+                    value output will the that of a normal GPIO output pin.
+HOLD        -       Bus hold request from display controller
+HLDA        -       Bus hold acknowledge from CPU
+INT         -       Interrupt request to CPU from 8259
+NMI         -       Non-maskable interrupt request to CPU
+NS[0:2]     -       CPU status lines
+NBHE        -       Bus high enable; used to specify low/high byte accesses
+SPK[1:2]    -       Speaker input lines; These inputs are exclusive ORed together with the
+                    normal speaker output signal.
+NIOCS       -       I/O chip select; this signal can be programmed to generate chip select
+                    signals over specific I/O address ranges.
+NREG        -       PCMCIA register select; Controlled by MEMC
+CCLK        -       2X CPU clock
+ALE         -       Address latch enable
+NMEMR       -       Low true memory read strobe
+NMEMW       -       Low true memory write strobe
+NIOR        -       Low true I/O read strobe
+NIOW        -       Low true I/O write strobe
+</PRE>
+</BODY>
+</HTML>

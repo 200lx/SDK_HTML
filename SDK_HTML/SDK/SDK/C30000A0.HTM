@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 00h: Read Character From Keyboard Input Buffer </TITLE></HEAD>
+<BODY>
+<H3>AH = 00h: Read Character From Keyboard Input Buffer </H3><P>
+This function attempts to read a character from the keyboard input buffer.  Each character is stored in the buffer as a two-byte pair consisting of the scancode and its ASCII equivalent.  If a scancode/ASCII pair is available, it is removed from the buffer and returned in AX.  Note that this function discards certain keycodes (see &quot;I16Clip&quot; on <A HREF="C3000099.HTM">page 3-113</A>).  Use function 10h for the extended scancodes.  The function waits until a scancode/ASCII pair is present in the keyboard input buffer.  Except for hardware interrupts, no other processing occurs until a key is pressed on the keyboard.  <P>
+<UL><LI>Input: AH = 00h </LI><P>
+<LI>Output: AH = Scancode <BR>
+AL = ASCII character code, or 00h for a special scancode.  <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers Modified: AX </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

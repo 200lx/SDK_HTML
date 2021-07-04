@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Guidelines </TITLE></HEAD>
+<BODY>
+<H3>Guidelines </H3><P>
+In general, this hook is called with a function code in AH.  Some functions require additional inputs in other CPU registers and/or BIOS RAM.  The expectations of the BIOS (the caller) on return from the Int 06h call are dependent on the specific function.  Frequently, a &quot;handled&quot; flag is examined to determine whether or not the BIOS should skip certain processing.  When required, this flag is always returned in AL (AL = 0 when not handled) and initialized by the BIOS prior to the call.  Applications which use the Int 06h hook should chain into it, not simply take it
+over.<P>
+One exceptional case is Fcn 01h which has a special AL input (WakeUp Source) for HP 95LX compatibility.<P>
+Some functions expect to be handled by a single application (or not at all).  In these cases, an application does not want its work &quot;undone&quot; by subsequent Int 06h handlers.  Handlers for these functions should respect the &quot;handled&quot; flag in AL.  Examples here are the Font Loading functions, Fcns 04h and 05h.<P>
+Some functions will permit multiple applications to handle the same function.  Generally, an application handling such a function should return with all inputs preserved (including AL), allowing subsequent Int 06h handlers the opportunity to process the function as well.  Examples here are the Sleep Mode hooks, Fcns 00h, 01h,02h, and 03h.<P>
+The default Int 06h handler provided by the BIOS is the dummy IRET at address F000h:FF53h.  The following table summarizes the Int 06h hooks.  <P>
+</BODY>
+</HTML>

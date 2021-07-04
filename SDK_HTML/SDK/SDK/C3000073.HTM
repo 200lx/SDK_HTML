@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 01h: Transmit One Character </TITLE></HEAD>
+<BODY>
+<H3>AH = 01h: Transmit One Character </H3><P>
+This function transmits one character through the serial port.  The sequence of operations performed is <P>
+<UL><LI>03h is written to the Modem Control Register (RTS and DTR).  </LI><P>
+<LI>Loop waiting for xx11xxxxb (DSR and CTS) in the Modem Status Register.  </LI><P>
+<LI>Loop waiting for xx1xxxxxb (Xmit Buff Reg Empty) in the Line Status Register.  </LI><P>
+<LI>Reset display timeout counter (Avoid Auto-Turn Off).  </LI><P>
+<LI>Output char to the Xmit Buffer.  </LI><P>
+</UL>Either of the above loops can result in a timeout error.  <P>
+<UL><LI>Input: AH = 01h <BR>
+AL = Character to transmit <BR>
+DX = Port# (0 = Built-In Serial Port) <P>
+</UL>
+<UL><LI>Output: AH = LSR (except: Only bits 1,2,3,4, and 7 are returned.) </LI><P>
+<LI>Error conditions: Possible timeout (AH[7]) </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><P>
+</BODY>
+</HTML>

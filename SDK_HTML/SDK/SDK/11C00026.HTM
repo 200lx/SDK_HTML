@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_FISLFieldTranslate </TITLE></HEAD>
+<BODY>
+<H3>DB_FISLFieldTranslate </H3><P>
+This function replaces a set of fields in a FISL string with another set.  Used in the database modify code if the fields need to be remapped.  If more than one field is remapped you should collect all the fields that require remapping and provide them in one call to DB_FISLFieldTranslate.  This will prevent corruption through multiple non-exclusive search and replaces.  <P>
+<UL><LI><Pre>Syntax:             DB_FISLFieldTranslate(char far *InTOKEN, int tokenlen, 
+                    int fieldcount, int far *oldfieldnumbers, 
+                    int far *newfieldnumbers); </LI><P>
+<LI>Returns:            0..255         Index of last field that was modified. <P>
+                    DB_NOTFOUND    No fields were modified.<P></LI>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

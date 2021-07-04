@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6005h: Set Rate for Periodic Battery Measurements </TITLE></HEAD>
+<BODY>
+<H3>AX = 6005h: Set Rate for Periodic Battery Measurements </H3><P>
+Normally, the system measures the Main, BkUp, and Card batteries every 15 seconds.  This rate is stored in the RAM Variable [BATCKRATE] (55 msec units).  This service stores the new rate into [BATCKRATE] and the battery check counter [BATCKCNT].  If the value specified is zero, periodic battery measurements will be disabled.  <P>
+<I>Warning: disabling battery measurements will make battery level reporting unreliable.  With depleted batteries, operating the palmtop with battery measurements disabled can result in loss of data without warning. </I> <P>
+<UL><LI>Input: AX = 6005h <BR>
+BX = Periodic Rate (55 msec units; 0=Disable) <P>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

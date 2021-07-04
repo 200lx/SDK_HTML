@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Banks D0 through D3 and E0 through E3 </TITLE></HEAD>
+<BODY>
+<H3>Banks D0 through D3 and E0 through E3</H3>
+
+Pages &quot;D and E&quot; of the CPU address space (D0000h to DFFFFh and E0000h to
+EFFFFh) are each divided into four 16K banks.  These banks are referred to as Bank D0
+through Bank D3 and Bank E0 through Bank E3.  Each of these banks has two registers that
+select the memory mapped into that bank.  One register contains the 8 MSBs of the FS
+value which specify device address bits [25:18] of the 26- bit device address.  Bits
+[7:4] of the second register specify device address bits [17:14] of the FS value.  Bit 3
+of th is second register is an enable bit which enables or disables bank switching for
+the appropriate bank.  The 3 LSBs (bits [2:0]) of this second register contain the CS.
+Together this pair of registers specifies the 12 MSBs (device address bits [25:14]) of
+the 26-bit address to the device, thereby selecting a 16-KB section.  A bank should not
+be enabled until the FS and CS values for that bank have been initialized.  It should be
+noted that devices connected to NRAS[3:0] do not use device address bit [25] re sulting
+in that address bit being a &quot;don't care&quot; for those devices.<P>
+
+The 3-bit CS values of Banks D0-3 and E0-3 are defined as for Bank C above.<P>
+
+</BODY>
+</HTML>

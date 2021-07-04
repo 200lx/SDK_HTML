@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>map_resource_file </TITLE></HEAD>
+<BODY>
+<H3>map_resource_file </H3>
+This function maps the resource file specified by filename into system address space and returns the segment of the address space segment in DX for assembly language access (1-2-3).  
+<PRE><UL>
+<LI>Syntax:      int map_resource_file(char far *filename) </LI>
+<LI>Parameters:  char far *filename - Name of resource file </LI>
+<LI>Returns:     0 - if successful 
+             1 - on failure </LI>
+             If it fails, the System Manager will post an error message before 
+             returning, so that the application need not display a hardcoded error 
+             message (it is assumed that the System Manager's resource file has been 
+             successfully loaded).  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

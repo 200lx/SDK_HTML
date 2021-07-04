@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Programmable Interrupt Controller (8259 Compatible ) </TITLE></HEAD>
+<BODY>
+<H3>Programmable Interrupt Controller (8259 Compatible )</H3>
+<P>
+
+<PRE>
+ I/O     R/W
+Address  Mode    Description
+==========================================================================================
+0020h    R       PIC Interrupt Request/In-Service Registers programmed by Operation
+                 Command Word 3 (OCW3):
+                 Interrupt Request Register, where:
+                 bits 7-0 = 0 no active request for the corresponding interrupt line
+                          = 1 active request for the corresponding interrupt line
+                 Interrupt In-Service Register, where:
+                 bits 7-0 = 0 The corresponding interrupt line is not currently being
+                              serviced.
+                          = 1 The corresponding interrupt line is currently being
+                              serviced.
+------------------------------------------------------------------------------------------
+0020h    W       PIC Initialization Command Word 1 (ICW1) when bit 4 is one:
+                 bits 7-5 = 0   not used
+                 bit 4    = 1   required to select this command word
+                 bit 3    = 0   edge triggered mode
+                 bit 2    = 1   not used
+                 bit 1    = 1   single mode (no ICW3 needed)
+                 bit 0    = 1   ICW4 needed
+------------------------------------------------------------------------------------------
+0021h    W       PIC ICW2 and ICW4 in sequential order after ICW1 written to Port 0020h:
+                 ICW2, where:
+                 bit 7-3 = 00001 address lines A7-A3 of base vector address for
+                                interrupt controller
+                 bit 2-0 = 0    reserved
+                 ICW4, where:
+                 bits 7-5 = 0   not used
+                 bit  4   = 0   no special fully nested mode
+                 bits 3-2 = 11  buffered mode/master
+                 bit  1   = 0   normal EOI
+                 bit  0   = 1   8086/8088 mode
+------------------------------------------------------------------------------------------
+0021h    R/W     PIC interrupt mask register (OCW1), where:
+                 bit 7 = 0 enable IRQ7 GPIO interrupts
+                 bit 6 = 0 enable IRQ6 GPIO interrupts
+                 bit 5 = 0 enable IRQ5 GPIO interrupts
+                 bit 4 = 0 enable IRQ4 UART interrupts
+                 bit 3 = 0 enable IRQ3 GPIO interrupts
+                 bit 2 = 0 enable IRQ2 miscellaneous interrupts
+                 bit 1 = 0 enable IRQ1 PC compatible keyboard interrupt (checked by BIOS)
+                 bit 0 = 0 enable IRQ0 timer0 interrupt
+------------------------------------------------------------------------------------------
+0020h    W       PIC OCW2 when bit 4 is zero and bit 3 is zero, where:
+                 bits 7-5 = 000 rotate in automatic EOI mode (clear)
+                          = 001 non-specific EOI
+                          = 010 no o
+                          = 011 specific EOI
+                          = 100 rotate in automatic EOI command (set)
+                          = 101 rotate on non-specific EOI command
+                          = 110 set priority command
+                          = 111 rotate on specific EOI command
+                 bits 3-4 = 00  required to select this command word
+                 bits 2-0 interrupt request to which the command applies
+------------------------------------------------------------------------------------------
+0020h    W       PIC OCW3 when bit 4 is zero and bit 3 is one, where:
+                 bit 7    = 0  reserved
+                 bits 6-5 = 00 no operation
+                          = 01 no operation
+                          = 10 reset special mask
+                          = 11 set special mask
+                 bits 4-3 = 01 required to select this command word
+                 bit 2    = 0  no poll command
+                          = 1  poll command
+                 bits 1-0 = 00 no operation
+                          = 01 no operation
+                          = 10 read interrupt request register on next read at Port 20h
+                 bits 1-0 = 11 read interrupt in-service register on next read at Port 20h
+------------------------------------------------------------------------------------------
+</PRE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,118 @@
+HP 100/200LX SDK in HTML
+
+*****IMPORTANT INFORMATION*****
+
+Please observe that you should transfer the whole zip file to your palmtop and unzip it there. Otherwise it will take a very long time to transfer almost 1000 files over a serial cable.
+
+This SDK consist of almost 1000 files. Many of the files are small and will take up lots of extra storage space. The actual total size of the SDK is about 1.9MB. But on a flash card with 4096 bytes in each allocation unit, the SDK will take up about 4.5MB of storage space! So please make sure you have lots of free space before you install this SDK.
+
+*****IMPORTANT INFORMATION*****
+
+THE HP 100LX/HP 200LX DEVELOPER'S GUIDE
+
+This developer's guide is an HTML version which is formatted to be used on the palmtop with Andreas Garzotto's HTML viewer- HV. We do not guarantee that you will get the same good result with any other HTML browser and/or on a desktop PC.
+
+Legal Stuff
+
+The original HP 100LX/HP 200LX Developer's Guide has some errors which we have tried to correct. We do not guarantee that this HTML version is free from errors. So you use this version at your own risk. We are not responsible for any software/hardware problems that may occur when you use this guide.
+
+Files Included
+
+This SDK consist of almost 1000 files. Many of the files are small and will then take up lots of extra storage space. The actual total size of the SDK is about 1.9MB. But on a flash card with 4096 bytes in each allocation unit, the SDK will take up about 4.5MB of storage space! So please make sure you have lots of free space before you install this SDK. To eliminate a lot of slack space, we also recommend that you use the 1KCluster program to reduce the allocation units to 1024 bytes. You will trade a small amount of speed for a large saving in disk space this way. (1KCLUS.ZIP is available at www.palmtop.net/super.html)
+
+SDK.TXT -This file which you are reading now.
+SDK.ZIP -The Zip file which contains the the SDK. 
+
+This file must be unzipped with the "-d" (without quotes) option so that the following directories will be created (assuming that you install it in the A:\ drive):
+
+A:\SDK\ (Main Directory) with 895 HTML files
+ESC.COM (Sending an ESC key to return to HV)
+PICKIT.EXE (The search menu)
+\IMAGE\ (Sub Directory) 55 graphic files (*.GIF)
+A:\SDKTEMP\
+DOIT.BAT
+PICKIT.C (Source code to the Search Engine)
+XGREP103.ZIP (By Robert Nordier)
+_SDKMAIN.HTM
+
+Installation
+
+Since this SDK contains information for software/hardware development for HP 100LX and HP 200LX Palmtop PC's, we assume that users of this information collection will be highly computer literate. In other words, we will not give detailed installation instructions. Please observe that you should transfer the whole zip file to your palmtop and unzip it there. Otherwise it will take a very long time to transfer almost 1000 files over a serial cable.
+
+So here we go:
+
+1) Install the HV HTML viewer (www.dasoft.com). If you run HV from the SysMgr, you must run it under MaxDOS (www.palmtop.net) with the following command line:
+
+ c:\bin\maxdos.com -df:\www f:\WWW\HV.EXE|
+
+ (Please change according to your installations).
+
+2) Get LXPIC by Stefan Peichl (www.palmtop.net) and install it as an external viewer for HV.
+
+3) Open HV.CFG (using Memo for example) and add following line under services:
+
+ [Services]
+
+ search=d:\dos\command.com /c %s 
+
+4) Unzip the SDK.ZIP file with the command: "PKUNZIP -D SDK.ZIP" into the drive\dir you want. The two directories, A:\SDK and A:\SDKTEMP, will be created (these instructions are using the A: drive). The reason why a SDKTEMP directory is created is so you can edit the configuration files without actually going to the SDK directory. With 895 HTML files in this directory, you will not be able to view it with Filer since Filer can not display more than 256 files. So edit your files in the SDKTEMP directory and when ready, go to DOS prompt and copy it over with: 
+
+COPY A:\SDKTEMP\"filename" A:\SDK 
+
+If you want to delete your SDK installation- go to DOS prompt and enter the DOS command: DEL A:\SDK\*.* (other methods will take to long time).
+
+5) Unzip XGREP103.ZIP which can be found in the A:\SDKTEMP directory and copy XGREP.COM to a directory in your path.
+
+6) Open A:\SDKTEMP\DOIT.BAT and edit the path according to your installation. 
+
+7) Edit A:\SDKTEMP\_SDKMAIN.HTM, so the following line has the correct path for your installation:
+
+ <a href="search://A:\SDK\DOIT.BAT">Search the SDK</a>......
+
+8) Then copy DOIT.BAT and _SDKMAIN.HTM to the directory in which you have all the HTML files installed (e.g. A:\SDK). 
+
+9) If you want the source code for the search engine, PICKIT.C, then save this file before you delete the A:\SDKTEMP directory.
+
+READY TO USE! 
+
+After you have started HV, open the local file, A:\SDK\_SDKMAIN.HTM and you can now browse the HP 100LX/ HP 200LX Developer's Guide.
+
+Note: the HV program will create a .LAB and .PAG file for each HTML document that you open. We chose to use many small files rather than a few large files to speed up the indexing process. The indexing is now fast enough so that you should be able to delete .LAB and .PAG files when they are no longer being used. The time to create them again is about the same as retrieving the old files from disk. If you want to keep the .LAB and .PAG files, you may do so at the expense of consuming more disk space.
+
+Again, we recommed using the 1KCluster program to configure your disk for this application. Note also that HV lets you store the .LAB and .PAG files in a directory other than \SDK. See the HV documentation for how to do this.
+
+USING THE SEARCH ENGINE
+
+In the main page you can do a search and, when the search is done, you will be back at the main page. Then you can look at the search results which have a link from the main page. However, if you use EXKey by Yoshihiro Hanaoka (available at www.palmtop.net) you can come directly to the result page after the search is done. We have tried several programs that stuff keystrokes into the keyboard buffer but only EXKey works together with HV. Please look in DOIT.BAT for the command line EXKey should use. 
+
+Please observe that a seach through all chapters takes some time (about 2 minutes on a double speed HP 200LX). This is due to the amount of files and the size of all the files (895 HTML files which takes about 1.9MB of storage space). 
+
+The Team
+
+This HTML version of The HP 100LX/HP 200LX Developer's Guide has been created from basic material provided by Thaddeus Computing. We have put in a lots of effort to format the files to fit HP 100LX/HP 200LX palmtop PC's and it has been a great team work with following people involved: 
+PROJECT COORDINATOR:
+Jorgen Wallgren , Singapore - Singapore
+HTML EDITING:
+Darryl W. Daniell, Savannah - USA
+David Lawrence , Auckland - New Zealand
+Mike Little , Stockport - England
+Gary Spiers , Huntsville- USA
+Jaime Viehweg , Naperville- USA
+Jorgen Wallgren , Singapore - Singapore
+CREATION OF NEW GRAPHIC FILES: Darryl W. Daniell, Savannah- USA
+SEARCH ENGINE PROGRAMMING: David Sargeant, Boulder City- USA
+SPECIAL THANKS TO:
+Andreas Garzotto and D&A Software for the excellent freeware-HV HTML viewer
+(www.dasoft.com).
+Stefan Peichl for the great freeware- LXPIC graphic file viewer (can for
+example be found at: www.palmtop.net).
+Robert Nordier for the fast search program- XGREP.
+George Coleman and Daniel Z. Sands- who helped us get started with the HTML search engine.
+Final Word
+We in the team hope that you will find this HTML version of The HP 100LX/HP200LX Developer's Guide useful- enjoy!
+On the behalf of the whole team-
+Best Regards,
+Jorgen Wallgren
+jorgen@palmtop.net
+Singapore, 14th of November 1998.
+

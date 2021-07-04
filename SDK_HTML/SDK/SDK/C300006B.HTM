@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = FD00: Find Logical Page and Offset for filename </TITLE></HEAD>
+<BODY>
+<H3>AX = FD00: Find Logical Page and Offset for filename </H3><P>
+<UL><LI>Input: AX = 0FD00h <BR>
+ES:BX = Address of filename <BR>
+The filename is an array of 11 bytes, with the primary portion the filename in the 8 bytes (blank-filled) and the filename extension in the last 3 bytes (blank-filled).  <BR>
+DL = 0 (i.e., drive A) <P>
+</UL>
+<UL><LI>Output: if NC, BX = 16K logical page, CX = offset in that 16K page<BR>
+if CY, filename was not found <P>
+</UL>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Interrupt Source Registers </TITLE></HEAD>
+<BODY>
+<H3>Interrupt Source Registers</H3>
+The interrupt source register (ISR) is provided in order to allow software to individually identify and acknowledge the Hornet-specific interrupts on IRQ2 and NMI.  <P>
+The individual bits of the ISR will be set when an interrupt is requested from its corresponding interrupt source.  Another interrupt will not occur from this source until the bit has been cleared by writing a zero.  <P>
+Writing a 1 to an ISR bit will have no effect.  This is an important feature.  To avoid missing interrupts when writing to the ISRs, all bits that are not to be affected should be written to a one.  <P>
+The ISR is physically located in the PWR block.  It is a read/write register that is reset to zero.  <P>
+
+<PRE>
+Index   Bit     Interrupt   Event Description
+==============================================================
+-1Ah    0       NMI         LPI - Low power detected
+        1       IRQ2        DCI - Display cursor write
+        2       IRQ2        RTI - Real-Time Counter underflow
+        3       IRQ2        T1I - Timer OUT1=1
+        4       IRQ2        RXI - RX pad high
+        5       IRQ2        RDI - Ring detect
+        6       IRQ2        KBI - Keyboard service request
+        7       IRQ2        IRI - IR service request
+</PRE>
+Note: The GPIO pads have separate ISR registers.  This is discussed in &quot;General
+Purpose I/O&quot; on <BR><A HREF="15C00034.HTM">page 15-545</A>.  <P>
+</BODY>
+</HTML>

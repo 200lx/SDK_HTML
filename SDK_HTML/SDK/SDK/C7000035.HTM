@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComGetParameters </TITLE></HEAD>
+<BODY>
+<H3>ComGetParameters </H3>
+ComGetParameters returns the communications port settings for HP palmtop System Manager-compliant applications.  <P>
+This function returns the complete set of port settings for the caller-specified port.  The complete port settings include the basic HP 95LX portion, plus the extra settings introduced for the HP palmtop.  <P>
+See the appropriate header file for the shape of the extended parameter structure. 
+<PRE><UL>
+<LI>Syntax:          err_t ComGetParameters(handle_t Handle, far *ComSettingsP)
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 far *ComSettingsP - Pointer to the structure which will receive the 
+                                     current port settings
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Comments:        ComOpen() must first be called in order to get a valid handle to 
+                 the communications port.  
+                 
+                 This call is not compatible with HP 95LX System Manager-compliant 
+                 applications.  
+</UL></PRE>
+</BODY>
+</HTML>

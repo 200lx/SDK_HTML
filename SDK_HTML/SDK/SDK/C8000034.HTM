@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ResetAlt </TITLE></HEAD>
+<BODY>
+<H3>ResetAlt </H3><P>
+Any internal LHAPI functions that process the Alt key, call ResetAlt to prevent the Alt release from generating a menu.  If you need to trap Alt key presses/releases, you need to call ResetAlt so that if the Alt release scan code gets to Object, you won't get an unwanted menu.  <P>
+In order for the Alt=Menu processing to work in the first place, the System Manager takes over int 15, func 4F, to intercept Alt, Shift and Control.  Additional scancodes are generated for these shift keys so that LHAPI can recognize key make/break states.  Normally, the BIOS weeds out Alt, Shift, and Ctrl scancodes, so an application never sees them.  LHAPI looks for the &quot;new&quot; scancodes to generate the menu, and to recognize Shift+Arrow selection.  See SYSDEFS.H for the scancode values generated for each shift key.  <P>
+Debugging tip: breaking out of a System Manager application without calling m_fini or m_action(DO_FINI) will leave the keyboard hooked.  Consequently, you'll have a really hard time typing anything with Shift not working right.  During the debugging stage of an application, try to exit through a known point, or install a C exit handler that will clean up by calling m_fini.  <P>
+<UL><LI>Syntax: void DISTANCE ResetAlt(void) </LI><P>
+<LI>Parameters: None </LI><P>
+<LI>Returns: None </LI><P>
+<LI>Related Calls: DoTopMenu(), MonitorAlt() </LI><P>
+</UL><P>
+</BODY>
+</HTML>

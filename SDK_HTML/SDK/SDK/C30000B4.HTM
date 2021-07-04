@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 1Ah: Time-of-Day Services </TITLE></HEAD>
+<BODY>
+<H1>Int 1Ah: Time-of-Day Services </H1><P>
+The Time-of-Day services provide access to the real-time clock and the BIOS clock.  <P>
+The BIOS clock is a software tool derived from Timer 0.  The BIOS time is maintained in the double word [LOTIME, HITIME] in RAM as the number of 18.2 Hz ticks since midnight.  This double-word value is incremented by the Int 08h service once every Timer 0 &quot;tick&quot; (hardware timer interrupt).  This occurs 18.2065 times per second.  See &quot;Int 08: Hardware Timer Interrupt&quot; for more detail.  When the double word count becomes equal to 24 hours worth of ticks, the RAM variable HOUR24 is set equal to 1.  Note that a test for &quot;&gt;=&quot; and an increment of the HOUR24 variable would be better, but PC compatibility has been maintained.  <P>
+The real-time clock (RTC) is a 26 bit, 1 Hz, hardware, count down timer.  The palmtop RTC services are derived from this timer.  <P>
+The Time-of-Day Services interrupt (Int 1Ah) functions are described below.  Specify the desired function code in register AH, with additional parameters passed in other registers as indicated in the table.  If an unsupported function is requested, Int 1Ah will return with the carry flag set.  <P>
+<H2><A HREF="c30000b5.htm">Compatibility: </A></H2><P>
+<H2><A HREF="c30000b6.htm">Int 1Ah Functions </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

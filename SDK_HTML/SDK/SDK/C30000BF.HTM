@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 08h: Set Power-On Alarm </TITLE></HEAD>
+<BODY>
+<H3>AH = 08h: Set Power-On Alarm </H3><P>
+This function sets an alarm that has additional capability over that of an alarm set with function 06h.  If an alarm is set with this function, it will power-up the system from deep sleep.  If the alarm does not have this capability, the RTC Interrupt Service will treat it the same as one that does, except that the display will not be turned on.  Non power-up alarms can provide periodic services (that is, RTC Adjustments) to be invoked in a manner transparent to the user.  See &quot;AH = 0Dh: Set Future Power-On Alarm&quot; on
+<A HREF="C30000C4.HTM">page 3-129</A> for more information.  <P>
+<UL><LI>Input: AH = 08h <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <P>
+</UL>
+<UL><LI>Output: AH = 00h </LI><P>
+<LI>Error conditions: Carry Set iff alarm inputs invalid, an alarm is already set, or RTC data is invalid.  </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

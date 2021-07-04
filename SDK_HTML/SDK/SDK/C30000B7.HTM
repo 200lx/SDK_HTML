@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 00h: Read BIOS Time </TITLE></HEAD>
+<BODY>
+<H3>AH = 00h: Read BIOS Time </H3><P>
+<UL><LI>This function returns the number of BIOS clock ticks since midnight and the value in the RAM variable HOUR24.  If the value returned for HOUR24 is non-zero, the application should increment the date by one day.  </LI><P>
+<LI>Input: AH = 00h </LI><P>
+<LI>Output: AH = 00h <BR>
+[CX,DX] = BIOS &quot;tick&quot; count [HITIME,LOTIME] <BR>
+AL: HOUR24 <BR>
+The RAM Variable HOUR24 is cleared.  <BR>
+Carry Clear <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX, CX, DX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

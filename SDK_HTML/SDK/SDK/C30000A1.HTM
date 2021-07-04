@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 01h: Report If Character Available </TITLE></HEAD>
+<BODY>
+<H3>AH = 01h: Report If Character Available </H3><P>
+This function examines the keyboard input buffer to see if a scancode/ASCII pair is available.  If a pair is available, it is returned without removing it from the buffer.  The function returns after the first interrupt (generally a Timer Interrupt), regardless of whether a scancode/ASCII pair is available.  Note that this function discards certain keycodes.  See &quot;I16Clip&quot; on <A HREF="C3000099.HTM">page 3-113</A> for more information.  Use function 11h for the extended scancodes.  <P>
+<UL><LI>Input: AH = 01h </LI><P>
+<LI>Output: Zero flag is clear if character is available: <BR>
+AH = Scancode <BR>
+AL = ASCII character code, or <BR>
+     00h for a special scancode <BR>
+Zero flag is set if no characters are available: <BR>
+     AX is indeterminate <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX, Status </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

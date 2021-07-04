@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Graphics Modes </TITLE></HEAD>
+<BODY>
+<H3>Graphics Modes </H3><P>
+If the application runs in a CGA Graphics Video mode (including the non-standard modes), it will always have access to the standard sized 8x8 (80x25) byte wide font mapped &quot;sanely&quot; into the CPU address.  In addition, graphics applications that use the BitBlt hardware (either directly or through the Video BIOS Write BitBlt String function) have access to the various fonts and bitmap services provided by the Video BIOS Font services.  <P>
+Multiple fonts in the currently active code page and possibly special graphics symbol tables are required by HP palmtop built-in applications running in CGA Graphics mode (Mode 6).  The HP palmtop BIOS Video services provide support for the routine tasks necessary to load/remove/query/access the required fonts and symbol table bitmaps.  Once the required bitmap(s) have been loaded, the application may use the Write BitBlt String function or invoke the BitBlt hardware directly to output strings, characters, or special symbols to the display.  <P>
+<P>
+</BODY>
+</HTML>

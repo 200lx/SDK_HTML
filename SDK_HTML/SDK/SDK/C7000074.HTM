@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_match </TITLE></HEAD>
+<BODY>
+<H3>m_match </H3>
+This call finds the next matching file name for the <I>matchp</I> set up by m_setpat.
+<PRE><UL>
+<LI>Syntax:        int far m_match(MATCH far *matchp, int far *flagp) </LI>
+<LI>Parameters:    MATCH far *matchp - Pointer to a structure containing the data to match
+               int far *flagp - Set when a match is found; otherwise, it is zero </LI>
+<LI>Returns:       0 - normal conditions 
+               Non-zero error code with flagp set to 0, when an error other than 
+               &quot;no more matches&quot; is encountered</LI>
+<LI>Related Calls: <A HREF="c7000080.htm">m_setpat</A></LI>
+</UL></PRE>
+</BODY>
+</HTML>

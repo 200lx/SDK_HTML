@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Close </TITLE></HEAD>
+<BODY>
+<H3>DB_Close </H3><P>
+This call closes a database file.  Closing a file initiates the following actions: <P>
+<OL><LI>  The current viewpoint table is written to disk.  </LI><P>
+<LI>  Garbage is collected on the file (as a result, no more Undos are available).  </LI><P>
+<LI>  The lookup table is written to disk.  </LI><P>
+</OL>
+<UL><LI><Pre>Syntax: int DB_Close(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          File was closed.  <P>
+                    DB_CLOSE       File could not be closed.  <P>
+                    This function also returns errors from a DB_WriteRecord.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

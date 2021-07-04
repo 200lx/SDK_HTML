@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Assigning a Key to an Application </TITLE></HEAD>
+<BODY>
+<H3>Assigning a Key to an Application </H3><P>
+Unlike normal DOS programs, System Manager applications are not invoked from a command prompt.  Instead, each is assigned to a key.  When this key is pressed, the application starts and the System Manager suspends any other active application.  The user can then switch from one application to another without having to close the first application.  <P>
+There are two ways to assign a key to an EXM application.  One is through the Application Manager (More key), which is covered in the user's manual.  This is the recommended method.  <P>
+The second is to add an entry to the file called C:\_DAT\APNAME.LST.  If this file does not exist, it must be created.  You can also have an A:\ APNAME.LST file; both are searched for valid applications.  If there is an application in A:\APNAME.LST that has the same key code as an application on drive C:, the HP palmtop beeps 3 times quickly indicating a conflict.  You must change one of the scan codes in one of the files.  <P>
+Entries in a APNAME.LST file have the following format: <P>
+Filepath(should be absolute),Hex scan code, Title <P>
+Examples: <P>
+c:\_sys\hb.exm,AF00,Hearts&amp;Bones <P>
+c:\_sys\TFOX.exm,B300,TigerFox <P>
+c:\apcalc.exm,c300,APCalc <P>
+<B>Note:</B> You must reboot the HP palmtop after making changes to the APPNAME.LST file for those changes to take effect.  This is not needed if the application is added through the Application Manager.  <P>
+<P>
+</BODY>
+</HTML>

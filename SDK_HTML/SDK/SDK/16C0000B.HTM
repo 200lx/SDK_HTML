@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Status Register </TITLE></HEAD>
+<BODY>
+<H3>System Status Register </H3><P>
+The System Status register contains information that is used by software to manage power consumption and also contains the RST bit used to force a hardware reset.  The System Status register is located at index -1Fh and is defined as follows: <P>
+<PRE>
+Bit      Value     Mode     Description
+----------------------------------------------------------------------------------------
+[0]      1         R/W      UART Access; This bit is set each time software reads or 
+                            writes to any register in the UART. Cleared by writing a zero
+
+[1]      1         R/W      Display Buffer Access; This bit is set each time software 
+                            reads or writes the display video RAM, and is cleared by 
+                            writing a zero.
+
+[2]      1         R/W      Display Register Access; This bit is set each time software 
+                            reads or writes any PC MDA/CGA compatible register in the 
+                            Display Controller and is cleared by writing a zero.
+
+[3]      1         R/W      External IO; This bit is set each time software reads or 
+                            writes an IO register that does not map to a location 
+                            internal to the Hornet chip.  These accesses are routed 
+                            to the MD bus and include the IO window as well as unmapped 
+                            accesses.
+
+[4]      1         R/W      PC peripheral IO Access; This bit is set by a read or write 
+                            access of the PC-compatible peripherals on the Hornet chip, 
+                            including the 8254, 8255, and 8259.  This bit is cleared by 
+                            writing a zero.
+
+[5]      -         -        unused
+
+[6]      -         -        unused
+
+[7]      0         R/W      RHO - Reset Has Occurred; This bit is cleared by a system 
+                            reset.  It should be initialized to a 1 by a warm start.
+
+</PRE>
+<H4></H4><P>
+</BODY>
+</HTML>

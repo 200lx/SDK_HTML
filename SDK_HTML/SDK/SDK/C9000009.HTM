@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Object Class </TITLE></HEAD>
+<BODY>
+<H3>Object Class </H3><P>
+Object windows are never actually created; the Object class is used as a subclass for all window classes in the system.  As the universal subclass, Object does the actions listed below unless the window explicitly overrides them.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: </LI><BR>
+During an APPEAR message, if STYLE_XYRELATIVE is being used, x and y are considered an offset relative to the parent window's position, and are converted to absolute coordinates by adding the parent's x and y coordinates.  If STYLE_XYRELATIVE is not being employed, the absolute location of the window must be specified.  <P>
+If the window is using STYLE_SAVEUNDER, then these coordinates delimit the screen area (x,y)-(x+w-1,y+h-1) to save into a screen buffer.  <P>
+</UL>
+<UL><LI>PLHRES Title:                Not used.  </LI><P>
+<LI>PLHDATA Data:                Not used.  </LI><P>
+<LI>UINT LogicalSize:                Not used.  </LI><P>
+<LI>UINT Style:                The accepted styles are </LI><BR>
+STYLE_SAVEUNDER causes the screen underneath the occupied area to be saved during an APPEAR message, and restored upon a DISAPPEAR message.  <P>
+STYLE_INVISIBLE suppress the window from sending an APPEAR message to itself during a CREATE message.  <P>
+STYLE_LEAF will prevent the DESTROY message from trying to recursively destroy children.  This is primarily used for efficiency.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: </LI><BR>
+Object uses Parent, among other things, to allow keystrokes to travel up the chain of windows and to be handled at the correct level.  See the KEYSTROKE message.  <P>
+</UL>
+<UL><LI>PLHFKEYS FKeys: </LI><BR>
+The Object class uses this pointer to display function keys upon receiving a SETFOCUS or a DRAW, DRAW_FKEYS message, and to call the function-key handler when it receives a function key KEYSTROKE.  Besides a pointer to an LHFKEY array of function keys, FKeys has two other allowable values, NO_FKEYS and PARENT_FKEYS.  The value PARENT_FKEYS is used to specify the use of the parent window's function key definition.  If the parent window has FKeys == PARENT_FKEYS as well, the Fkey system continues up the parent chain until it finds a valid pointer.  The Fkey system will also respond to the value NO_FKEYS to terminate the search.  A value of NO_FKEYS in the chain will prevent function keys from being displayed.  Although all built-in apps will have HELP available, NO_FKEYS is provided for ISV apps that may not have function keys.  <P>
+</UL>
+<UL><LI>PLHMENU Menu: </LI><BR>
+The PLHMENU pointer determines the Menu structure that contains hotkey definitions, among other things.  The allowable values are similar to Fkeys, either a pointer to a menu structure, PARENT_MENU, or NO_MENU.  The chain is followed in the same fashion as FKeys.  <P>
+</UL>
+<UL><LI>UINT Selection:                Not used.  </LI><P>
+<LI>UINT WindowTop:                Not used.  </LI><P>
+</UL><B>Messages</B> <BR>
+<UL><LI>KEYSTROKE: </LI><BR>
+If the given window currently has the focus and the key is a Function key, Object determines the function key handler (see PLHFKEYS above) and dispatches the key.  The FKeys structure can have style bits to indicate the method of dispatch.  The default case is to make a far call to the handler.  FKEY_CREATEWND treats the handler as a window, and sends this window a CREATE, CREATE_FOCUS, SETFOCUS_NORMAL message.  <P>
+Note that unlike the action of a normal SETFOCUS message, CREATE_FOCUS sends a LOSEFOCUS message to the previous focus window before actually creating the new window.  This allows the previous focus window to redisplay itself properly before the new window is drawn on the screen, avoiding the potential problem of the previous focus window overwriting part of the new window.  FKEY_SENDMSG sends a COMMAND with Data=Handler to the current focus.   <BR>
+If the given window currently has the focus and the keystroke is a menu item hotkey, the Object class performs the same action as would have been done if the item had been selected through the menus.  <P>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+Object draws the function-key bar at the bottom of the display if the sub-message is DRAW_FKEYS.  <P>
+</UL>
+<UL><LI>CREATE: </LI><BR>
+Object sets the STATUS_INCREATE bit in the Status field of the window's LHWINDOW structure to signal to the window's handler that the create process is taking place.  Certain window handlers check this bit so that they can perform different actions upon receiving other messages while CREATE is in progress (such as APPEAR and DRAW).  <P>
+If the message is used on the first and only window, Object sets the FirstWnd field in the LHAPIBLOCK structure to point to the window structure.  Otherwise, CREATE uses LHAPIBLOCK's LastWnd field to add the window to the end of the window chain, and updates the NextWnd field in the former last window's LHWINDOW structure to point to the new window structure.  CREATE also updates the PrevWnd field in the new window's LHWINDOW structure to point to the former window's structure.  <P>
+If the window style is not STYLE_INVISIBLE, and the STATUS_VISIBLE bit in the window's Status field is clear, the Object class sends the window an APPEAR message to display the window on the screen.  <P>
+If the sub-message is CREATE_FOCUS and the tertiary message is SETFOCUS_NORMAL, CREATE sends a LOSEFOCUS message to the previous focus window, if any, before sending the APPEAR message to the new window.  In any event, Object sends a SETFOCUS, SETFOCUS_NOLOSE message to the new window if the sub-message is CREATE_FOCUS and the STYLE_NOFOCUS bit in the new window's LHWINDOW structure is not set.  <P>
+Object clears the STATUS_INCREATE bit just before exiting.  <P>
+Finally, the CREATE message returns TRUE.  <P>
+</UL>
+<UL><LI>DESTROY: </LI><BR>
+The DESTROY message first recursively destroys any child windows this window may have if the Style STYLE_LEAF is not set.  If the sub-message is DESTROY_NO_REDRAW, DESTROY sends the window a DISAPPEAR_NO_REDRAW message as opposed to a DISAPPEAR_NORMAL.  This keeps each window in a dialog box, for example, from erasing itself when removing the entire dialog box.  <P>
+Object then removes the window from the window chain, by pointing the previous and next windows around the current one, using the NextWnd and PrevWnd fields.  Object updates the LHAPIBLOCK structure to reflect if the window being destroyed is the first or last window in the chain.  <P>
+Next, if the window has its STYLE_NOTIFY bit set, Object sends the Parent window a NOTIFY message with the submessage NOTIFY_CHILDKILLED.  <P>
+Next, the DESTROY message sends the window a DISAPPEAR message to remove it from the screen.  <P>
+Finally, if the application's FocusWnd is the current window, DESTROY sets the focus to the parent window.  <P>
+NOTE: A STYLE_LEAF window WILL NOT destroy any windows that are children of the window being destroyed.  Most windows automatically set STYLE_LEAF if they are terminal windows, so this style can be ignored most of the time.  However, if you create a subclass of a dialog control that has child windows, that subclass has the responsibility of destroying its child windows.  Failing to do so will foul the window chain with unpredictable results.  <P>
+</UL>
+<UL><LI>TERMINATE: </LI><BR>
+Not used.  This message is received when the application is exiting for good, and it doesn't care if the screen, focus, or window chain is updated.  It would be used to save a window's settings to disk, for example.  All active windows should be sent this message when the application exits.  <P>
+</UL>
+<UL><LI>ACTIVATE: </LI><BR>
+Not used.  ACTIVATE is received when the application returns from a context switch.  All active windows will be sent this message by the ReactivateLHAPI service.  <P>
+</UL>
+<UL><LI>DEACTIVATE: </LI><BR>
+Not currently used.  DEACTIVATE is received when the application is being switched away.  All active windows should be sent this message when the application is switched away from.  <P>
+</UL>
+<UL><LI>SETFOCUS: </LI><BR>
+Object sends the previous window with focus a LOSEFOCUS message.  If that window returns FALSE (i.e.  the window currently with focus does not want to give it up), then Object ignores the SETFOCUS.  Else, the Object class sets the Focus to the current window and sends it a DRAW, DRAW_FKEYS message.  <P>
+NOTE: The STYLE_NOFOCUS bit is used by DialogBox to indicate windows that are not supposed to receive focus.  This does not prevent these windows from actually receiving focus.  This means a SETFOCUS message will work for STYLE_NOFOCUS windows, although the window may not be able to deal with keystrokes; ignoring keystrokes effectively locks up the computer.  (It is normal, however, during DESTROY processing that DialogBox and GroupBox windows temporarily receive focus before focus is finally determined.) <P>
+</UL>
+<UL><LI>NULLEVENT:                Not used.  </LI><P>
+<LI>LOSEFOCUS: </LI><BR>
+Object sets the FocusWnd field in the LHAPIBLOCK structure to NULL.  <P>
+</UL>
+<UL><LI>NOTIFY: </LI><BR>
+Object sends the parent window a NOTIFY message.  The status of the SendMsg returns, so returned results are percolated up to the calling routine.  <P>
+</UL>
+<UL><LI>COMMAND: </LI><BR>
+Object passes the COMMAND message to the parent window.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+Object sends the APPEAR message to a window to make it visible.  This is different from a DRAW message because the screen underneath the window may be saved first.  If the window changes state from its currently specified status (in the STATUS_VISIBLE bit in Window.Status) then Object displays the screen area occupied by the window, otherwise the message is ignored.  <P>
+If the window is being displayed, Object sets the STATUS_VISIBLE bit in the window's Status field.  If STYLE_SAVEUNDER is set, Object saves the background underneath the window, then sends the window a DRAW message.  <P>
+If STYLE_XYRELATIVE is being used, Object considers the x and y fields to be an offset relative to the parent window's position, and converts the fields to absolute coordinates by adding the parent's x and y coordinates.  Object sets the STATUS_XY_ABS bit in the LHWINDOW Status field.  <P>
+</UL>
+<UL><LI>DISAPPEAR: </LI><BR>
+Object sends the DISAPPEAR message to a window to make it invisible.  If the STATUS_VISIBLE bit is not set, Object just exits.  Otherwise, Object clears the STATUS_VISIBLE bit, and checks the STYLE_SAVEUNDER bit.  If this bit is also set, Object restores the saved screen area.  If the STYLE_SAVEUNDER bit is not set, Object sets a global clipping region to the window's screen extent, and redraws all windows with a SendAllMsg(DRAW,DRAW_ALL,0).  (Global clipping has precedence over window's drawing: if any windows need to perform clipping as part of their DRAW message processing, they should set a local clipping limit, and reset the local clipping to the whole screen when they are finished drawing.) <P>
+If STYLE_XYRELATIVE is being used and the STATUS_XY_ABS bit is set, x and y convert back to the display position relative to the window's parent from absolute coordinates and STATUS_XY_ABS clears.  <P>
+</UL>
+<P>
+</BODY>
+</HTML>

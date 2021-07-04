@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_fcreat </TITLE></HEAD>
+<BODY>
+<H3>m_fcreat </H3>
+This function creates a new file, identified by <I>filespec</I>.  Any existing file matching the <I>filespec</I> will be truncated.
+<PRE><UL>
+<LI>Syntax:      int far m_fcreat(FCB far *fp, char far *filespec,
+                              int len, int sys, int nobuf) </LI>
+<LI>Parameters:  FCB far *fp - Pointer to location to post new file information 
+             char far *filespec - Path and filename of file to be created 
+             int len - Length of the filespec 
+             int sys - Unused value - set to 0 
+             int nobuf - 0 = file will be buffered
+                         non-zero = no buffering will be performed</LI>
+<LI>Returns:     0 - if successful
+             Any other value indicates an error condition. </LI>
+</UL></PRE>
+</BODY>
+</HTML>

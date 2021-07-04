@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComAcquire </TITLE></HEAD>
+<BODY>
+<H3>ComAcquire </H3>
+This routine attempts to acquire exclusive or non-exclusive access to the communication
+port.  ComAcquire allows the port to be seized, even if another process has the port
+opened exclusively, effectively overriding that process' exclusive open.  <P> This
+function must be called whenever an application wishes to use a communication port it had
+previously opened, but may have lost ownership of.  Ownership may be lost whenever an
+application is &quot;switched out,&quot; if it receives and honors any System Manager
+deactivating event.  <P> Making this call with &quot;normal&quot; seizure specified does
+not guarantee that port ownership will pass to the caller.  An error may be returned
+indicating that the port is exclusively owned by another application.  If the calling
+application receives this error, it can prompt the user as to whether port ownership
+should be seized from the owning application.  If so, the ComAcquire call may be made
+again, specifying unconditional port seizure.  <P> Since this function call does not
+nest, thirty consecutive calls to this function are equivalent (except possibly for side
+effects, see below) to a single call, and do not require thirty calls to the <A HREF="c7000040.htm">ComRelease</A>
+function.  Port acquisition may also be ended by a <A HREF="c7000032.htm">ComClose</A> call.  <P> This function has
+two important side effects.  The first side effect is fairly transparent; whenever port
+ownership changes, UART parameters are changed to match those in effect when the new
+owner did a ComSet or <A HREF="c7000043.htm">ComSetParameters</A> call.  <P> The second side effect occurs when
+port ownership is changed as the result of this call.  ComAcquire resets any
+&quot;XON/XOFF&quot; flow control currently in effect.  If the local transmitter had been
+flow-controlled off by a remote (i.e., the remote device sent an XOFF), the flow control
+is considered expired and data transmission resumes.  Similarly, if the local receiver
+has flow-controlled the remote transmitter, this flow controlling is considered expired
+and the local receiver sends an XON to the remote.  Note that this expiration of flow
+control only occurs for the &quot;transient&quot; character-based flow control, the
+XON/XOFF variety, and not for &quot;persistent&quot; hardware-based flow control.
+<PRE><UL>
+<LI>Syntax:         err_t far ComAcquire(handle_t Handle, int Mode)
+<LI>Parameters:     handle_t Handle - The handle to the Com port returned via a 
+                                  successful <A HREF="c700003a.htm">ComOpen</A>.
+                int Mode  - defines the mode in which the port should be acquired.
+                            It is a combination (logical inclusive OR) of an ownership 
+                            mode type and a seizure mode: 
+                                
+                            Ownership mode: 
+
+                            COM_ACQUIRE_NORMAL (0) acquires the port in promiscuous 
+                            mode where another application can seize the port by 
+                            simply calling ComAcquire with a normal seizure mode.
+                                
+                            COM_ACQUIRE_EXCLUSIVE (1) acquires the port exclusively 
+                            where another application must use the unconditional 
+                            seizure mode to obtain port ownership.  
+
+                            Seizure mode: 
+
+                            COM_SEIZE_NORMAL (0) specifies that the port is requested 
+                            normally.  If no application owns the port exclusively, 
+                            then ownership passes to the application making the 
+                            ComAcquire call.  If the port is owned by another 
+                            application exclusively, then the ComAcquire call will 
+                            return an error.
+
+                            COM_SEIZE_UNCONDITIONAL (1) forces ownership to pass to 
+                            the application making the ComAcquire call.  This 
+                            seizure mode is typically made only after the 
+                            application prompts the user for permission to 
+                            unconditionally seize the port.  
+<LI>Returns:        ESUCCESS - The port has been claimed, and UART parameters were 
+                           restored, if necessary.
+                EBUSY - The port couldn't be seized.
+                EINVALID - A bad parameter was passed to the function.
+                E_EXCLUSIVE - Com port is already opened in Exclusive mode.
+<LI>Related Calls:  <A HREF="c7000040.htm">ComRelease</A> is the counterpart to ComAcquire and must be used after 
+                exclusive access is no longer required.  
+<LI>Comments:       <A HREF="c700003a.htm">ComOpen</A> must first be called in order to get a valid handle to the 
+                communication port.
+                ComAcquire is not required for informational calls, such as 
+                <A HREF="c700003e.htm">ComQryTxQue</A>, <A HREF="c700003d.htm">ComQryRxQue</A>, and <A HREF="c7000044.htm">ComXmitting</A>.  
+                
+                Table of possible results:
+                
+Ownership Mode          Seizure Mode            Existing        Returned
+------------------------------------------------------------------------
+COM_AQUIRE_NORMAL       COM_SEIZE_NORMAL        Normal          Normal
+COM_AQUIRE_EXCLUSIVE    COM_SEIZE_NORMAL        Normal          Exclusive
+COM_AQUIRE_NORMAL       COM_SEIZE_UNCONDITIONAL Normal          Normal (1)
+COM_AQUIRE_EXCLUSIVE    COM_SEIZE_UNCONDITIONAL Normal          Exclusive
+COM_AQUIRE_NORMAL       COM_SEIZE_NORMAL        Exclusive       *Failure*
+COM_AQUIRE_EXCLUSIVE    COM_SEIZE_NORMAL        Exclusive       *Failure*
+COM_AQUIRE_NORMAL       COM_SEIZE_UNCONDITIONAL Exclusive       Normal (1)
+COM_AQUIRE_EXCLUSIVE    COM_SEIZE_UNCONDITIONAL Exclusive       Exclusive
+
+Note: (1) - This is an odd case, and would probably not be encountered under normal 
+            circumstances.  
+</UL></PRE>
+</BODY>
+</HTML>

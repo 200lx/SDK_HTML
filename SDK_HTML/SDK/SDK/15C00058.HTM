@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Hardware Description </TITLE></HEAD>
+<BODY>
+<H3>Hardware Description</H3>
+Digital values written to the DAC value register are converted to an analog voltage.  This analog voltage is fed to the comparator along with the selected analog input channel.  After the comparison is completed, the result is available as a single bit called TOHI.  TOHI will be returned with the value 1 if the DAC value is higher than the selected input, it will be a zero if the DAC value is lower than the selected input.<P>
+In order to make a voltage measurement, software must first enable the ADC and select the appropriate input channel.  Software then arrives at a measurement value by successively writing values to the value register, waiting 62uS, and then reading the TOHI bit of the control register.  A 6-bit conversion takes 6 iterations, or approximately 370uS.<P>
+The 3 input channels of the DAC allow measurement of the main system battery voltage, the backup battery voltage, and a reference voltage used to increase the accuracy of the other 2 measurements.  These battery voltage measurements are used to provide the user with information about the current remaining battery capacity.<P>
+The output range of the DAC is between 1.5V and 3.3V for a 3.3V supply yielding a 28.6mV typical step voltage.  The convertor output is monotonic with +-1 bit differential linearity and +-1/2 bit relative accuracy.  The comparator voltage offset is +-15mV maximum.<P>
+</BODY>
+</HTML>

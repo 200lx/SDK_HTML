@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_ident </TITLE></HEAD>
+<BODY>
+<H3>m_ident </H3>
+This call sets <I>*typep</I> to indicate the filetype of <I>bp</I>.
+<PRE><UL>
+<LI>Syntax:      int far m_ident(char far *bp, int len, int sys, int far *typep) </LI>
+<LI>Parameters:  char far *bp - Pointer to the file to obtain filetype from 
+             int len - Length of the filename stored in bp
+             int sys - If sys is set, the System Manager will build a path for 
+                       the file using the system directory 
+             int far *typep - Pointer to the location to post obtained filetype </LI>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition </LI>
+<LI>Comments:    Type of files are: </LI>
+             
+             Code           Numeric Value
+             ident_none          0 
+             ident_file          1 
+             ident_directory     2 
+             ident_device        3
+</UL></PRE>
+</BODY>
+</HTML>

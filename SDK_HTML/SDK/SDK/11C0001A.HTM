@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_IsSelected </TITLE></HEAD>
+<BODY>
+<H3>DB_IsSelected </H3><P>
+This function returns the select status of a TYPE_DATA record.  <P>
+<UL><LI><Pre>Syntax:             int DB_IsSelected(DBBLOCK *dblk, RECORDNUM recordnum); </LI><P>
+<LI>Returns:            0              Record is not selected.  <P>
+                    1              Record is selected.  <P>
+                    DB_NOTFOUND    Recordnum is not in the database.  <P>
+                    DB_DELETED     Record is deleted.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

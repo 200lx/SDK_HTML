@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 0FF00h: Modify RAM Disk (Drive C:) Size </TITLE></HEAD>
+<BODY>
+<H3>AX = 0FF00h: Modify RAM Disk (Drive C:) Size </H3><P>
+This function changes the size of the RAM disk (Drive C:).  <P>
+<UL><LI>Input: AH = 0FF00h <BR>
+BX = signed value indicating the number of 8K byte blocks by which the RAM disk is to be shrunk (BX &lt; 0) or grown (BX &gt; 0) <P>
+DL = 1h <P>
+</UL>
+<UL><LI>Output: AX = -1h if insufficient memory to grow that much or if flexible sectors are not supported <BR>
+AX = 0h if successful <BR>
+AX = 1h if RAM disk cannot be shrunk by requested amount, see BX <BR>
+BX = Number of 8K byte blocks available for shrinking, if AX = 1h <P>
+</UL>
+<UL><LI>Error conditions: As given in AX </LI><P>
+<LI>Registers modified: AX, BX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,255 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_action </TITLE></HEAD>
+<BODY>
+<H3>m_action </H3>
+This call enables the activation of any event type, by processing the current do_event entry in the EVENT structure (definition of the EVENT structure is in EVENT.H).  The calling application must set this entry prior to making an event request through m_action.
+<PRE><UL>
+<LI>Syntax:      int far m_action(EVENT far *a)
+<LI>Parameters:  void far *a - Pointer to the event structure
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.
+</UL> 
+
+Allowable Actions
+
+The different actions allowed by m_action are below.  All these example assume existance
+of an EVENT structure called e.  That is, they are all in the following format: 
+
+          EVENT e; 
+          e.do_event = Some_Lovely_Little_Action; 
+          m_action(&amp;e); <P>
+          // Process the returned action's status and returned event...  
+
+<I>The e's appearing in this section are arbitrary, and should be replaced with your own 
+event structure's name!  </I>
+
+<UL>
+<LI>DO_EVENT.     Asks the System Manager to just return the next event.  No other 
+              action is processed.</LI>  
+
+              Inputs:  e.do_event = DO_EVENT; 
+
+              Outputs: e.kind   Kind of event (see beginning of this section for a 
+                                list of the possible event types) 
+                       e.data   ASCII (CP 850) translation of keystroke if E_KEY event
+                       e.scan   scan code from BIOSif E_KEY event
+                       e.shifts BIOS shifts register, when function returns, not 
+                                necessarily when key struck 
+                       e.lics   LICS translation of keystroke, if E_KEY event
+ 
+<LI>DO_YIELD      Causes the application to become &quot;asleep.&quot; Although the application is 
+              still open, it will appear as &quot;asleep&quot; in the Application Manager,
+              and if the user quits all &quot;open&quot; applications, yielded applications 
+              remain open.  The application is placed behind the topcard in 
+              the &quot;waiting task&quot; queue.  </LI>
+
+              Inputs:  e.do_event = DO_YIELD 
+
+              Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT. 
+ 
+<LI>DO_FINI       Causes the application to terminate.  </LI>
+
+              Inputs:  e.do_event = DO_FINI
+
+              Outputs: None.  Execution does not return after the m_action call.
+
+<LI>DO_NO_EVENT   Gets an event, without waiting for one to appear.  If no event is 
+              ready, E_NONE is the returned event type.  This function would be used 
+              if you wish to retrieve events, but do not want to fall into light 
+              sleep for 1/2 second before getting notification that there are no
+              events queued up for your application.  </LI>
+
+              Inputs:  e.do_event = DO_NO_EVENT 
+
+              Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+ 
+<LI>DO_NO_FINI  Refuses the System Manager's E_TERM request.  If the System Manager 
+            wants to terminate an application (either through the Low Memory closeout 
+            box, or the user closing the application through the AppMgr), the 
+            application recieves an E_TERM event.  If the application cannot close for
+            some reason (i.e., the user has an unsaved file that they wish to deal 
+            with, etc.), the application can refuse the request with DO_NO_FINI.  </LI>
+
+             Inputs:  e.do_event = DO_NO_FINI
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+
+<LI>DO_BRIDGE    Used to communicate with 123.  Bridge services with 123 provide 
+             functions such as storing, retrieving or recalculating cells on a 
+             spreadsheet.  BRIDGE.H contains the definition of the BRIDGE_BP 
+             structure.  </LI>
+
+             Inputs:  e.do_event = DO_BRIDGE
+                      e.bridge A pointer to a BRIDGE_BP structure.  This structure 
+                               is filled with details for the bridge request; 
+                               returned status about the request is filled in by 123 
+                               on the m_action's return.
+ 
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+                      BRIDGE_BP structure pointed to by e.bridge is filled in 
+                                 appropriately.
+
+<LI>DO_IC_INIT   Initiates an Intertask Communication session.  See Chapter 5 under 
+             the topics Intertask Communication and System Manager Task Management
+             for more details.  </LI>
+              
+             Inputs:  e.do_event = DO_IC_INIT <P>
+                      e.e_link_task Index of the task you wish to initiate intertask 
+                                    communication with.  This index is determined by 
+                                    examining the System Manager's TCB array.  
+                      e.e_icdata_ptr Near pointer to a far pointer to a memory block.  
+                                     This memory block is passed to the 
+                                     &quot;slave&quot; application.  An area in the 
+                                     owner's data space may be used instead of a 
+                                     memory block, as long as the far pointer to the
+                                     block resides in the application's far pointer
+                                     table.  
+
+             Outputs: e.kind = E_SWAP 
+                      e.return_status Status of the IC init operation.  Non-zero is 
+                                      an error (see SYSDEFS.H for possible errors.) 
+                      The memory block will be modified or not as appropriate by the 
+                      slave application.
+   
+<LI>DO_IC_CLOSE Closes an IC communication session.  </LI>
+             
+             Inputs:  e.do_event = DO_IC_CLOSE 
+                      e.e_link_task Index of the TCB of the task you are communicating 
+                                    with (this value does not change if you are using 
+                                    the same event structure.) 
+
+             Outputs: e.kind=E_NONE if the slave terminated in response to the 
+                             DO_IC_CLOSE, E_SWAP if the slave remains open.  
+                      e.return_status Status of the DO_IC_CLOSE operation.  
+
+<LI>DO_SWAP     Swaps back to the other application in an Intertask Communication session.  </LI>
+
+             Inputs:  e.do_event = DO_SWAP <P>
+                      e.e_link_task Index of the TCB of the task you are communicating 
+                                    with (this value does not change if you are using 
+                                    the same event structure). 
+
+             Outputs: e.kind= E_SWAP if the other application DO_SWAPs back, 
+                              E_IC_CLOSE if the other app is the owner closing
+                              the channel.  
+                      e.return_status Status of the DO_SWAP.  
+
+<LI>DO_LAUNCH   Launches a System Manager compiant program.  </LI>
+   
+             Inputs:  e.do_event = DO_LAUNCH
+                      e.e_launch_task Index of the TCB of the task you wish to launch.
+                      e.e_launch_type Specifies how the launch should proceed:
+                                      LT_CLOSE_THEN_LAUNCH Closes the calling 
+                                      application, then launches the new one.  
+                                      LT_YIELD_THEN_LAUNCH Yields the calling 
+                                      application, then launches the new one.  
+                                      LT_LAUNCH_THEN_RETURN Launches the new 
+                                      app, and immediately returns.  
+                                      LT_LAUNCH_THEN_Q Launches the new app, 
+                                      then places the calling app in the wait 
+                                      queue.  Similar to LT_YIELD_THEN_LAUNCH, 
+                                      except the application does not appear 
+                                      to the user to be &quot;closed&quot;; 
+                                      it is still &quot;above&quot; the top card.
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.  
+                      e.return_status Result of the launch.
+
+<LI>DO_EXEC     Executes a DOS program (also see DO_EXEC_FULL for a DOS launch with 
+            more control).  If a DOS box is already open, this call will fail.  </LI>
+
+             Inputs:  e.do_event = DO_EXEC 
+                      e.e_exec_file_ptr Pointer to fully qualified path of program to 
+                                        execute.  E.g.  e.e_exec_file_ptr = 
+                                        &quot;D:\\DOS\\COMMAND.COM&quot;; 
+                      e.e_cmd_tail_ptr Pointer to command line to be passed to 
+                                       program; null terminated.  E.g.  
+                                       e.e_cmd_tail_ptr = &quot;/CMYPROG.COM&quot;;
+                      e.e_task_id TCB entry of DOS Task (?) 
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT. 
+                      e.return_status = Success (0) or failure code (!= 0).  
+
+<LI>DO_DOS_CLOSE Closes an open DOS box forcefully.  The preferred way to close 
+             a DOS box is to have the application itself terminate.  </LI>
+
+             Inputs:  e.do_event = DO_DOS_CLOSE
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.  
+
+<LI>DO_REFRESH   Sends the top application an E_REFRESH event to request the 
+             application to redraw the screen.  Control will return to the 
+             calling app as soon as the top application makes its next 
+             m_action call.  </LI>
+
+             Inputs:  e.do_event = DO_REFRESH 
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+
+<LI>DO_SERVICE_COMPLETE Ends a transaction with a Special TSR.  The application will 
+                    have recieved an E_SERVICE event (probably in the background).
+                    To return to the background, and end the E_SERVICE request, 
+                    return a DO_SERVICE_COMPLETE action.  </LI>
+
+             Inputs:  e.do_event = DO_SERVICE_COMPLETE 
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+
+<LI>DO_REQUEST_FOREGROUND Used to make the current application the top application.  
+                      Normally, only the top application recieves events, but in
+                      the case of a Special TSR notifying the application, the 
+                      E_SERVICE events may happen while the application is in the 
+                      background.  If, as a the result of the E_SERVICE, the
+                      application needs to pop up to get the user's attention, it 
+                      should use DO_REQUEST_FOREGROUND.  </LI>
+
+             Inputs:  e.do_event = DO_REQUEST_FOREGROUND
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+
+<LI>DO_CLOSE_APP Closes a System Manager compliant task.  The task is sent an 
+             E_TERM event.  </LI>
+
+             Inputs:  e.do_event = DO_CLOSE_APP
+                      e.e_launch_task The TCB index of the task you wish to close
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+                      e.return_status indicates success (0) or failure (!=0) 
+                                      of the close.
+
+<LI>DO_EXEC_FULL Launches a DOS program with full control.  A structure must be 
+             defined (EXEC_STRUCT) that contains the launch information.</LI>
+
+             Inputs:  e.do_event = DO_EXEC_FULL
+                      e.exec_struct_ptr Pointer to the filled out EXEC_STRUCT.  
+                                        The exec struct contains the following 
+                                        fields: 
+                                        ex_file_spec Full path to file spec
+                                        ex_command_line Command line
+                                        ex_DOSsizek Kbytes needed for this task 
+                                                    (0=use default, 0xFFFF=use 
+                                                     all remaining) 
+                                        ex_pause Pause before returning (0=No pause)
+                                        ex_lock Inhibit task switches (0=Allow)
+    
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+                      e.return_status is the status of the launch 
+                                      (0 is success, !=0 is failure) 
+<LI>DO_EXIT_SYSMGR Terminates the System Manager, and all of the open applications.</LI>
+
+             Inputs:  e.do_event = DO_EXIT_SYSMGR
+
+             Outputs: None.  m_action does not return.
+
+<LI>DO_MOVE_TO_END Moves task to end of wait queue.  Task is still open, 
+                   not &quot;asleep&quot;. Similar to DO_YIELD, but task 
+                   stays above top card.  </LI>
+</UL>
+             Inputs:  e.do_event = DO_MOVE_TO_END
+
+             Outputs: e.kind, e.data, e.scan, e.shifts, e.lics same as DO_EVENT.
+
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_keyunlock </TITLE></HEAD>
+<BODY>
+<H3>m_keyunlock </H3>
+This call allows hotkey-induced task switching.  
+<PRE><UL>
+<LI>Syntax:         void m_keyunlock(void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        None </LI>
+<LI>Related Calls:  <A HREF="c70000d2.htm">m_keylock</A>, <A HREF="c70000d4.htm">m_lock</A>, <A HREF="c70000d7.htm">m_unlock</A> </LI>
+<LI>Comments:       This call (and its complement, m_keylock) work by decrementing and 
+                incrementing the lock counters.  Correct nesting is therefore essential
+                for use.  For example, two successive m_keylock() calls, followed by a 
+                single m_keyunlock() call, will still leave the lock on </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,504 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BIOS Data Area Definitions </TITLE></HEAD>
+<BODY>
+<H3>BIOS Data Area Definitions </H3><P>
+<P><PRE>
+ADDRESS  NAME     LENGTH  DESCRIPTION
+                  (BYTES)
+==========================================================================================
+40h:00h  EIADRTBL   8     I/O address of up to 4 serial communications ports
+------------------------------------------------------------------------------------------
+40h:08h  LPADRTBL   6     I/O address of up to 3 parallel ports (All 00's in HP palmtop).
+------------------------------------------------------------------------------------------
+40h:0Eh  EXTDAT     2     Segment address of extended data area (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:10h  DEVFLG     2     Equipment variable.
+                          BIT     DEFINITION 
+                          15-14   Number of printer adapters
+                          13-12   Reserved 
+                          11-9    Number of RS-232 Adapters
+                           8      Reserved
+                          7-6     Number of disk drives where
+                                   00b=1 drive
+                                   01b=2 drives
+                          5-4     Initial video mode
+                                   00b=Reserved
+                                   01b=40x25 Color
+                                   10b=80x25 Color
+                                   11b=80x25 Black &amp; White
+                           3      Reserved 
+                           2      1 if Pointing device installed
+                           1      1 if Math coprocessor installed 
+                           0      1 if Disk installed
+------------------------------------------------------------------------------------------
+40h:12h  MANTST     1     reserved for Manufacturer Test (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:13h  MEMSIZE    2     installed memory in Kilobytes
+------------------------------------------------------------------------------------------
+40h:15h  BASMEM     2     reserved (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:17h  SHFLGS     1     Keyboard flag 1 
+                          BIT     DEFINITION                           
+                           7      1=Insert active
+                           6      1=Caps Lock active
+                           5      1=Num Lock active 
+                           4      1=Scroll Lock active
+                           3      1=Alt pressed 
+                           2      1=Ctrl pressed 
+                           1      1=Left shift presse
+                           0      1=Right shift pressed
+------------------------------------------------------------------------------------------
+40h:18h  SHFLGS2    1     Keyboard flag 2 
+                          BIT     DEFINITION                           
+                           7      1=Insert pressed
+                           6      1=Caps Lock pressed
+                           5      1=Num Lock pressed
+                           4      1=Scroll Lock Pressed
+                           3      1=Ctrl-Num Lock active (Pause)
+                           2      1=Sys Req pressed (Unused in HP palmtop)
+                           1      1=Left Alt pressed 
+                           0      1=Left Ctrl pressed
+------------------------------------------------------------------------------------------
+40h:19h  ALTDATA    1     Alt-key, keypad buffer
+------------------------------------------------------------------------------------------
+40h:1Ah  KBGET      2     Key buffer read pointer (relative to Segment 0040h)
+------------------------------------------------------------------------------------------
+40h:1Ch  KBPUT      2     Key buffer write pointer (relative to Segment 0040h)
+------------------------------------------------------------------------------------------
+40h:1Eh  KBUFR      32    Key buffer (16 words, 15 keys maximum)
+------------------------------------------------------------------------------------------
+40h:3Eh  DRVSTAT    1     Floppy recalibrate status (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:3Fh  FDMOTS     1     Floppy disk motor status (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:40h  FDTIMO     1     Floppy motor time-out count (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:41h  ERRSTAT    1     Disk Status return code (unused in HP palmtop) 
+                          BIT     DEFINITION                           
+                           7      1=Drive not ready
+                           6      1=seek error occurred
+                           5      1=disk ctrlr failed 
+                          4-0     Error codes, where:
+                                   0h=No error
+                                   1h=Illegal function was requested
+                                   2h=Address mark not found
+                                   3h=Write protect error
+                                   4h=Sector not found
+                                   6h=Drive door was opened
+                                   8h=DMA overrun error (unused in palmtop)
+                                   9h=DMA boundary error (unused in palmtop)
+                                   Ch=Media type unknown
+                                  10h=CRC failed on disk read
+------------------------------------------------------------------------------------------
+40h:42h  DSKST      7     Floppy controller status &amp; cmd bytes (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:49h  CRTMODE    1     Video mode setting 
+------------------------------------------------------------------------------------------
+40h:4Ah  SCRNWID    2     Number of character columns on screen
+------------------------------------------------------------------------------------------
+40h:4Ch  SCRNLEN    2     Current page size (bytes - 2K,4K, or 16K)
+------------------------------------------------------------------------------------------
+40h:4Eh  PAGADDR    2     Page offset in bytes (=SCRNLEN*DSPYPAG)
+------------------------------------------------------------------------------------------
+40h:50h  CURCOOR    16    Cursor coordinates for 8 pages, with two bytes for each page
+                          The first byte of each pair is the column, the second byte is
+                          the row.  (0,0) is the upper left corner of the screen.
+------------------------------------------------------------------------------------------
+40h:60h  CURTYPE    2     Cursor size: byte1 = end scan line, byte2 = start scan line
+------------------------------------------------------------------------------------------
+40h:62h  DSPYPAG    1     Current display page number
+------------------------------------------------------------------------------------------
+40h:63h  CRTADDR    2     Base I/O address of Video controller (03b4h/03d4h)
+------------------------------------------------------------------------------------------
+40h:65h  MSRCOPY    1     Display controller mode register (copy)
+------------------------------------------------------------------------------------------
+40h:66h  PALETTE    1     Display controller palette (copy)
+------------------------------------------------------------------------------------------
+40h:67h  ///////    4     (Reserved in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:6Bh  INTLST     1     Last Interrupt
+------------------------------------------------------------------------------------------
+40h:6Ch  LOTIME     2     Timer count: ticks since midnight (LSW)
+------------------------------------------------------------------------------------------
+40h:6Eh  HITIME     2     Timer count: ticks since midnight (MSW)
+------------------------------------------------------------------------------------------
+40h:70h  HOUR24     1     24 hour rollover flag
+------------------------------------------------------------------------------------------
+40h:71h  BRKFLG     1     Ctrl-Brk flag (bit 7=1 : &lt;Ctrl&gt;&lt;Break&gt; pressed)
+------------------------------------------------------------------------------------------
+40h:72h  RSTFLG     2     Warmstart flag: 1234h means warmstart
+------------------------------------------------------------------------------------------
+40h:74h  HDSTAT     1     Hard disk status (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:75h  HDNUMB     1     Number of hard drives (0 in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:76h  HDCTRL     1     Hard disk control byte copy (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:77h  HDPORT     1     Hard disk controller port offset (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:78h  LPTOTBL    3     Parallel printer time-out table, Ports 0-2
+------------------------------------------------------------------------------------------
+40h:7Bh  HALTVAL    1     Halt Value (Event timeout)
+------------------------------------------------------------------------------------------
+40h:7Ch  EIATOTBL   4     Serial port time-out table, Ports 0-3.  
+                          Only port 0 is built-in to the HP palmtop.
+------------------------------------------------------------------------------------------
+40h:80h  KBXTGET    2     Offset to Key Buffer start (40h:[KBXTGET])
+------------------------------------------------------------------------------------------
+40h:82h  KBXTPUT    2     Offset to 1st byte after Key buffer (40h:[KBXTPUT])
+------------------------------------------------------------------------------------------
+40h:84h  CRTROW     1     Number of video rows -1 (EGA function used in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:85h  CHRSIZ     2     Character height EGA mode(unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:87h  EGAINF     1     EGA Info Video control bits (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:88h  EGAIN2     1     EGA Info2 switch data (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:89h  ///////    2     (Reserved in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:8Bh  FDRATE     1     Last floppy data rate selected (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:8Ch  HDSTRG     1     Hard Disk Controller status copy (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:8Dh  HDERRG     1     Hard disk error status copy (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:8Eh  HDINTR     1     Hard Disk Interrupt flag (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:8Fh  HDCFLG     1     Hard Disk Controller flag (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:90h  KYBSET     2     Keyboard Set flag
+------------------------------------------------------------------------------------------
+40h:92h  LANG       1     Language Set flag
+------------------------------------------------------------------------------------------
+40h:93h  WINFLG     1     Windowing Enable flag- Cursor and Kybd
+                                     CURSOR     KBD 
+                          VALUE     ENABLED   ENABLED 
+                           00h        Yes       Yes 
+                           01h        Yes       No 
+                           02h        No        Yes
+                           03h        No        No 
+------------------------------------------------------------------------------------------
+40h:94h  WkeUpSrc   1     Wake Up source, where: 
+                          BIT     DEFINITION                           
+                           0      1 = Keyboard wakeup
+                           1      1 = UART wakeup
+                           2      1 = RTC wakeup
+                           3      1 = GPIO wakeup 
+                           0-3    0h = System Reset
+------------------------------------------------------------------------------------------
+40h:95h  T1_State   1     Timer1 state (how being used) 
+                          0 = Polling (Periodic Services)
+                          1 = Kbd Debounce 
+                          2 = Push Scan Codes
+                          3 = Send (to Int 09h) Scan Codes
+------------------------------------------------------------------------------------------
+40h:96h  KBDSTAT1   1     Kbd Status Byte 1 (Unused in HP palmtop):
+                          BIT     DEFINITION                           
+                           7      1=Read ID in progress 
+                           6      1=Last code was first ID 
+                           5      1=Forced NumLock 
+                           4      1=101/102 kbd present
+                           3      1=Right Alt Active
+                           2      1=Right Ctrl Active
+                           1      1=Last code was E0h
+                           0      1=Last code was E1h
+------------------------------------------------------------------------------------------
+40h:97h  KBDSTAT2   1     Kbd Status Byte 2 (Unused in HP palmtop): 
+                          BIT     DEFINITION                           
+                           7      1=Error Flag for Kbd command 
+                           6      1=LED update in progress
+                           5      1=RESEND received from Kbd 
+                           4      1=ACK received from Kbd 
+                           3      1=Reserved 
+                           2      1=Caps Lock LED Status 
+                           1      1=Num Lock LED Status 
+                           0      1=Scroll Lock LED Status 
+------------------------------------------------------------------------------------------
+40h:98h  NoBeep     1     beep suppression for BIOS Messages: 
+                          BIT     DEFINITION                           
+                           7      1=Msg# 7 
+                           6      1=Msg# 6 
+                           5      1=Msg# 5 
+                           4      1=Msg# 4 
+                           3      1=Msg# 3 
+                           2      1=Msg# 2 
+                           1      1=Msg# 1 
+                           0      1=Msg# 0 
+------------------------------------------------------------------------------------------
+40h:99h  ///////    1     (Reserved in HP palmtop) 
+------------------------------------------------------------------------------------------
+40h:9Ah  BATsys     1     Last system battery measurement 
+------------------------------------------------------------------------------------------
+40h:9Bh  BATbkup    1     Last back-up battery measurement
+------------------------------------------------------------------------------------------
+40h:9Ch  BATref     1     Last reference battery measurement
+------------------------------------------------------------------------------------------
+40h:9Dh  KYBFLG     2     Keyboard type
+------------------------------------------------------------------------------------------
+40h:9Fh  CRTZOOM    1     Extension of CRTMODE (0-7, 20h,21h, 80h-85h)
+------------------------------------------------------------------------------------------
+40h:A0h  WTACTF     1     Wait Active flag (unused in HP palmtop)
+------------------------------------------------------------------------------------------
+40h:A1h  TimOutCnt  2     Number of timer ticks until display timeout
+------------------------------------------------------------------------------------------
+40h:A3h  TimOutVal  2     Display Time Out reset value
+------------------------------------------------------------------------------------------
+40h:A5h  PrtStatus  1     Printer Status flag
+------------------------------------------------------------------------------------------
+40h:A6h  CurFlag    1     Cursor Movement flag
+------------------------------------------------------------------------------------------
+40h:A7h  BATTFL3    1     Battery flags, Byte 3 
+                          BIT     DEFINITION                           
+                           7      1 = xxxx (/// RESERVED ///) 
+                           6      1 = VLBAK (Very Low Main Batt Acknowledge) 
+                           5      1 = xxxx (/// RESERVED ///) 
+                           4      1 = xxxx (/// RESERVED ///) 
+                           3      1 = xxxx (/// RESERVED ///) 
+                           2      1 = xxxx (/// RESERVED ///) 
+                           1      1 = xxxx (/// RESERVED ///) 
+                           0      1 = xxxx (/// RESERVED ///)
+------------------------------------------------------------------------------------------
+40h:A8h  CPUCKSUM   2     CPU register checksum
+------------------------------------------------------------------------------------------
+40h:AAh  URAMCKSUM  2     User RAM checksum
+------------------------------------------------------------------------------------------
+40h:ACh  IOCKSUM    2     Hornet register checksum
+------------------------------------------------------------------------------------------
+40h:AEh  SS_Save    2     Stack Segment register save location
+------------------------------------------------------------------------------------------
+40h:B0h  SP_Save    2     Stack Pointer register save location
+------------------------------------------------------------------------------------------
+40h:B2h  DAYCNTR    2     Day Counter 
+                          This word contains the count of times the software clock at
+                          40h:06Ch has been set to zero.
+------------------------------------------------------------------------------------------
+40h:B4h  RTC_Cent   1     RTC century value in bcd
+------------------------------------------------------------------------------------------
+40h:B5h  RTC_Yr     1     RTC year value in bcd
+------------------------------------------------------------------------------------------
+40h:B6h  RTC_Mon    1     RTC month value in bcd
+------------------------------------------------------------------------------------------
+40h:B7h  RTC_Day    1     RTC day of month value in bcd
+------------------------------------------------------------------------------------------
+40h:B8h  RTC_Hour   1     RTC hour value in bcd
+------------------------------------------------------------------------------------------
+40h:B9h  RTC_Min    1     RTC minute value in bcd
+------------------------------------------------------------------------------------------
+40h:BAh  RTC_Sec    1     RTC second value in bcd
+------------------------------------------------------------------------------------------
+40h:BBh  RTC_DayLt  1     RTC daylight savings time flag
+------------------------------------------------------------------------------------------
+40h:BCh  ALM_Cent   1     RTC ALARM century value in bcd
+------------------------------------------------------------------------------------------
+40h:BDh  ALM_Yr     1     RTC ALARM year value in bcd
+------------------------------------------------------------------------------------------
+40h:BEh  ALM_Mon    1     RTC ALARM month value in bcd
+------------------------------------------------------------------------------------------
+40h:BFh  ALM_Day    1     RTC ALARM day value in bcd
+------------------------------------------------------------------------------------------
+40h:C0h  ALM_Hour   1     RTC ALARM hour value in bcd
+------------------------------------------------------------------------------------------
+40h:C1h  ALM_Min    1     RTC ALARM minute value value in bcd
+------------------------------------------------------------------------------------------
+40h:C2h  ALM_Sec    1     RTC ALARM second value value in bcd
+------------------------------------------------------------------------------------------
+40h:C3h  ALM_Stat   1     RTC ALARM status; where: 
+                          BIT     DEFINITION                           
+                           7      1 = /// RESERVED /// 
+                           6      1 = /// RESERVED /// 
+                           5      1 = /// RESERVED /// 
+                           4      1 = /// RESERVED /// 
+                           3      1 = /// RESERVED /// 
+                           2      1 = Alarm already serviced.  
+                           1      1 = Alarm Enabled to pwr on.  
+                           0      1 = Alarm Enabled (no pwr on) 
+------------------------------------------------------------------------------------------
+40h:C4h  TMRVAL     4     RTC timer value at last update of RTC Variables.
+------------------------------------------------------------------------------------------
+40h:C8h  NRAS0_Size 1     NRAS0 RAM physical device size 
+                          0 = No device, else 
+                          BIT     DEFINITION                           
+                           7      1=32M (128) 
+                           6      1=16M (64) 
+                           5      1=8M (32) 
+                           4      1=4M (16) 
+                           3      1=2M (8) 
+                           2      1=1M (4) 
+                           1      1=512K (2) 
+                           0      1=256K (1) 
+------------------------------------------------------------------------------------------
+40h:C9h  NRAS1_Size 1     NRAS1 RAM physical device size 
+                          This is the same format as NRAS0_Size. 
+------------------------------------------------------------------------------------------
+40h:CAh  NRAS2_Size 1     NRAS2 RAM physical device size
+                          This is the same format as NRAS0_Size.
+------------------------------------------------------------------------------------------
+40h:CBh  NRAS3_Size 1     NRAS3 RAM physical device size 
+                          This is the same format as NRAS0_Size.
+------------------------------------------------------------------------------------------
+40h:CCh  XIPFL      1     Port Locked &amp; System Manager Media Changed flags 
+                          BIT     DEFINITION                           
+                           7      1 = Port 1 locked 
+                           6      1 = Port 0 locked
+                           5      1 = /// RESERVED /// 
+                           4      1 = /// RESERVED /// 
+                           3      1 = /// RESERVED /// 
+                           2      1 = /// RESERVED /// 
+                           1      1 = Port 1 media changed 
+                           0      1 = Port 0 media changed
+------------------------------------------------------------------------------------------
+40h:CDh  SysFlags   1     System flags 
+                           bit 7 Time/Date Change flag (Int 15h, Fcns 03h,05h) 
+                           bit 6 Graphics Cursor Service in Progress 
+                           bit 5 Zoom Disabled 
+                           bit 4 Charger-Poll in Progress 
+                           bit 3 Battery-Poll in Progress 
+                           bit 2 DAC In-Use 
+                           bit 1 Tmp Msg in Display 
+                           bit 0 /// RESERVED /// 
+------------------------------------------------------------------------------------------
+40h:CEh  NumPadFlags 2    Bits when set indicate a NumPad &quot;digit&quot; MAKE Scan Code has
+                          been pushed into the Scan Code buffer and we are awaiting
+                          keyup to send the corresponding BREAK.  
+                           bit 13 [MENU] [0] 
+                           bit 12 [MENU] [+] 
+                           bit 11 [MENU] [.] 
+                           bit 10 [MENU] [4] 
+                           bit  9 [MENU] [*] 
+                           bit  8 [MENU] [5] 
+                           bit  7 [MENU] [6] 
+                           bit  6 [MENU] [1] 
+                           bit  5 [MENU] [-] 
+                           bit  4 [MENU] [2] 
+                           bit  3 [MENU] [3] 
+                           bit  2 [MENU] [7] 
+                           bit  1 [MENU] [8] 
+                           bit  0 [MENU] [9] 
+------------------------------------------------------------------------------------------
+40h:D0h  BATCKRATE  2     Battery service rate (55 msec units).
+------------------------------------------------------------------------------------------
+40h:D2h  BATCKCNT   2     Counts before battery service (55 msec units).
+------------------------------------------------------------------------------------------
+40h:D4h  BATTFL1    1     Battery flags, Byte 1 
+                          BIT     DEFINITION                           
+                           7      1 = TYPE (0=Alkaline, 1=NiCad) 
+                           6      1 = NOAC (Pwr Source: 1 = Batt, 0 = AC_Adaptor) 
+                           5      1 = FCHG (Charge Speed = Fast) 
+                           4      1 = ECHG (Charging In Progress) 
+                           3      1 = UCHG (Charging User Enabled) 
+                           2      1 = CARD (Low Card Battery) 
+                           1      1 = BKUP (Low BackUp Battery) 
+                           0      1 = MAIN (Low Main Battery)
+------------------------------------------------------------------------------------------
+40h:D5h  BATTFL2    1     Battery flags, Byte 2 
+                          BIT     DEFINITION                           
+                           7      1 = OVDT (Over Voltage Detected) 
+                           6      1 = VLBI (Very Low Batt - Software ShutDn) 
+                           5      1 = NIFL (Bits 54: 01=LOW, 00=OK, 1x=FULL) 
+                           4      1 = NILO (Bits 54 = NiCad Level) 
+                           3      1 = /// Reserved /// 
+                           2      1 = CDAK (Low Card Batt Acknowdledged) 
+                           1      1 = BPAK (Low BackUp Batt Acknowledged)
+                           0      1 = MNAK (Low Main Batt Acknowledged)
+------------------------------------------------------------------------------------------
+40h:D6h  LteSlpFL   1     Light Sleep flag 
+                          BIT     DEFINITION                           
+                           0      1 = Avoid lite sleep in Int 16h, Fcns{01h,11h}.  
+                           1      1 = Currently in lite sleep.
+------------------------------------------------------------------------------------------
+40h:D7h  KBDBM      10    Current Keyboard BIT MAP, last bitmap collected by INT 0Ah.
+------------------------------------------------------------------------------------------
+40h:E1h  TMPBM      10    Keyboard work area
+------------------------------------------------------------------------------------------
+40h:EBh  AnnFlags   1     Indicates presence of annunciators in display 
+                          BIT     DEFINITION                           
+                           7      1 = Annun Display Disabled 
+                           6      1 = Right Corner Location 
+                           5      1 = /// RESERVED /// 
+                           4      1 = /// RESERVED /// 
+                           3      1 = /// RESERVED /// 
+                           2      1 = Caps Annunciator present 
+                           1      1 = Fn Annunciator present 
+                           0      1 = Shift Annunciator present
+------------------------------------------------------------------------------------------
+40h:ECh  LPI_Flag   2     Low Power NMI Interrupt flag (BackUp mode
+------------------------------------------------------------------------------------------
+40h:EEh  OutCopy    1     Keyboard output register copy
+------------------------------------------------------------------------------------------
+40h:EFh  CodePage   2     Current code page (437h,850h,852h,860h,863h,865h,..)
+------------------------------------------------------------------------------------------
+40h:F1h  KBDFLGS    1     Keyboard flags maintained and used during scan code creation
+                          (before being sent to Int 09h) to maintain proper shift status.
+                           bit 7     /// RESERVED /// 
+                           bit 6     /// RESERVED /// 
+                           bit 5     /// RESERVED /// 
+                           bit 4     FnFL - Fn Active 
+                           bit 3     ALTSHF - Alt Active 
+                           bit 2     CTRLSHF - Control Active 
+                           bit 1     LEFTSHF - Left Shift Active 
+                           bit 0     RGHTSHF - Right Shift Active
+------------------------------------------------------------------------------------------
+40h:F2h  FnFlags    2     Bits when set indicate a Fn MAKE Scan Code has been pushed
+                          into the Scan Code buffer and we are awaiting keyup to send the
+                          corresponding BREAK.  
+                           bit 15     /// RESERVED /// 
+                           bit 14     [Fn][+] = Paste 
+                           bit 13     [Fn][=] = Copy 
+                           bit 12     [Fn][RDOT] = Cut 
+                           bit 11     [Fn][LDOT] = Time 
+                           bit 10     [Fn][COMMA] = Date 
+                           bit  9     [Fn][SPACE] = Zoom 
+                           bit  8     [Fn][2] = F12 
+                           bit  7     [Fn][1] = F11 
+                           bit  6     [Fn][BS] = SCRL 
+                           bit  5     [Fn][0] = PrtSc 
+                           bit  4     [Fn][DEL] = INS 
+                           bit  3     [Fn][DnArrow] = PgDn 
+                           bit  2     [Fn][LtArrow] = End 
+                           bit  1     [Fn][RtArrow] = Home 
+                           bit  0     [Fn][UpArrow] = PgUp
+------------------------------------------------------------------------------------------
+40h:F4h  SysFlags2  2     System flags Byte 2 
+                           bit 7     /// RESERVED /// 
+                           bit 6     /// RESERVED /// 
+                           bit 5     NIFLC (NIFL at Charge Start - See BATTFL2) 
+                           bit 4     NILOC (NILO at Charge Start - See BATTFL2) 
+                           bit 3     /// RESERVED /// 
+                           bit 2     /// RESERVED /// 
+                           bit 1     /// RESERVED /// 
+                           bit 0     /// RESERVED /// 
+------------------------------------------------------------------------------------------
+40h:F5h  Debounce   1     Software Keyboard Debounce state
+------------------------------------------------------------------------------------------
+40h:F6h  LASTIRQ2   2     Rotating IRQ2 Priority
+------------------------------------------------------------------------------------------
+40h:F8h  LASTKY     1     Last key pressed 
+------------------------------------------------------------------------------------------
+40h:F9h  RPTCNT     1     Key repeat counter
+------------------------------------------------------------------------------------------
+40h:FAh  MISCFL     1     Miscellaneous Keyboard flags 
+                          BIT     DEFINITION                           
+                           7      1=ClrMuteEn (Ready to clear Mute function) 
+                           6      1=MenuDown (Windowing in zoomed text) 
+                           5      1=ClrFnEn (Ready to clear Fn Key function) 
+                           4      1=FnFL (Fn Key function Active) 
+                           3      1=SH2NORM (HP palmtop shifted, PC unshifted) 
+                           2      1=NORM2SH (HP palmtop unshifted, PC shifted) 
+                           1      1=ClrShEn (Ready to send Shift Break) 
+                           0      1=OnKySeq (On key sequence active)
+------------------------------------------------------------------------------------------
+40h:FBh  MUTEFL     1     Mute key flags
+------------------------------------------------------------------------------------------
+40h:FCh  KYDELAY    1     Key repeat start delay (in 33 msec tick units)
+------------------------------------------------------------------------------------------
+40h:FDh  TYPMATC    1     Typematic key repeat rate (in 33 msec tick units)
+------------------------------------------------------------------------------------------
+40h:FEh  RESETID    2     Power-Up ID flags
+------------------------------------------------------------------------------------------
+</PRE>
+<P>
+</BODY>
+</HTML>

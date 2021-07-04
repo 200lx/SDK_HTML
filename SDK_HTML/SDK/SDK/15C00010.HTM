@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>An Example </TITLE></HEAD>
+<BODY>
+<H3>An Example</H3>
+As an example of bank switching, assume that a 2MB ROM is tied to NRCE.  The first page
+of this ROM (ROM addresses 000000h to 00FFFFh) would be configured at F0000h to FFFFFh.
+The second page (ROM addresses 010000h to 01FFFFh) would be configured at A0000h to
+AFFFFh.  If an application needs 1 contiguous page beginning at ROM address 120000h, it
+can configure it into CPU Bank C.  The following register settings would accomplish this
+plus map the starting addresses of a plug-in card in slot 0 (NCS[0]) into the 4 sections
+of BANK E.<P>
+
+C Reg0 = 04h (FS0=00000100)<P>
+C Reg1 = 88h (FS1=1000, enable=1, CS=000)<P>
+E0 Reg0 = 00h (FS0=00000000)<P>
+E0 Reg1 = 0Dh (FS1=0000, enable=1,CS=101)<P>
+E1 Reg0 = 00h (FS0=00000000)<P>
+E1 Reg1 = 1Dh (FS1=0001, enable=1, CS=101)<P>
+E2 Reg0 = 00h (FS0=00000000)<P>
+E2 Reg1 = 2Dh (FS1=0010, enable=1, CS=101)<P>
+E3 Reg0 = 00h (FS0=00000000)<P>
+E3 Reg1 = 3Dh (FS1=0011, enable=1, CS=101)<P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bitmap Stack </TITLE></HEAD>
+<BODY>
+<H3>Bitmap Stack </H3><P>
+A System Bit Map FILO stack is maintained and utilized by the BIOS font services.  Each entry on this stack is ten bytes wide and the stack has a maximum depth of n (to be determined).  A call to the BIOS Load Bitmap service will push an entry onto this stack that records information on format, size, and location of the bit map table that was loaded into the dedicated Bitmap Buffer.  The information in this stack is a resource for the BIOS and as a service for those applications that would choose to use the Hornet BitBlt hardware directly in Graphics Video modes.  Any of the currently loaded bit maps may be made the &quot;active&quot; one.  Applications may load symbol tables until the fixed stack size is exceeded, or the dedicated Bitmap buffer becomes full.  When the stack or Bitmap Buffer becomes full, the application may &quot;pop&quot; the bitmap on the top of the stack to free additional space.  This is the only provision (except the more drastic stack reset) to free space in the Bitmap buffer.  Each entry in the table contains the following information:
+<BR>
+<PRE>
+ID   Length (n)   Width   Height   Format   Status   Offset 
+============================================================
+2    2            1       1        1        1        2 
+------------------------------------------------------------
+</PRE>
+The ID field identifies the bitmap data.  For example, ID=4 specifies the standard 8x8 character font.  <P>
+The bit map length (n) register specifies the number of bit map symbols in the table.  For font tables, this will always be 256.  For symbol tables, n will specify how many symbols are provided in the table.  <P>
+The bit map width and height are each byte fields specifying the cell dimensions.  If the bitmap is a font being used by the Display Controller (Text mode), the width must be one of 8,10, or 16, and the height must be (1-32).  If the bit map is a font or symbol table being used by the Hornet BitBlt hardware while in Graphics mode, the width must be even (2-16), and the height must be (1-32).  <P>
+The Status field identifies the currently active bitmap.  This is for use in graphics mode when using the {Int 10h, Fcn D7h} routine.  When the Bitmap stack is non-empty, exactly one entry will have a status byte with bit 7 set, the active one.  <P>
+The Table Offset is the word value giving the address offset from the start of the 16KB buffer to where the bitmap data actually begins.  <P>
+The Format register identifies the bitmap format as it appears in the dedicated bit map buffer.  Each format is identified by a specific bit in the Format byte, providing for up to 8 different formats.  The BIOS Video service Int 10h, Fcn D7h Write BitBlt String will work with any of the following four formats.  Of course, any of these formats (and potentially others) may be used by applications expecting to invoke the BitBlt hardware directly (not use the BIOS service).  <P>
+
+<UL><LI>Bit 0, Format 0: Noncontiguous Font </LI><BR>
+The font is loaded in the noncontiguous format, word-wide with character scan lines separated by 256 words.  The Display controller requires this format for the font bit maps used in Text modes.  There is an implicit character mapping with the bit map corresponding to character &quot;A&quot; (41h) starting at an offset of 65*2 bytes from the start of the table.  The font bitmap table is 256*2*h bytes in length. </UL>
+<P>
+<UL><LI>Bit 1, Format 1: Contiguous Font </LI><BR>
+This is the contiguous version of Format 0.  The font is loaded word-wide with character scan lines separated by 1 word.  The Display Controller cannot use this format for text mode applications.  There is an implicit character mapping with the bit map corresponding to character &quot;A&quot; (41h) starting at an offset of 65*2*h bytes from the start of the table.  The font bitmap table is 256*2*h bytes in length. </UL>
+<P>
+<UL><LI>Bit 2, Format 2: Raw Symbol Table </LI><BR>
+This format is for a symbol table bitmap loaded in the contiguous format without any -explicit- character mapping to the bit maps in the table.  The Write BitBlt String video service will assume an implicit character mapping when using bitmap data presented in this format.  One possibility (not final) will map char 20h = &quot; &quot; to the 1st bit map, &quot;!&quot; to the 2nd, &quot;&quot;&quot; to the 3rd, and so on.  The symbol table bitmap is n*2*h bytes in length; where n is the number of symbols in the table.  </UL>
+<P>
+<UL><LI>Bit 3, Format 3: Mapped Symbol Table </LI><BR>
+This format is for a symbol table bitmap loaded in the &quot;sane&quot; format with character mapping provided explicitly by an index table.  The offset field in the entry on the Bitmap Stack (BMSTK) that corresponds to the table points to an nx2 byte (word-wide) index table that precedes the bit map table.  Words in the index table map specified characters to bit map symbols as follows: the least significant byte in each word in the table is the index of the corresponding bit map, while the most significant byte is the character to which it is mapped.  The index word &quot;4102h&quot; means that BIOS write string service will display the 3rd (option base 0) bit map in the table for the character &quot;A&quot; (41h).  The bit map for a given character must be located by a linear search through the index table.  For this reason, it is advisable to use this format only for reasonably small symbol tables.  Also, it may be worthwhile to arrange the index table so that the index words for frequently used symbols appear near the front of the table.  The symbol table bit map is (2*n + n*2*h) bytes in length where n is the number of symbols.  </UL>
+
+<P>
+</BODY>
+</HTML>

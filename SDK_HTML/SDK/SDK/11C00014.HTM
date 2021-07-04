@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_CollectGarbage </TITLE></HEAD>
+<BODY>
+<H3>DB_CollectGarbage </H3><P>
+This function removes unused records in the database.  Collecting garbage resets the Undo point (see the following section describing DB_Undo).  This happens automatically when the database file is closed.  Garbage collection may need to be called at strategic points to prevent disk files from growing too large.  After garbage collection, any deleted record numbers will be reclaimed.  The DOS file buffer is flushed after garbage collection.  <P>
+<UL><LI><Pre>Syntax:             int DB_CollectGarbage(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          Garbage collection was successful.  <P>
+                    DB_CORRUPT     A media error during garbage collection may
+                                   have rendered the file unusable.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

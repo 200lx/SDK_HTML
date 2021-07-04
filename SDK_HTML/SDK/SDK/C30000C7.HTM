@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 1Ch: Timer Tick Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 1Ch: Timer Tick Interrupt </H1><P>
+The Timer Tick interrupt is called via an Int 1Ch instruction shortly after entry into the TIMER0 Hardware Interrupt handler (Int 08h).  <P>
+The Int 08h interrupt occurs at a nominal rate of 18.2 Hz (once every 55 ms).  Applications may chain into the Timer Tick interrupt.  Interrupts are still disabled and the Int 08h interrupt has not yet been acknowledged at the Programmable Interrupt Controller when the Int 1Ch is issued.  The BIOS points the Int 1Ch vector to a default handler that consists of simply an IRET instruction.  For more information, see &quot;Int 08h: TIMER0 Hardware Interrupt&quot;.  <P>
+Int 1Ch handlers should restore all registers.  Programs which chain into Int 1Ch are responsible for restoring the original Int 1Ch interrupt vector before exit to DOS.  <P>
+When the Int 1Ch routine is entered, the HP 100LX BIOS has established a stack frame as shown below:
+<PRE>
+                 ------------------------
+                 Saved Flags 
+                 ------------------------
+                 Saved CS 
+                 ------------------------
+                 Saved IP from Int 8h 
+                 ------------------------
+                 Saved HIR 
+                 ------------------------
+                 Saved DS 
+                 ------------------------
+                 Saved AX 
+                 ------------------------
+                 Saved DX 
+                 ------------------------
+                 Saved Flags
+                 ------------------------ 
+                 Saved CS 
+                 ------------------------
+          SP->   Saved IP (from Int 1Ch)
+                 ------------------------
+</PRE>
+<B>Note: </B>The above stack frame is PC incompatible.  There may be programs that expect the more compatible stack frame that looks like the one above, but missing the Hornet Index register (HIR).  <P>
+The register contents are as shown below when Int 1Ch is called: <P>
+<UL><LI>AX, BX, CX, DX, BP, SI, DI: contain undefined values.  </LI><P>
+<LI>DS: 40h.  </LI><P>
+<LI>ES: Undefined.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

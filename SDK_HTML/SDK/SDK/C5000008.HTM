@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Accessing System Manager Services From C </TITLE></HEAD>
+<BODY>
+<H3>Accessing System Manager Services From C </H3><P>
+Each source file containing services calls must include the header file INTERFAC.H which contains macro definitions for each System Manager service.  The macro expands the call to be a call to a common System Service request function.  In addition, the macro adds a service number to the argument list and casts near pointers to far pointers as appropriate.  <P>
+For example, the m_disp call in the source <P>
+<PRE>
+#include         &quot;interfac.h&quot; 
+int              row, col, style, ostyle; 
+char             *str; 
+m_disp(x, y, str, strlen(str), style, ostyle); 
+</PRE>
+expands to
+<PRE> 
+c_service(F_M_DISP, x, y, (void far *)str, strlen(str), style, ostyle); 
+</PRE>
+where F_M_DISP is the function code for m_disp and is defined in INTERFAC.H.  <P>
+The function c_service is provided in the object module CSVC.OBJ (which is in SCSVC_HP.LIB) and converts the call into a software interrupt that transfers control to the System Manager Dispatch table.  <P>
+<P>
+</BODY>
+</HTML>

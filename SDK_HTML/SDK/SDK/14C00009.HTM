@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Programmable Peripheral Interface (Emulates 8255) </TITLE></HEAD>
+<BODY>
+<H3>Programmable Peripheral Interface (Emulates 8255)</H3>
+The Hornet chip does not contain an actual PPI.  Instead it contains a group of three I/O
+registers that are configured to behave as the PC's PPI.  The definitions of the
+configuration switch bits should be chosen to be PC compatible.<P>
+<PRE>
+I/O      R/W
+Address  Mode   Description
+==========================================================================================
+0060h    R/W    PPI Input Port A:
+                If port 0061h bit 7 = 0
+                bits 7-0      scratch location for keyboard scan code
+                If port 0061h bit 7 = 1:
+                bits 7-0      scratch location for SW1 configuration switch settings
+------------------------------------------------------------------------------------------
+0061h    R/W    PPI Output Port B:
+                bit 7 = 0  read/write keyboard scratch byte (0060h)
+                      = 1  read/write SW1 scratch byte (0060h)
+                bit 6 = 0  disable keyboard
+                bit 5 = 0  ignored, reads 0 (enable I/O check)
+                bit 4 = 0  ignored, reads 0 enable RAM parity check)
+                bit 3 = 0  read high switch (0062h)
+                      = 1  read low switch (0062h)
+                bit 2 = 0  ignored, always reads 0
+                bit 1 = 1  enable speaker data
+                bit 0 = 1  enable Timer 2 gate (to speaker)
+------------------------------------------------------------------------------------------
+0062h    R/W    PPI Input Port C:
+                bits 7-6 = 0  unused (read only)
+                bit  5        Timer 2 output (read only)
+                bit  4   = 0  unused (read only)
+                If port 0061h bit 3 = 0:
+                bits 3-0      scratch location for 4 MSBs of S2 configuration switches
+                If port 0061h bit 3 = 1:
+                bits 3-0      scratch location for 4 LSBs of SW2 configuration switches
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

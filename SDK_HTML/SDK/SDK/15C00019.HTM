@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CRTC Registers </TITLE></HEAD>
+<BODY>
+<H3>CRTC Registers</H3>
+These are the registers internal to the CRTC.  They are accessible at I/O address
+03B5h/03D5h when indexed by the CRTC index register.  They correspond to registers in
+standard MDA/CGA/EGA/VGA adapters and have identical functions.<P>
+<PRE>
+Index   Bits    R/W     Description
+==========================================================================================
+-0Ah                    CurStart - cursor start scan line and blink mode.
+        6-5     R/W     CurBlinkMode, the cursor blink mode bits, can be used to disable
+                        the cursor or to enable cursor blinking.  They are defined as:
+                        <B>Value    Description</B>
+                        00       Blinking cursor at 1 Hz
+                        01       No cursor
+                        10       Flashing cursor at half of the frame rate
+                        11       Non-blinking cursor
+        4-0     R/W     Bits 4-0 make up CurStartLine, the cursor start scan line.  The
+                        cursor is defined by turning on all the dots of one or more lines
+                        of a character position within the display.  These bits define
+                        the scan line number of the first line to be turned on (where the
+                        scan lines are numbered from zero).  The cursor is not displayed
+                        if this value exceeds the highest numbered scan line of a
+                        character.
+------------------------------------------------------------------------------------------
+-0Bh    4-0     R/W     CurStop, the cursor scan line end register, defines the scan line
+                        number of the last line to be turned on for the cursor.  The
+                        cursor is not displayed if this register's value is less than the
+                        CurStartLine value.
+------------------------------------------------------------------------------------------
+-0Ch    5-0     R/W     DspStHi - display start address high
+------------------------------------------------------------------------------------------
+-0Dh    7-0     R/W     DspStLo - display start address low Multiplying DspStHi and
+                        DspStLo, the 14-bit display start address register-pair, by two
+                        defines the address in the frame buffer of the first (upper-
+                        leftmost) character in the display.  Horizontal scrolling and
+                        vertical scrolling by line or by page may be performed by
+                        adjusting this register.  The two most-significant bits of this
+                        register-pair will read zero.
+------------------------------------------------------------------------------------------
+-0Eh    5-0     R/W     CurLocHi - cursor location high
+------------------------------------------------------------------------------------------
+-0Fh    7-0     R/W     CurLocLo - cursor location low Multiplying CurLocHi and CurLocLo,
+                        the 14-bit cursor location register-pair, by two defines the
+                        address in the frame buffer of the character that is to be
+                        overlaid by the cursor.  If this register-pair points to an
+                        address that is not within the display, the cursor will not be
+                        displayed.  The two most-significant bits of this register-pair
+                        will read zero.
+------------------------------------------------------------------------------------------
+-10h    5-0     R       LpenHi - light pen high
+------------------------------------------------------------------------------------------
+-11h    7-0     R       LpenLo - light pen low Multiplying this extremely useful register-
+                        pair returns the value contained in the cursor address register-
+                        pair.  It is hoped that this will enhance the overall
+                        compatibility of the display controller.  The two most-significant
+                        bits will read zero.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

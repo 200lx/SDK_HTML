@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Keyboard Hardware </TITLE></HEAD>
+<BODY>
+<H3>Keyboard Hardware</H3>
+The keyboard hardware contained in the Hornet chip consists of an output register, an input register, an ON key input, and a precharge control circuit.  Each bit in the output register controls one keyboard line.  When this bit is set to one, the keyboard line will be driven high.  If this bit is set to a 0, then the keyboard line is considered an input and held resistively low after precharge.  If a zero output is desired, a zero is written to the keyboard output register.  The input lines are precharged low by being driven low.  They are held low by the pulldown resistor.  If a matrix key is pressed, a keyboard input line will be shorted to a keyboard output line.  The keyboard line will then be driven high by the output line it is shorted to.<P>
+Two of the keyboard lines are dedicated inputs, they cannot be driven high.  They are combined with the ON key to provide a hardware reset.  The configurable keyboard lines allow a large number of possible matrix combinations.  The only limitation is that the ON key and that two other lines are input only.  The ON key is debounced, and it's state readable separately.<P>
+Besides the normal keyboard input functions, the ON key input is directly wired to the Hornet power supply control circuitry and has the ability to wakeup the unit and to bring the unit out of backup mode.<P>
+<P>
+</BODY>
+</HTML>

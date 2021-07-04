@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Display Module Interface </TITLE></HEAD>
+<BODY>
+<H3>Display Module Interface</H3>
+Hornet has thirteen pins dedicated to the display controller.  Twelve of these pins form
+the interface to the display module.  The remaining pin plus 1 GPIO pin are used to
+control the display power supply.  The pins and their definitions are:<P>
+
+<PRE>
+PIN         #   TYPE    DESCRIPTION
+==========================================================================================
+DD[0:7]     8   O       Data to the display column drivers
+------------------------------------------------------------------------------------------
+CP (CL2)    1   O       Clock pulse
+                        The falling edge of this signal shifts data on the DD pins into
+                        the column drivers.
+------------------------------------------------------------------------------------------
+YD (FRM)    1   I/O     Y-axis data for row drivers
+------------------------------------------------------------------------------------------
+LOAD (CL1)  1   O       Parallel load pulse
+                        The falling edge of this signal shifts data on the YD pin into the
+                        row drivers.  That edge also causes the column drivers to transfer
+                        their shift register contents to the voltage drivers.
+------------------------------------------------------------------------------------------
+DF (FI)     1   O       Frame inversion signal
+                        This signal toggles on the falling edge of every 17th LOAD pulse.
+                        This is used by the row and column drivers to invert the voltages
+                        used and remove DC bias from the pixels.
+------------------------------------------------------------------------------------------
+CCV         1   I/O     Contrast control voltage
+                        This signal is used to control the high voltage power supply,
+                        thereby controlling the display contrast. See &quot;Programming&quot; on
+                        <A HREF="15C0001B.HTM">page 15-515</A> for more information.
+------------------------------------------------------------------------------------------
+DVEN        1   I/O     Display voltage enable
+                        This GPIO pin is used to enable the high voltage power supply.
+                        See &quot;Programming&quot; on <A HREF="15C0001B.HTM">page 15-515</A> and &quot;General Purpose I/O&quot;
+                        on <A HREF="15C00034.HTM">page 15-545</A> for more details.
+------------------------------------------------------------------------------------------
+</PRE>
+
+The display module consists of the liquid crystal display, column drivers, row drivers,
+and a bias-supply generator.<P>
+The column drivers form a shift register with one bit for each column of the display.
+The data on the DD pins is loaded into this shift register 8 bits at a time by the
+falling edge of the CP signal.  After data is clocked into the shift register for all
+columns, the falling-edge of the LOAD pulse causes that data to define which dots are on
+in the currently active row.<P>
+The row drivers form a shift register with one bit for each line of the display.  The
+data on the YD pin is clocked into the shift register by the falling edge of the LOAD
+pulse.  Only one bit of the shift register should be true at a time.  That bit defines
+the active row.<P>
+The bias-supply generator generates the intermediate voltages required by the row and
+column drivers.<P>
+
+<H2><A HREF="15c00022.htm">Display Organization </A></H2>
+<H2><A HREF="15c00023.htm">Display Module Waveforms </A></H2>
+
+</BODY>
+</HTML>

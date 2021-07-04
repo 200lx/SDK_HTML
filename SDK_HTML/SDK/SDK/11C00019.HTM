@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Select </TITLE></HEAD>
+<BODY>
+<H3>DB_Select </H3><P>
+Sets the state of a TYPE_DATA record to be selected (status=1), unselected (status=0), or toggled (status=2).  This is used to track multiple selections made by the user.  Once made, selections must be cleared by the application.  Note that the select state is not retained by the database after closing the file, nor is it retained if the record is modified.  Undo does not affect selection status.  <P>
+<UL><LI><Pre>Syntax:             int DB_Select(DBBLOCK *dblk, RECORDNUM recordnum, 
+                    int status); </LI><P>
+<LI>Returns:            DB_OK              Select was successful.  <P>
+                    DB_NOTFOUND        Recordnum is not in the database.  <P>
+                    DB_DELETED         Record is deleted.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Nonstandard Display Controller Registers </TITLE></HEAD>
+<BODY>
+<H3>Nonstandard Display Controller Registers</H3>
+<PRE>
+Index   Bits    R/W Mode    Description
+==========================================================================================
+-20h                        DspSetUp - display setup register
+        7-5     R/W         DspTest - display test mode selection
+        4       R/W         NoRTLmode - disable row-then-line mode
+        3       R/W         UCmode - enable update on change mode
+        2       R/W         JagGrMode - select 95LX-compatible graphics
+        1       R/W         CGAMode - select CGA registers
+        0       R/W         DspEnable - enable MDA/CGA registers and memory
+------------------------------------------------------------------------------------------
+-21h                        DspSpd - clock speed selection
+        3-2                 DotClk - dot clock to display module
+        1-0                 DspClk - display DRAM access speed
+------------------------------------------------------------------------------------------
+-22h    7-0     R/W         RowTime - row timer
+------------------------------------------------------------------------------------------
+-23h    4-0     R/W         Contrast - contrast control
+------------------------------------------------------------------------------------------
+-24h    6-0     R/W         HorzDsp - horizontal displayed
+------------------------------------------------------------------------------------------
+-25h                        ChrWidth - character width
+        2       R/W         DoubDot - enable dot doubler
+        1-0     R/W         CellWid - character cell width
+------------------------------------------------------------------------------------------
+-26h    5-0     R/W         RowOff - window row size offset
+------------------------------------------------------------------------------------------
+-27h    4-0     R/W         FontOff - font offset
+------------------------------------------------------------------------------------------
+-28h    7-0     R/W         VertDsp - vertical displayed
+------------------------------------------------------------------------------------------
+-29h    4-0     R/W         MaxScan - maximum scan line
+------------------------------------------------------------------------------------------
+-2Ah    5-0     R/W         VertAdj - vertical adjust
+------------------------------------------------------------------------------------------
+-2Bh    4-0     R/W         Underline - underline scan line
+------------------------------------------------------------------------------------------
+-2Ch                        ShadeReg - shading and color mapping
+        3-2     R/W         ShadeMode - shading technique selection
+        1       R/W         EnFRS - enable frame-rate shading
+        0       R/W         Invert - invert shades
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

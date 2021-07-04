@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_GetFieldStrings </TITLE></HEAD>
+<BODY>
+<H3>DB_GetFieldStrings </H3><P>
+DB_GetFieldStrings converts a group of fields (instead of just one) from the data record into strings. 
+<I>srcrec</I> points to the preloaded record, <I>indextable</I> is an array of integers representing field indices,
+<I>ptrtable</I> is a table of pointers that is loaded with the addresses of the strings, and
+<I>indexcount</I> is the number of fields requested.  <P>
+<I>buffer </I>and <I>bufsize </I>are used for &quot;temporary&quot; string creation.  <P>
+If the fields asked for are already in string format, the pointers in ptrtable are just set to point into the srcrec.  If the fields are in a non-string format, then they are created in buffer, and ptrtable points to them there.  <P>
+No errors are returned, and memory is not moved.  <P>
+<UL><LI><Pre>Syntax:             int DB_GetFieldStrings(DBBLOCK *dblk, void far *srcrec,
+                    int indextable[], char far *ptrtable[], int indexcount, 
+                    char far *buffer, int bufsize); </Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

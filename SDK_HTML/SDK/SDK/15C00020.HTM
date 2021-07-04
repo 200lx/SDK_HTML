@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Interrupts and Activity Monitors </TITLE></HEAD>
+<BODY>
+<H3>Interrupts and Activity Monitors</H3>
+There is one interrupt and one activity monitor associated with the display controller.
+DCINT, the display cursor interrupt, is used by software to keep the cursor in the
+visible part of a zoomed text mode.  DBA, the display buffer activity monitor, is used by
+software to tell when its safe to go into light sleep.<P>
+DCINT is triggered by writes to the cursor address registers at indexes -0Eh and -0Fh
+within the CRTC.  DCINT will be disabled if the CRTC registers are disabled by the
+DspEnable bit in the DspSetUp register.  If the CRTC registers are enabled the CRTC's
+address is controlled by the CGAMode bit in the DspSetUp register.  DCINT is also
+controlled by the Hornet interrupt system.  See &quot;Interrupt Control&quot; on <A HREF="15C00042.HTM">page 15-554</A> 
+for more details.<P>
+The DBA monitor is triggered by reads or writes to the display frame buffer.  DBA will be
+disabled if the DspEnable bit in the DspSetUp register is clear.  The address of the
+frame buffer is controlled by the CGAMode bit in the DspSetUp register.  The DBA monitor
+is located in the system status register.  See &quot;Power Management&quot; on <A HREF="16C00001.HTM">page 16-563</A> 
+for more information.<P>
+</BODY>
+</HTML>

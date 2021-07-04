@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_ReadRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_ReadRecord </H3><P>
+This function reads a record from the disk (or ROM, if ROM support is being used).  The record read is of type
+<I>recordtype</I>.  <I>Recordnum</I> is used to index the
+<I>recordnum</I>-th record of that type.  The record is read into
+<I>dest</I> (up to a maximum size of bufsize).  The actual number of bytes read is returned in
+<I>sizeread</I>, and is equal to the record size unless the record has been truncated (in which case,
+<I>sizeread</I> will equal bufsize--comparing the returned size with the size returned by DB_RecordSize is the only way to detect truncation).  <P>
+<UL><LI><Pre>Syntax:             int DB_ReadRecord(DBBLOCK *dblk, char recordtype, 
+                    RECORDNUM recordnum, void far *dest, 
+                    unsigned int bufsize,unsigned int *sizeread); </LI><P>
+<LI>Returns:            DB_OK          File was closed.  <P>
+                    DB_NOTFOUND    Recordnum is not in the database.  <P>
+                    DB_READ        Cannot read the disk.  <P>
+                    DB_SEEK        File is probably corrupt.  <P>
+                    DB_DELETED     Record is deleted.  <P>
+<LI>May Move Memory:    No </LI><P>
+</UL><P>
+</BODY>
+</HTML>

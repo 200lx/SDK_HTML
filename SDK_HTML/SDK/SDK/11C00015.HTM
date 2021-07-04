@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_SetUndoPoint </TITLE></HEAD>
+<BODY>
+<H3>DB_SetUndoPoint </H3><P>
+This function takes a &quot;snapshot&quot; of the database when it is called.  An Undo will restore the database to its state at the time the Undo Point was set.  Note that all records (not just data records) are restored.  DB_SetUndoPoint also collects garbage, and in fact, the two functions are identical.  See &quot;DB_CollectGarbage&quot; for errors.  <P>
+<UL><LI><Pre>Syntax:             int DB_SetUndoPoint(DBBLOCK *dblk);
+</Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

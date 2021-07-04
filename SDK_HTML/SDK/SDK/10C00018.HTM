@@ -1,0 +1,258 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>TYPE_USER </TITLE></HEAD>
+<BODY>
+<H3>TYPE_USER </H3><P>
+Record 0 <P>
+<P>
+<pre>
+Offset  Name              Type              Contents
+------  ----------------  ----------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)*** 
+0       Today             unsigned char[3]  Datestamp of last day file open;
+                                            used for tracking repeating todos.
+3       Settings          unsigned int      Timeline:
+                                              bit 0 = 15 minutes
+                                                  1 = 30 minutes
+                                                  2 = 60 minutes
+                                                  3 = Appointments only
+                                            Week Start:
+                                                  4 = Week starts on Monday
+                                                  5 = Week starts on Sunday
+                                            Default Alarm:
+                                                  6 = Alarm defaults to enabled
+                                            View Defaults:
+                                                  7 = Appt shows in month view
+                                                  8 = Appt shows in week view
+                                                  9 = Event shows in month view
+                                                  10= Event shows in week view
+                                            Default Todo:
+                                                  11= Carry forward enabled
+                                                  12...15 Unused
+5       BeepSettings      unsigned int      Volume:
+                                               bit 0 = Low
+                                                   1 = Medium
+                                                   2 = High
+                                            Muted:
+                                                   3 = Volume disabled
+                                            Sounds:
+                                                   4 = Beep
+                                                   5 = Trumpet
+                                                   6 = Chime
+                                                   7 = Custom
+                                                   8...15 Unused
+7       Composite View    unsigned int      Appointment:
+                                               bit 0 = Clock
+                                                   1 = Calendar
+                                                   3 = Thermometer
+                                                   4...7 Unused
+                                            Todos:
+                                                   8 = Clock
+                                                   9 = Calendar
+                                                   10= Next Appt
+                                                   11= Thermometer
+                                                   12...15 Unused 
+9       FirstHour         int               First hour in the day in minutes since
+                                            midnight.  This affects the timeline display
+                                            and the default choices made for time entries
+                                            with no am/pm designation.
+11      Duration          int               Default appointment duration in minutes
+13      Leadtime          int               Default leadtime in minutes
+15      Priority          char[2]           Default priority
+17      FirstRptRecNo     int               Record of the first multi occurrence data
+                                            record
+19      SglOccurDayCount  int               Count of days with single occurrence items
+21      EventLines        int               Number lines for Event display in appt daily
+                                            view (always 3)
+</pre>
+
+Record 1 <P>
+Record 1 of TYPE_USER has the Single Occurrence Table.  This holds a date sorted list of records to help the appointment book quickly find the single-occurrence items for a given day.  There are SglOccurDayCount (in above record) entries in the table, and each one contains a date and record number: <P>
+<pre>
+     Array of SglOccurDayCount * { 
+       0..2 Date (Year, Month, Day) See other document for format of bytes 
+       3..4 Record Number int 
+       } 
+</pre>
+The table's last has an indeterminate date and Record Number=-1.  <P>
+The appointment book keeps track of the time order of records by using three types of linked lists.  The first list is given by the Single Occurrence Table (above).  Each entry in the Single Occurrence table is the head of a doubly-linked list of records for that day.  Each chain is sorted so that Events are first, then all appointments (sorted in ascending time order), then any todo's (only single occurrence todos; checked-off or todo's without carry over).  A visual example: <P>
+<pre>
+Single Occurrence Table              links in data records 
+Date       First Record On That Day  Other records in the chain sorted in ascending time order 
+5/18/1992                            2=>(-1) 
+1/29/1993                            53=>(-1) 
+2/16/1993                            78 <=> 4 <=> 1 <=> 82=>(-1) 
+2/23/1993                            70=>(-1) 
+2/30/1993                            62=>(-1) 
+3/15/1993                            12=>(-1) 
+3/22/1993                            11 <=> 0=>(-1) 
+3/26/1993                            5=>(-1) 
+3/28/1993                            9 <=> 61 <=> 63=>(-1) 
+4/1/1993                             8=>(-1) 
+4/19/1993                            3=>(-1) 
+4/21/1993                            20 <=> 66=>(-1) 
+4/24/1993                            65=>(-1) 
+4/25/1993                            74=>(-1) 
+5/1/1993                             72=>(-1) 
+10/22/1993                           69=>(-1) 
+?/?/?                                (-1) 
+</pre>
+Next, all the multi-occurrence items are linked together in one long doubly-linked chain.  The head of the chain is given in the ApptBook Info structure FirstRptRecNo field.  These aren't sorted in any particular order, since the Apptbook internally generates the repeating occurrences, and interleaves them as necessary.  <P>
+The next linked list is for each repeating todo with checked-off occurrences (stubs).  The "spawner" has a list of the dates of all deleted and checked-off occurrences at its end.  The stubs are represented by single-occurrence records, that for a given repeating todo (spawner) are chained together in a doubly linked chain.  The spawner points to the stub most recently checked off, and all stubs contain the record number of their spawner.  <P>
+<A HREF="IMAGE/__dg1001.gif">Graphic</A><P>
+Appointment Book Field Definitions <P>
+The appointment book files (.ADB) have a fixed field definition layout.  These are the field definitions that the appointment book creates: <P>
+<pre>
+0  fieldtype  char    STRING_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1B 
+   flags      char    0 
+   reserved   int     -- 
+   name       ascii   "Description" 
+1  fieldtype  char    STRING_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x04 
+   flags      char    FIELDDEF_RELATIVE 
+   reserved   int     0 
+   name       ascii   "Location"
+2  fieldtype  char    NOTE_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x08 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Note" 
+3  fieldtype  char    STRING_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x02 
+   flags      char    FIELDDEF_RELATIVE 
+   reserved   int     0 
+   name       ascii   "Category" 
+4  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fAppt 
+   name       ascii   "Appointment" 
+5  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fEvent
+   name       ascii   "Event" 
+6  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fToDo 
+   name       ascii   "ToDo Item" 
+7  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fAlarm 
+   name       ascii   "Alarm" 
+8  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fWeek 
+   name       ascii   "Week View" 
+9  fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fMonth 
+   name       ascii   "Month View" 
+10 fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fCarryForward 
+   name       ascii   "Carry Forward" 
+11 fieldtype  char    BYTEBOOL_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0E 
+   flags      char    0 
+   reserved   int     fCheckedOff 
+   name       ascii   "Completed ToDo Item" 
+12 fieldtype  char    DATE_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x0F 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Start Date" 
+13 fieldtype  char    TIME_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x12 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Start Time" 
+14 fieldtype  char    PRIORITY_FIELD (USER_FIELD+1) 
+   fieldID    char    0 
+   fieldloc   int     0x12 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Priority" 
+15 fieldtype  char    DUEDATE_FIELD (USER_FIELD+2) 
+   fieldID    char    0
+   fieldloc   int     0x14 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Due Date" 
+16 fieldtype  char    TIME_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x16 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "End Time" 
+17 fieldtype  char    DATE_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x16 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Completion Date" 
+18 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     fNoRepeat 
+   name       ascii   "None" 
+19 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     fDaily 
+   name       ascii   "Daily" 
+20 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     appropriate bit mask 
+   name       ascii   "Weekly" 
+21 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     fMonthly 
+   name       ascii   "Monthly" 
+22 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     fYearly 
+   name       ascii   "Yearly" 
+23 fieldtype  char    RADIO_FIELD 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     fCustom 
+   name       ascii   "Custom" 
+24 fieldtype  char    REPEAT_FIELD (USER_FIELD) 
+   fieldID    char    0 
+   fieldloc   int     0x1A 
+   flags      char    0 
+   reserved   int     0 
+   name       ascii   "Repeat" 
+</pre>
+</BODY>

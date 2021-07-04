@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 03h: Set RTC Time </TITLE></HEAD>
+<BODY>
+<H3>AH = 03h: Set RTC Time </H3><P>
+This function sets the time in the real-time clock.  Also, this function sets bit 7 of the BIOS RAM variable [SysFlags].  <P>
+<UL><LI>Input: AH = 03h <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <BR>
+DL = 01h if Daylight Saving time <BR>
+     00h if Standard time <P>
+</UL>
+<UL><LI>Notes: The HP palmtop does not use or modify the Day Light Savings flag.  It is returned for compatibility only.  </LI><P>
+<LI>Output: AH = 00h <BR>
+Carry Clear <P>
+</UL>
+<UL><LI>Error conditions: Carry Set if RTC inputs invalid </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

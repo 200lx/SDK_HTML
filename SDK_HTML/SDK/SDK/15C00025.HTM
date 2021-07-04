@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Performance Impact </TITLE></HEAD>
+<BODY>
+<H3>Performance Impact</H3>
+The display controller accesses RAM at the speed set by the DspClk bits in the DspSpd
+register.  The display controller's internal state machines also run at this speed.<P>
+In a text mode display, the display controller makes one access to the frame buffer for
+every character displayed.  It also makes one access to the font buffer for every scan
+line of every character.  Therefore, the number of accesses (per frame) is equal to the
+number of characters in the frame times 1 plus the number of scan lines in a character.
+The display controller requires 9 additional clocks per active line in the display plus 5
+additional clocks per character row.  Put all of this together, and the se equations can
+be used to determine the performance impact of a given text mode:<P>
+    <UL>clocks = (HorzDsp * VertDsp) * (2 + MaxScan) + 9 * VertDsp * (1 + MaxScan) + 5 * VertDsp</UL><P>
+    <UL>access_time_per_frame = clocks * 2 * DspClk_divider / HFO</UL><P>
+    <UL>frame_time = (1 + Rowtime) * 200 / 1193182</UL><P>
+    <UL>performance_impact = access_time_per_frame / frame_time * 100%</UL><P>
+where DspClk_divider is 1.0, 1.5, 2.0, or 3.0 according to the DspClk bits in the DspSpd
+register.  This table gives the performance impact of some text displays with a frame
+rate of 90Hz.<P>
+
+
+<U>Performance Impact for text modes</U><P>
+<PRE>
+Attribute name          Attribute
+==========================================================================================
+Physical size           80x25   64x18   40x25   40x16
+------------------------------------------------------------------------------------------
+Character size          8x8     10x11   8x8     16x12
+------------------------------------------------------------------------------------------
+Frame buffer accesses   2000    1152    1000    640
+------------------------------------------------------------------------------------------
+Font buffer accesses    16000   12672   8000    7680
+------------------------------------------------------------------------------------------
+Clocks per frame        19925   15696   10925   10125
+------------------------------------------------------------------------------------------
+Performance Impact      22.7%   17.9%   12.5%   11.6%
+------------------------------------------------------------------------------------------
+</PRE>
+
+In a graphics mode, the display controller makes one access to the frame buffer for every
+16 pixels (high resolution) or 8 pixels (low resolution).  Therefore, there are 8000
+accesses per frame for CGA graphics modes, regardless of the resolution.  There are only
+1920 accesses in Jaguar graphics mode.  The display controller requires 9 additional
+clocks per active line in the display.  The following equation can be used to determine
+the number of clocks required by a given graphics mode:<P>
+    <UL>clocks = ((HorzDsp + 9) * VertDsp) * (1 + MaxScan)</UL><P>
+The performance impact can then be found using the same equations as for text modes.
+This table gives the performance impact of some graphics displays with frame rates of
+60Hz or 90Hz.<P>
+
+<U>Performance Impact for graphics modes</U><P>
+<PRE>
+Attribute name          Attribute
+==========================================================================================
+Physical size           320x200     320x200     640x200     240x128
+------------------------------------------------------------------------------------------
+Colors                  4           4           2           2
+------------------------------------------------------------------------------------------
+Frame rate              90 Hz       60 Hz       60 Hz       60 Hz
+------------------------------------------------------------------------------------------
+Frame buffer accesses   8000        8000        8000        1920
+------------------------------------------------------------------------------------------
+Clocks per frame        9800        9800        9800        3072
+------------------------------------------------------------------------------------------
+Performance Impact      11.2%       7.5%        7.5%        2.3%
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

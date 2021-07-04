@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_DeleteRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_DeleteRecord </H3><P>
+DB_DeleteRecord deletes a record.  If <I>viewptindex</I> != NULL, then
+<I>viewptindex</I> returns the index at which the record was removed.  <P>
+<UL><LI><Pre>Syntax:             int DB_DeleteRecord(DBBLOCK *dblk, char recordtype, 
+                    RECORDNUM recordnum, int *viewptindex); </LI><P>
+<LI>Returns:            DB_OK          Record was deleted.  <P>
+                    DB_NOTFOUND    Recordnum is not in the database.  <P>
+                    DB_READ        Cannot read the disk.  <P>
+                    DB_SEEK        File is probably corrupt.  <P>
+                    DB_DELETED     Record is already deleted.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

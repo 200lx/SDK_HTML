@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Serial Port (16450 Compatible UART) </TITLE></HEAD>
+<BODY>
+<H3>Serial Port (16450 Compatible UART)</H3>
+<PRE>
+I/O      R/W
+Address  Mode    Description
+==========================================================================================
+03F8h    W       UART transmitter holding register, which contains the character to be
+                 sent bit 0, the least significant bit, is sent first. bits 7-0 contains
+                 data bits 7-0 when Divisor Latch Access Bit (DLAB) = 0 (03FBh)
+------------------------------------------------------------------------------------------
+03F8h    R       UART receiver buffer register, which contains the received character
+                 bits 7-0 contains data bits 7-0 when DLAB = 0
+------------------------------------------------------------------------------------------
+03F8h    R/W     UART divisor latch, low byte;
+                 Both divisor latch registers store the baud rate divisor.
+                 bits 7-0   bits 7-0 of divisor when DLAB = 1
+------------------------------------------------------------------------------------------
+03F9h    R/W     UART divisor latch, high byte, where:
+                 bits 7-0   bits 15-8 of divisor, when DLAB = 1
+------------------------------------------------------------------------------------------
+03F9h    R/W     UART interrupt enable register when DLAB = 0; allows the four controller
+                 interrupts to enable the chip interrupt output signal
+                 bits 7-4 = 0  reserved
+                 bit 3    = 1  modem status interrupt enable
+                 bit 2    = 1  receiver line status interrupt enable
+                 bit 1    = 1  transmitter holding register empty interrupt enable
+                 bit 0    = 1  received data available interrupt enable
+------------------------------------------------------------------------------------------
+03FAh    R       UART interrupt ID register;
+                 Information about a pending interrupt is stored here.  When this
+                 register is addressed, the highest priority interrupt is held and no
+                 other interrupts are acknowledged until the CPU services that interrupt.
+                 bits 7-3 = 0  reserved
+                 bits 2-1      Identity of the pending interrupt with highest priority
+                          = 11 receiver line status interrupt: highest priority
+                          = 10 received data available: second priority
+                          = 01 transmitter holding register: third priority
+                          = 00 modem status interrupt: lowest priority
+                 bit 0    = 0  interrupt pending, contents of register can be used as a
+                               pointer to the appropriate interrupt service routine
+                          = 1  no interrupt pending
+------------------------------------------------------------------------------------------
+03FBh    R/W     UART Line Control Register, where:
+                 bit 7    = 0  Receiver buffer, transmitter holding or interrupt enable
+                               register access (DLAB)
+                 bit 7    = 1  divisor latch access
+                 bit 6    = 1  set break enabled (output = space)
+                 bit 5         stick parity
+                 bit 4    = 0  odd parity
+                          = 1  even parity
+                 bit 3    = 1  parity enable
+                 bit 2    = 0  1 stop bit
+                          = 1  1.5 stop bits if bits 1-0 = 00, else 2 stop bits
+                 bits 1-0 = 00 5 bit word length
+                          = 01 6 bit word length
+                          = 10 7 bit word length
+                          = 11 8 bit word length
+------------------------------------------------------------------------------------------
+03FCh    R/W     UART Modem Control Register
+                 bits 7-4 = 0  reserved
+                 bit 3    = 1  enable UART interrupt
+                 bit 2    = 0  reserved
+                 bit 1    = 0  Request to Send inactive
+                          = 1  Request to Send active
+                 bit 0    = 0  Data Terminal Ready inactive
+                          = 1  Data Terminal Ready active
+------------------------------------------------------------------------------------------
+03FDh    R       UART Line Status Register, where:
+                 bit 7 = 0     reserved
+                 bit 6 = 1     transmitter shift and holding registers empty
+                 bit 5 = 1     transmitter holding register is empty
+                 bit 4 = 1     break interrupt
+                 bit 3 = 1     framing error
+                 bit 2 = 1     parity error
+                 bit 1 = 1     overrun error
+                 bit 0 = 1     data ready
+------------------------------------------------------------------------------------------
+03FEh    R       UART Modem Status Register
+                 bit 7 = 0     Data Carrier Detect inactive
+                       = 1     Data Carrier Detect active
+                 bit 6 = 0     Ring Indicator inactive
+                       = 1     Ring Indicator active
+                 bit 5 = 0     Data Set Ready inactive
+                       = 1     Data Set Ready active
+                 bit 4 = 0     Clear to Send inactive
+                       = 1     Clear to Send active
+                 bit 3 = 1     Data Carrier Detect changed state
+                 bit 2 = 1     Ring Indicator changed state
+                 bit 1 = 1     Data Set Ready changed state
+                 bit 0 = 1     Clear to Send changed state
+------------------------------------------------------------------------------------------
+03FFh    R/W     UART scratch pad register
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

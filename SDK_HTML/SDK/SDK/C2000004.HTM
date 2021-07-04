@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BIOS RAM Definition </TITLE></HEAD>
+<BODY>
+<H1>BIOS RAM Definition </H1><P>
+This section describes how memory is organized and used by the BIOS.  <P>
+<PRE>
+           Table 1:
+                               FFFFFh
+    CPU Address Space
+    -------------------------- F9000h
+    28KB hard mapped BIOS ROM 
+    -------------------------- F0000h
+    36KB hard mapped ROM
+    --------------------------
+
+    4 - 16KB Banks             E0000h
+
+    --------------------------
+
+    4 - 16KB Banks             D0000h
+
+    --------------------------
+
+    1 - 64KB Bank              C0000h
+
+    -------------------------- BC000h
+    16KB hard mapped ROM
+    -------------------------- B8000h
+    CGA Frame Buffer
+    -------------------------- B4000h
+    16KB hard mapped ROM
+    -------------------------- B0000h
+    MDA Frame Buffer
+    --------------------------
+
+    64KB hard mapped OS Fcns   A0000h
+
+    -------------------------- Variable*
+    OS Data
+    --------------------------
+
+
+    Application Program Area   
+                               Variable*
+
+    -------------------------- Variable*
+    DOS
+    -------------------------- 00600h
+    DOS Data Area
+    -------------------------- 00400h
+    BIOS Data Area
+    -------------------------- 00000h
+    Interrupt Vectors
+    --------------------------
+</PRE>
+<P>
+* The size of the Disk Operating System area varies since optional drivers and buffers may occupy variable amounts of RAM.  <P>
+</BODY>
+</HTML>

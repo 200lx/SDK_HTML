@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_valid_api_fnct </TITLE></HEAD>
+<BODY>
+<H3>m_valid_api_fnct </H3>
+This function returns the status of a function.
+<PRE><UL>
+<LI>Syntax:         int m_valid_api_fnct(ClassFnct)
+<LI>Parameters:     int ClassFnct - The number of the Class/Function being checked.
+<LI>Returns:        0 - if the function is implemented.
+                API_FNCT_UNIMPLEMENTED (-1) - if the function is NOT implemented.
+                API_FNCT_DISABLED (-2) - if the function is implemented, but disabled.
+                API_CLASS_UNIMPLEMENTED (-3) - if the class is NOT implemented.
+                ERROR_INVALID_CLASS - if invalid class number specified.
+                Return values are defined in SysDefs.h.
+</UL></PRE>
+</BODY>
+</HTML>

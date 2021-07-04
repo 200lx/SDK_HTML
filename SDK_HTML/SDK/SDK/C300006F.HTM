@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Parameter-Related Errors </TITLE></HEAD>
+<BODY>
+<H3>Parameter-Related Errors </H3><P>
+Parameter related errors do not return an error indication.  The Int 14h BIOS services checks the following parameter-related conditions when it receives input: <P>
+<UL><LI>The function# (AH) is in the range (0-3).  </LI><P>
+<LI>The port# (DX) is in the range (0-3).  </LI><P>
+<LI>The port# (DX) exists in hardware (Base I/O Address in EIADRTBL RAM).  </LI><P>
+</UL>If any of the conditions above are not true, the requested service is not performed, and all CPU registers are returned intact.  <P>
+</BODY>
+</HTML>

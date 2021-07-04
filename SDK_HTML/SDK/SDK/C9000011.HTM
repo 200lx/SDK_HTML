@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>StaticRect </TITLE></HEAD>
+<BODY>
+<H3>StaticRect </H3><P>
+StaticRect is a rectangle used to delimit screen items in a dialog box where a GroupBox would not be wanted.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: </LI><BR>
+These valuse determine the coordinates (x,y) to display the rectangle at and the size (w,h) of it.  <P>
+</UL>
+<UL><LI>PLHRES Title:                Not used.  </LI><P>
+<LI>PLHDATA Data:                Not used.  </LI><P>
+<LI>UINT LogicalSize:                Not used.  </LI><P>
+<LI>UINT Style: </LI><BR>
+If the style RECT_SHADOW is being used,StaticRect displays the rectangle with a shadow around the right and bottom edges of it.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent:                Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys:                Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu:                Used by the Object class handler.  </LI><P>
+<LI>UINT Selection:                Not used.  </LI><P>
+<LI>UINT WindowTop:                Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>KEYSTROKE:                Passed to the Object class handler.  </LI><P>
+<LI>CREATE: </LI><BR>
+StaticRect sets the STYLE_NOFOCUS bit while clearing the STYLE_LEAF bit.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, StaticRect converts the window client size, specified in terms of text characters, to the size of the entire window in terms of display units.  This is done by multiplying w and h by the width of the specified window font and then ad ding the size of any window border and shadow.  StaticRect always passs the message to the Object class handler.  <P>
+</UL>
+<UL><LI>DISAPPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, StaticRect converts w and h back to the size of just the window's client area, which doesn't include and border or shadow size, in terms of text characters.  StaticRect passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+The StaticRect handler draws the rectangle with or without a border, depending on STYLE_NOBORDER.  If a border is specified, the rectangle is drawn with or without shadow, depending on the RECT_SHADOW style.  SaticRect always draws the rectangle as a white box with a black outline, with a gray shadow that appears to the right and below the rectangle.  Note that both the shadow and border size are included in the total w and h of the window.  The StaticRect handler responds to the Data parameter submessage DRAW_FRAME.  <P>
+</UL>
+<UL><LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

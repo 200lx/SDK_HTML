@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 10h Font Support </TITLE></HEAD>
+<BODY>
+<H3>Int 10h Font Support </H3><P>
+The HP palmtop contains bitmap character data in ROM for six code pages in a somewhat compressed form (single representation for each unique character) in a font structure (ROMFONTS).  Four different-sized fonts are available in each code page.  In addition, support is provided for maintenance and display of localized fonts and special symbols that are not built-in.  <P>
+When in use, font and other bitmap data reside in a dedicated 16-KB RAM buffer (Bitmap buffer) that is not generally mapped into the CPU Address space.  While the Bitmap buffer is at a fixed location on one of the NRAS[i] RAM chips, its actual location is system configuration dependent (dependent on the size and number of RAM chips present).  The location can be determined from the contents of the BIOS RAM Variable &quot;FntReg&quot; after powerup.  The default code page on powerup is 437 (US).  <P>
+<PRE>
+Code Page:  437  850           852     860       863            865 
+----------------------------------------------------------------------
+Country  :  US   Multilingual  Slavic  Portugal  Canada-French  Norway
+
+
+Bitmap ID    Char Size   Display 
+================================
+0001h        6x8         40x16 
+--------------------------------
+0002h        16x12       40x16 
+--------------------------------
+0004h        8x8         80x25 
+--------------------------------
+0008h        10x11       64x18 
+--------------------------------
+</PRE>
+<BR>
+<UL><LI>Bitmap IDs = 0001h, 0002h, 0004h, 0008h are reserved for specific font sizes.  </LI><P>
+<LI>Bitmap IDs = 0010h, 0020h, 0040h, 0080h are reserved for built-in symbol tables.  </LI><P>
+<LI>Bitmap IDs = 2n for 8&lt;=n&lt;=15 are reserved for ISV/User fonts or symbol tables.  </LI><BR>
+
+512 = Reserved for LHAPI (radio buttons, check boxes, check marks, combo box icons) <BR>
+1024= Reserved for HP Apps 10x11 font (smiling Sun, sad face, check, rising sun) <BR>
+2048= Reserved for HP Apps 8x8 font (smiling sun, sad face, check, rising sun) <BR>
+4096= Reserved for Quicken (on 200LX only)
+</UL>
+<P>
+The Font IDs are powers of 2 in order to easily identify the bit map tables currently loaded in RAM memory (there will frequently be more than one).  The Hornet Display controller's &quot;bit doubler&quot; is used in low resolution text modes with Bitmap 0004 to produce the required 16x8 character cell.  Some of the fonts are required by the Hornet Display controller in Text modes.  Some are required only by the software for graphics support, and some are used by both hardware and software.  <P>
+The ROMFONT structure consists of a header followed by four tables (four built-in font sizes).  The bitmap data for built-in symbol tables resides in a similar structure.  The required bitmap data is loaded from the source (font structure, symbol structure, user table) into the Bitmap RAM buffer when required.  Frequently, more than one font will be available in the Bitmap buffer at a given time.  A BIOS service is available that will load the entire ROMFONT structure into a user supplied buffer.  <P>
+BIOS Services are available to load a specified font from ROMFONT into the Bitmap buffer.  The format of the font data that resides in the Bitmap buffer will frequently not be the same format as stored in ROMFONTS.  <P>
+The font loader invokes an Int 06h hook that permits selective modification to the font data that is normally loaded.  <P>
+For compatibility reasons, a copy of the lower half (chars 0-127) of the standard 8x8, byte-wide, contiguous format font resides permanently hard mapped in the CPU ROM space.  A contiguous format font stores all of the scan lines for a given character contiguously.  <P>
+The last half (chars 128-255) of the standard 8x8 (sometimes a 6x8), byte-wide, contiguous format font (in the current code page) is loaded as a default in extended BIOS RAM.  On power-up, the Int 1Fh vector points at this default data.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 05h: Set Display Page </TITLE></HEAD>
+<BODY>
+<H3>AH = 05h: Set Display Page </H3><P>
+This function sets the active display page.  In text modes, pages range from 0 through 7.  In all graphics modes the page number must be 0.  An &quot;instantaneous&quot; screen change can be made in text modes which support multiple pages by building a screen on an undisplayed page, then using this function to display it.  <P>
+<UL><LI>Input: AH = 05h </LI><P>
+AL = Page number: (0-7) </LI><P></UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>
+<B>Note:</B> Video service functions 06h and 07h affect only display RAM.  They are not dependent on the position of the video cursor and have nothing to do with the windowing done in the background to keep the cursor always in view in the zoom text modes.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_cb_info </TITLE></HEAD>
+<BODY>
+<H3>m_get_cb_info </H3>
+This function retrieves information about the current state of the clipboard.
+<PRE><UL>
+<LI>Syntax:         int far m_get_cb_info(int far *count, char far *author, 
+                                      unsigned far *cbsize, unsigned far *cbsize_inuse)
+<LI>Parameters:     int far *count - Number of representations on the clipboard at this 
+                                 time.
+                char far *author - String identifying the author of the clipboard's 
+                                   current contents (up to 48 bytes long) 
+                unsigned far *cbsize - Size of the clipboard (in bytes)
+                unsigned far *cbsize_inuse - Amount of the clipboard in use at this 
+                                             time, including the header (in bytes)
+<LI>Returns:        CB_OK - for success
+                CB_NOT_OPEN - if clipboard access is denied 
+</UL></PRE>
+</BODY>
+</HTML>

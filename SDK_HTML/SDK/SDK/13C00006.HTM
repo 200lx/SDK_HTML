@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Resource Allocation Issues </TITLE></HEAD>
+<BODY>
+<H1>Resource Allocation Issues </H1><P>
+This section discusses the resource allocation issues with respect to IO windows and memory windows.  <P>
+IO windows are not a problem because there are two IO windows available and neither one is used except in support of an IO card in the PCMCIA slot.  The modem card installer, CIC100, will allocate an IO window to modem cards.  In this case the window will be at the standard COM2 location, 2F8h.  Other custom card installers are free to use either or both IO windows as needed for their particular card's needs.  See the CICDEMO program discussed below for an example.  <P>
+Memory windows are another matter.  All of the memory windows are potentially in use whenever the System Manager is running.  The System Manager uses the memory windows to map application code and data, residing on the System ROM, into the address space.  <P>
+This means than no memory window can be dedicated to the PCMCIA slot.  Instead, applications which need memory windows to the PCMCIA slot will need to save the current window mapping, open a memory window to the card and do whatever is needed, and then restore the original window mapping before giving up control of the CPU, except for hardware interrupts.  The system architecture does not allow hardware interrupt handlers to be stored in memory windows, so it is NOT necessary to d isable interrupts during the time the window configuration is changed.  <P>
+The Int 63h Get/Set page map functions should be used to save and restore mapping states; see the BIOS chapter.  The Socket Services functions are not adequate for this purpose because Socket Services deals only with the plug-in card device while the memory windows are used by the System ROM as well.  <P>
+Storage for saving the window state is provided by the application.  Int 63h function AX=0103h returns the number of bytes of storage needed.  For the current HP palmtops, 19 bytes are needed.  For applications which can dynamically allocate memory for this purpose, it is recommended to use this function to determine the storage requirement and act accordingly.  For applications which must do a static allocation, it is recommended to allocate 40 bytes and use this function to check that the allocation is sufficient.  <P>
+The Int 63h Get/Set page map functions read/write the hardware bank control registers to get/set the page mapping state.  <P>
+Note that if CardBIOS is used to read/write to a memory card, then it is not necessary for the application to save and restore the window state because this is done by CardBIOS.  <P>
+<P>
+</BODY>
+</HTML>

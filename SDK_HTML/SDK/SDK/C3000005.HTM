@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 05h: Print Screen Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 05h: Print Screen Interrupt </H1><P>
+This interrupt executes the BIOS Print Screen function, causing the current display page contents to be written to a serial printer.  The printer must be configured as COM1 (port 0).  The full display page is printed, not the display window in zoomed text modes.  The cursor position is saved before the operation is begun, and restored once the printout is complete.  The Print Screen service routine can be initiated by either pressing the [Precast] key on the keyboard, or by issuing an Int 05h in a program.  <P>
+Print screen uses several BIOS services to accomplish the printing.  More information on Int 10h, Fcns {02h, 03h, 08h, and 0Fh}, can be found on <A HREF="C300002D.HTM">pages 3-65</A> through 3-72, and Int 17h, Fcn 00h, can be found on <A HREF="C30000AF.HTM">page 3-120</A>.  <P>
+<H2><A HREF="c3000006.htm">Multiple Print Screen Calls </A></H2><P>
+<H2><A HREF="c3000007.htm">Setup </A></H2><P>
+<H2><A HREF="c3000008.htm">Graphics Video Modes </A></H2><P>
+<H2><A HREF="c3000009.htm">XON/XOFF </A></H2><P>
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+<HTML> 
+<HEAD> 
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. --> 
+<TITLE>Dispatch Table Mechanism</TITLE></HEAD> 
+<BODY> 
+<H3>Dispatch Table Mechanism </H3><P> 
+All API functions are accessed using a two-part number.  A one-byte class
+number in the AH register and a one-byte function number in the AL
+register combine to form the Class/Function number in the AX register.<P> 
+The Class table is an array of far pointers 128 elements deep
+(from 0h to 7Fh).  If a particular class is available, the associated
+element in the class table points to the function table.  For
+unimplemented classes, the pointer value is 0, that is both the segment
+and offset values are 0.<P> 
+The Function table is composed of two parts, the Function Table header and the 
+Function offsets.  The Function Table header holds bank switching, Function Code Segment
+value, the starting and ending Function numbers available in the table,
+and other related information.  <P> 
+The function tables for individual classes are implemented as a linked list.  
+A function table can be overridden by another function table, allowing the functions 
+in the overriding function table to be invoked instead of the original
+functions.  API calls can also invoke the overridden functions, which
+is discussed in &quot;Using Function Table
+Enabling and Disabling&quot; on <A HREF="C7000005.HTM">page 7-192</A>.<P>
+<B>When an API call is made, the following procedure is invoked</B> 
+<OL>
+<LI>Get function table pointer from class table. 
+<LI>If function table pointer is 0, set APIError and return to caller. 
+<LI>Check function table header to determine if the function is present in the table. 
+<LI>If the function is present, invoke the function and on return from the function, 
+return to caller. 
+<LI>Else, get linked function table pointer from function table header, and repeat from 
+step 2.  
+</OL> <P> 
+In the event that the Class/Function is not found, a global variable in the System
+Manager, APIError, is set to the Class/Function which failed.  <P>
+</BODY> 
+</HTML>

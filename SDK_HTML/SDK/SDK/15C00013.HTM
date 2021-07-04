@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>I/O Address Control Registers </TITLE></HEAD>
+<BODY>
+<H3>I/O Address Control Registers</H3>
+The I/O address control registers are read/write registers.  The format of the registers
+is given in the following table:<P>
+
+<PRE>
+Index  Name             Bits   Comments
+==========================================================================================
+-A0h   W0 High Address  [7:0]  8 MSBs of I/O Window 0 Start Address
+                               (I/O address bits [15:8])
+------------------------------------------------------------------------------------------
+-A1h   W0 Low Address   [7:0]  8 LSBs of I/O Window 0 Start Address
+                               (I/O address bits [7:0])
+------------------------------------------------------------------------------------------
+-A2h   W0 Size          [7:0]  any power of 2 from 1 byte to 256 bytes
+------------------------------------------------------------------------------------------
+-A3h   W0 Control       [7:5]  unused
+                        [4]    Overlapping I/O-Address window 0 enable
+                        [3]    I/O Window 0 enable
+                        [2:0]  I/O Window 0 device select code
+------------------------------------------------------------------------------------------
+-A4h   W1 High Address  [7:0]  8 MSBs of I/O Window 1 Start Address
+                               (I/O address bits [15:8])
+------------------------------------------------------------------------------------------
+-A5h   W1 Low Address   [7:0]  8 LSBs of I/O Window 1 Start Address
+                               (I/O address bits [7:0])
+------------------------------------------------------------------------------------------
+-A6h   W1 Size          [7:0]  any power of 2 from 1 byte to 256 bytes
+------------------------------------------------------------------------------------------
+-A7h   W1 Control       [7:5]  unused
+                        [4]    Overlapping I/O-Address window 1 enable
+                        [3]    I/O Window 1 enable
+                        [2:0]  I/O Window 1 device select code
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

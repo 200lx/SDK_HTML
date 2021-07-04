@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Using the Prescaler Bits </TITLE></HEAD>
+<BODY>
+<H3>Using the Prescaler Bits</H3>
+The register at 0bH provides the 5 least significant bits of the prescaler.  The prescaler is driven by the 32.768Khz oscillator, and divides it down to 1Hz.  The RTC is decremented by that 1Hz signal.  The prescaler bits are F16HZ, F8HZ, F4HZ, F2HZ, F1HZ, located at bits 2 through 6 of register 0bH.  The bits should be read twice and compared to verify that they were not changing to a new value when they were being read.<P>
+<P>
+</BODY>
+</HTML>

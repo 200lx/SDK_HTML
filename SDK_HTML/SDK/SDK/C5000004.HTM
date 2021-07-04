@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Data Pointer Considerations </TITLE></HEAD>
+<BODY>
+<H3>Data Pointer Considerations </H3><P>
+The System Manager may move an application's data space under certain circumstances; in particular, the data space may be moved when an application is inactive, or when making memory calls.  If only DS-relative Near pointers are used, then this movement of memory is not a problem, since the System Manager will set up the DS properly prior to activating the application.  If Far data pointers are used, then the application main program segment needs to know the Far data pointer status and fix the pointers on reentry to the application after being pre-empted by another application.  The application does not need to fix up far pointers if they are kept in a far pointer array registered with the System Manager.  See m_reg_far().  <P>
+<H2><A HREF="c5000005.htm">Compiling/Linking Conventions </A></H2><P>
+<H2><A HREF="c5000006.htm">Application Initialization and Termination </A></H2><P>
+<H2><A HREF="c5000007.htm">Interruptible Processes </A></H2><P>
+<H2><A HREF="c5000008.htm">Accessing System Manager Services From C </A></H2><P>
+<H2><A HREF="c5000009.htm">Accessing System Manager Services From ASM </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComAcqReceiveBytes </TITLE></HEAD>
+<BODY>
+<H3>ComAcqReceiveBytes </H3>
+This is a special function which is a one-step <A HREF="c7000030.htm">ComAcquire</A> and <A HREF="c700003f.htm">ComReceiveBytes</A> call.  
+The parameters are nearly identical to ComReceiveBytes; the only difference is the addition of <I>MinRequired</I>.  Note that errors 
+relating to port acquisition and a &quot;short read&quot; may be returned.  <P> ComAcqReceiveBytes attempts to acquire the port non-exclusively, 
+so the caller is responsible for gaining exclusive port access if it is appropriate.  If the port cannot be acquired, the acquisition error is returned.  
+Non-exclusive acquisition is requested, as this function is provided for subsystems that need to poll for receive data.  Note that the companion function, <A HREF="c700002f.htm">ComAcqSendBytes</A>, 
+does gain exclusive access because it will typically be called after polling for and finding an appropriate message.  <P>
+In operation, this function first checks the receive buffer to see if the minimum number of bytes the caller requires is present.  
+If not, then the error ESHORT is returned.  If the required minimum is available, the call copies data from the communication buffer to the caller's 
+buffer, up to the caller's specified maximum number of bytes.  Copying fewer bytes than the caller specified maximum is not an error; neither is copying 
+bytes up to the caller's maximum and leaving some in the communication buffer.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComAcqReceiveBytes(handle_t Handle, char far *Datap, 
+                                              int far *DataLenp, int MinRequired)
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A> 
+                 char far *Datap - Far pointer to the application's data buffer 
+                 int far *DataLenp - Far pointer to an integer which, on entry,
+                                     specifies the maximum number of data bytes to 
+                                     read
+                                     
+                                     On exit, ComAcqReceiveBytes sets this variable to 
+                                     the actual number of bytes placed into the 
+                                     application's buffer.
+                 int MinRequired - This parameter defines the absolute minimum number 
+                                   of bytes that must be present before any bytes are 
+                                   copied to the caller's buffer.  If the caller has no
+                                   minimum requirement, 0 may be specified.  If fewer 
+                                   bytes are available in the communication driver than
+                                   <I>MinRequired</I>, the ESHORT error returns.
+<LI>Returns:         0 - if successful
+                 Any other value indicates an error condition
+<LI>Related Calls:   <A HREF="c700002f.htm">ComAcqSendBytes</A>
+<LI>Comments:        <A HREF="c700003a.htm">ComOpen()</A> must first be called in order to get a valid handle to the 
+                 communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

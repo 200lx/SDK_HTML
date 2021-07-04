@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_new_rep </TITLE></HEAD>
+<BODY>
+<H3>m_new_rep </H3>
+This call prepares the clipboard to receive a representation under the name <I>rep_name</I> or
+appends data to an existing representation.  Multiple representations of the same data
+may be copied to the clipboard.  If necessary, m_new_rep sets up a new representation
+header for the designated representation type.
+<PRE><UL>
+<LI>Syntax:         int far m_new_rep(char far *rep_name)
+<LI>Parameters:     char *rep_name - Name for new representation
+<LI>Returns:        CB_OK - if a new representation is received
+                CB_EXISTS - if it already exists
+                CB_REP_OPEN - if another representation was open
+                CB_ALLOC - if there is insufficient space
+</UL></PRE>
+</BODY>
+</HTML>

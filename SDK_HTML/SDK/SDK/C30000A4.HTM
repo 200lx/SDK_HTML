@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 05h: Write Character to Keyboard Input Buffer </TITLE></HEAD>
+<BODY>
+<H3>AH = 05h: Write Character to Keyboard Input Buffer </H3><P>
+This function writes the scancode and character code in CX to the keyboard input buffer.  The scancode and character code are placed at the end of the buffer.  The function will return an error status if the buffer is full.  <P>
+<UL><LI>Input: AH = 05h <BR>
+CH = Scancode to write to buffer <BR>
+CL = ASCII character code to write to buffer, or <BR>
+  00h for a special scancode, or <P>
+</UL>
+<UL><LI>Output: AL = 00h if the write succeeded <BR>
+AL = 01h if the write failed due to a full buffer <P>
+</UL>
+<UL><LI>Error conditions: The write will fail if the buffer is full.  </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><B>Note: </B>The condition for return from a call to Int 16h, services {13h, 14h} is a timeout or a particular type of change in the BIOS RAM variable INTLST &quot;([INTLST] AND 11h) # 0)&quot;.  Keyboard make interrupts and successful calls to {Int 16h, Fcn 05h} set Bit1, while UART interrupts set Bit4.  Applications that push keys directly into the keybuffer (without using Int 16h, function 05h), should set Bit1 of INTLST to avoid erratic key execution timing for applications using the Int 16h, Fcn's 13h, 14h.  <P>
+<P>
+</BODY>
+</HTML>

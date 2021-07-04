@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComForceXon </TITLE></HEAD>
+<BODY>
+<H3>ComForceXon </H3>
+This function deasserts flow control to the remote transmitter.  <P>
+ComForceXon permits the remote transmitter to resume transmission.  If XON/XOFF flow control is used, 
+then ComForceXon sends an XON.  If RTS/CTS flow control is used, then the function raises RTS.  If DTR/DSR flow 
+control is used, then the function raises DTR.  <P>
+If the port does not have a flow control method selected, this function is a no-operation.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComForceXon(handle_t Handle) 
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Comments:        ComOpen() must first be called in order to get a valid handle to 
+                 the communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

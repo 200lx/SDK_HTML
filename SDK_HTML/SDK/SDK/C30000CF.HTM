@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 82h: Map/Unmap Card Port Pages </TITLE></HEAD>
+<BODY>
+<H3>AH = 82h: Map/Unmap Card Port Pages </H3><P>
+This function maps a logical page from a plug-in card memory into the physical address page frames.  This function operates on 16 KB pages when requested to map into physical pages 0, 1, 2, or 3, and operates on 64 KB pages when requested to map into physical pages 4 or 8.  <P>
+For physical page numbers 4 and 8, the logical page number must be a multiple of 4 so that the logical page starts on a 64 KB boundary.  In this case four consecutive logical pages are mapped into the C or D bank corresponding to physical pages 4 or 8, respectively.  <P>
+This function can also unmap physical pages, which makes the previously mapped logical pages inaccessible for reading or writing.  A physical page is unmapped by setting its associated logical page to FFFFh.  <P>
+This function is intended to be used by the XIP loader to map XIP code and data into the CPU address space for execution.  It is subsequently used to unmap card pages prior to unlocking a port.  <P>
+<UL><LI>Input: AH = 82h <BR>
+AL = Physical page number, 0, 1, 2, 3, 4, or 8 <BR>
+BX = Logical page number <BR>
+DX = Port number <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success (No Error) <BR>
+8Ah = Error - Invalid BX <BR>
+8Bh = Error - Invalid AL <BR>
+A0h = Error - Invalid DX <BR>
+A1h = Error - Port not locked <P>
+</UL>
+<UL><LI>Error conditions: As given in AH </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><P>
+</BODY>
+</HTML>

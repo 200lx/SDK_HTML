@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Built-in clients (CardDrv and CIC100) </TITLE></HEAD>
+<BODY>
+<H1>Built-in clients (CardDrv and CIC100) </H1><P>
+CardDrv is a DOS disk device driver which supports RAM cards and SunDisk cards in drive A.  CardDrv is a client of CardBIOS, which support CardDrv with card change events and media read/write functions.  See the DOS chapter for more information on this driver.  <P>
+CIC100 (Card Installation Client for the 100LX) is a modem card installer.  CIC100 is a CardBIOS client, which supports CIC100 with card change events.  Since CardBIOS does not support IO cards, CIC100 goes directly to Socket Services as needed.  <P>
+Both CardDrv and CIC100 examine each card in response to a card insertion type event received from CardBIOS.  If CardDrv recognizes the card then drive A has a disk inserted.  If CIC100 recognizes the card, the card and socket are configured as COM2 and the BIOS data area at 40:2 is filled in with the address of COM2.  <P>
+In response to a card removal event, CardDrv and CIC100 undo any card configuration that was previously in effect.  <P>
+<H2><A HREF="13c00009.htm">CardBIOS </A></H2><P>
+<H2><A HREF="13c0000a.htm">Socket Services 1.01 </A></H2><P>
+</BODY>
+</HTML>

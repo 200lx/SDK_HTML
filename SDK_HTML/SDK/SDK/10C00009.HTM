@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Signature </TITLE></HEAD>
+<BODY>
+<H3>Signature </H3>
+<p>
+The first 4 bytes in the file, the Database Signature, are.
+</p>
+<pre>
+Offset  Name    Type  Contents 
+------  ------  ----  --------
+0...3   FileID  char  0x68 0x63 0x44 0x00 
+</pre>
+<p>
+Following the signature are the database records.  Only the first record
+(the database header) is in a fixed location.  All other records may occur
+in any order in the file.
+</p>
+</BODY>
+</HTML>

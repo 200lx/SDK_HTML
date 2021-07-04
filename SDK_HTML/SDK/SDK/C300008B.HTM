@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 51h: Mailbox Service (Store/Retrieve word at MailBox[i]) </TITLE></HEAD>
+<BODY>
+<H3>AH = 51h: Mailbox Service (Store/Retrieve word at MailBox[i]) </H3><P>
+This function provides storage and retrieval of any of 8 words in extended BIOS RAM.  The built-in applications use the first few of these locations.  The others are available.  Inputs include a direction flag by specifying Store or Retrieve, and an index specifying the word location in the mailbox.  In addition, if the operation is a store, the word to be stored is an input.  The service exits CS iff the value in AL is invalid.  <P>
+<B>Mailbox Allocation </B>
+<PRE>
+Index   Usage 
+=================================================
+00h     TSR keybez load segment. 
+-------------------------------------------------
+01h     System Manager loaded if value is 7072h.
+-------------------------------------------------
+02h     /// Currently Unallocated /// 
+-------------------------------------------------
+03h     /// Currently Unallocated ///
+-------------------------------------------------
+04h     /// Currently Unallocated /// 
+-------------------------------------------------
+05h     /// Currently Unallocated /// 
+-------------------------------------------------
+006h    /// Currently Unallocated /// 
+-------------------------------------------------
+07h     /// Currently Unallocated /// 
+-------------------------------------------------
+</PRE>
+<UL><LI>Input: AH = 51h.  <BR>
+AL[7] = Direction Flag (0=Recall, 1=Store) <BR>
+AL[6;0] = i (Index: 0-7) <BR>
+BX = Value to store (if AL[7]=1) <P>
+</UL>
+<UL><LI>Output: CS - Error (Invalid AL) <BR>
+CC - If Store, (bx) --&gt; MailBox[i] <BR>
+     If Recall, (ax) &lt;-- MailBox[i] <P>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

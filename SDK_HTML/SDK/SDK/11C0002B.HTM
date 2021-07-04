@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_SetCurrentViewpt </TITLE></HEAD>
+<BODY>
+<H3>DB_SetCurrentViewpt </H3><P>
+This functon sets the currently used viewpoint (filter and sort) used by the database.  DB_SetCurrentViewpt saves any changes to the previous viewpoint table, and loads the new viewpoint definition and viewpoint table.  If any records have changed since the specified viewpoint table was saved, those are updated with respect to this viewpoint.  <P>
+<UL><LI><Pre>Syntax: </LI><P>
+<LI>Returns:            DB_OK          New viewpoint in effect.  <P>
+                    DB_NOTFOUND    Cannot find requested viewpoint record.  <P>
+                    DB_MEMORY      Not enough memory to load new viewpoint 
+                                   definition/table.  <P>
+                    DB_SEEK        File is probably corrupt.  <P>
+                    DB_WRITE <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

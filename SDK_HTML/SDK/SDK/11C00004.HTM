@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Create </TITLE></HEAD>
+<BODY>
+<H3>DB_Create </H3><P>
+This function creates an empty database file.  <I>DBBLOCK</I> is a pointer to a structure
+ that the database maintains.  This block allows the engine to keep track of the opened database.  The DBBLOCK structure can be examined, but should not be modified.  <P>
+If a file exists with the path pointed to by <I>filename</I>, DB_Create removes that file.  If the database creation fails either because of lack of disk space or lack of memory, the partial database file is removed.  <P>
+The <I>filetype</I> is a unique character supplied by the application that indicates the type of file (i.e.  Appointment book, Phone Book, etc.).  This field is not used by the database, but can be used by applications to determine if the database file is of the proper type.  <P>
+Creating a database with <I>filetype=0</I> allows that file to be read into any database application; DB_Opening an existing database file and passing
+<I>filetype</I>=0 allows the application to open any database file type.  The file types of the built-in applications are <P>
+<UL><LI><Pre>'D'              Phonebook/General Database file (same format).  All data in 
+                 records accessible through fielddefs.</Pre>
+ </LI><P>
+<LI><Pre>'N'              Notetaker file.  All data is accessible through
+                 FieldDefs. </Pre></LI><P>
+
+<LI><Pre>'2'              Appointment book file.  Not all data is accessible through 
+                 fielddefs.  Appointment Book files may have embedded links to other
+                 records.</Pre>  </LI><P>
+<LI><Pre>'W'              World Time file.  All data in records is accessible, however
+                 most data records are ROM resident.  World Time files require
+                 <I>ROMCallBack</I> and <I>ROMCount</I> to be correctly set to
+                 open properly.</Pre>  </LI><P>
+</UL><I>FieldCallBack</I> is a pointer to a function that is used to sort and filter unknown database formats.  It can be NULL if the application does not have any call back fields.  See &quot;User-defined Field types (FieldCallBack)&quot; on <A HREF="11C00038.HTM">page 11-441</A> for more details.  <P>
+The <I>ROMCount</I> and <I>ROMCallBack</I> fields are 0, unless the application requires ROM record support.  See Miscellaneous:ROMCallBack for more details.  <P>
+The date and time of the file's creation are recorded in the last reconciled field in the header block.  They will indicate the original creation date of the file (unlike DOS's file timestamp).  Reconciliation software should reset this time and date after reconciling the contents with another copy of the database.  <P>
+<UL><LI><Pre>Syntax:             int DB_Create(DBBLOCK *dblk, char *filename, char filetype,
+                    int (far *FieldCallBack)(),int ROMCount, int (far*ROMCall-
+                    Back)());</Pre> </LI><P>
+<LI><Pre>Returns:            DB_OK           Database was created.<P>
+                    DB_CREATE       File cannot be created.  (not enough
+                                    handles, bad filename, etc.)<P>
+                    DB_MEMORY      Not enough memory to open the created file.<P>
+                    DB_WRITE       Not enough disk space; bad media.<P>
+                    DB_PROTECTED   File is on protected media.<P>  
+                    DB_OPEN        Created file cannot be opened.<P>
+                    DB_READ        Cannot read from new file.<P>
+                    DB_SEEK        Cannot seek within file; media may bad.</Pre></LI><P>
+<LI><Pre>May Move Memory:    Yes </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Special SunDisk card handling </TITLE></HEAD>
+<BODY>
+<H3>Special SunDisk card handling </H3><P>
+SunDisk cards have high power requirements relative to the built-in palmtop components.  Consequently, the BIOS software shutdown is not sufficient to keep the unit from going into backup mode when writing to a SunDisk card.  Possible card corruption can result if power is lost (e.g., by going into backup mode) while writing to a SunDisk card.  To prevent this from happening, extra low battery protection was built into CardDrv.  <P>
+When CardDrv is writing to a SunDisk card, additional battery measurements are made before and after writing to the card.  If the battery is too low to continue, CardDrv posts a software shutdown request and waits for the low battery condition to be corrected.  After the system returns to operation, the write continues.  In this particular case, media changes (which are normally signaled on resume) are suppressed so that the write can continue without DOS ever being the wiser.  <P>
+<P>
+</BODY>
+</HTML>

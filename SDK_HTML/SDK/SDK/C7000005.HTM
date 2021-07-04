@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Using Function Table Enabling and Disabling </TITLE></HEAD>
+<BODY>
+<H3>Using Function Table Enabling and Disabling </H3><P>
+Consider the following scenario: Function table F0, having functions A0,
+B0, and C0, is overridden by function table F1, having functions A1 and
+B1.  If A1 needs to call A0, A1 must precede the call to A0 by an
+<A HREF="c700000a.htm>m_disable_fnct_tbl</A> call and follow it with an <A HREF="c700000b.htm>m_enable_funct_tbl</A> call. <P> 
+However, certain side effects occur when enabling and disabling
+function tables.  By disabling Function A1, Function B1 also gets
+disabled since they share the same function table.  So if A1 calls A0
+and A0 needs to make a call to B1, B0 will be invoked instead of B1. 
+If B1 needs to be invoked in the preceding scenario, A1 and B1 should
+be placed in two different function tables.  <P>
+</BODY>
+</HTML>

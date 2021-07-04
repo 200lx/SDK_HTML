@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Programmable Interval Timer (8254 Compatible) </TITLE></HEAD>
+<BODY>
+<H3>Programmable Interval Timer (8254 Compatible)</H3>
+<PRE>
+I/O      R/W
+Address  Mode Description
+==========================================================================================
+0040h    R/W  PIT counter 0
+------------------------------------------------------------------------------------------
+0041h    R/W  PIT counter 1
+------------------------------------------------------------------------------------------
+0042h    R/W  PIT counter 2
+------------------------------------------------------------------------------------------
+0043h    W    PIT control word, where:
+              bits 7-6   = 00 select counter 0
+                         = 01 select counter 1
+                         = 10 select counter 2
+                         = 11 read back command
+              bits 5-4   = 00 counter latch command
+                         = 01 read/write counter bits 0-7 only
+                         = 10 read/write counter bits 8-15 only
+                         = 11 read/write counter bits 0-7 first, then bits 8-15
+              bits 3-1   = 000 mode 0 select
+                         = 001 mode 1 select
+                         = x10 mode 2 select
+                         = x11 mode 3 select
+                         = 100 mode 4 select
+                         = 101 mode 5 select
+              bit 0      = 0 binary counter 16 bits
+                         = 1 BCD counter
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

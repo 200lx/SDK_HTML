@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_setpat </TITLE></HEAD>
+<BODY>
+<H3>m_setpat </H3>
+This call builds the MATCH structure used for searching for files with the m_match function.
+<PRE><UL>
+<LI>Syntax:        int far m_setpat(MATCH far *matchp, char far *bp, int len, int sys) </LI>
+<LI>Parameters:    MATCH far *matchp - Pointer to the MATCH structure </LI>
+               char far *bp - Pattern to match, including path information
+               int len - Length of <I>bp</I>
+               int sys - If <I>sys</I> is non-zero, the path information is built from the
+                         system directory.</LI>
+<LI>Returns:       0 - if successful 
+               Any other value indicates an error condition.</LI>
+<LI>Related Calls: <A HREF="c7000074.htm">m_match</A></LI>
+</UL></PRE>
+</BODY>
+</HTML>

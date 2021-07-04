@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Far Pointers </TITLE></HEAD>
+<BODY>
+<H3>Far Pointers </H3><P>
+Some of the calls to the database engine (namely those marked as &quot;May Move Memory&quot;) may request more/less memory to expand/shrink viewpt, lookup or other memory blocks.  This request will cause far pointers pointing at SysMgr far memory blocks to change.  In particular cases, these calls may not move memory.  However, to be completely safe reload any far pointers that point into far memory blocks after calling these functions.  Applications that always access the far memory block by double indirection should have nothing to worry about.  <P>
+<P>
+</BODY>
+</HTML>

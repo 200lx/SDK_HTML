@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Required handler functions </TITLE></HEAD>
+<BODY>
+<H3>Required handler functions </H3><P>
+Support for seven functions is required: <P>
+<UL><LI>INIT <BR>
+Called only once by the system manager.  This call enables the handler to perform any integrity checks and to optionally hook itself into the system.  At this point the handler may make DOS calls as well as most system manager calls.  If the handler will need to make DOS or system manager calls at a later time, it must get a service request entry (F_M_GET_SERVICE_ENTRY).  System manager returns two far pointers.  One pointer is to the allocated service request entry and the other points to a service request data structure (see next page).  The remaining requests (besides INIT) are usually called by an application directly to the service handler via the handler's SVC_user_entry point.  The calling application passes a far pointer to a buffer.  The first byte of the buffer contains the command (equates for defined commands are located in SYSDEFS.H).  <P>
+</UL>
+<UL><LI>LINK TO APP <BR>
+Enables an application to link into the TSR service handler.  The second byte of the passed buffer contains the app's TCB entry #.  The handler sets the TSR service request field SVC_app_index to this value. </UL> <P>
+<UL><LI>UNLINK FROM APP <BR>
+Dissociates linked app from the TSR service handler.  No parameters are passed. </UL> <P>
+<UL><LI>HOOK DEVICE <BR>
+Tells TSR service handler to capture necessary resources to provide service.  This typically involves capturing interrupts, etc. </UL> <P>
+<UL><LI>UNHOOK DEVICE <BR>
+Unhook any hooked interrupts and restore any changed system resources back to their original states.  Note that the handler should check the current value of any hooked interrupt vector for indications that it has subsequently been hooked by another program.  If it is not safe to restore the original interrupty vector, it must fail the request.  The requesting app can then free the overlapped interrupt vector by requesting other handlers to unhook, returning back to the taget handler and re-issueing the unhook request.  Finally it must request all other unhooked handlers to re-hook themselves.</UL> <P>
+<UL><LI>SERVICE COMPLETE <BR>
+Called when an application (typically in background mode) has completed processing data from a handlers buffer, or has data ready to by processed by the handler. </UL> <P>
+<UL><LI>SERVICE UNLOAD <BR>
+TSR service handler must unhook interrupts, release the service request entry and free the reserved static memory allocated by sysmgr.  Failure may occur as in unhook command. </UL> <P>
+<P>
+</BODY>
+</HTML>

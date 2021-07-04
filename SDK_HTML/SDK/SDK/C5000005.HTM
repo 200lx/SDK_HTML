@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Compiling/Linking Conventions </TITLE></HEAD>
+<BODY>
+<H3>Compiling/Linking Conventions </H3><P>
+When compiling and linking System Manager applications, the following conventions must be followed: <P>
+<UL><LI>Applications must be compiled with the /Gs option to eliminate stack checking.  The stack checking provided by the Microsoft compiler uses far pointers that cannot be fixed if memory moves.  </LI><P>
+<LI>There must be at least 256 bytes of application stack space available for System Manager use whenever a System Manager service is called.  Some of the database engine services require a larger stack, and LHAPI calls can nest back to the application many times.  The suggested minimum stack size is 4K.  </LI><P>
+<LI>Applications must link with the System Manager services interface module, SCSVC_HP.LIB.  This module contains the c_service function that performs the software interrupt to transfer control to the System Manager services jump table.  </LI><P>
+</UL>If the System Manager provides a given service, that service should be used instead of using a C-library function.  This ensures compatibility and reduces the size of the application's code.  Some specific points to note are <P>
+<UL><LI>Keyboard input must be obtained only by the use of the System Manager m_action function, or task swapping will not work.  </LI><P>
+<LI>Dynamic memory allocations should use m_get_far_block instead of m_alloc.  If the m_alloc or m_alloc_large calls (HP95LX compliant) must be used, don't mix them with m_get_far_block calls.  Standard C library Memory Management functions should not be used.  </LI><P>
+<LI>Elementary C library routines such as strlen and atoi can be used.  </LI><P>
+<LI>System Manager file I/O uses a FILE structure that is not compatible with the FILE structure defined in Microsoft C STDIO.H.  Use care with including STDIO.H and, in particular, don't include both FILEIO.H and STDIO.H in the same module.  </LI><P>
+<LI>The standard C library startup code is not used with System Manager compliant applications.  This may affect the use of some types of C library functions.  Particularly, there is no startup code for floating point math.  It is possible, however, to build startup code that uses an alternate math library.  </LI><P>
+</UL>Avoid initializing data if at all possible.  Initialized data takes up space in the .EXE/.EXM file, whereas un-initialized data takes up no space in the .EXE/.EXM file and is allocated and zeroed automatically by the System Manager at startup time.  <P>
+<P>
+</BODY>
+</HTML>

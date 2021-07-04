@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DOS, TSRs, Interrupt Vectors, and the System Manager </TITLE></HEAD>
+<BODY>
+<H3>DOS, TSRs, Interrupt Vectors, and the System Manager </H3><P>
+There are many ways that DOS can be accessed on the HP palmtop, and three of these ways are relevant to TSRs.  <P>
+Method 1) DOS pre-System Manager (either remove the 100 from your AUTOEXEC.BAT, or use the AppMgr Terminate All selection while in the System Manager).  This method is the best place to load TSR's on the 100LX.  This method allows TSRs to allocate memory that won't subsequently be fragmented by the SysMgr, and all interrupts can be chained before the SysMgr starts grabbing them.  The only bad part about this is if a TSR needs to intercept an interrupt that the System Manager takes over--this special case will be addressed shortly.  <P>
+Method 2) DOS from within the System Manager, but in a &quot;locked&quot; DOS box.  There are two ways to get this locked DOS box; from the AppMgr (put an upside-down !, or Fn+!, as the first character in the comment field).  This is a &quot;sort of&quot; undocumented feature--it is in the help system and manual for the 200LX, and in widespread knowledge on CompuServe/Internet, although it certainly isn't &quot;user intuitive&quot;!  The second way of getting a locked DOS box is a launch of DOS through 123's System command.  DOS in the locked box state cannot be task-switched away from.  The only way to return to the System Manager is to exit the DOS box.  The locked box also prevents the System Manager from fiddling with the interrupt vectors every second or so.  Most TSRs should run fine in this environment, but they will need to be unloaded before you exit the DOS box.  <P>
+Method 3) &quot;Standard&quot; DOS, i.e.  Ctrl+123, DOS from the AppMgr, or DOS from the Filer.  I can't recommend strongly enough that TSR's not be installed in this type of DOS box.  Not only will the memory block allocated by the TSR clog up the System Manager's memory management, but any &quot;stolen&quot; interrupts are very fragile, and are likely to be trampled by the System Manager under a number of circumstances.  <P>
+TSRs usually make use of interrupt vectors.  Since the System Manager takes over some interrupt vectors without &quot;chaining&quot; onto the previous owner, a TSR that is loaded first may not be able to use an interrupt that has been taken over by the System Manager.  It is therefore necessary to be aware of interrupts that are used by the System Manager as listed below: <P>
+<H3>Int 05h </H3><P>
+See &quot;Int 05h - Print Screen Interrupt&quot; for more information.  <P>
+<H3>Int 06h </H3><P>
+HP palmtop specific BIOS service used to signal entering and leaving sleep modes.  <P>
+See &quot;Int 06h: BIOS Hook&quot; for more information.  <P>
+<H3>Int 0Ch </H3><P>
+COM1 Serial Port interrupts.  <P>
+<H3>Int 1Bh </H3><P>
+CTRL-Break interrupt.  <P>
+The System Manager saves the original value and restores it before accessing DOS from the Filer.  See &quot;Int 1Bh - Keyboard Break Interrupt&quot; for more detail.  <P>
+<H3>Int 4Ah </H3><P>
+User alarm called by BIOS when the real-time clock alarm goes off.  <P>
+See &quot;Int 4Ah: User Alarm Interrupt&quot; for more information.  <P>
+<H3>Int 60h,61h </H3><P>
+95LX System Manager support (analogous to Int 7Fh, 7Eh for the 100LX), but with more limited support.  <P>
+<H3>Int 7Fh </H3><P>
+Used for calls to System Manager services (100LX/200LX).  <P>
+<H3>Int 7Eh </H3><P>
+Used by the System Manager to load its DS register.  <P>
+In addition, the System Manager chains into the Int 1Ch, the user timer tick interrupt.  Finally, Int 62h is used by the HP palmtop's Calculator application.  <P>
+<P>
+</BODY>
+</HTML>

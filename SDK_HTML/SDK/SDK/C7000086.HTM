@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Help Structures </TITLE></HEAD>
+<BODY>
+<H3>Help Structures </H3>
+<PRE>
+typedef struct HELPSTRUCT { 
+          unsigned int  wSize;      /* Struct size: For compatibility check */ 
+          char *        pHelpFile;  /* Near ptr to path and name of Help file */ 
+          char *        pHelpData;  /* Near ptr to far ptr to Help data area */ 
+          unsigned int  wHelpRev;   /* Help file rev #: compatibility check */ 
+          char *        pKeyTxt;    /* Near ptr to Bottom Row key text */ 
+} HELPSTRUCT; 
+</PRE>
+<I>pHelpFile</I> is a near pointer to a null terminated file name string (with extension) in the default Data segment.  The name must not contain the country code since the Help System will insert it during initialization, for example LHTEST.HLP would be converted to LHTESTUS.HLP.  <P>
+<I>pHelpData</I> is a near pointer to a far pointer to an area of RAM, of size HELPDATASIZE.  This indirection scheme is being used to take advantage of the System Manager Memory Management Services.  
+<PRE>
+typedef struct HELPMETRICS { 
+         unsigned int wSize;     /* Struct size: For compatibility check */ 
+         unsigned int wHX;       /* Help Screen X coordinate */ 
+         unsigned int wHY;       /* Help Screen Y coordinate */ 
+         unsigned int wHWidth;   /* Help Screen width including shadow */ 
+         unsigned int wHHeight;  /* Help Screen height including shadow */ 
+         unsigned int wSWidth;   /* Help Screen shadow width */ 
+         unsigned int wSHeight;  /* Help Screen shadow height */ 
+} HELPMETRICS; 
+</PRE>
+</BODY>
+</HTML>

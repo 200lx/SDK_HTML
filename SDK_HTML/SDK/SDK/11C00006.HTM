@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Reset </TITLE></HEAD>
+<BODY>
+<H3>DB_Reset </H3><P>
+This function is called if the DB_Open() returns a DB_MAYBEINUSE error.  The user should be prompted to continue, as using an already open database is a recipe for trouble.  DB_Reset resets the internal lock on the file so the next DB_Open will not fail.  DB_Reset should only be called for database files that have not been opened.  See DB_Open for more information.  <P>
+<UL><LI><Pre>Syntax:             int DB_Reset(char *filename); </LI><P>
+<LI>Returns:            DB_OK          Database was reset.  <P>
+                    DB_OPEN        File cannot be opened.  <P>
+                    DB_SIGNATURE   File is not a database file.  <P>
+<LI>May Move Memory:    No </LI><P>
+<}Pre></UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Size Registers </TITLE></HEAD>
+<BODY>
+<H3>Size Registers</H3>
+There are two size registers.  The first size register specifies the size of the NRAS[0]
+device which is mapped into the CPU address space.  The 3-bit value may be configured to
+any multiple of 128 KB between 0 KB and 640 KB.<P>
+The second size register specifies the combined size of the NRAS[1:0] devices that are
+mapped into CPU address space.  The 3-bit value may be configured to any multiple of 128
+KB between 0 KB and 640 KB.  Given these two values, the start and end addresses for both
+NRAS[0] and NRAS[1] can be determined.<P>
+The size register value only specifies the amount of RAM that is mapped into the CPU
+address space.  It does not indicate the amount of RAM that is physically available on
+NRAS[1:0].<P>
+The size of NRCE is fixed at 160 KB.  (See <A HREF="15C00005">page 15-498</A>.)<P>
+Size Register Value = (Device Size / 131072)<P>
+<PRE>
+Index   Name                Reset  Comments
+                            Value
+===================================================================
+-84h    Device Size Reg0    01h    Size of NRAS[0] (128KB default)
+-------------------------------------------------------------------
+-85h    Device Size Reg1    01h    Combined size of NRAS[1:0]
+                                   (128 KB default)
+-------------------------------------------------------------------
+</PRE>
+
+The above reset values result in a size of 0 KB for NRAS[1].  Whenever Device Size Reg0
+and Device Size Reg1 contain the same value, the specified memory is mapped entirely into
+NRAS[0].  If Device Size Reg0 contains a value that is larger than the value in Device
+Size Reg1, the memory size given by Device Size Reg0 is assumed correct and the specified
+memory is again mapped entirely into NRAS[0].  To map the specified memory entirely into
+NRAS[1], Device Size Reg0 must contain the value of 00h and Device S ize Reg1 must
+contain a value greater than 00h.<P>
+If a device is configured with a size that is larger than its actual size, several images
+of the device will appear in the allotted address space.<P>
+</BODY>
+</HTML>

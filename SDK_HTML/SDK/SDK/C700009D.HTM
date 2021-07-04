@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_avail_static_mem </TITLE></HEAD>
+<BODY>
+<H3>m_get_avail_static_mem </H3>
+This function returns the total bytes of the largest free block of static RAM that can be allocated.  <P>
+Note that the returned size can vary greatly based upon current system states.  For example, if no RAM applications or DOS applications are currently open, the returned amount also reflects the total available system memory.  If RAM or DOS applications are open, however, then the returned value only reflects the largest block of currently available static RAM.  
+<PRE><UL>
+<LI>Syntax:      ulong int m_get_avail_static_mem(void) </LI>
+<LI>Parameters:  None </LI>
+<LI>Returns:     Total bytes of the largest free block of static RAM that can 
+             be allocated </LI>
+</UL></PRE>
+</BODY>
+</HTML>

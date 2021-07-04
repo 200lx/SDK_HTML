@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Wait State Registers </TITLE></HEAD>
+<BODY>
+<H3>Wait State Registers</H3>
+The number of wait states required by each device can be programmed using the Wait State Registers.  These registers default to the maximum number of wait states and should be programmed to maximize the system performance allowed by the access speeds of the devices present.<P>
+Note that for plug-in cards (NCS[1:0]) which use the wait line (NCWAIT[1:0]), a minimum of 3 wait states must be programmed.  There is also a bus timeout which prevents a card from holding the bus via the NCWAIT lines for more than 32.3 uS.<P>
+In addition, bit [7] of address index -81h controls the refresh rate for the system DRAM.  If bit [7] is clear, 512 refresh cycles are done every 8 mS.  If bit [7] is set, 512 refresh cycles are done every 128 mS.<P>
+NRCE is a special case in that it has two wait state values associated with it.  Since devices connected to NRCE are located on an 8-bit bus, 16-bit accesses require two 8-bit accesses.  The two 8-bit accesses appear as a single extended cycle to the system.  The two wait state values, allow a different number of wait states for each of the two 8-bit accesses.  This can allow performance improvements through the use of specialized devices such as page mode ROM.<P>
+<PRE>
+Index   Bits    Signal            Reset      Comments
+                                  Value
+==========================================================================================
+-80h    [7]     unused
+        [6:4]   NRCE (1st half)   111b       0 to 7 wait states
+        [3]     unused
+        [2:0]   NRCE (2nd half)   111b       0 to 7 wait states
+------------------------------------------------------------------------------------------
+-81h    [7]     Refresh Rate      0b         Refresh cycle of 8mS/128mS
+        [6:2]   unused
+        [1:0]   NRAS[3:0]         11b        0 to 3 wait states
+------------------------------------------------------------------------------------------
+-82h    [7:4]   NCS[1]            1111b      0 to 15 wait states
+        [3:0]   NCS[0]            1111b      0 to 15 wait states
+------------------------------------------------------------------------------------------
+-83h    [7:4]   unused
+        [3:0]   ISA Bus           1111b      0 to 15 wait states
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Deactivate </TITLE></HEAD>
+<BODY>
+<H3>DB_Deactivate </H3><P>
+This function is used before leaving an application on a E_DEACTIV event to make sure the database file handle is closed.  Failing to do this may cause DOS to run out of file handles.  Only the DOS file handle is closed; this does not do garbage collection or any other actions associated with DB_Close.  Note that if multiple database files are open, each should be DB_Deactivated.  <P>
+Deactivation of a file causes the file to be marked read only.  This prevents the user from accidentally removing or modifying the file while it is still open by another application.  <P>
+<UL><LI><Pre>Syntax:             int DB_Deactivate(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          File was deactivated OR file was already
+                                   deactivated.  <P>
+                    DB_OPEN        File was not able to be write protected.  <P>
+<LI>May Move Memory:    No </LI><P>
+<}Pre></UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DISAPPEAR Submessages </TITLE></HEAD>
+<BODY>
+<H3>DISAPPEAR Submessages </H3><P>
+<UL><LI>DISAPPEAR_NORMAL (0): If the window is not employing the STYLE_SAVEUNDER style, the Object class handler will send a DRAW_ALL message to all the other active, visible windows in order to remove this window from the screen.  If the window is employing the STYLE_SAVEUNDER style, and there was enough room in the LHAPI screen save buffer to save the window on APPEARING, the area underneath the window is restored.  </LI><P>
+<LI>DISAPPEAR_NODRAW (1): If the window is not employing the STYLE_SAVEUNDER style, the Object class handler will NOT send a DRAW_ALL message to all the other active, visible windows.  This is useful when each of the children of a parent window is sent a DISAPPEAR message.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,148 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Changes to PSA Code </TITLE></HEAD>
+<BODY>
+<H1>Changes to PSA Code </H1><P>
+This list reflects some of the major changes to the PSA Code to support the BIOS on the HP palmtop.  Effort has been made to maintain PC and HP 95LX compatibility in the user interface (inputs,outputs, and resource utilization) for BIOS routines that provide identical functionality in other HP palmtops.  A number of additional non-standard BIOS services have been added to support features unique to HP palmtops.  <P>
+
+<UL>
+<B><LI>Reset</B> 
+Power On code is changed so that turning the machine on causes the machine to return
+to<BR>
+the application that was running before the system was powered down. <P>
+
+<B><LI>Int 02h</B>
+Nonmaskable interrupt (NMI).  <P>
+This interrupt is invoked in the IBM-XT when a RAM parity error occurs. It is invoked<BR>
+on the HP palmtop by the Low Power interrupt (LPI) or the Module Pulled interrupt (MPI). <P>
+
+<B><LI>Int 05h</B>
+Print Screen interrupt.  <P>
+The HP palmtop Print Screen service prints the contents of the active display page.  <P>
+
+<B><LI>Int 06h </B>
+General Purpose hook.  <P>
+On the HP 95LX this hook was used for Low Power processing only.  On any other HP palmtop,<BR>
+this hook is provided in several additional locations to permit applications to intervene<BR>
+in certain processing.  <P>
+
+<B><LI>Int 07h </B>
+The HP palmtop BIOS installs a special Int 07h handler on power-up.  Certain DOS <BR>
+applications do not use the equipment check to determine whether or not a numeric <BR>
+coprocessor is present.  Instead they attempt to execute certain coprocessor instructions.<BR>
+Because of the configuration of the embedded 80186 CPU in HP palmtops, attempted execution<BR>
+of numeric coprocessor instructions will cause ESC Interrupts (Int 07h) to be generated.<BR>
+Without the default Int 07h handler supplied by the BIOS, numeric coprocessor instructions<BR>
+will &quot;hang&quot;. The default Int 07h handler supplied by the BIOS &quot;decodes&quot; numeric coprocessor<BR>
+instructions, causing them to be skipped. This enables most applications to successfully <BR>
+determine that a numeric coprocessor is not present.  <P>
+
+<B><LI>Int 08h </B>
+IRQ0 - Timer Hardware service.  <P>
+The Timer0 service was modified to add display window control via the menu-arrow key <BR>
+sequences.  <P>
+
+<B><LI>Int 09h </B>
+IRQ1 - Keyboard interrupt.  <P>
+Int 09 was modified to support Fn key translations, and Mute key translations.  <P>
+
+<B><LI>Int 0Ah </B>
+IRQ2 - Hornet Miscellaneous interrupt.  <P>
+Display Cursor Update, RTC, Timer1, RX, Ring Detect, Keyboard, IR, and several GPIO lines<BR>
+can be the source for this hardware interrupt.  This is a reserved interrupt in the IBM XT.  <P>
+
+<B><LI>Int 0Bh </B>
+IRQ3 - Unused (GPIO[24:26] Pads if properly configured).  <P>
+This is the COM2 interrupt in the IBM-XT.  <P>
+
+<B><LI>Int 0Ch </B>
+IRQ4 - UART interrupt.  <P>
+This is the COM1 interrupt in the IBM-XT.  <P>
+
+<B><LI>Int 0Dh </B>
+IRQ5 - Unused (GPIO[24:26] Pads if properly configured) <P>
+This is the fixed disk interrupt in the IBM-XT.  <P>
+
+<B><LI>Int 0Eh </B>
+IRQ6 - Ready/Change (GPIO[24]) interrupt.  <P>
+This is the diskette interrupt in the IBM-XT.  <P>
+
+<B><LI>Int 0Fh </B>
+IRQ7 - Unused (GPIO[24:26] Pads if properly configured).  <P>
+This is the LPT1 (printer) interrupt in the IBM-XT.  <P>
+
+<B><LI>Int 10h </B>
+Video services.  <P>
+MDA and CGA functions were modified for the &quot;Hornet&quot; hardware IC. Several non-standard <BR>
+services added.  <P>
+
+<B><LI>Int 13h </B>
+Disk services.  <P>
+Modified to work with a RAM disk.  <P>
+
+<B><LI>Int 14h </B>
+Serial Port services.  <P>
+Original PSA serial port services were modified to support the new 9-pin connection provided by<BR>
+the Hornet chip.  <P>
+
+
+<B><LI>Int 15h </B>
+System services (Obsolete cassette control in XT).  <P>
+Most of Int 15h has been modified.  <P>
+
+<B><LI>Int 16h </B>
+Keyboard services.  <P>
+This interrupt was modified to trap an [ON] key press while machine is running.  Several hot-key<BR>
+sequences were added for display tuning control.  Int 16h also invokes light sleep code as a power-saving feature.  <P>
+
+
+<B><LI>Int 17h </B>
+Printer services.  <P>
+This interrupt was modified to work with a serial printer.  The HP palmtop observes XON/XOFF <BR>
+flow control.  <P>
+
+<B></LI>Int 19h </B>
+Boot service.  <P>
+HP palmtops boot DOS from ROM.  <P>
+
+<B><LI>Int 1Ah </B>
+Time of Day services.  <P>
+Support of real time clock, including the capability of setting an alarm, was added. The alarm <BR>
+is capable of turning on power to the unit.  Nonstandard functions were added to set alarms to <BR>
+future date (avoids shelf storage turn-on for system time updates).  <P>
+
+<B><LI>Int 1Eh </B>
+Set to a dummy IRET.  <P>
+This is the disk parameter table in the IBM-XT.  <P>
+
+<B><LI>Int 1Fh </B>
+Graphics Character Table pointer.  <P>
+This points to the last half (chars 80h - FFh) of the default font in the currently active code page font <BR>
+(std 8x8, byte wide).  <P>
+<P>
+<P>
+<B>The following PSA interrupt handlers were not modified: </B><P>
+
+<B><LI>Int 11h </B>
+Equipment Check service.  <P>
+
+<B><LI>Int 12h </B>
+Get Memory Size service.  <P>
+
+<B><LI>Int 14h </B>
+Serial Port service.  <P>
+
+<B><LI>Int 1Bh </B>
+Keyboard Break Default handler.  <P>
+
+<B><LI>Int 1Ch </B>
+User Timer Tick hook.  <P>
+
+<B><LI>Int 1Dh </B>
+Video Parameter table <P>
+
+</UL>
+<P>
+</BODY>
+</HTML>

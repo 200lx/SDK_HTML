@@ -1,0 +1,144 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Graphics Cursor Functions: AX = DCxxh; xx = 00-08 </TITLE></HEAD>
+<BODY>
+<H3>Graphics Cursor Functions: AX = DCxxh; xx = 00-08 </H3><P>
+These functions provide support for a graphics cursor in Video Mode 6.  The graphics cursor must be defined using the maximum sized cells (16x32), but effectively can be any rectangular size from 1x1 to 16x32.  The blink rate is variable, and there is masking capability to handle situations where the desired cursor data needs to be XORed (instead of overwriting) into existing display data.  Cursor &quot;HotSpot&quot; coordinates allows for flexible cursor positioning.  Cursor clipping at the display boundaries is provided.  These services are supported by software as part of the Int 08h (TIMER 0) Service.  <P>
+<B>Graphics Cursor Services</B> <BR>
+<PRE>
+AH     AL    Description 
+===============================================
+DCh          Cursor Services for Graphics Mode
+-----------------------------------------------
+       00h   Define Graphics Cursor Data
+-----------------------------------------------
+       01h   Get Graphics Cursor Data
+-----------------------------------------------
+       02h   Define Graphics Cursor Blink Rate
+-----------------------------------------------
+       03h   Move Graphics Cursor 
+-----------------------------------------------
+       04h   Enable Graphics Cursor Blink
+-----------------------------------------------
+       05h   Disable Graphics Cursor Blink
+-----------------------------------------------
+       06h   Turn On Graphics Cursor 
+-----------------------------------------------
+       07h   Turn Off Graphics Cursor
+-----------------------------------------------
+       08h   Get Graphics Cursor Status
+-----------------------------------------------
+</PRE>
+<BR>
+<B>DC00h: Define Cursor Data </B><BR>
+This function provides for the definition of the size and shape of the graphics cursor.  The cursor will be positioned in the display with the &quot;HotSpot&quot; centered at the specified screen coordinates and clipped if necessary at the display boundaries.  <P>
+<UL><LI>Input: AX: DC00h <BR>
+DS:SI = Pointer to 130 byte data structure defining cursor <BR>
+</UL>
+<UL><LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><BR>
+</UL>
+<B>Cursor Data Structure </B><BR>
+<PRE>
+Name      Length    Description
+          (Bytes) 
+===========================================================================
+HotSpotX  1         Cursor origin x-coordinate (normally 0)
+---------------------------------------------------------------------------
+HotSpotY  1         Cursor origin y-coordinate (normally 0) 
+---------------------------------------------------------------------------
+GC_AND    64        16x32 bitmap that is ANDed into the cursor destination
+---------------------------------------------------------------------------
+GC_XOR    64        16x32 bitmap that is XORed into the cursor destination 
+---------------------------------------------------------------------------
+</PRE>
+<BR>
+Each word in the &quot;GC&quot; definitions represents a 16 bit row in display memory.  The first word corresponds to row 0, and the last to row 31.  Within each word, the least significant byte is left-most in the display.  The most significant bit in each byte is left-most in the display.  <P>
+If the data in the 16x32 area of the display memory that is the cursor destination is designated as &quot;GC_Save&quot;, then the cursor image is defined by the following formula: <P>
+Cursor = [(GC_Save) AND (GC_And)] XOR GC_Xor <P>
+<B>Example 1:</B> If all bits in GC_And are zero, then the cursor image will be a full 16x32 copy of GC_Xor.  <P>
+<B>Example 2:</B> For a simple 8x8 cursor, defined in the upper left corner of the 16x32 cell, the first 8 words of GC_And should be 0FF00h and the remaining 24 words should be 0FFFFh.  The first 8 words of GC_Xor should be 00xxh (xx = cursor data), and the remaining 24 words should be 0000h.  <P>
+<B>DC01h: Get Cursor Data </B><BR>
+This function is designed to return the current data that defines the graphics cursor.  A typical application would be to save the existing cursor definition so that it could later be restored with the AX=DC00h function.  <P>
+<UL><LI>Input: AX: DC01h <BR>
+DS:SI = Pointer to 130 byte buffer to hold the data structure.  <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>
+<B>Cursor Data Structure </B><BR>
+<PRE>
+Name         Length    Description
+             (Bytes) 
+=============================================================================
+GC_HotSpotX  1         Cursor origin x-coordinate (normally 0)
+-----------------------------------------------------------------------------
+GC_HotSpotY  1         Cursor origin y-coordinate (normally 0) 
+-----------------------------------------------------------------------------
+GC_And       64        16x32 bitmap that is ANDed into the cursor destination
+-----------------------------------------------------------------------------
+GC_Xor       64        16x32 bitmap that is XORed into the cursor destination
+-----------------------------------------------------------------------------
+</PRE>
+<BR>
+<B>DC02h: Define Cursor Blink Rate </B><BR>
+This function defines the rate at which the cursor is scheduled to blink.  The resolution is 55 msec units, so that the cursor may be scheduled to blink at 55 msec, 110 msec, 165 msec .  .  .  intervals.  The cursor blink rate is used to initialize a counter that is decremental with each service (Int 08h) of timer 0.  When the counter reaches zero, the cursor or underlying data, depending on the cursor state, is displayed.  The cursor state is toggled, and the counter is reset from the blink rate variable.  Regardless of the blink rate, the cursor will not blink unless enabled.  As an example, a rate of 9 will cause each state of the cursor to be shown for roughly 1/2 second.  This will result in a frequency approaching 1 Hz.  Rapid blink is more power consumptive.  <P>
+<UL><LI>Input: AX: DC02h <BR>
+CX: Blink Rate (55 msec units) <BR>
+</UL>
+<UL><LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC03h: Move Cursor </B><BR>
+This function defines the display destination in pixel coordinates (GC_X, GC_Y) that will correspond to the cursor origin (HotSpotX, HotSpotY).  A value of (0,0) corresponds to the upper left corner of the display.  If the cursor is on, the underlying display data is restored, the cursor coordinates are changed to the new location, the new display data is saved, and the cursor image is built according to the formula given in the Define Cursor function.  The cursor will become active (if enabled) on the next Int 08h (Timer 0) Service.  If blink is enabled, it will blink at the new location.  If the cursor is off, the only action is to change the cursor coordinates.  <P>
+<UL><LI>Input: AX: DC03h <BR>
+CX: GC_X (col#) <BR>
+DX: GC_Y (row#) <BR>
+</UL>
+<UL><LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC04h: Blink Enable </B><BR>
+This function enables the cursor blink function.  If disabled, the cursor may be displayed, but the underlying data will not be restored until the cursor is moved or turned off.  If enabled, and the cursor is on, it will blink at the previously established rate.  <P>
+<UL><LI>Input: AX: DC04 </LI><BR>
+<LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC05h: Blink Disable </B><BR>
+This function disables the cursor blink function.  If disabled, and the cursor is on, the cursor will be displayed.  The underlying data will not be restored until the cursor is moved or turned off.  <P>
+<UL><LI>Input: AX: DC05h </LI><BR>
+<LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC06h: Cursor On </B><BR>
+This function saves the underlying display data, and displays the cursor.  <P>
+<UL><LI>Input: AX: DC06h </LI><BR>
+<LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC07h: Cursor Off </B><BR>
+This function restores the underlying display data and disables the graphics cursor.  <P>
+<UL><LI>Input: AX: DC07h </LI><BR>
+<LI>Output: None </LI><BR>
+<LI>Registers modified: AX </LI><P>
+
+</UL><B>DC08: Get Cursor Status </B><BR>
+This function returns graphics cursor status information.  <P>
+<UL><LI>Input: AX: DC08h </LI><BR>
+<LI>Output: AX: Status where; <BR>
+bit 0: 1=Cursor On <BR>
+bit 1: 1=Blink enabled <BR>
+bit 2: Cursor State (1=Cursor, 0=Underlying Area) <BR>
+BX: GC_Count (remaining 55 msec ticks before blink) <BR>
+CX: GC_X (col#) <BR>
+DX: GC_Y (row#) <BR>
+SI: GC_Rate (Blink Rate) <BR>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, SI </LI><P>
+</UL><B>Notes: </B><P>
+<UL><LI>GC_COUNT is only meaningful if the cursor is blink enabled.  </LI><P>
+<LI>If the cursor is on, the Cursor State indicates whether the cursor is currently showing in the display, or whether the underlying data is being shown.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

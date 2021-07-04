@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Ah: Write Character at Cursor Position </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Ah: Write Character at Cursor Position </H3><P>
+This function writes a character to the current cursor location, but leaves the attribute byte at that location unchanged.  The function is otherwise identical to function 09h (Write Character and Attribute at Cursor Position).  <P>
+<UL><LI>Input: AH = 0Ah <BR>
+AL = Character to write.  <BR>
+BH = Page number (must be 0 for alpha mode; not used in graphics mode) <BR>
+CX = Number of characters to write <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

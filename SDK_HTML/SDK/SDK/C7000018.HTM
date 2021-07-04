@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_cb_read </TITLE></HEAD>
+<BODY>
+<H3>m_cb_read </H3>
+This function reads <I>size</I> bytes of data to buffer from the representation 
+associated with <I>index</I>.  The <I>offset</I> parameter indicates the starting offset
+in the clipboard buffer from which data will be read.  Multiple calls may be made with
+m_cb_read, allowing the caller to extract data from the clipboard, from a specified
+offset (with reference to the start of the data), for a specified length.  <P>
+<PRE><UL>
+<LI>Syntax:         int far m_cb_read(int index, unsigned offs, char far *buffer, 
+                                  unsigned size)
+<LI>Parameters:     int index - Index number of representation to be read
+                unsigned offset - Offset into data from which to start transfer
+                char far *buffer - Pointer to area to receive data 
+                unsigned size - Maximum amount of data to transfer (maximum of 1024 
+                                bytes per call)
+<LI>Returns:        The number of bytes transferred, with CB_OK (0) representing exactly 
+                <I>size</I> bytes.  A positive value is returned if more data is requested 
+                than exists in the representation.
+                CB_NOT_OPEN - if clipboard access is denied 
+                CB_NO_SUCH - if the specified representation is not there
+                CB_BOUNDS - if the offset points past the end of the data
+<LI>Related Calls:  The <I>index</I> number and length of the representation to be read may be 
+                obtained by making a call to <A HREF="c700001f.htm>m_rep_index</A> first.
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bank C </TITLE></HEAD>
+<BODY>
+<H3>Bank C</H3>
+Page C of the CPU address space (CPU addresses C0000h to CFFFFh) is set up as a 64-KB
+bank and is referred to as Bank C.  This bank has two 8-bit registers used to select the
+memory mapped into the bank.  One register contains the 8 MSBs of the frame select (FS)
+value which specify device address bits [25:18] of the 26-bit device address.  Bits [7:6]
+of the second register specify device address bits [17:16] of the frame select value.
+Bit 3 of this second register is an enable bit which enables/disables ba nk switching for
+Bank C.  The 3 LSBs (bits [2:0]) of this second register contain the chip select (CS).
+<P>
+Bits [5:4] of this register are unused.  Together this pair of registers specifies the 10
+MSBs (device address bits [25:16]) of the 26-bit device address, thereby selecting a
+64-KB section.  Bank C should not be enabled until the FS and CS values have been
+initialized.  It should be noted that devices connected to NRAS[3:0] do not use device
+address bit [25] resulting in that address bit being a &quot;don't care&quot; for those
+devices.
+<P>
+The 3-bit CS values of Bank C can select any of the 8 possible external memory devices.
+However, a CS value of 7 is undefined.  If 7 is selected, no chip selects will be
+activated when Bank C is accessed.  The CS value is decoded into a chip select as
+follows:<P>
+
+<PRE>
+CS VALUE    DEVICE SELECTED
+==========================================================================================
+000         NRCE - Built-In system ROM.
+------------------------------------------------------------------------------------------
+001         NRAS[0] - Built-in RAM hard-configured to start at 00000h.
+------------------------------------------------------------------------------------------
+010         NRAS[1] - Built-in RAM.
+------------------------------------------------------------------------------------------
+011         NRAS[2] - Built-in RAM.
+------------------------------------------------------------------------------------------
+100         NRAS[3] - Built-in RAM.
+------------------------------------------------------------------------------------------
+101         NCS[0] - Plug-In slot 0.
+------------------------------------------------------------------------------------------
+110         NCS[1] - Plug-In slot 1.
+------------------------------------------------------------------------------------------
+111         unused - External Device.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

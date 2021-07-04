@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>REDEYE Format </TITLE></HEAD>
+<BODY>
+<H3>REDEYE Format</H3>
+The REDEYE portion consists of the RED, LBF, and ELBE bits in the IRFMAT register, the
+LBR bit in the IRCNT register, the REDEYE formatter, and the IRO LED pin.  The LED pin
+has an open drain device and thus may be driven low or tristated only.  When driven low
+the drain current is somewhat regulated by a feedback circuit.  The LBF and LBR bits form
+a double buffered handshake mechanism that allow automatic REDEYE half-bit formatting and
+pacing.  An interrupt mechanism is provided to indicate completion of each half-bit.  <P>
+The REDEYE printer requires 15-bit frames of a precise format.  Each bit of the frame
+consists of two half-bits.  The duration of each half-bit is 14 cycles of the 32768 kHz
+crystal oscillator.  The half-bit is considered to be &quot;on&quot; if the LED is pulsed
+6-8 times (out of the 14 possible) at the 32768 kHz rate.  Hornet's REDEYE port uses 8
+pulses.  The format of a complete REDEYE frame is shown below: <P>
+<PRE>
+        Start-bits      Three half-bits &quot;on-on-on&quot;
+        Hamming-bits    Four pairs of half-bits
+        Data-bits       Eight pairs of half-bits
+                        Each of the four hamming and eight data bits are encoded with two
+                        half-bits.  A &quot;one&quot; data or hamming bit is encoded by &quot;on-off&quot;
+                        and a zero is encoded by &quot;off-on&quot;.
+        Stop-bits       Three half-bits &quot;off-off-off&quot;
+                        This is the minimum idle time required between frames.
+</PRE>
+<P>
+The ELBE, RED, LBF, and LBR bits are cleared at reset.  The REDEYE port also uses a
+formatter which is turned off whenever RED is cleared.  Software initiates a half-bit
+transmission by writing a bit to LBR.  This automatically sets the LBF flags in IRFMAT
+register and starts the state machine.  The state machine transfers the bit from LBR into
+the formatter and clears LBF.  If ELBE is set, this will cause an IR interrupt indicating
+that it is safe to write the next half-bit to LBR.  The state machine then times the
+half-bit for 14 counts of the 32768 Hz crystal oscillator.  If the bit in the formatter
+is a one, the LED is pulsed for the first eight of the 14 counts.  Otherwise the LED is
+left off.  If after the 14 counts LBF is clear, the state machine will return to its idle
+state of waiting for LBF.  Otherwise it will immediately transfer the next half-bit and
+start timing it.  <P>
+When LBF is clear and ELBE is set, an IR interrupt will occur.  When the state machine
+clears LBF, software has 13 counts of the oscillator to write the next bit to LBR.
+Otherwise the length of the half-bits will not be correct.  <P>
+Through-put: <P>
+    <UL>32768 /14 = 2340.6 baud (half-bits/sec)<P>
+        32768 /28 = 1170.3 bps (bits/sec) <P></UL>
+REDEYE Frame Length: <P>
+    <UL>1.5 start + 4 Hamming + 8 data + 1.5 stop = 15 bits <P></UL>
+REDEYE Thru-put: <P>
+    <UL>1170.3 /15 = 78.02 cps <P></UL>
+<P>
+</BODY>
+</HTML>

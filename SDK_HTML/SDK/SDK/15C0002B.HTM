@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Destination Specification </TITLE></HEAD>
+<BODY>
+<H3>Destination Specification</H3>
+The following figure shows a character placed in the CGA graphics frame buffer.  The rectangles in the background are words within the frame buffer.  The most significant bits of the word correspond to the left-most pixel on the display.  The bytes of the word are swapped by BitBlt so that the left-most byte of pixels corresponds to an even address.<P>
+Alternate scan lines are stored in separate blocks.  Even scan lines are stored in a block of 8000 bytes at the beginning of the frame buffer.  Odd scan lines are stored at an offset of 8192 bytes into the buffer.  Scan lines are fixed at 40 words in length.<P>
+The ChrH and ChrW registers determine the size of the character.  The DstPtr register-pair specifies the word containing the upper- leftmost pixel of the character.  The DstBitOff register specifies an offset into that word to locate the upper-leftmost pixel of the character.<P>
+<A HREF="image/__dg1522.gif">Graphic</A><P>
+<P>
+</BODY>
+</HTML>

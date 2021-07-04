@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Parameter-Related Errors </TITLE></HEAD>
+<BODY>
+<H3>Parameter-Related Errors </H3><P>
+Parameter-related errors do not return an error indication.  The Int 17h BIOS services check the following parameter-related conditions: <P>
+<UL><LI>The function# (in AH) is in the range (0-2).  </LI><P>
+<LI>The port# (in DX) is in the range (0-3) (only port 0 is implemented in the HP palmtop).  </LI><P>
+<LI>The corresponding base I/O address (EIADRTBL RAM) is non-zero.  </LI><P>
+</UL>If the input parameters are invalid (one or more of the above conditions are not true), the requested service is not performed, and all CPU registers are returned intact.  <P>
+If the input parameters are valid (above conditions all true), the service will be executed.  All services exit through service 02h, hence return status information to the caller.  <P>
+<P>
+</BODY>
+</HTML>

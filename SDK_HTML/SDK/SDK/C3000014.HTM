@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>NumPad vs.  Digits </TITLE></HEAD>
+<BODY>
+<H3>NumPad vs.  Digits </H3><P>
+For an application running on a PC with a standard keyboard, the Int 09h service provides the means to distinguish between presses of the NumPad digits and the top-row digits.  The Int 09h service receives different inputs and produces different results for these 2 sets of keys.  The HP palmtop's single set of digit keys produce ScanCode inputs and Character code outputs that correspond with results that would be obtained using the top row digit keys on a 101/102 key keyboard.  A mechanism using the [MENU] key is provided to generate results that correspond to NumPad use on a full sized PC Keyboard for DOS applications that might require them.  When the [MENU] key is held down, 14 of the HP palmtop's keys become &quot;remapped&quot; to the NumPad keys on a standard keyboard.  <P>
+<B>Example:</B> When the [6] key is pressed on the HP palmtop, a ScanCode of 07h and a keycode of 07h/36h (the top row &quot;6&quot;) are generated.  If Shift is active and the [6] key is pressed on the HP palmtop while the menu key is held down, a ScanCode of 4Dh and a keycode of 4Dh/36h (the NumPad &quot;6&quot;) are generated.  The results depend on the SHIFT state and will be identical to that obtained on a standard PC keyboard with Numlock Off.  If Shift is inactive, this example yields a keycode of 4Dh/00h, which corresponds to the RightArrow key.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Repeating To-Do Item That Has Been Checked-Off Data Record </TITLE></HEAD>
+<BODY>
+<H3>Repeating To-Do Item That Has Been Checked-Off Data Record </H3><P>
+<pre>
+Offset   Name                     Type           Contents 
+-------  -----------------------  -------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)*** 
+0        Item Length              int 
+2        Offset to Category       int 
+4        Offset to Location       int            Offset to end of Category field 
+6        Offset to Repeat         int            Offset to Repeat Factor 
+8        Note record#             int            Record Number or -1 
+10       Prev Record# Today Link  int 
+12       Next Record# Today Link  int 
+14       ToDoState                unsigned char  Flags<a href="#one_star">*</a>
+15       Start (Origination) Date: 
+          Year                    unsigned char  Year# since 1900 (0-199) 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+18       Priority                 int            <letter><digit> 
+20       Due Date                 unsigned int   #days after origination date
+                                                 (0-65535)<a href="#three_stars">***</a>
+22       Check-Off Date: 
+          Year                    unsigned char  Year# since 1900 (0-199) 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+25 --unused-- char 0 
+26       RepeatType               char           <same as spawner><a href="#two_stars">**</a>
+27       Description Text         ASCIIZ 
+27+....  Category Text            ASCIIZ 
+27+....  Location Text            ASCIIZ         0 
+27+....  Repeat Factor: 
+          Frequency               char           <same as spawner> 
+          Days                    int            <same as spawner> 
+          Months                  int            <same as spawner> 
+32+....  Duration Start Date: 
+          Year                    unsigned char  <same as spawner> 
+          Month                   unsigned char  <same as spawner> 
+          Day                     unsigned char  <same as spawner> 
+35+....  Duration End Date: 
+          Year                    unsigned char  <same as spawner> 
+          Month                   unsigned char  <same as spawner> 
+          Day                     unsigned char  <same as spawner>
+38+....  #Deleted ToDos           char           0 
+39+....  Prev ToDo Link           int            Record# of Prev Checked off ToDo 
+41+....  Next ToDo Link           int            Record# of Next Checked off ToDo 
+43+....  Record# of To-Do Spawner int 
+
+<a name="one_star">* Bit 1 set -> Checked Off
+  Bit 2 set -> Carry Forward Enabled
+  Bit 4 set -> To-do Item
+  Bit 6 set -> Stub for a repeating completed to-do
+
+<a name="two_stars">**2-> Daily Repeat
+  4-> Weekly Repeat
+  8-> Monthly Repeat
+ 16-> Yearly Repeat
+ 32-> Custom Repeat
+
+<a name="three_stars">***Stored DueDate=0 -> No specified due date
+   Stored DueDate#0 -> SpecifiedDueDate = StartDate + DueDate-1
+</pre>
+</BODY>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DOS </TITLE></HEAD>
+<BODY>
+<H3>DOS </H3><P>
+The HP palmtop uses DOS5.0 which executes directly out of ROM, thus freeing valuable RAM.  <P>
+One complication arises from normal DOS programs operating on HP palmtop.  When the unit is turned on, DOS has no way to verify that a card in the A: drive is the same as the card in the drive when the unit was turned off.  To be absolutely safe, DOS needs to assume that the card is not the same as the one in the drive when it was turned off.  Otherwise, the user could turn the unit off, pull the card, put it into another unit or thincard drive, add/remove files, put that card (or a different card) back in, and turn the unit on.  If DOS needed to flush buffers, they would be written to the wrong places on the disk: very bad indeed.  <P>
+The only unfortunate ramification of this is that any DOS file handles that are open on the A: drive become invalidated.  Trying to read or write to open A: file handles after turning the unit off and on will not work properly.  They may work (if DOS still contains some information in its buffers), or more likely, they may fail.  <P>
+The database engine normally leaves a file handle open to the database file.  An application that uses the database engine needs to take special precautions by calling DB_CardChanged to close file handles if the unit has been turned off and on, then reopen the files to get &quot;fresh&quot; file handles.  Your application might need to do something similar to this to allow it to keep DOS file handles open for extended periods of time (i.e.  between keystrokes).  The System Manager provides a function to assist in this called m_card_changes.  m_card_changes returns an integer that represents the number of times the unit has been turned on or off and the number of times the card has been pulled since the System Manager was running.  Your application can get this integer when it starts, and whenever the value returned is different from the current m_card_changes integer, close any open handles and reopen them.  <P>
+For programs or library routines that leave files open but that you don't have direct control over, there is a program on the ISV disk called FIXEDA.  This program is a TSR that defeats the palmtop's safe assumption that the card has changed.  FIXEDA makes DOS report that the card never changes.  ONLY USE THIS IF YOU KNOW THE CARD WILL NOT BE CHANGING!  An example might be a customized solution where you bundle a card in the palmtop that is inside a ruggedized case and the card cannot be removed.  <P>
+<P>
+<P>
+</BODY>
+</HTML>

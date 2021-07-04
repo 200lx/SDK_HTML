@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComReceiveBytes </TITLE></HEAD>
+<BODY>
+<H3>ComReceiveBytes </H3>
+ComReceiveBytes copies received data to application.  <P>
+This non-blocking function attempts to copy any received data from internal communication port buffers into an application's buffer.  If no data is available when this call is made, a zero is returned in the short integer specified by the pointer DataLenP.  <P>
+Note that since System Manager calls can have significant overhead, it is advisable for the application to perform some level of local buffering and not perform character-at-a-time reads from the port's internal buffers.
+<PRE><UL>
+<LI>Syntax:      err_t far ComReceiveBytes(handle_t Handle, char far *DataP, 
+                                       int far *DataLenP)
+<LI>Parameters:  handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+             char far *DataP - Far pointer to the application's data buffer 
+             int far *DataLenP - This is a Far pointer to an integer which, on entry,
+                                 specifies the maximum number of data bytes to read.  
+                                 On exit, this variable is set to the actual number of 
+                                 bytes placed into the application's buffer.  
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  
+             ENOTYOURS - The specified port has not been acquired by the calling
+                         application.  
+<LI>Comments:    ComOpen() must first be called in order to get a valid handle to the 
+             communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

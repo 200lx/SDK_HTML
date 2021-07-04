@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComMdmClr </TITLE></HEAD>
+<BODY>
+<H3>ComMdmClr </H3>
+This function clears (de-asserts) the specified communication port's modem control lines.  <P>
+ComMdmClr permits a modem-aware application to control modem control signals on a port.  Note that the application may control RTS even though a communication port is using hardware flow control.  Although controlling RTS is not recommended behavior, it is assumed that the application is aware that it may adversely affect the communications driver's flow control.  <P>
+The <I>ModemControl</I> parameter is a mask of bits (found in COMIO.H), which indicates which modem control signals should be cleared (de-asserted).  Multiple bits may be cleared with a single call, and any unspecified modem control signals are not changed.
+<PRE><UL>
+<LI>Syntax:          err_t far ComMdmClr(handle_t Handle, int ModemControl) 
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 int ModemControl - An integer mask used to indicate which modem control 
+                                    signals are to be cleared (de-asserted) 
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Comments:        ComOpen() must first be called in order to get a valid handle to the 
+                 communications port.
+                 
+                 This function does NOT check for interactions between hardware flow 
+                 control and any user modem signal manipulation.  Be careful not to 
+                 accidently interfere with the flow control use of RTS.  
+</UL></PRE>
+</BODY>
+</HTML>

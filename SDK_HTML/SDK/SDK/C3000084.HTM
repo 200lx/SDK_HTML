@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 4C02h: Return Available Keyboard Types </TITLE></HEAD>
+<BODY>
+<H3>AX = 4C02h: Return Available Keyboard Types </H3><P>
+This function returns the types of keyboards available.  The keyboards that are available is set at assembly time (set at the factory as variable KBDS), and may be different for different HP palmtop ROM releases.  The format of the return code in AX is the sum of available keyboard codes from among those listed in service 4c00h.  For example, a return code of AX=8001h would indicate that US and BELGIUM keyboards are supported.  <P>
+<UL><LI>Input: AX = 4C02h </LI><P>
+<LI>Output: AX = available keyboard type(s) </LI><P>
+<LI>Registers modified AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

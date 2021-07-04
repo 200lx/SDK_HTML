@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Service 01h or 11h (Char Available?): </TITLE></HEAD>
+<BODY>
+<H3>Service 01h or 11h (Char Available?): </H3><P>
+These services conditionally invoke Int 15h, Fcn 4100h when a certain condition is true (*).  When Int 15h, Fcn 4100h is invoked, it will return to the Int 16h caller after at most one interrupt.  As the timer (Both Timer0 and Timer1) interrupts are active, this will be at most 55 msec.  If there is a key in the key buffer or the AC Adaptor is present, the Auto-Timeout counter, TimOutCnt is reset.  <P>
+(*) (NoKey) AND (CurFlag=0) AND [(AnnOn) OR ((NoAC) AND (Light Slp Enabled))] <P>
+NoKey means no key present in the keybuffer, CurFlag=0 will be true when there has been no recent cursor (CRTC 0Eh, 0Fh) activity, AnnOn means some annunciator (SHF, Fn, CAPS Lock) should be on, NoAC is true when the AC Adaptor is not present, and Light Slp Enabled is true when LtSlpFL[0]=0.  See Int 15h, Fcn 4Eh on <A HREF="C3000088.HTM">page 3-104</A>.  <P>
+<P>
+</BODY>
+</HTML>

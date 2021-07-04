@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Note </TITLE></HEAD>
+<BODY>
+<H3>Note </H3><P>
+A note is a record attached to a data record.  Each note field has its own record.  In the HP palmtop, only data records with notes have note records; the Omnibook 300 has note records for every data record (even if the note is empty).  <P>
+<pre>
+Offset  Name           Type          Description 
+------  -------------  ------------  -----------
+0...5   Record Header  recordheader  See <a href="10C00003.HTM">recordheader</a> structure above.
+                                     0x09 0x??  0x??  0x??  0x??  0x??  
+6...n   Note           chars         From 0...32767 characters.  The note cannot contain
+                                     characters 0x00 or 0xff.  
+</pre>
+</BODY>

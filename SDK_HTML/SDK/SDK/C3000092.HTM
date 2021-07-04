@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6006h: Voltage Comparison </TITLE></HEAD>
+<BODY>
+<H3>AX = 6006h: Voltage Comparison </H3><P>
+This function uses the DAC to generate an analog voltage from the given 6-bit digital value.  This voltage is then compared with that on the specified channel (options are: MainBattery, BkUpBattery, Reference) and the logical result of this comparison is returned to the caller.  The practical use is for a reasonably fast threshold comparison on the selected channel voltage.  <P>
+The result is not adjusted based on the reference voltage, and only a single comparison is made.  If repeated calls to this service are utilized to perform a battery measurement, the results obtained will differ slightly from the more reliable results returned from services 6000h and 6001h.  <P>
+The service will error if the DAC is in-use at the time of the call.  If the ERR bit is set, the LOW bit should be removed and the call repeated.  If the ERR bit is clear, then the LOW bit is &quot;1&quot; iff Vd &lt; V, where Vd is the DAC generated voltage corresponding to the digital input d, and V is the voltage on the specified channel.  <P>
+The voltage Vd corresponding to the digital input value d can be obtained from the formula: <P>
+     Vd = [(3.3-1.57)/63]*d + 1.57 <P>
+It is worth noting that NiCad and alkaline batteries have different characteristics and that the battery voltage is not always a reliable indication of remaining battery capacity.  <P>
+<UL><LI>Input: AX = 6006h <BR>
+CH = Channel <BR>
+  00h = Main Batteries <BR>
+  01h = Backup Batteries <BR>
+  02h = Reference Voltage <BR>
+CL = d (DAC input: 0 - 63) <P>
+</UL>
+<UL><LI>Output: AL = [0 0 0 0 LOW ERR 0 0]</UL></LI> <P>
+<UL><LI>Registers modified: AX </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

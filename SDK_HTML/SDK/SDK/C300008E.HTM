@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6002h: Get System Power Status </TITLE></HEAD>
+<BODY>
+<H3>AX = 6002h: Get System Power Status </H3><P>
+This function returns status in AX ([BATTFL2] [BATTFL1]) relating to various aspects of System Power.  A double word value is also returned in the register pair [CX DX] that indicates the length of time that the batteries have been charging.  A brief description of the bits returned in AL follows.  <P>
+The {MAIN, BKUP, CARD} bits are set by the operating system when system voltages are measured and determined to be below the Low Battery thresholds.  Since batteries have a tendency to recover after a bit of non-use, the measured voltage will have to exceed the Low Bat Threshold by a certain delta to reset these bits.  These bits when set will cause Low Batt Warning messages until acknowledged by a press of the [ESC] key.  <P>
+The UCHG bit reflects the Enable/Disable choice made by the user in SETUP.  It is set or cleared by Int 15h, Fcn 6004h.  It may also be reset by the operating system in the event that the hardware detects overcharge.  In this case, charging will be disabled immediately, and the user will generally have to use the SETUP application to re-enable charging.  <P>
+The {ECHG, FCHG} bits reflect the actual hardware charging status.  If ECHG is set, the batteries are being charged.  If FCHG is also set, the batteries are being charged at a faster rate.  <P>
+The NOAC status bit shows whether the unit is currently using batteries or the adaptor for its power source.  The operating system sets this bit depending on whether or not the adaptor is plugged in.  If the adaptor is plugged in, the main batteries are not in use, regardless of the charging status.  <P>
+The TYPE status bit indicates which battery type the user has said is installed (See Int 15h, Fcn 6003h).  The operating system cannot verify that this bit is set correctly.  This value governs Low Battery Thresholds, charging, and certain displays in the SETUP application.  <P>
+<UL><LI>Input: AX = 6002h </LI><P>
+<LI>Output: AX: System Power Status <BR>
+bit 15 OVDT (Over Voltage Detected) <BR>
+bit 14 VLB (Very Low Battery) <BR>
+bit 13 NIFL (NiCad Level, 2 Bits [NIFL NILO]) <BR>
+bit 12 NILO (00b = OK, 01b = LOW, 10b = FULL) <BR>
+bit 11 OVAK (Suppress Over Voltage Message) <BR>
+bit 10 CDAK (Low Card Batt Acknowledged) <BR>
+bit 9 BPAK (Low BackUp Batt Acknowledged) <BR>
+bit 8 MNAK (Low Main Batt Acknowledged) <BR>
+bit 7 TYPE (1=NiCad, 0=Alkaline) <BR>
+bit 6 NOAC (Pwr Source 1=Batt, 0=AC) <BR>
+bit 5 FCHG (Fast Charge Hdwr Enabled) <BR>
+bit 4 ECHG (Battery Charging Hdwr Enabled) <BR>
+bit 3 UCHG (Battery Charging User Enabled) <BR>
+bit 2 CARD (1=Low Card Batt) <BR>
+bit 1 BKUP (1=Low Back Up Batt) <BR>
+bit 0 MAIN (1=Low Main Batt) <BR>
+[CX DX] Charging timer (ticks; 18.2 ticks/Sec) <P>
+</UL>
+<UL><LI>Registers modified: AX, CX, DX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

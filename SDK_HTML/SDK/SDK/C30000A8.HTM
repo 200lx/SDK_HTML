@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 13h: Wait for Keyboard Event </TITLE></HEAD>
+<BODY>
+<H3>AH = 13h: Wait for Keyboard Event </H3><P>
+This function detects keyboard events, even those that don't place keycodes in the keybuffer.  This service can read both standard scancodes and the palmtop's extended scancodes.  Note that this service translates certain keycodes (see &quot;I16Clip&quot; on <A HREF="C3000099.HTM">page 3-113</A>).  It returns to the caller when any of the following 3 conditions are satisfied: <P>
+<UL><LI>A keycode is present in the keybuffer.  In this case, the key is removed from the buffer, and returned in AX with ZF = 0.  </LI><P>
+<LI>A mismatch in comparing the keyboard shift flags with BX.  If BX is pre-loaded with [SHFLGS2, SHFLGS] before the call, this routine will return with AX = [SHFLGS2, SHFLGS] and ZF = 1 when a a change is detected.  </LI><P>
+<LI>Timeout occurs (Fixed at 8 Timer0 Ticks or about 0.444 seconds).  The routine returns with AX = [SHFLGS2, SHFLGS] and ZF = 1.  </LI><P>
+<P>
+<LI>Input: AH = 13h <BR>
+BX = Current kbd shift flags (same format as service 12h) <P>
+</UL>
+<UL><LI>Output: Zero flag is clear if character is available: <BR>
+AH = Scancode <BR>
+AL = ASCII character code, or <BR>
+00h for a special scancode, or <BR>
+Zero flag is set if timeout or keyboard flags changed.  <BR>
+AX is loaded with the keyboard flags as described in service 12h.  <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers Modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

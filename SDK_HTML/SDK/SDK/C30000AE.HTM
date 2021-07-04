@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Setup </TITLE></HEAD>
+<BODY>
+<H3>Setup </H3><P>
+These services assume that the serial port has already been programmed with the appropriate parameters (Serial power on, Wired mode, BAUD Rate, parity, etc.) to communicate with your serial printer.  If this hasn't been done, the DOS &quot;Mode&quot; command can be used to establish the proper settings.  See also Int 14h, Fcn 00h on <A HREF="C3000072.HTM">page 3-92</A>, Int 15h, Fcn 49h on <A HREF="C300007F.HTM">page 3-101</A>, and Int 15h, 4Ah on <A HREF="C3000080.HTM">page 3-102</A>.  <P>
+Note that the HP palmtop polls for XON/XOFF printer handshakes as described in service 00h.  The HP 95LX uses a special serial interrupt service to detect and service XON/XOFF.  <P>
+The Printer Services (Int 17h) functions are described on the next page.  Specify the desired function code in register AH, with additional parameters passed in other registers as indicated in the table.  <P>
+</BODY>
+</HTML>

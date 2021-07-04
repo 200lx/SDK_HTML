@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 00h: Write a Byte to a Serial Printer </TITLE></HEAD>
+<BODY>
+<H3>AH = 00h: Write a Byte to a Serial Printer </H3><P>
+This function first waits for the Transmit Holding register to empty (THRE = 1).  The duration of the wait is controlled by the Timeout value in the LPTOTBL table.  If Timeout occurs while waiting for the Transmit Holding register to empty, the function will exit with the Timeout bit set in the Status byte (See below).  <P>
+The function next enters a main loop that will attempt to transmit the given byte.  Several checks are made within the loop before the transmittal takes place, and timeout is again possible.  If Timeout occurs, the function will exit with the Timeout bit set in the Status byte (See below).  <P>
+The first check is for a parity or framing error.  If this error has occurred, the function will immediately return with the I/O Error bit set in the Status byte.  <P>
+Next the function checks for data received from the printer (overrun errors are ignored here).  If the character received is XON, the Printer Not Busy bit is set in the Status byte, the given byte is immediately transmitted to the printer, and the routine exits thru service 02h returning status.  If the character received is XOFF, the Printer Not Busy bit is cleared in the Status byte and we remain in the loop until timeout or an XON character has been received allowing the byte to be transmitted.  <P>
+Finally if there is no data received, and the Printer Not Busy bit is set, the byte is transmitted and the service returns status information.  <P>
+<UL><LI>Input: AH = 00h <BR>
+AL = Data byte to be written <BR>
+DX = Port number (0 - 1) <P>
+</UL>
+<UL><LI>Output: AH = Printer status as shown below </LI><P>
+<LI>Registers modified: AH.  </LI><P>
+</UL><A HREF="image/__dg0320.gif">Graphic</A><P>
+<P>
+</BODY>
+</HTML>

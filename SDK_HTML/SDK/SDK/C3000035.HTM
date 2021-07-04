@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MDA Mode 7 </TITLE></HEAD>
+<BODY>
+<H3>MDA Mode 7 </H3><P>
+When configured for MDA Mode 7, the display memory is organized into cells containing 2 bytes each.  Byte 0 of each cell contains the 8 bit character code and byte 1 defines the display attributes for that character.  Character cells are arranged in rows of 80 cells each, and there are 25 rows of cells.  There is only one 80 x 25 page of text.  The base address of display memory is B0000h and the size is 4000 bytes.  <P>
+<A HREF="image/__dg0302.gif">Graphic</A><P>
+The attribute byte has the following bit definitions: <P>
+<A HREF="image/__dg0303.gif">Graphic</A> <P>
+Only four foreground and background field combinations are useful:
+<PRE>
+Background   Foreground    Definition 
+Field (hex)  Field (hex)
+==============================================================================
+0            0             White on white (does not display)
+------------------------------------------------------------------------------
+x            1             Underlined characters
+------------------------------------------------------------------------------
+7            0             Inverse video (white chars on black background)
+------------------------------------------------------------------------------
+0            7             Normal video (black chars on white background) (*) 
+------------------------------------------------------------------------------
+</PRE>
+(*) - Other combinations are also normal video.
+<P>
+</BODY>
+</HTML>

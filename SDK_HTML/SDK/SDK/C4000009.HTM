@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Battery Messages </TITLE></HEAD>
+<BODY>
+<H3>Battery Messages </H3><P>
+The battery related BIOS messages are shown below: <P>
+<UL><LI>MAIN BATTERY LOW - Press ESC.  </LI><P>
+<LI>MAIN BATT VERY LOW - Press ESC.  </LI><P>
+<LI>BKUP BATTERY LOW - Press ESC.  </LI><P>
+<LI>CARD BATTERY LOW - Press ESC.  </LI><P>
+<LI>BATTERY CHARGING STARTED ...  </LI><P>
+<LI>BATTERY CHARGING STOPPED ...  </LI><P>
+<LI>*BATTERY ERROR* - Press ESC.  </LI><P>
+</UL>The BIOS software provides some &quot;hysteresis&quot; in the display of the low battery messages to avoid the appearance of unreliability for battery levels near the thresholds.  This means that once a low battery condition is detected, a significant voltage recovery is required to make the condition go away.  The message(s) are displayed briefly, then the original contents of display memory are restored.  The battery warnings will continue at the periodic measurement rate (15 seconds) until fresh batteries are installed, or the message is acknowledged by pressing the [ESC] key while the message is in the display.  If acknowledged, subsequent warnings will be suppressed until the unit is awakened from deep sleep, or reset.  The accompanying warning beep will only happen on the first display of the message, but will reoccur if there is any keyboard activity.  <P>
+The charging messages will appear to confirm charging transitions.  These messages will appear only once, and will appear briefly in the display in the same manner as the low battery warnings.  As with the low battery warnings, acknowledging the message by pressing the [ESC] key will cause the underlying display data to be restored more quickly.  <P>
+The Battery Error message occurs as the result of detection of overvoltage.  It will occur if an attempt is made to recharge the main batteries when there are no batteries installed.  It may also occur if an attempt is made to recharge Alkaline batteries.  If this message occurs, charging will immediately be disabled.  The message will continue to appear at the periodic battery measurement rate until acknowledged by pressing the [ESC] key.  <P>
+<P>
+</BODY>
+</HTML>

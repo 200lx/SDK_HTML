@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 08h: TIMER0 Hardware Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 08h: TIMER0 Hardware Interrupt </H1><P>
+A periodic hardware TIMER0 interrupt occurs on hardware interrupt level 0 (IRQ0) at a rate of 18.2 times per second.  TIMER0 is the &quot;heartbeat&quot; timer and runs in Mode 3 (Square Wave).  IRQ0 maps to interrupt vector 08h.  The BIOS interrupt service routine for Int 08h performs several standard tasks and a few non-standard ones for the BIOS.  One standard task is to call Int 1Ch (User Timer Tick).  If an application needs a periodic interrupt, it should take over or chain into the Int 1Ch service.  We recommend that application programs not take over the Int 08h service routine directly.  The BIOS Int 08h service routine does the following: <P>
+<UL><LI>Decrements the RAM variable [TimOutCnt] (Deep Sleep Time Out Counter), but not past zero.  Note: The Int 08h code does not directly invoke Deep Sleep when the counter becomes zero.  See Int 16h on <A HREF="C3000096.HTM">page 3-112</A> for more information.  </LI><P>
+<LI>If Bit 0 of the RAM variable [LteSlpFL] is 1 (Light Sleep Disabled), resets the Deep Sleep Time Out Counter ([TimOutCnt] &lt;-- [TimOutVal]).  </LI><P>
+<LI>Decrements the RAM variable [HALTVAL], but not past zero.  See Int 15h, Fcn 41h on <A HREF="C3000079.HTM">page 3-97</A>.  </LI><P>
+<LI>Increments the BIOS software clock double word RAM variable [HITIME,LOTIME].  If the count equals 1800B0h (24 hours), then the variable is reset to 0, the rollover flag [HOUR24] is set to 1, and the day counter variable [DAYCNTR] is incremented.  </LI><P>
+<LI>Calls the User Timer Tick (Int 1Ch, see <A HREF="C30000C7.HTM">page 3-131</A>).  The BIOS default Int 1Ch handler is an IRET.  </LI><P>
+<LI>When control is returned from Int 1Ch, the 8259 programmable interrupt controller is reset and interrupts are enabled.  </LI><P>
+<LI>If in a Zoomed Text video mode, and the cursor is outside the current window (but still in the same logical page), an attempt will be made to move the display window so that it contains the cursor (Cursor Tracking).  </LI><P>
+<LI>The routine returns with an IRET.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

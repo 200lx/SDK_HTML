@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_reg_far </TITLE></HEAD>
+<BODY>
+<H3>m_reg_far </H3>
+This call registers an indirect far pointer table with the System Manager.  m_reg_far must be made once, prior to an m_get_far_block call.  
+<PRE><UL>
+<LI>Syntax:         void m_reg_far(void *TopOfTable, unsigned int TotalNumEntries, 
+                               unsigned int NumUserOnly) </LI>
+<LI>Parameters:     void *TopOfTable - Offset of the first entry in a far pointer table
+                unsigned int TotalNumEntries - Total number of entries in the table 
+                                               including any designated as user only 
+                unsigned int NumUserOnly - Indicates how many entries located at the 
+                                           end of the table are to be reserved by the 
+                                           application.  This value must be less than 
+                                           or equal to the TotalNumEntries parameter. </LI>
+<LI>Returns:        None.  </LI>
+<LI>Related Calls:  <A HREF="c70000a0.htm">m_get_far_block</A> </LI>
+<LI>Comments:       All far pointer entry definitions must be contiguous; it is recommended
+                that an array be defined for this purpose. 
+                Although these user-only entries will not be allocated by the system 
+                manager, they will be automatically updated where appropriate.  
+                An application can use entries in a registered far pointer table for 
+                maintaining the integrity of pointers to its default data segment 
+                items.  The application should reserve the last n entries in the table
+                by setting the NumUserOnly parameter to n.  The System Manager will not
+                attempt to use the entries.  An application can then pass a near 
+                pointer (offset into the far pointer table pointing to desired entry) 
+                referring to far pointer that actually points to an area within the 
+                application's default data segment.  Since the pointer appears in the
+                far pointer table and falls within the allocated memory block for this 
+                application, the System Manager will automatically fix up the pointer 
+                whenever the application's memory block is moved.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

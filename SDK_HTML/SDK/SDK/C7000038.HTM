@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComMdmSet </TITLE></HEAD>
+<BODY>
+<H3>ComMdmSet </H3>
+ComMdmSet sets (asserts) the modem control lines for the specified port.  
+This function will assert the modem control lines specified by the bits in the 
+<I>ModemControl</I> parameter, which is a mask of bits found in COMIO.H.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComMdmSet(handle_t Handle, int ModemControl) 
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 int ModemControl - An integer mask used to indicate which modem 
+                                    control signals are to be cleared (de-asserted) 
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Comments:        ComOpen() must first be called in order to get a valid handle to the 
+                 communications port.  
+
+                 This function does not check for interactions between hardware flow 
+                 control and any user modem signal manipulation.  Be careful not to 
+                 accidently interfere with the flow control use of RTS.  
+</UL></PRE>
+</BODY>
+</HTML>

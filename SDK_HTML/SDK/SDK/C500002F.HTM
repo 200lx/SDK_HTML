@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Application Switching </TITLE></HEAD>
+<BODY>
+<H3>Application Switching </H3><P>
+The System Manager implements non-preemptive multitasking for built-in applications.  Applications are event driven and must make timely calls to one of the services in the event class (m_action).  The System Manager reports keystrokes in ordinary cases, but reports a deactivate event when another application key is struck.  The application is expected to do the necessary housekeeping to prepare for deactivation and then call for the next event.  <P>
+The request for a new event, subsequent to the issue of a deactivation event, will not be honored immediately.  The System Manager saves the state of the application's environment, which includes CPU registers and memory mappings.  The System Manager then prepares to transfer control to the new application.  <P>
+If the new application is currently inactive itself, its state information will be restored.  The System Manager will construct a reactivation event and return control to that application.  <P>
+If the new application is not deactivated, the System Manager will initiate the launching procedure described above.  If that procedure fails, the System Manager will reactivate the application that it just deactivated, as if the new application had been exited in a normal fashion.  <P>
+<P>
+</BODY>
+</HTML>

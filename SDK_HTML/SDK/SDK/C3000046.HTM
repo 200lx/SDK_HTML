@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 01h - Set Cursor Size </TITLE></HEAD>
+<BODY>
+<H3>AH = 01h - Set Cursor Size </H3><P>
+This function sets the size of the cursor displayed in the Text Display modes.  The character cell is h pixels lines high with the lines numbered from 0 (top of cell) through h-1 (bottom of cell).  The cursor size is specified by giving the beginning and ending scan line numbers within bits 0-4 of CL and CH.  The beginning and ending cursor scan lines are written to BIOS RAM in two bytes beginning at 40:60h (1st byte = end scan, 2nd byte = begin scan).  Bits 5 and 6 of CH are cursor control bits and govern the operation of the text mode character.  <P>
+<UL><LI>Input: AH = 01h </LI><BR>
+               CH[6-5] = Cursor Control <BR>
+               CH[0-4] = Beginning Scan Line Number <BR>
+               CL[0-4] = Ending Scan Line Number <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><BR>
+</UL>
+<PRE>
+          Cursor Control
+          -----------------------------------------
+          Value  Description
+          00     Blinking Cursor at 1 Hz
+          01     No Cursor 
+          10     Blinking Cursor at 1/2 Frame Rate
+          11     Non-Blinking Cursor
+          
+</PRE>
+<B>Notes:</B><BR>
+<UL><LI>Setting cursor control to 01 will reliably suppress the cursor. A less desirable alternative is to position the cursor to a nondisplayable address [e.g.; (xy)=(0,25)]. Cursor tracking in zoomed text modes will not follow the cursor off of the logical page.</LI><P>
+<LI>The input parameter register (CX) is written unchanged to the RAM variable CURTYPE.  </LI><P>
+<LI>It is assumed that callers of this service know nothing about the palmtop's Zoom feature and have supplied input parameters based on the standard 8x8 character cell.  If the display is in a zoomed state, the START and END parameters are scaled before writing to the display controller hardware to maintain the &quot;intent&quot; of the call.  </LI><P>
+<LI>The HP 95LX has no Cursor End (hard coded to 7) register.  This may result in erratic (or missing) cursors for HP 95LX application code running on the HP palmtop.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

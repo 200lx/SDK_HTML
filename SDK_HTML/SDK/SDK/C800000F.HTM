@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Menu Structure </TITLE></HEAD>
+<BODY>
+<H3>Menu Structure </H3><P>
+An application menu is an array of menu structures in which each structure describes one menu item.  The top menu and each popdown menu are seperate arrays.  Each array must end with a menu structure filled with 0.  <P>
+<UL><LI><B>Title:</B> Title is the displayed name of the item.  Characters preceded by &quot;&amp;&quot; specify the menu item's mneumonic and appear underlined.  </LI><P>
+</UL><UL>
+<LI><B>Handler:</B> For pull-down menus, Handler is a near pointer to a menu structure.  For menu actions other than pull-downs, Handler is either a near pointer to code associated with the menu item or an integer ID number.  For window creations, this field is a near pointer to a window structure.  (See Style below).  A summary of the available choices for menu actions: </LI><P>
+<UL>
+<LI>Direct launch of function.  Don't set the MENU_SENDMSG, MENU_PULLDOWN, or MENU_CREATEWND style bits.  Handler is the address of the function to execute.  <P>
+<LI>Creation of a pull-down menu.  Set the MENU_CREATEWND style bit.  Handler is the address of the pull-down menu structure array.  <P>
+<LI>Creation of a dialog/window.  Set the MENU_CREATEWND style bit.  Handler is the address of the window to create (a LHWINDOW struct).  <P>
+<LI>Send a command message.  Set the MENU_SENDMSG style bit.  Hander is the integer ID of the COMMAND you want to execute (the Data word of the incoming COMMAND message).  <P>
+</UL>
+</UL>
+<UL><LI><B>HotKey:</B> This field is the scancode of key that will execute the function directly without going through the menu.  </LI><P>
+</UL><UL>
+<LI><B>Style:</B> Style bits are defined as follows: </LI><BR>
+<UL>
+<B>MENU_GRAY</B><BR>
+0x0080 The menu item is &quot;grayed,&quot; meaning cannot be selected.  <P>
+<B>MENU_INVISIBLE </B><BR>
+0x0040 The menu item doesn't display.  MENU_INVISIBLE is used to support different menu choices embedded in the same menu structure.  <P>
+<B>MENU_CHECKED </B><BR>
+0x0020 The menu item displays with a check mark before it.  <P>
+<B>MENU_BARBEFORE </B><BR>
+0x0010 A separator bar is inserted before the item.  <P>
+<B>MENU_SENDMSG </B><BR>
+0x0008 Instead of the handler being directly called by the menu system, a COMMAND message is sent to the menu's parent window, with the Data parameter set to the LHMENU Handler field.  This allows the flexibility of placing code inside a switch, and lets a window handler manage menu options that may be modal in that window.  <P>
+<B>MENU_PULLDOWN </B><BR>
+0x0004 The menu is a pop-down menu.  The handler points to the array of pop-down menu structures.  <P>
+<B>MENU_CREATEWND </B><BR>
+0x0002 The handler is a pointer to a window structure; this window is automatically created and given the focus (via a CREATE, CREATE_FOCUS, SETFOCUS_NORMAL message) when the corresponding menu item is selected.  This would typically be a DialogBox, but it does not have to be.  <P>
+<B>MENU_ELLIPSIS </B><BR>
+0x0001 This field appends the &quot;...&quot; text string to the menu item when displayed to indicate a dialog is initiated by that menu item.  <P>
+<B>MENU_USER </B><BR>
+0x0400 Values of the Style field at and after this value are reserved for application-specific uses.  <P>
+</UL></UL>
+<UL><LI><B>Help:</B> Help is the context-sensitive help index number for this menu item.  A value of NO_HELP means that this menu item does not have any help text associated with it.  </LI><BR>
+This value is saved in the Help field of the LHMENU and LHWINDOW structure to signify that this menu item or window does not have any specific help index associated with it.  <P>
+</UL>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Structure of an .EXM File </TITLE></HEAD>
+<BODY>
+<H3>Structure of an .EXM File </H3><P>
+The special C-language program startup situations for System Manager compliant applications are <P>
+<UL><LI>Applications must be linked with a special version of the C-language startup code, CRT0.OBJ.  This version is needed because the System Manager Launch mechanism has already performed the tasks performed by the normal C-language startup code.  <P>
+<B>Note:</B> Startup code for floating point math in not included in the HP palmtop.  If your application requires floating point, you will need to modify CRT0.ASM to include appropriate initialization code from your compiler's normal startup routine.  </LI><P>
+<LI>Command-line and environment variables (argc, argv, and envp) are not available.  </LI><P>
+</UL>External System Manager compliant applications must be small memory-model programs, with less than 64K of code and less than 64K of preallocated data, including the stack.  Additional data space, up to available memory, can be dynamically allocated using the System Manager m_set_far_block or m_get_far_block functions.  <P>
+The actual EXM file is identical to an EXE except the E2M utility uses the program's MAP file to determine the separation point between the code and data, and writes this into the EXE header.  The System Manager uses that information to split the program's code from the data during the loading process.  The data segment is allowed to move in memory, but the code segment is fixed.  <P>
+<P>
+<P>
+</BODY>
+</HTML>

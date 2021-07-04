@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Service 00h or 10h (Read Char): </TITLE></HEAD>
+<BODY>
+<H3>Service 00h or 10h (Read Char): </H3><P>
+If there is no key in the keybuffer on entry, these services invoke Int 15h, Fcn 4102h with BH equal to the low byte of KBGET, BL=0, and ES:DI pointing at KBPUT.  This has the effect of hanging inside the Int 15h, Fcn 4102h code until a key is present in the keybuffer.  Eventually, if there is no keyboard activity, this service will Auto-Timeout.  When a key is eventually fetched from the keybuffer, the Auto-Timeout counter, TimOutCnt is reset.  <P>
+</BODY>
+</HTML>

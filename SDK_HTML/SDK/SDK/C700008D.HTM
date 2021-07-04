@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Memory Management Services </TITLE></HEAD>
+<BODY>
+<H1>Memory Management Services </H1><P>
+The System Manager's Memory Management services provide the RAM space indicated in the application's image structure whenever the application is invoked.  This amount of memory should be sufficient for ordinary uses of the application.  There are instances when more RAM is required, at which point the application calls <A HREF="c7000092.htm">m_alloc()</A> or <A HREF="c7000093.htm">m_alloc_large()</A> to expand the size of its data area.  If successful, the application's data area may have been moved by the System Manager.  Applications must be careful not to store the current data segment or to update these stored values after memory allocation calls.<P>
+Note for those replacing any Memory Management calls: in these calls, the caller's DS is not saved on the stack.  The current DS is not the System Manger's DS, but the caller's DS.  <P>
+Dynamic memory allocation is implemented by resizing the memory block belonging to the application.  The new buffer will therefore begin at the previous end of the memory block.  Calls to release memory are translated into requests to shrink the memory block to the specified level.  These services should not be confused with the functions m_alloc() and free().  <P>
+DOS memory allocation services are also available.  It is likely, however, that all DOS memory will have been consumed by 1-2-3, and memory will be available only by using these System Manager Memory Management services.  <P>
+System Manager compliant applications are able to access non-default data blocks without concern over possible relocation.  This is possible based on a compiler-independent indirect far pointer approach, which uses a table to hold the physical segment addresses.  The indirect far pointer technique requires a double word for each table entry as well as a near handle used as a pointer to the table entry.  Memory allocations need not be linked to any specific table entry (handle), so the System Manager performs the handle selection and returns an offset to the corresponding far pointer.  <P>
+<H2><A HREF="c700008e.htm">Caveats </A></H2><P>
+<H2><A HREF="c700008f.htm">Application Notes </A></H2><P>
+<H2><A HREF="c7000090.htm">Call Descriptions </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

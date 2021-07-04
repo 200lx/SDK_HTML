@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_ChangePassword </TITLE></HEAD>
+<BODY>
+<H3>DB_ChangePassword </H3><P>
+This function changes the current password on the file.  Either a NULL pointer or a null string (&quot;&quot;) can be passed to indicate no password; both are equivalent.  Changing the password does garbage collection, so an DB_Undo cannot be executed immediately afterwards.  Changing the password requires rewriting all records in the database, and may take a while.  <P>
+<UL><LI><Pre>Syntax:             int DB_ChangePassword(DBBLOCK *dblk, char *oldpassword,
+                    char *newpassword); </LI><P>
+<LI>Returns:            DB_OK          Password was changed or the new password is
+                                   not different from the old password.  <P>
+                    DB_PASSWORDFAILED The old password is invalid.  <P>
+                    DB_SEEK        File is probably corrupt.  <P>
+                    DB_READ        Media error.  <P>
+                    DB_WRITE       Media error.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

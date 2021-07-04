@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CPU Bus Interface </TITLE></HEAD>
+<BODY>
+<H1>CPU Bus Interface </H1><P>
+The Hornet chip includes a CPU bus interface block that interfaces between the 80C186 Internal CPU core and other system devices.  This block includes an 8288-compatible bus controller, address latches, data bus cross-over logic for converting 16-bit accesses to two 8-bit accesses, and necessary control logic.  A block diagram of the bus interface is shown below.<P>
+<A HREF="image/__dg1501.gif">Graphic</A><P>
+The bus interface block functions with either the internal CPU or with an external CPU in XCPU mode.  The 8288-compatible bus controller latches and decodes the status lines, S[0:2], from the CPU.  The block's outputs include memory read/write signals, I/O register read/write signals, as well as control signals for the address latches, data bus transceivers, and the 8259.<P>
+</BODY>
+</HTML>

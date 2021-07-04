@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 06h Functions </TITLE></HEAD>
+<BODY>
+<H3>Int 06h Functions </H3><P>
+<P>
+<PRE>
+Fcn   Description             Inputs                                Outputs
+------------------------------------------------------------------------------------------
+00h   Deep Sleep Entry        None                                  None 
+------------------------------------------------------------------------------------------
+01h   Deep Sleep WakeUp       AL   WakeUp Source (*)                None  
+                              (*)- 1 = ON key press 
+                                   2 = UART wake up 
+                                   4 = Real Time Clock Alarm 
+                                   8 = GPIO (XINT for 95LX)
+------------------------------------------------------------------------------------------
+02h   LightSleep Entry        None                                  None 
+------------------------------------------------------------------------------------------
+03h   LightSleep WakeUp       None                                  None
+------------------------------------------------------------------------------------------
+04h   Font Load (Byte-Wide)   AL       Handled Flag                 AL Handled Flag
+                              BX       Bitmap ID (*) 
+                              ES:DI    Destination (StdFontHi) 
+                              40h:EFh  CodePage 
+
+                              (*) - 1=6x8, 4=8x8) 
+------------------------------------------------------------------------------------------
+05h   Font Load (Word-Wide)   AL       Handled Flag                 AL Handled Flag
+                              BX       Bitmap ID (*) 
+                              DL       Load Format (1=Noncontiguous, 
+                                       2=Contiguous) 
+                              ES:DI    Destination 
+                              40h:EFh  CodePage 
+                            
+                              Invoked by the font loader (Int 10h, 
+                              Fcn D1h on page <A HREF="C3000058.HTM">page 3-74</A>).  An 
+                              application that loads its own font 
+                              should return with AL#0.  On exit, 
+                              the Bitmap buffer (Destination) will 
+                              be unmapped (no longer in the CPU 
+                              Address space).  
+                             
+                             (*) - 1=6x8, 2=16x12, 4=8x8, 8=10x11 
+------------------------------------------------------------------------------------------
+06h   Low Main               Low Main Batt message will be          AL Handled Flag
+                             displayed by the BIOS unless handled.
+------------------------------------------------------------------------------------------
+07h   Low BkUp               Low BkUp Batt message will be          AL Handled Flag
+                             displayed by the BIOS unless handled.
+------------------------------------------------------------------------------------------
+08h   Low Card               Low Card Batt message will be          AL Handled Flag
+                             displayed by the BIOS unless handled.
+------------------------------------------------------------------------------------------
+09h   Batt Err               Battery Error message (OverVoltage)    AL Handled Flag
+                             will be displayed by the BIOS unless 
+                             handled. 
+------------------------------------------------------------------------------------------
+0Ah   Very Low Main          Very Low Main Batt message will be     AL Handled Flag
+                             displayed by the BIOS unless handled. 
+------------------------------------------------------------------------------------------
+0Bh   Redefine Display Mode  This function is called inside Int     AL Handled Flag
+                             10h Fcns 00h, D0h just before setting  ES:SI Data Pointer 
+                             ES:SI to point to a 25 byte row of 
+                             data in the XCRTPRM table (See Int 
+                             10h, Fcn DFh).  The handler sets ES:SI
+                             to point at the 25-byte array of data
+                             for display hardware initialization 
+                             and returns with the handled flag set.  
+                             The data should be appropriate for the 
+                             mode indicated by the RAM variables 
+                             CRTMODE and CRTZOOM. 
+------------------------------------------------------------------------------------------
+
+</PRE>
+<P>
+</BODY>
+</HTML>

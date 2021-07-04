@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_volume </TITLE></HEAD>
+<BODY>
+<H3>m_volume </H3>
+m_volume sets <I>bp</I> to the name of the current volume and sets <I>*sizep</I> to the amount of free space available on that volume.
+<PRE><UL>
+<LI>Syntax:      int far m_volume(char far *bp, long far *sizep) </LI>
+<LI>Parameters:  char far *bp - Pointer to the name of the volume being checked 
+             long far *sizep - Pointer to the amount of freespace available in the 
+                               volume identified by <I>*bp</I>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

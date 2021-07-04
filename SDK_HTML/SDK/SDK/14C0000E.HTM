@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Real-Time Clock </TITLE></HEAD>
+<BODY>
+<H3>Real-Time Clock</H3>
+<PRE>
+Index   R/W Mode  Description
+==========================================================================================
+-08h    R/W       bits 7-0  bits 7-0 of the 26-bit counter value
+------------------------------------------------------------------------------------------
+-09h    R/W       bits 7-0  bits 15-8 of the 26-bit counter value
+------------------------------------------------------------------------------------------
+-0Ah    R/W       bits 7-0  bits 23-16 of the 26-bit counter value
+------------------------------------------------------------------------------------------
+-0Bh    R/W       bits 1-0  bits 25-24 of the 26-bit counter value
+                  bit 2     F16HZ signal (read only)
+                  bit 3     F8HZ signal (read only)
+                  bit 4     F4HZ signal (read only)
+                  bit 5     F2HZ signal (read only)
+                  bit 6     F1HZ Anticipates the state of the RTC clock by 1mS (read only)
+                  bit 7     Shows the state of the RTC clock (read only)
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

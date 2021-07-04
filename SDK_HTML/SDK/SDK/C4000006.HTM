@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Battery Measurement </TITLE></HEAD>
+<BODY>
+<H3>Battery Measurement </H3><P>
+HP palmtop hardware provides a 3-channel 6-bit DAC and a comparator.  This provides the means to implement a 6-bit, 3 channel ADC through software successive approximation.  The three input channels are dedicated to the Main, Backup, and Reference Voltage sources.  The Reference voltage measurement is used by the software to adjust the main and backup battery measurements.  Periodic main, backup, and card battery measurements are scheduled during normal operation using Timer1 (IRQ2).  BIOS Power services provides applications the ability to measure the Main and BackUp batteries, enable battery charging, etc.  The measurement of plug-in card batteries is direct (doesn't use the ADC).  <P>
+</BODY>
+</HTML>

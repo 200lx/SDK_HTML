@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>PackedWindow </TITLE></HEAD>
+<BODY>
+<H3>PackedWindow </H3><P>
+<P>
+<pre>
+Offset   Name         Type      Contents 
+-------  -----------  --------  --------
+0...3    UNUSED       long int  Window class handler; reconstructed upon loading from
+                                fielddef information
+4...5    x            int       X position in pixels (0...639) of upper left corner of
+                                window 
+6...7    y            int       Y position in pixels (0...199) 
+8...9    w            int       width in pixels 
+10...11  h            int       height in pixels 
+12...13  LogicalSize  int       Size of buffer for edit-type fields (as opposed to screen
+                                size); includes null terminator.  For radio fields,
+                                LogicalSize is an index of the radio type.  For check
+                                boxes, LogicalSize is a bit mask for that check on.
+14...17  Style        longint   LHAPI window style  Most styles are not used.
+                                See the following <a href="#10C00005_1">table</a> for more information.  
+18...19  Parent       int       Index of the parent window (all windows within a group
+                                box give the index of the group as their parent).  -1
+                                if no parent (top level window).  
+</pre>
+
+<a name="10C00005_1"><p>
+Styles per LHAPI are as follows: 
+</p>
+<pre>
+STYLE_NOSHADOW        0x00004000L 
+STYLE_COMBOEDIT       0x00008000L 
+STYLE_DATETIME        0x00010000L 
+STYLE_CHECKBOX        0x00020000L  Should be set for a check box 
+STYLE_NO_PARENT_KEY   0x00040000L 
+STYLE_PUSHB_WIDTH     0x00080000L 
+STYLE_PUSHBUTTON      0x00100000L 
+STYLE_COMBOLIST       0x00200000L 
+STYLE_RADIO           0x00400000L  Should be set for a radio button 
+STYLE_GRAY            0x00800000L
+STYLE_WHCHAR          0x02000000L 
+STYLE_NOBORDER        0x04000000L 
+STYLE_LEAF            0x08000000L 
+STYLE_NOTIFY          0x10000000L 
+STYLE_NOFOCUS         0x20000000L 
+STYLE_SAVEUNDER       0x40000000L 
+STYLE_INVISIBLE       0x80000000L 
+</pre>
+
+</BODY>
+</HTML>

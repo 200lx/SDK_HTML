@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_static_block </TITLE></HEAD>
+<BODY>
+<H3>m_get_static_block </H3>
+This is the initial call to allocate a block of static RAM.
+<PRE><UL>
+<LI>Syntax:          int m_get_static_block(_far *_near *static_ptr, 
+                                        unsigned long int DesiredBytes) </LI>
+<LI>Parameters:      _far * _near * static_ptr - Near pointer to a far pointer
+                 The System Manager sets the address pointed to by this parameter 
+                 to the 32-bit buffer start address (offset always =0).
+                 ulong int DesiredBytes - Desired size in bytes of the static block </LI>
+<LI>Returns:         0 - if static memory block is successfully allocated 
+                 The far pointer is returned to the start of the block. 
+                 Any other value indicates an error condition.  Error code is stored in
+                 AX.</LI>
+<LI>Related Calls:   <A HREF="c7000098.htm">m_free_static_block</A>.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

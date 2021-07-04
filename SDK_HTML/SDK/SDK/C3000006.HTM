@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Multiple Print Screen Calls </TITLE></HEAD>
+<BODY>
+<H3>Multiple Print Screen Calls </H3><P>
+Multiple Print Screen calls are ignored while a Print Screen operation is in progress.  This prevents multiple screen printouts from being queued if the [PrtSc] key is quickly pressed more than once.  The Print Screen service routine updates a status byte at address 40h:100h.  The value of this byte is interpreted as follows: <P>
+<UL><LI>00h      No Print Screen activity.  </LI><P>
+<LI>01h      A Print Screen operation is in progress.  </LI><P>
+<LI>FFh     The previous Print Screen operation terminated with an error.  </LI><P>
+</BODY>
+</HTML>

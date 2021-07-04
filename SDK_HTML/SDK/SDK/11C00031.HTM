@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_WinGledTo850 </TITLE></HEAD>
+<BODY>
+<H3>DB_WinGledTo850 </H3><P>
+This function converts a Windows (ANSI) length delimited string to a Code page 850 string (the standard 100LX code page).  This function is used when loading an OmniBook file.  <P>
+<B>Note:</B> Although the function is named GledTo850, GLED escape sequences (starting with 0xFF) in the string will be translated as standard Windows characters.  If the buffer does contain legitimate GLED escape sequences, you will need to make multiple calls to this function, bypassing the escapes.  <P>
+<UL><LI><Pre>Syntax:             DB_GledTo850(char far *str, unsigned int stringlength); </LI><P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

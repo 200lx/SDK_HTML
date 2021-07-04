@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Extended BIOS Data Area Definitions </TITLE></HEAD>
+<BODY>
+<H1>Extended BIOS Data Area Definitions </H1><P>
+<P><PRE>
+ADDRESS      NAME      LENGTH  DESCRIPTION
+                       (BYTES)
+==========================================================================================
+9000h:F733h  ScanPutPtr   1    Put Ptr (offset into ScanBuff).
+------------------------------------------------------------------------------------------
+9000h:F734h  ScanGetPtr   1    Get Ptr (offset into ScanBuff). 
+------------------------------------------------------------------------------------------
+9000h:F735h  ScanBuff     33   Room for 32 scancodes (1 less than ScanBuff Size) buffer
+                               for Byte scancodes that will be sent to Int 09h.
+------------------------------------------------------------------------------------------
+9000h:F756h  ///////      22   Reserved in HP palmtops. 
+------------------------------------------------------------------------------------------
+9000h:F76Ch  MailBox      16   MailBox (8 words - See Int 15h, Fcn 51h).
+------------------------------------------------------------------------------------------
+9000h:F77Ch  AnnSave      48   Save Area for display underlying annunciators.
+------------------------------------------------------------------------------------------
+9000h:F7ACh  Irq2VecTbl   64   Vector table for the 16 potential IRQ2 Int sources.  
+                               OFFSET     IRQ2 SOURCE                                
+                               00h        F7ACh, DCI 
+                               04h        F7B0h, RTC 
+                               08h        F7B4h, TIMER 1 
+                               0Ch        F7B8h, RX 
+                               10h        F7BCh, RING 
+                               14h        F7C0h, KBD 
+                               18h        F7C4h, IR 
+                               1Ch        F7C8h, Gpio[10] 
+                               20h        F7CCh, Gpio[11] 
+                               24h        F7D0h, Gpio[12] 
+                               28h        F7D4h, Gpio[13] 
+                               2Ch        F7D8h, Gpio[06] 
+                               30h        F7DCh, Gpio[07] 
+                               34h        F7E0h, Gpio[24] 
+                               38h        F7E4h, Gpio[25] 
+                               3Ch        F7E8h, Gpio[26]
+------------------------------------------------------------------------------------------
+9000h:F7ECh  NmiVecTbl    12   NMI vector table (GPIO[24;26] sources only) 
+                               OFFSET     GPIO SOURCE                                
+                               1Ch        F7ECh, Gpio[24] 
+                               20h        F7F0h, Gpio[25] 
+                               24h        F7F4h, Gpio[26]
+------------------------------------------------------------------------------------------
+9000h:F7F8h  Far_DpSleep? 4    Far address of DPSLEEP?  (APM Usage)
+------------------------------------------------------------------------------------------
+9000h:F7FCh  Far_ShutDown 4    Far address of ShutDown (APM Usage)
+------------------------------------------------------------------------------------------
+9000h:F800h  BMSP         2    Bitmap Stack pointer<P>Values: BMSTK-10, BMSTK, .  .  .
+------------------------------------------------------------------------------------------
+9000h:F802h  BMSTK        70   The 7-level, 10-byte wide BitMap Stack supports variable
+                               sized, RAM resident, fonts, and symbol bitmaps and grows
+                               toward High Memory.
+------------------------------------------------------------------------------------------
+9000h:F848h  ChgCntLow    2    Charge timer (55 msec Timer1 Ticks, LSW) 
+------------------------------------------------------------------------------------------
+9000h:F84Ah  ChgCntHi     2    Charge timer (55 msec Timer1 Ticks, MSW)
+------------------------------------------------------------------------------------------
+9000h:F84Ch  FntReg       2    value for Hornet's Font Control registers  
+                               This is constant, but hardware configuration dependent.
+------------------------------------------------------------------------------------------
+9000h:F84Eh  DspReg       2    value for Hornet's Display Control registers  
+                               This is constant, but hardware configuration dependent.
+------------------------------------------------------------------------------------------
+9000h:F850h  ///////      4    Reserved in HP palmtops
+------------------------------------------------------------------------------------------
+9000h:F854h  BAT_Start    1    The digital value corresponding to the leftmost cell 
+                               (cell -5) in the measurement histogram. Cells are 
+                               numbered: -5, -4, ...,0,...  4, 5.
+------------------------------------------------------------------------------------------
+9000h:F855h  BAT_Hist     11   Battery histogram with eleven -27.46 mVolt wide cells. 
+                               This gives a horizontal range of 0.302 Volts generally 
+                               centered on the first reading. In any case, the value 
+                               in BAT_Start gives the digital value (0-63) associated 
+                               with the leftmost cell (cell -5).
+------------------------------------------------------------------------------------------
+9000h:F860h  BAT_OutRng   1    Out-Of-Range cell for battery histogram
+                               Once the 1st measurement determines placement of the 
+                               histogram, values out of range will be added to this bucket
+------------------------------------------------------------------------------------------
+9000h:F861h  GC_Rate      2    Graphics cursor display rate (55 msec units)
+------------------------------------------------------------------------------------------
+9000h:F863h  GC_Count     2    Counts before blink (55 msec units)
+------------------------------------------------------------------------------------------
+9000h:F865h  GC_Status    1    Graphics cursor status 
+                               BIT     DEFINITION            
+                                0      1 = Cursor On (Enabled) 
+                                1      1 = Blink Enabled 
+                                2      1 = Cursor State (Visible=1)
+------------------------------------------------------------------------------------------
+9000h:F866h  GC_X         2    Graphics cursor screen destination X coord (0-639)
+------------------------------------------------------------------------------------------
+9000h:F868h  GC_Y         2    Graphics cursor screen destination Y coord (0-199)
+------------------------------------------------------------------------------------------
+9000h:F86Ah  GC_HotspotX  1    Graphics cursor (origin) X coordinate (0-15)
+                               Normally 0 (upper left corner of 16x32 cell).
+------------------------------------------------------------------------------------------
+9000h:F86Bh  GC_HotspotY  1    Graphics cursor (origin) Y coordinate (0-31)
+                               Normally 0 (upper left corner of 16x32 cell).
+------------------------------------------------------------------------------------------
+9000h:F86Ch  GC_And       64   Bitmap of 16x32 cursor to be logically ANDed into 
+                               the display
+------------------------------------------------------------------------------------------
+9000h:F8ACh  GC_Xor       64   Bitmap of 16x32 cursor to be logically XORed into 
+                               the display
+------------------------------------------------------------------------------------------
+9000h:F8ECh  GC_Save      64   Stash for 16x32 display area for cursor overwrite
+------------------------------------------------------------------------------------------
+9000h:F92Ch  GC_Disp      64   Bitmap of 16x32 cursor to be displayed 
+                               This bitmap is built by the BIOS each time the cursor is 
+                               moved or redefined.  The value is: GC_Disp = (GC_Save 
+                               AND GC_And) XOR GC_Or.
+------------------------------------------------------------------------------------------
+9000h:F96Ch  BiosMsgBuf   650  (40x(10x13))/8 = 650 byte buffer for upper left corner of 
+                               display This buffer is used by BIOS for msg display.
+------------------------------------------------------------------------------------------
+9000h:FBF6h  ATS_LABEL    9    Label identifying key pressed (eg: Menu Label)
+                               This label is used to make ATS test results more readable.
+------------------------------------------------------------------------------------------
+9000h:FBFFh  ATS_FLAG     1    Length of label stored at ATS_LABEL 
+                               The value is also used as a SysMgr/ATS handshake for 
+                               label processing.
+------------------------------------------------------------------------------------------
+9000h:FC00h  StdFontHi    1024 Last Half (Chrs 128-255) of standard byte-wide 8x8 font 
+                               (code page support in graphics)
+------------------------------------------------------------------------------------------
+</PRE>
+<P>
+</BODY>
+</HTML>

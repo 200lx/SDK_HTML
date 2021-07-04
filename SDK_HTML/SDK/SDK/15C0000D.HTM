@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bank Control Registers </TITLE></HEAD>
+<BODY>
+<H3>Bank Control Registers</H3>
+The bank control registers are read/write registers.<P>
+<PRE>
+Index   Name        Bits    Comments
+==========================================================================================
+-88h    D0 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-89h    D0 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank D0 enable
+                    [2:0]   Bank D0 device select code
+------------------------------------------------------------------------------------------
+-8Ah    D1 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Bh    D1 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank D1 enable
+                    [2:0]   Bank D1 device select code
+------------------------------------------------------------------------------------------
+-8Ch    D2 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Dh    D2 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank D2 enable
+                    [2:0]   Bank D2 device select code
+------------------------------------------------------------------------------------------
+-8Eh    D3 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Fh    D3 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank D3 enable
+                    [2:0]   Bank D3 device select code
+------------------------------------------------------------------------------------------
+-90h    E0 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-91h    E0 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank E0 enable
+                    [2:0]   Bank E0 device select code
+------------------------------------------------------------------------------------------
+-92h    E1 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-93h    E1 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank E1 enable
+                    [2:0]   Bank E1 device select code
+------------------------------------------------------------------------------------------
+-94h    E2 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-95h    E2 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank E2 enable
+                    [2:0]   Bank E2 device select code
+------------------------------------------------------------------------------------------
+-96h    E3 Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-97h    E3 Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                    [3]     Bank 3 enable
+                    [2:0]   Bank E3 device select code
+------------------------------------------------------------------------------------------
+-98h    C Reg0      [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-99h    C Reg1      [7:6]   next 2 MSBs of device address (address bits [17:16])
+                    [5]     unused
+                    [4]     Bank C Attribute Memory Select bit
+                    [3]     Bank C enable
+                    [2:0]   Bank C device select
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

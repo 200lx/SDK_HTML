@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>GroupBox </TITLE></HEAD>
+<BODY>
+<H3>GroupBox </H3><P>
+The GroupBox is a labeled box surrounding a group of fields on a screen for visible grouping of like items.  One of the most common uses of the GroupBox is to group RadioButtons together so they can determine their &quot;siblings&quot; by having a common parent.  A GroupBox is actually a subclass of the StaticRect class.  <P>
+<B>Window Structure Details </B><P>
+<UL>
+<LI>int x,y,w,h:  <BR>
+x and y give the coordinates (x,y) at which to display the GroupBox rectangle.  GroupBox displays the title at the upper left corner of the group box, overlaying a portion of the rectangle border. <P>
+</UL><UL>
+<LI>PLHRES Title;: Title gives the label for the GroupBox.  </LI><P>
+<LI>PLHDATA Data: Not used.  </LI><P>
+<LI>UINT LogicalSize: Not used.  </LI><P>
+<LI>UINT Style: If the GroupBox is part of a DialogBox, STYLE_NOFOCUS should be used.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>DRAW: GroupBox responds to the Data parameter submessages DRAW_TITLE and DRAW_FRAME.  </LI><P>
+<LI>KEYSTROKE: Passed to StaticRect class handler.  </LI><P>
+<LI>CREATE: Passed to StaticRect class handler.  </LI><P>
+<LI>DESTROY: Passed to StaticRect class handler.  </LI><P>
+<LI>TERMINATE: Passed to StaticRect class handler.  </LI><P>
+<LI>ACTIVATE: Passed to StaticRect class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to StaticRect class handler.  </LI><P>
+<LI>SETFOCUS: Passed to StaticRect class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to StaticRect class handler.v </LI><P>
+<LI>NULLEVENT: Passed to StaticRect class handler.  </LI><P>
+<LI>NOTIFY: Passed to StaticRect class handler.  </LI><P>
+<LI>COMMAND: Passed to StaticRect class handler.  </LI><P>
+<LI>APPEAR: Passed to StaticRect class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to StaticRect class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

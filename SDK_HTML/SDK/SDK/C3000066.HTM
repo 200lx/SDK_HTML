@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 12h: Memory Size Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 12h: Memory Size Interrupt </H1><P>
+The Int 12h service returns the number of 1K byte blocks of system RAM in register AX.  The value is copied directly from the MEMSIZE RAM Variable at 40h:13h.  This variable is the amount of user RAM found in the system during the power-on and initialization process.  It does not include any expanded RAM that may be present.  <P>
+The current HP 100LX design has 1 MB of RAM memory built in as standard equipment.  This can be increased by adding a plug-in RAM card.  No method is currently provided to disable a portion of the 1M RAM.  The number returned by Int 12h is approximately the 1 MB minus the number of KB in the RAM portion of the drive C: Edisk and will never exceed 636 KB (027Ch).  <P>
+Note that an application can use this service to determine the total amount of user RAM in the system.  However, this service does not indicate how much RAM is available (&quot;free&quot;) for running applications.  <P>
+<P>
+</BODY>
+</HTML>

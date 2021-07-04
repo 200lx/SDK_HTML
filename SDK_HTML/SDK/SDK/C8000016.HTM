@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DESTROY Submessages </TITLE></HEAD>
+<BODY>
+<H3>DESTROY Submessages </H3><P>
+<UL><LI>DESTROY_NORMAL (0): The window is destroyed normally in that the Object class handler will cause all the other windows currently visible to be redrawn if this window does not employ STYLE_SAVEUNDER.  It accomplishes this by sending a DISAPPEAR_NORMAL message to this window's handler.  </LI><P>
+<LI>DESTROY_NODRAW (1): The Object class handler will send a DISAPPEAR_NODRAW message to the window in order to prevent all the other visible windows from being redrawn (if STYLE_SAVEUNDER is not being used).  This is useful when a parent window (such as a dialog box) is destroyed, in which case we want to prevent all of it's child windows from causing all the other visible windows from being redrawn when each of them is destroyed.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

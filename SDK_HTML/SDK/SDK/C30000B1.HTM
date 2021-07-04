@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 01h: Initialize Printer </TITLE></HEAD>
+<BODY>
+<H3>AH = 01h: Initialize Printer </H3><P>
+This function initializes a serial printer port.  It clears the XOFF received flag, and it does not set the baud rate or parity.  This should be done with Int 14h function 00.  <P>
+<UL><LI>Input: AH = 01h <BR>
+DX = Port number (0 - 1) <P>
+</UL>
+<UL><LI>Output: AH = Printer status (see function AH=00h) </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><P>
+</BODY>
+</HTML>

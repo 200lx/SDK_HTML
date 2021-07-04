@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Display Organization </TITLE></HEAD>
+<BODY>
+<H3>Display Organization</H3>
+This display controller is designed to operate with a 640- by 200-pixel display.  Columns are numbered 0 to 639 from left to right.  The DD7 signal corresponds to columns 0, 8, 16, .  .  .  , 632.  The DD0 signal corresponds to columns 7, 15, 23, .  .  .  , 639.  The first falling edge of CP (after a falling edge on LOAD) latches DD7 through DD0 into the columns drivers corresponding to columns 0 through 7, respectively.  Subsequent falling edges on CP correspond to successive groups of columns up through column 639.<P>
+Rows are numbered 0 to 199 from top to bottom.  The YD signal is loaded into row 0 by a falling edge on LOAD.  This causes row 0 to become the active row.  It also causes the data that was loaded into the column drivers to become active, controlling the pixels on the active row.  Subsequent falling edges on LOAD will shift the active row down successively numbered rows so that vertical scans are done from top to bottom.<P>
+<P>
+</BODY>
+</HTML>

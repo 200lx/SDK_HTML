@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CardBIOS </TITLE></HEAD>
+<BODY>
+<H3>CardBIOS </H3><P>
+CardBIOS is a short name for what Microsoft called &quot;CARDDRV BIOS Interface&quot; dated September 15, 1992 together with some extensions made at HP.  <P>
+CardBIOS is called as follows:
+<PRE>
+     mov      ax, b000h 
+     les      bx, ptr to a CardBIOS request packet 
+     int      1ah 
+</PRE>
+The media types supported by CardBIOS are RAM cards, SunDisk cards, and Intel Series II flash cards.  The Flash File System drivers would be needed to use the Intel flash cards and these drivers are not included in the HP palmtop.  <P>
+The Microsoft specification defined the following functions: <P>
+<UL><LI>GetBIOSInfo </LI><P>
+<LI>InitializeBIOS </LI><P>
+<LI>UninitializeBIOS </LI><P>
+<LI>RegisterClient </LI><P>
+<LI>DeregisterClient </LI><P>
+<LI>ReadMemory </LI><P>
+<LI>WriteMemory </LI><P>
+<LI>CopyMemory </LI><P>
+<LI>RequestEraseQueueService </LI><P>
+<LI>GetStatus </LI><P>
+<LI>GetFirstRegion </LI><P>
+<LI>GetNextRegion </LI><P>
+</UL>HP added the following functions: <P>
+<UL><LI>GetFirstTuple </LI><P>
+<LI>GetNextTuple </LI><P>
+<LI>GetTupleData </LI><P>
+<LI>Hook2FNow </LI><P>
+<LI>SetSocketBusyCallback </LI><P>
+<LI>GetDriveParameters </LI><P>
+<LI>BroadcastRequest </LI><P>
+</UL>The InitializeBIOS function provides RAM needed by CardBIOS.  This function is called by CardDrv and, since CardDrv is always the first client loaded, there is no need for other clients to be concerned with initializing CardBIOS.  CardBIOS must remain active at all times so the UninitializeBIOS function should not be used.  <P>
+Applications which need to watch for a specific card should register as a CardBIOS client so that they will be informed of card change events.  <P>
+The CICDEMO example program, which is described more below and which is included in the developer's kit, illustrates the use of RegisterClient, DeregisterClient, GetFirstTuple, GetNextTuple, and WriteMemory (for writing to attribute memory to configure a card).  <P>
+Note that one of the advantages of using the CardBIOS WriteMemory function to configure a card is that CardBIOS will take care of saving and restoring memory windows, see the Resource Allocation section above for more information on window management.  <P>
+It is expected that CICDEMO will provide a sufficient illustration of CardBIOS usage for most application's needs.  However, complete CardBIOS documentation is available upon request.  <P>
+<P>
+</BODY>
+</HTML>

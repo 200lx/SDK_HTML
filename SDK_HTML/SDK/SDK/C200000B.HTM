@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Compatibility Issues </TITLE></HEAD>
+<BODY>
+<H1>Compatibility Issues </H1><P>
+<B>Bios Special Compatible Subroutine </B> <P>
+The following code fragment must be present at the address indicated for compatibility with the Industry Standard.  <P>
+<P>
+<PRE>
+F000:E00D 20 49 42        AND [BX+DI+42],CL    ;db ' ', 'I', 'B', 'M' 
+F000:E010 4D              DEC BP
+F000:E011 C3              RET
+</PRE>
+<P>
+<B>Compatibility Addresses </B><P>
+The table below shows the compatible entry points and data table addresses which the 100LX/200LX BIOS system supports.  <P>
+<P>
+<PRE>
+Int    ROM Entry   Type    Function
+------------------------------------------------------------------------------------------
+--     F000:E05B   code    Reset
+02     F000:E2C3   code    Nonmaskable Interrupt
+19     F000:E6F2   code    Boot
+--     F000:E729   data    Baud rate divisor table
+14     F000:E739   code    Serial 
+16     F000:E82E   code    Keyboard 
+09     F000:E987   code    Int 09h (Kbd ISR)
+13     F000:EC59   code    Int 13h (Disk Services)
+0E     F000:EF57   code    Disk ISR (Not used in 100LX/200LX)
+--     F000:EFC7   data    Disk parameter table (Not used in 100LX/200LX)
+17     F000:EFD2   code    Int 17h (Printer Services)
+10     F000:F065   code    Int 10h (Video Services)
+1D     F000:F0A4   data    Video parameter table
+12     F000:F841   code    Int 12h (Memory Size)
+11     F000:F84D   code    Int 11h (Equipment Check)
+15     F000:F859   code    Int 15h (System Services)
+--     F000:FA6E   data    8x8 Character table (lower 128 chars only)
+1A     F000:FE6E   code    Int 1Ah (Time and Date Services)
+08     F000:FEA5   code    Int 08h (Timer0 ISR)
+--     F000:FEF3   data    Interrupt Vector Table
+--     F000:FF23   data    Unexpected Interrupt Handler (handles interrupts not 
+                           specifically handled by the BIOS.
+--     F000:FF53   code    Dummy IRET
+05     F000:FF54   code    Int 05h (Print Screen)
+--     F000:FFF0   code    Hardware reset point
+--     F000:FFF5   data    BIOS date stamp 
+--     F000:FFFE   data    Hardware ID byte
+</PRE>
+<B>Notes:</B> 
+<UL>
+<LI>In the HP100LX/200LX, the Int 19h (Bootstrap Load) jumps to F000h:E05Bh <P>
+<LI>The BIOS uses the &quot;Interrupt Vector Table&quot; to initialize the interrupt vectors for Int 08h through Int 1Eh on power-up.  Some of these are then chained by DOS.  <P>
+</UL>
+<P>
+</BODY>
+</HTML>

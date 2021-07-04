@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Example </TITLE></HEAD>
+<BODY>
+<H1>Example </H1><P>
+A frequently encountered need is for an application which can recognize and configure a particular special purpose IO card, where special purpose means something other than a modem card.  Recall that CIC100 handles modem cards, so these cards do not usually need any special handling.  <P>
+When initially inserted and each time the palmtop is powered on, a plug-in card returns to its default state which is that of a memory card.  Thus, some action is needed to enable the card's IO functions.  Once the card and the host are configured for IO card operation, the card is usually accessed by some standard application software for that card.  The trick is just to put the card in IO mode and create an IO window so the application can talk to the card.  <P>
+The CICDEMO program was written to show how this sort of recognition and configuration can be done on the HP palmtop.  CICDEMO is contained in the developer's kit.  <P>
+The major features of CICDEMO are: <P>
+<UL><LI>It is a TSR which registers as a CardBIOS client at install time.  This enables CICDEMO to receive notification of card change events so that it can watch for its special card to be inserted or removed.  </LI><P>
+<LI>It uses CardBIOS GetTuple functions to examine each newly inserted card to see if the card is its special card.  </LI><P>
+<LI>It uses the CardBIOS write memory function to write configuration data to its special card's attribute memory in order to configure the card for IO mode.  </LI><P>
+<LI>It uses the Socket Services SetSocket function to configure the socket for IO operation and to enable an appropriate interrupt, when its card has been found.  When the card has been removed, SetSocket is used to return the socket to generic memory card operation.  </LI><P>
+<LI>It uses the Socket Services SetWindow function to assign an IO window of the appropriate size and location to the socket, when its card has been found.  When the card has been removed, SetWindow is used to disable the IO window.  </LI><P>
+<LI>It has an uninstall feature which demonstrates how to unregister a CardBIOS client.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

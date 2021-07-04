@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Eh: Write Teletype Character </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Eh: Write Teletype Character </H3><P>
+This function writes a character to the display at the current cursor position, using the specified color (if in graphics modes), then advances the cursor one location.  <P>
+<UL><LI>Input: AH = 0Eh <BR>
+AL = Character <BR>
+BH = Page (where required) <BR>
+BL = Foreground color (graphics modes only) <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL><B>Notes: </B><P>
+<UL><LI>ASCII codes for four characters are treated as commands: LineFeed (0Ah), Carriage Return (0Dh), Backspace (08h), and Bell (07h).  </LI><P>
+<LI>In video modes with multiple pages, characters may be written off screen.  </LI><P>
+<LI>Line wrap and scrolling are active.  If the cursor is at the end of a line, it is moved to the beginning of the next line.  If the cursor reaches the end of the last line on the screen, the screen is scrolled up by one line and the cursor is placed at the beginning of a new blank line.  The attribute for the entire new line is taken from the last character on the preceding line.  </LI><P>
+<LI>This function cannot be used to specify the attribute of a character in Text Modes.  </LI><P>
+<LI>In Mode 6 (Hi-Res B&amp;W Graphics), the foreground color is resolved to 0 or 1.  </LI><P>
+<LI>In Mode 4 (Lo-Res Color Graphics), the foreground color is resolved to 0-3.  </LI><P>
+<LI>In Mode 5 (Lo-Res B&amp;W Graphics), the foreground color is resolved to 0 or 1.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

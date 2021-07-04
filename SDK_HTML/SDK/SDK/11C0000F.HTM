@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_RecordSize </TITLE></HEAD>
+<BODY>
+<H3>DB_RecordSize </H3><P>
+This function returns the size of the indicated record.  The record size is maintained in memory, so this call is more efficient than reading the disk.  <P>
+<UL><LI><Pre>Syntax:             int DB_RecordSize(DBBLOCK *dblk, char recordtype, 
+                    RECORDNUM recordnum); </LI><P>
+<LI>Returns:            0..32767       Size of the record.  <P>
+                    DB_NOTFOUND    recordnum is not in the database.  <P>
+                    DB_DELETED     Record is deleted.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

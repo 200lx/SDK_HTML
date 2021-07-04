@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Messages </TITLE></HEAD>
+<BODY>
+<H3>Messages </H3><P>
+<UL><LI>KEYSTROKE: Responds to the following keystrokes: </LI><BR>
+<UL>
+<LI>Esc: If the user has not yet edited the text, passes the key through to the Object handler.  If the text has been edited, the original copy of the text buffer is restored by copying it from the application-defined buffer it was saved in when the first editing key is pressed after the window received the focus.  The Edit handler then sends itself a SETFOCUS message in order to start the editing process over again.  <P>
+<LI>Right Arrow: Moves the cursor one character to the right, or to the first character on the next line if the cursor is currently at the end of a line.  <P>
+<LI>Left Arrow: Moves the cursor one character to the left, or to the last character on the previous line if the cursor is currently at the beginning of a line.  <P>
+<LI>Up Arrow: Moves the cursor position up one line, to the character at the same column on the previous line.  <P>
+<LI>Down Arrow: Moves the cursor position down one line, to the character at the same columns on the next line.  <P>
+<LI>PageUp: Displays the previous window's worth of data in the edit box.  The cursor position is moved to the character at the roughly same row and column in the new text within the edit box (it depends on the length of the text line the cursor will fall on).  <P>
+<LI>PageDown: Displays the next window's worth of data in the edit box.  The cursor position is moved to the character at the roughly same row and column in the new text within the edit box (it depends on the length of the text line the cursor will fall on).  <P>
+<LI>Del: If any text is highlighted, it is deleted.  Otherwise, the character at the current cursor position is deleted.  <P>
+<LI>Backspace: If any text is highlighted, it is deleted.  Otherwise, the character just before the current cursor position is deleted.  <P>
+<LI>Ctrl+Del: If any text is highlighted, it is deleted.  Otherwise, the next word is deleted.  <P>
+<LI>Ctrl+Backspace: If any text is highlighted, it is deleted.  Otherwise, the previous word is deleted.  <P>
+<LI>Ins: Toggles the state of insertion between insert and overwrite.  An insert cursor is opaque, whereas an overwrite cursor is transparent to the characters underneath.  <P>
+<LI>Home/End: Moves the cursor to the first/last character on the current line.  <P>
+<LI>Ctrl+Home/Ctrl+End: Moves the cursor to the first/last character in the edit text buffer.  The data in the edit box is redisplayed via a DRAW, DRAW_CLIENT message.  <P>
+<LI>Shift+Movement key: Extends the highlight from the current cursor position to the position after the Movement key is processed.  The highlighted area is displayed in inverse video.  <P>
+<LI>Cut, Copy: If any text is highlighted, that portion is Cut/Copied to the clipboard.  Otherwise, the entire buffer is Cut/Copied.  <P>
+<LI>Paste: If any text is highlighted, that text is replaced with the current contents of the clipboard.  Otherwise, the clipboard contents are inserted beginning at the current cursor position.  <P>
+<LI>ASCII characters: If any text is highlighted, the key pressed replaces the highlighted text.  Otherwise, the character is inserted/placed at the current cursor position (depending on the state of the Insert toggle), and the cursor is advanced one character to the right.  <P>
+<LI>Any other key: Passed to the Object class handler.  The DialogBox handler will thus receive dialog movement keys (&lt;Enter&gt;, &lt;TAB&gt;, &lt;BackTab&gt;, etc.) because Object automatically sends any unused keystrokes to the window's parent.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: Displays the edit box contents and the window Title.  The Edit DRAW message responds to the Data parameter sub-messages bits DRAW_TITLE, DRAW_FRAME, DRAW_CLIENT, DRAW_CLIENT_UPDATE and DRAW_CURSOR to draw the corresponding parts of the Edit window.  </LI><P>
+<LI>SETFOCUS: First passes the message on to the Object class handler.  The window's title and the editable text is then inverted, and the cursor is displayed.  The Selection field in the LHWINDOW structure is set to the last text character in the edit buffer and the WindowTop field is adjusted accordingly.  The appropriate Insert mode is forced and updated via the STATUS_INSERT bit depending on the state of EDIT_INSERT / EDIT_OVERWRITE style.  The STATUS_NOT_EDITED bit is also set.  </LI><P>
+<LI>LOSEFOCUS: Removes the editable text highlight, text cursor, and the window title is drawn in normal video.  </LI><P>
+<LI>APPEAR: If STYLE_WHCHAR is being used, w and h are converted from the text character size of the edit box alone (the client portion of the window), to the total display size of the entire window, including the length of any window title and border surrounding the e dit box.  The STATUS_XY_ABS bit is then set.  In either case, the message is passed on to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: If STYLE_WHCHAR is being used, w and h are converted back to the text character size of the edit box alone from the total display size of the entire edit window.  The STATUS_XY_ABS bit isthen cleared.  In either case, the message is passed on to the Object class handler.  </LI><P>
+<LI>NOTIFY: The NOTIFY_UPDATE message causes the data in the text buffer to be reformatted according to the current WrapLen field.  The text is then redisplayed via a DRAW, DRAW_CLIENT message.  </LI><P>
+<LI>NULLEVENT: Passed to Object class handler.  </LI><P>
+<LI>CREATE: Passed to Object class handler.  </LI><P>
+<LI>DESTROY: Passed to Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to Object class handler.  </LI><P>
+<LI>COMMAND: Passed to Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

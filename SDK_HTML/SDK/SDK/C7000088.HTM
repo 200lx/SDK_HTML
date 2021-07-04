@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_help2_display </TITLE></HEAD>
+<BODY>
+<H3>m_help2_display </H3>
+This call displays the help screen data. 
+<PRE><UL>
+<LI>Syntax:      int far m_help2_display(char far *&amp;HelpStruct, int wHelpCode) </LI>
+<LI>Parameters:  char far *&amp;HelpStruct - Pointer to the help structure 
+             int wHelpCode - The help context code: 
+
+                             H_C_GETSTARTED (0xFFFF) = Getting Started menu item 
+                                                       display 
+                             H_C_HOWUSEHELP (0xFFFE) = How to Use Help menu item 
+                                                       display 
+<LI>Returns:     H_RC_OK (0) - Success 
+             H_RC_FILE_ERR (1) - File could not be opened. 
+             H_RC_REV_ERR (2) - Help file revision error </LI>
+</UL></PRE>
+</BODY>
+</HTML>

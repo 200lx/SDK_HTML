@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Record Level Reconciliation </TITLE></HEAD>
+<BODY>
+<H3>Record Level Reconciliation </H3><P>
+Record level reconciliation of two databases will be provided by an auxiliary PC application, but the database engine will provide enough information to make it possible.  The typical application of this would be to maintain a database on both a PC and on an HP palmtop.  Although the same database would exist in both places, occasional reconciliation would be needed to allow adds, modifies, and deletes to show up in both databases even if they were made to only one or the other of the two databases.  <P>
+The time of creation (or last reconciliation) of the databases and a modified-since-last-reconciliation bit for each record will be used to perform the comparison.  After a reconciliation, the reconciliation timestamp will be refreshed for both databases and all record modified bits will be cleared.  During matching of the records from the two databases, these cases need to be considered: <P>
+<UL><LI>Both records have not been modified.  The application can take either one of the records as they should be equivalent.  </LI><P>
+<LI>One record is modified, one is not.  The modified record should be used.  </LI><P>
+<LI>Both records are modified.  The user should be prompted to choose which record to accept.  </LI><P>
+<LI>One record is not modified, the other is missing.  The user should be prompted to remove or add the non-modified record, with default set to remove.  Note that deleted records do not need to retain any stubs with this scheme.  </LI><P>
+<LI>One record is modified, the other is missing.  The record should be added.  </LI><P>
+<LI>If the reconciliation dates of the two files are different, then the two files have never been merged.  In this case, the program will act as the current CPACK merge does, and keep all records in both databases.  Note that this is not the case for a file that has been copied; this will have the same reconciliation date, so will use the more intelligent algorithm.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

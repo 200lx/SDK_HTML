@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_alloc_large </TITLE></HEAD>
+<BODY>
+<H3>m_alloc_large </H3>
+m _alloc_large attempts to expand the data space occupied by the application by <I>pgraph_request</I> paragraphs, or 16-byte units.
+<PRE><UL>
+<LI>Syntax:         unsigned int m_alloc_large(unsigned int pgraph_request) </LI>
+<LI>Parameters:     unsigned int pgraph_request - Number of paragraphs to expand data space</LI>
+<LI>Returns:        0 - for failure 
+                If successful - returns paragraph offset (not byte offset) from the 
+                beginning of the application's data segment.  Application must deal 
+                with all segment normalizations and fix ups after memory moves. </LI>
+<LI>Related Calls:  <A HREF="c7000092.htm">m_alloc</A></LI>
+<LI>Comments:       This function must be used with care, since it is possible to 
+                claim space that cannot be accessed through the DS register (&gt; 64K).
+                Since the entire data space of the application may be moved during 
+                certain System Manager calls, the application must be certain not to 
+                save a segment value that may become invalid.  
+                Do not call after making calls to <A HREF="c70000a0.htm">m_get_far_block</A>.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 63 Function 02 - Get Single Physical Page's Mapping State </TITLE></HEAD>
+<BODY>
+<H3>Int 63 Function 02 - Get Single Physical Page's Mapping State </H3><P>
+<UL><LI>Input: AH = 02h <BR>
+AL = Physical page#, 0, 4, 5, 6, 7, 8, 9, 0Ah, or 0Bh.  <P>
+</UL>
+<UL><LI>Output: AH = Completion status <BR>
+00h Success (No Error) <BR>
+8Bh Error - Invalid AL <BR>
+BX = Logical page# currently mapped to specified physical page.  <BR>
+DX = Device select code of logical page mapped to the specified physical page.  <P>
+</UL>
+<UL><LI>Error conditions: AH non-zero (See above) </LI><P>
+<LI>Registers modified: AH, BX, DX </LI><P>
+</UL>This function does not support attribute versus common memory.  Its primary usage is by the built-in System Manager to access System ROM.  <P>
+BX = FFFFh indicates that the physical page is currently unmapped.  <P>
+<P>
+<P>
+</BODY>
+</HTML>

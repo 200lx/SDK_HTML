@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 46h: Set Display Timeout </TITLE></HEAD>
+<BODY>
+<H3>AH = 46h: Set Display Timeout </H3><P>
+This function enables the Auto-Timeout feature that will put the unit into deep sleep after a period of inactivity.  The function also provides for setting the timeout interval.  The test for Auto-Timeout occurs inside the Int 15h, Function 41xxh code.  <P>
+<UL><LI>Input: AH = 46h <BR>
+BX = 1-65535: time out interval in 55 msec increments <BR>
+    = 0 : Display timeout disabled <P>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified None </LI><P>
+</UL><B>Notes: </B><P>
+<UL><LI>The Auto-Timeout counter is TimOutCnt (40h:A1h).  The counter reset value is TimOutVal (40h:A3h).  TimOutCnt is decremented (but not past zero) by Timer0 Service.  </LI><P>
+<LI>The power-up default for TimOutVal is 0CCCh (3 minutes).  </LI><P>
+<LI>If the main batteries are low, the operating system reduces TimOutCnt to a maximum of 1 minute during the periodic Timer1 Service.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

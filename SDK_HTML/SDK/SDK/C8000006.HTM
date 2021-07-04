@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>LHAPI Window Handlers </TITLE></HEAD>
+<BODY>
+<H3>LHAPI Window Handlers </H3><P>
+Every window in LHAPI has a window handler, and every window handler has the same prototype.  The window handler responds to messages sent to windows of that class, and deals with them accordingly.  For many of the windows in a LHAPI application, you will be able to use a window handler supplied by LHAPI.  These are the LHAPI Base Classes, and include Edit fields, Radio Buttons, Check Boxes, Dialog Boxes, and other specialized controls.  <P>
+To create your own window handler, you need to decide what class it is a desendant of.  The class you create will be a subclass\x110011of that class.  If the class of window you create does not have an already existing equivalent, it would be derived from the Object class, which is the basis for all LHAPI window handlers.  As an example, you decide you need a class that only accepts uppercase input--all lowercase letters should be converted to uppercase.  This would be a subclass of an Edit control, and would look something like this: <P>
+<PRE>int far UpperOnlyEditHandler(PWINDOW Wnd,WORD Message, WORD Data, WORD Extra) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>switch (Message) { </PRE><P>
+<PRE>case KEYSTROKE: </PRE><P>
+<PRE>     if (Data&gt;='a' &amp;&amp; Data&lt;='z') Data -= `a'+'A'; </PRE><P>
+<PRE>     /* !!!  FALL THROUGH TO DEFAULT CASE */ </PRE><P>
+<PRE>     default: </PRE><P>
+<PRE>     return SubclassMsg(Edit, Wnd, Message, Data, Extra); </PRE><P>
+<PRE>     } </PRE><P>
+<PRE>} </PRE><P>
+This example is pretty simple, but illustrates the basic mechanism of subclassing.  You create a window handler prototype, case out the messages that you are interested in, respond to them if needed, and possibly pass them on to the &quot;parent&quot; class via SubclassMsg.  Depending on the circumstances, you may want to intercept messages before or after the subclass operates on them, or not pass the messages on through at all.  Usually, you want to pass any messages that you don't handle on to the subclass; even simple classes such as the Object class handles keystrokes to bring up the menu, or null events to update the clock on the title bar.  For a more complex example on how to subvert LHAPI classes by subclassing them, see the example PASSWORD.C on the ISV disk.  <P>
+An application's main window will probably be a subclass of Object, and will need to handle DRAW and KEYSTROKE messages at a minimum.  <P>
+The other type of handler is the function key or menu event handler.  These handlers are very simple--they take no parameters, and return none.  Their sole purpose is to act on an event selected by the user.  For example, there might be a function key and a menu item in a window that should bring up help.  You will have one help handler that is just a function dedicated to bringing up help.  In both the function key structure and the menu structure associated with that window, entries will refer to that function, so that LHAPI will call it on selecting the menu item or pressing the function key.  <P>
+<P>
+</BODY>
+</HTML>

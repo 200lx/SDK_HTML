@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CARDDEF </TITLE></HEAD>
+<BODY>
+<H3>CARDDEF </H3><P>
+CardDef contains the positioning information for the windows in the database card.  All records (even on multiple pages) share the same carddef; the card page definition record details the spliting of fields into multiple pages.  There is only one record of this type.  <P>
+<pre>
+Offset  Name           Type          Contents 
+------  -------------  ------------  --------
+0...5   Record Header  recordheader  See <a href="10C00003.HTM">recordheader</a> structure above.
+                                     0x04 0x??  0x??  0x??  0x00 0x00 
+6....   Windows 1...n  Packedwindow  Array of packed windows for each field in the
+                                     database
+                                     The relationship is one-to-one with the FieldDef
+                                     records.  The number of packed windows is computed
+                                     by the number of FieldDef records.  
+</pre>
+</BODY>

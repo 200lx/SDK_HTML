@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_set_far_block </TITLE></HEAD>
+<BODY>
+<H3>m_set_far_block </H3>
+This call expands, shrinks, or frees a previously-allocated indirect far pointer memory block.  The corresponding handle entry is passed along with the new desired size in bytes.  
+<PRE><UL>
+<LI>Syntax:         int m_set_far_block(char far **target_block,unsigned long target_size) </LI>
+<LI>Parameters:     char far **target_block - Near pointer to far pointer to block 
+                unsigned long target_size - New size (in bytes) for the memory block
+                                            If the block size is set to zero, the 
+                                            corresponding far* table entry is cleared. 
+<LI>Returns:        New block size 
+                If return value = 0, then not enough memory exists 
+                ERROR_TABLE_NOT_REGISTERED - Table not registered 
+                ERROR_TABLE_ENTRY_RANGE - Range error 
+                ERROR_INSUFFICIENT_MEMORY - insufficient memory 
+                ERROR_TABLE_FULL - No room in far table </LI>
+<LI>Related Calls:  <A HREF="c70000a0.htm">m_get_far_block</A></LI>
+<LI>Comments:       To free up all memory allocated for this block, set the target_size
+                field to zero.  Freeing up the block will make the handle available 
+                for re-use.  See the example under &quot;m_get_far_block&quot;.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

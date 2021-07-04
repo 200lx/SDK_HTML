@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_search_api_class </TITLE></HEAD>
+<BODY>
+<H3>m_search_api_class </H3>
+searches for the class in the specified ClassGroup which matches the identification
+string successfully.
+<PRE><UL>
+<LI>Syntax:         int m_search_api_class(unsigned ClassGroup, char far *String, 
+                                           unsigned Len)
+<LI>Parameters:     unsigned ClassGroup - Declared as a manifest constant (in INTERFAC.H).
+                char far *String - String to match 
+                unsigned Len - Length of string to match 
+<LI>Returns:        The class number 
+                ERROR_INVALID_CLASS_TYPE (-1) - if the ClassGroup number is invalid
+                ERROR_CLASS_NOT_FOUND - if the class is not found
+<LI>Comments:       The convention established to implement this function is to reserve 
+                function number 0 in all classes to be used as the identification 
+                function.  Function 0, if available, is of the prototype 
+                int far Fnct0 (char far *String, unsigned Len) and returns 0 if the
+                identification string matches.  Function 0 returns -1 if the 
+                identification string doesn't match. 
+</UL></PRE>
+</BODY>
+</HTML>

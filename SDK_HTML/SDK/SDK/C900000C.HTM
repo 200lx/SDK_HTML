@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>RadioButton </TITLE></HEAD>
+<BODY>
+<H3>RadioButton </H3><P>
+The RadioButton class defines with other radio buttons an exclusive option.  A circle is displayed in front of the title, and a smaller filled-in circle within that circle if the button is selected.  RadioButtons that are &quot;siblings&quot;, those that are mutually exclusive, should be children of the same GroupBox.  <P>
+<B>Window Structure Details</B> <P>
+<UL><LI>int x,y,w,h: </LI><BR>
+The coordinates (x,y) specify the display point to start the radio button selection circle at.  The title extends out to the right of that.  The RadioButton handler automatically calculates the window size (w,h) based on the length of the title and the size of the radio button symbol when an APPEAR message is received.  Object uses w and h to save the screen underneath the window when STYLE_SAVEUNDER is being used.  The RadioButton handler does not actually use w and h itself.  <P>
+</UL>
+<UL><LI>PLHRES Title: </LI><BR>
+Title is the text label appearing to the right of the radio button.  <P>
+</UL>
+<UL><LI>PLHDATA Data: </LI><BR>
+Data points to the word variable which will be modified when the radio button is selected.  See the LogicalSize field description for more information.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: </LI><BR>
+LogicalSize is the ID value to be stored in the word variable pointed to by the Data field in order to signify the selection of this radio button.  A set of exclusive radio buttons should use the same Data pointer to show selection so that selecting one button will automatically deselect all other buttons in the same GroupBox.  Each radio button in a GroupBox should have a distinct ID value, though.  <P>
+</UL>
+<UL><LI>UINT Style: </LI><BR>
+Used by the Object class handler.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: </LI><BR>
+Both the RadioButton handler and the DialogBox handler use the Parent parameter to determine the radio buttons that are grouped together.  Radio buttons are considered to be part of the same &quot;group&quot; when each of them has the same GroupBox window as a parent.  The LHWINDOW structures for each of the radio buttons in the same group must be contiguous with one other in the DialogBox control field array (the array which is pointed to by the Data field in the dialog box window structure) and must immediately follow the structure for the GroupBox window.  <P>
+</UL>
+<UL><LI>PLHFKEYS FKeys: </LI><BR>
+Used by the Object class handler.  <P>
+</UL>
+<UL><LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>KEYSTROKE: Responds to the following keys: </LI><BR>
+<UL>
+<LI>A space selects the radio button, and deselects all other radio buttons in the same set (all radio buttons with the same Parent).  A set of radio buttons is delimited by a GroupBox, with all the radio buttons in that set being children of the same GroupBox window.  After the word variable pointed to by the Data field is set to the ID specified in the LogicalSize field, a DRAW, DRAW_CLIENT message is sent by the RadioButton handler to itself in order to display the new radio button state properly.  <P>
+<LI>RadioButton passes all other keys to the Object class handler.  Arrowing in a group of RadioButtons is handled by the DialogBox class--the Object handler's default behavior is to pass the message along to the parent (in this case, a GroupBox, which in turn passes the message to DialogBox).  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+The RadioButton handler draws the radio button, and shows it selected if the word at Data = LogicalSize.  The Radio button responds to the Data parameter sub-message bits DRAW_TITLE, DRAW_CLIENT and DRAW_FRAME to draw the respective portions of the RadioButton window.  <P>
+</UL>
+<UL><LI>CREATE: </LI><BR>
+RadioButton sets the STYLE_RADIO and STYLE_NOBORDER style bits, then passes the message to Object.  <P>
+</UL>
+<UL><LI>SETFOCUS: </LI><BR>
+The RadioButton handler automatically fills (selects) the button by setting the word variable pointed to by the Data field to the ID contained in the LogicalSize field, and then sending a SPACE key KEYSTROKE message to itself.  Also, the RadioButton handle writes the radio button label in reverse video by issuing a DRAW, DRAW_TITLE message to itself.  RadioButton then passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>LOSEFOCUS: </LI><BR>
+RadioButton displays the window's title normally by issuing a DRAW, DRAW_TITLE message to itself and then passes the message on to the Object class handler.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+RadioButton sets the entire size of the window (w,h) based on the length of the title and the size of the RadioButton symbol.  The RadoiButton handler then passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>NULLEVENT: Passed to Object class.  </LI><P>
+<LI>DESTROY: Passed to Object class.  </LI><P>
+<LI>TERMINATE: Passed to Object class.  </LI><P>
+<LI>ACTIVATE: Passed to Object class.  </LI><P>
+<LI>DEACTIVATE: Passed to Object class.  </LI><P>
+<LI>NOTIFY: Passed to Object class.  </LI><P>
+<LI>COMMAND: Passed to Object class.  </LI><P>
+<LI>DISAPPEAR: Passed to Object class.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

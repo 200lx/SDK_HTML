@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 14h: Wait for Keyboard Event, Variable Timeout </TITLE></HEAD>
+<BODY>
+<H3>AH = 14h: Wait for Keyboard Event, Variable Timeout </H3><P>
+This function is identical to Fcn 13h, except that it supports a variable timeout.  The timeout value is in units of &quot;Timer0 Ticks&quot;, or roughly 55 msec units.  If the Timeout value is 0, the routine will return immediately if a key or shift-status change is not detected.  <P>
+<UL><LI>Input: AH = 14h <BR>
+BX = Current kbd shift flags (same format as service 12h) <BR>
+CL = Timeout (55 msec units) <P>
+</UL>
+<UL><LI>Output: Zero flag is clear if character is available <BR>
+AH = Scancode <BR>
+AL = ASCII character code, or <BR>
+     00h for a special scancode, or <BR>
+Zero flag is set if timeout or keyboard flags changed <BR>
+AX is loaded with the keyboard flags as described in service 12h.  <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers Modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

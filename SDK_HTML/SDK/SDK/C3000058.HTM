@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D1h: Load Bitmap Data </TITLE></HEAD>
+<BODY>
+<H3>AH = D1h: Load Bitmap Data </H3><P>
+This function loads a specified bitmap table into the next available position in the dedicated 16-KB bitmap buffer.  It also pushes information about the load location, format, size, and cell dimensions onto the System Bitmap stack (BMSTK) described in &quot;Bitmap Stack&quot; on <A HREF="C3000043.HTM">page 3-62</A>.  This function does not write to the Display Controller hardware.  Once the data is loaded, use Int 10h, Function D3h to make it available for BitBlt operations in CGA Graphics Modes.  <P>
+If the specified bitmap table is external (not built-in), then ES:SI is a pointer to the supplied bitmap table to be loaded.  If this is a font (format 1 or 2), this service assumes that it is presented in the contiguous format, regardless of the requested storage format.  Otherwise, the supplied bitmap table must look identical to the desired storage format.  If the built-in bitmap table is also a symbol table (ID's 16,32,64,128), the format input is also ignored.  The format input for font tables must be either 1 or 2.  <P>
+Error conditions are identified by the state of the carry, and the value in CL.  <P>
+<UL><LI>Input: AH = D1h <BR>
+AL = Desired Format (1,2,4,8) <BR>
+1 = Noncontiguous Font - For Display Controller in Text Modes <BR>
+2 = Contiguous Font - BitBlt <BR>
+4 = Raw Symbol Table - BitBlt No explicit char map <BR>
+8 = Mapped Symbol Table - BitBlt Includes char map <BR>
+BX = Bitmap ID (2^k; k&lt;8 ==&gt; Built-In) <BR>
+1 = 6x8 Font <BR>
+2 = 16x12 Font <BR>
+4 = 8x8 Font <BR>
+8 = 10x11 Font <BR>
+16,32,64,128 = Built-In symbol tables <BR>
+2^k; 8&lt;=k&lt;=15 = ISV/User supplied bit map tables <BR>
+CH = h (Cell Height) <BR>
+CL = w (Cell Width) <BR>
+DX = n (#Symbols) <BR>
+ES:SI = Points to bitmap structure (for ID&gt;128) <BR>
+</UL><P>
+<UL><LI>Output: CARRY CLEAR - Successful <BR>
+CARRY SET - Error <BR>
+CL: Error Code <BR>
+CL = 0 Invalid ID <BR>
+CL = 1 ID in use <BR>
+CL = 2 Bitmap Stack (BMSTK) Full <BR>
+CL = 3 Invalid Format <BR>
+CL = 4 Invalid n <BR>
+CL = 5 Bitmap Buffer Full <BR>
+</UL>
+<UL><LI>Registers modified: AX, CL, FLAGS </LI><P>
+<LI>Error conditions: (See Above) </LI><P>
+</UL>This service invokes the Int 06h, Function 05h hook to provide for localization and/or customization of the font data.  <P>
+<P>
+</BODY>
+</HTML>

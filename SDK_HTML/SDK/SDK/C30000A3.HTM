@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 03h: Set Typematic Rate and Key Delay </TITLE></HEAD>
+<BODY>
+<H3>AH = 03h: Set Typematic Rate and Key Delay </H3><P>
+This function sets the typematic rate and delay between key press and when key repeat takes effect.  The power-up default value is BX=0103h.  <P>
+<UL><LI>Input: AH = 03h <BR>
+AL = 05h Set typematic rate <BR>
+BH = 00h - 03h for delays of 250ms, 500ms, 750ms, or 1s <BR>
+BL = 00h - 1Fh for typematic rates of 25cps down to 1.7cps
+</UL>
+<PRE>
+      BL=00h -&gt; 25cps    BL=10h -&gt; 6.4cps 
+      BL=01h -&gt; 25cps    BL=11h -&gt; 6.4cps 
+      BL=02h -&gt; 25cps    BL=12h -&gt; 5.1cps 
+      BL=03h -&gt; 25cps    BL=13h -&gt; 5.1cps 
+      BL=04h -&gt; 25cps    BL=14h -&gt; 4.3cps 
+      BL=05h -&gt; 25cps    BL=15h -&gt; 4.3cps 
+      BL=06h -&gt; 25cps    BL=16h -&gt; 3.7cps 
+      BL=07h -&gt; 25cps    BL=17h -&gt; 3.7cps 
+      BL=08h -&gt; 13cps    BL=18h -&gt; 3.2cps 
+      BL=09h -&gt; 13cps    BL=19h -&gt; 2.8cps 
+      BL=0ah -&gt; 13cps    BL=1ah -&gt; 2.6cps 
+      BL=0bh -&gt; 13cps    BL=1bh -&gt; 2.3cps 
+      BL=0ch -&gt; 8.5cps   BL=1ch -&gt; 2.1cps 
+      BL=0dh -&gt; 8.5cps   BL=1dh -&gt; 2.0cps 
+      BL=0eh -&gt; 8.5cps   BL=1eh -&gt; 1.8cps 
+      BL=0fh -&gt; 8.5cps   BL=1fh -&gt; 1.7cps 
+</PRE>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Speaker Drivers </TITLE></HEAD>
+<BODY>
+<H1>Speaker Drivers </H1>
+The Hornet IC has two speaker drivers for differential drive of the piezo speaker.  One of these drivers operates from the 5V supply and the other from the 3V supply.  The drivers can be individually enabled or disabled, allowing 3 volume levels plus &quot;off&quot;.  This is done with the speaker volume bits located within the System Control register at -1Eh.  The speaker drive levels are:<P>
+<PRE>
+    00      off
+    01      3V drive (soft)
+    10      5V drive (medium)
+    11      8V differential drive (loud)
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 62h: Set/Read Display Contrast </TITLE></HEAD>
+<BODY>
+<H3>AH = 62h: Set/Read Display Contrast </H3><P>
+This function sets or reads the contrast register.  The range of permissible values is 0 - 1Fh.  The highest display contrast corresponds to a value of 1Fh.  <P>
+<UL><LI>Input: AH = 62h <BR>
+AL = Subfunction <BR>
+  = 0 - Set Contrast value in BL <BR>
+  =1 - Read Contrast value and return it in AL <BR>
+BL = 0-1Fh Contrast value (If AL=0) <BR>
+  &gt; 1Fh Contrast value set to 1Fh <P>
+</UL>
+<UL><LI>Output: AL = contrast value if AL was 1 at entry </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

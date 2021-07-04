@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 63h: eXecute In Place (XIP) Services Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 63h: eXecute In Place (XIP) Services Interrupt </H1><P>
+The Int 63h XIP services provide low-level program location and bank switching capabilities which can be used to run code directly from a plug-in ROM card.  These services are compatible with those in the HP 95L, except that only drive A (port 0) is supported.  <P>
+When a PCMCIA standard card is inserted into the HP palmtop, that card resides in Port 0, which is the only valid port number to use in the XIP services.  <P>
+The term &quot;logical page&quot; refers to memory in a plug-in card and the term &quot;physical page&quot; refers to memory in the address space of the CPU.  <P>
+Memory on a plug-in card is viewed as a sequence of 16 KB logical pages.  The logical pages start on successive 16 KB boundaries starting with logical page 0 which starts at card physical address 0.  <P>
+The physical page numbering for the XIP functions is 0 - 16K page at E000, 1 - 16K page at E400, 2 - 16K page at E800, 3 - 16K page at EC00, 4 - 64K page at C000, and 8 - 64K page at D000.  <P>
+The XIP Services interrupt (Int 63h) functions are described in the tables which follow.  Specify the desired function code in register AH, with additional parameters passed in other registers as indicated in the table.  <P>
+<H2><A HREF="c30000cd.htm">AH = 80h: Return File Location and Lock Card Port </A></H2><P>
+<H2><A HREF="c30000ce.htm">AH = 81h: Unlock Card Port </A></H2><P>
+<H2><A HREF="c30000cf.htm">AH = 82h: Map/Unmap Card Port Pages </A></H2><P>
+<H2><A HREF="c30000d0.htm">AH = 83h: Get/Set Page Map </A></H2><P>
+</BODY>
+</HTML>

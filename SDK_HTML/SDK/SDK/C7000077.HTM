@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_openro </TITLE></HEAD>
+<BODY>
+<H3>m_openro </H3>
+This function opens an existing file in read-only mode. 
+<PRE><UL>
+<LI>Syntax:      int far m_openro(FCB far *fp, char far *filespec, int len, int sys,
+                              int nobuf) </LI>
+<LI>Parameters:  FCB far *fp - Pointer to the File Control Block 
+             char far *filespec - Path and filename of file to be opened 
+             int len - Size of file to be opened 
+             int sys  - 0 =
+                        non-zero = the desired file exists in the Metro system 
+                                   directory (likely to be unnecessary in the 
+                                   hand-held).  
+             int nobuf - 0 = The file will be buffered.
+                         non-zero = No buffering will be performed.</LI>
+<LI>Returns:     If successful, the values in <I>fp</I> will be updated and 0 will be returned.
+             Otherwise, a non-zero error code is returned.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

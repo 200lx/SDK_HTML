@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_insert_fnct_tbl </TITLE></HEAD>
+<BODY>
+<H3>m_insert_fnct_tbl </H3>
+This function inserts a function table into the dispatching mechanism.  
+<PRE><UL>
+<LI>Syntax:         int m_insert_fnct_tbl(int Class, far *FnctTbl) 
+<LI>Parameters:     int Class - Class of the new function table 
+<LI>Returns:        far *FnctTbl - Pointer to the new function table 
+                0 - if successful 
+                ERROR_INVALID_CLASS (-1) - if the class number specified is invalid 
+                                           (greater than 7Fh)
+<LI>Related Calls:  <A HREF="c7000010.htm">m_remove_fnc_tbl</A>
+</UL></PRE>
+</BODY>
+</HTML>

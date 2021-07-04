@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CGA Mode 3 (High Resolution Color Text) </TITLE></HEAD>
+<BODY>
+<H3>CGA Mode 3 (High Resolution Color Text) </H3><P>
+When configured for CGA Mode 3, the display memory is organized similar to that for the MDA display, except that there are four 80 x 25 pages of text starting at the base address B8000h.  The Display memory buffer size is 16 KB with pages beginning on 4-KB boundaries.  The attribute byte is used for background (hi nibble) and foreground (lo nibble) color processing.  Color (4 shades of grey) and Contrast Restore will be enabled as the default.  <P>
+Non built-in applications expecting 16 color processing will need to run with Restore Contrast enabled.  Built-in applications that use this mode expect only 4-shade processing and program the attribute bytes so that contrast restoration will not be needed.  Bits 1 and 2 are used for foreground color, and bits 5 and 6 are used for background color.  &quot;Frame Rate Shading&quot; is the technique used to render the shading.  The 2-bit color value is used to determine the number of frames out of each 3 that each pixel is turned on.  The shading value (0,1,2,3) controls the duty cycle (0%, 33%, 67%, 100%) with the higher values corresponding to darker pixels.  <P>
+<A HREF="image/__dg0304.gif">Graphic</A><P>
+The attribute byte has the following bit definitions:.  <P>
+<A HREF="image/__dg0305.gif">Graphic</A><P>
+The &quot;I&quot; and &quot;B&quot; bits are ignored.  The &quot;R&quot; and &quot;G&quot; bits are the 2-bit color value with the &quot;R&quot; bit the most significant.  <P>
+<P>
+</BODY>
+</HTML>

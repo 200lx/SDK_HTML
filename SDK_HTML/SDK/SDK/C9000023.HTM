@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>FileOpenDialogBox </TITLE></HEAD>
+<BODY>
+<H3>FileOpenDialogBox </H3><P>
+The CUA compliant dialog box used for File...Open.  Supports file/directory selection through lists, and path and wildcard specification.  Is a subclass of the regular DialogBox class.  Note that the FileOpenDialogBox does not change DOS's current director, y.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: Used by DialogBox class handler.  </LI><P>
+<LI>PLHRES Title: Used by DialogBox class handler.  </LI><P>
+<LI>PLHDATA Data: A pointer to an array of windows, just like DialogBox.  For FileOpenDialogBox, though, the first window must be a PathEdit window, the second must be a StaticText (to display the current directory), the third a FileListBox, the fourth a DirListBox, the fifth an OK PushButton, and the sixth a Cancel PushButton.  FileOpenDialogBox relys on this ordering to properly synchronize the actions of the controls.  You can have more than six controls in the dialog, but these must be the first six.  Likewise, nothing prevents you from positioning them below other controls on the screen.  </LI><P>
+<LI>UINT LogicalSize: Used by the DialogBox class handler.  </LI><P>
+<LI>UINT Style: In addition to the styles supported by the Dialog Box handler, there are: </LI><BR>
+<UL>
+<LI>FILEOPEN_NODEFAULT: The FileOpenDialogBox handler will not initialize any of the fields in the dialog control windows.  It is then the responsibility of the application to properly define these values.  <P>
+<LI>FILEOPEN_WILDCARDS_OK: The FileOpenDialogBox handler will pass any &lt;Enter&gt; KEYSTROKE messages on to the Dialog Box handler instead of suppressing them if the &quot;File name&quot; edit data has not been updated (either directly by the user or via an update from another dialog control).  This style is to be used by applications in which file specifications that contain wildcards are acceptable, preventing the normal &quot;update directory/drive&quot; lists that would normally happen on pressing &lt;Enter&gt;.  <P>
+</UL>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by the DialogBox class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the DialogBox class handler.  </LI><P>
+<LI>PLHMENU Menu: Points to the default wildcard to be used for the window, e.g.  &quot;*.TXT&quot;.  </LI><P>
+<LI>UINT Selection: Used by the DialogBox class handler.  </LI><P>
+<LI>UINT WindowTop: Used by the DialogBox class handler.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>KEYSTROKE: Responds to the following keys: </LI><BR>
+<UL>
+<LI>ENTER: Does different things, depending on the window within the dialog that currently has the focus: <P>
+<LI>PathEdit - If the path is a file specification (i.e.  it contains either a '*' or '?', or ends in a '\' or ':'), then the StaticText, DirListBox and FileListBox are updated to reflect the new path, and the path portion is removed from PathEdit (unless the style FILEOPEN_WILDCARDS_OK is used).  If the path is a file name, the name is returned to the parent window.  <P>
+<LI>FileListBox - Returns the selected file path to the parent window.  See note above.  <P>
+<LI>DirListBox - Changes the directory currently used by the directory window.  If it is a drive, that drive is switched to and the current directory read, otherwise the selected directory is switched to.  StaticText is updated to the now current directory, the FileListBox is updated for the new directory, and PathEdit is updated to remove the path portion.  <P>
+<LI>All other keys - Passed to the DialogBox class handler.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: Passed to the DialogBox class handler.  </LI><P>
+<LI>CREATE: Sets the FileListBox and the DirListBox to have STYLE_NOTIFY.  Fills both with their file/directory contents by sending each a NOTIFY, NOTIFY_UPDATE message.  </LI><P>
+<LI>NOTIFY: Indicates a listbox change.  If the change came from the FileListBox, the PathEdit is modified to reflect the new name (but the old path is retained if there is one).  </LI><BR>
+<OL><LI>If the change came from the DirListBox, the StaticText is updated to contain the now current directory, and PathEdit is modified to prepend the name of the directory before the file specification, while wiping out the old path (if any).  </LI><P>
+<LI>You can send the FileOpenDialogBox a NOTIFY, NOTIFY_UPDATE message to update the file, directory, and drive windows.  </LI><P>
+</OL></UL>
+<UL><LI>SETFOCUS: Passed to the DialogBox class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the DialogBox class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the DialogBox class handler.  </LI><P>
+<LI>DESTROY: Passed to the DialogBox class handler.  </LI><P>
+<LI>TERMINATE: Passed to the DialogBox class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the DialogBox class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the DialogBox class handler.  </LI><P>
+<LI>COMMAND: Passed to the DialogBox class handler.  </LI><P>
+<LI>APPEAR: Passed to the DialogBox class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the DialogBox class handler.  </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

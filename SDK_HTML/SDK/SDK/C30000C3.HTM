@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Ch: Set Future Alarm </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Ch: Set Future Alarm </H3><P>
+This function extends the functionality provided by Fcn 06h to allow an alarm to be set at any date in the future.  This function, like function 06h will generate an Int 4Ah at the specified time.  The user must place a pointer to an appropriate interrupt handling routine in the Int 4Ah vector.  The alarm will reoccur every 24 hours if not reset using Fcn AH = 07h.  <P>
+<UL><LI>Input: AH = 0Ch <BR>
+AL = Year in BCD <Br>
+BH = Month in BCD <BR>
+BL = Day in BCD <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <BR>
+DL = Century in BCD <P>
+</UL>
+<UL><LI>Output: AH = 00h </LI><P>
+<LI>Error conditions: Carry Set iff alarm already set or RTC defunct </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

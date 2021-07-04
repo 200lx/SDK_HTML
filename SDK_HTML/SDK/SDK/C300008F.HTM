@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6003h: Set Battery Type </TITLE></HEAD>
+<BODY>
+<H3>AX = 6003h: Set Battery Type </H3><P>
+This function specifies the type of Main battery installed.  HP palmtops support only 2 options here: NICAD, ALKALINE.  The type specified will effect charging and end-of-life aspects of system behavior.  It also will effect certain displays in the Setup application.  This service sets/resets bit 7 (TYPE) of [BATTFL1].  <P>
+<UL><LI>Input: AX = 6003h <BR>
+BL = Type (0 = Alkaline, Else = Nickel Cadmium) <P>
+</UL>
+<UL><LI>Output: AL: System Power Status (See Fcn 6002h) <BR>
+[CX DX]: Charge time (See Fcn 6002h) <P>
+</UL>
+<UL><LI>Registers modified: AX, CX, DX </LI><P>
+</UL>This function sets or resets bit7 (TYPE) of the RAM Variable BATTFL1.  <P>
+<P>
+</BODY>
+</HTML>

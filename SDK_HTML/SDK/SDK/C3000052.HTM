@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Dh: Read Graphics Pixel </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Dh: Read Graphics Pixel </H3><P>
+This function returns the value of the specified pixel.  The range of valid pixel (x,y) addresses depends on the video mode.  <P>
+<UL><LI>Input: AH = 0Dh <BR>
+BH = Page (not used by HP 100LX) <BR>
+CX = x (Column or Horizontal pixel address) <BR>
+DX = y (Row or Vertical pixel address) <BR>
+</UL>
+<UL><LI>Output: AL = Pixel Value (0 or 1 in hi-res, or 0-3 in lo-res) </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

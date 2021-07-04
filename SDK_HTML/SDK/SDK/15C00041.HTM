@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>IR UART Modes </TITLE></HEAD>
+<BODY>
+<H3>IR UART Modes</H3>
+The 16450 may be used for half duplex IR communication of limited baud rate.  To use this
+mode the IRURT bit must be set in the IRFMAT register.  When this bit is set, the 16450
+is disconnected from the Serial port and connected to the IR communication block.  When
+using this mode, software must first choose the transmission format.  The two possible
+formats are single pulse mode and multiple pulse mode.  If the PMOD bit is 0, single
+pulse mode is chosen.  In this mode, a single pulse of one half cycle of t he modulation
+source is transmitted for a 0.  In multiple pulse mode, a train of pulses of the
+modulation source is transmitted for a 0.  In both modes, a 1 is transmitted as no
+pulses.  As in Modulated mode, the modulation source again must be chosen.  If the baud
+rate of 2400 baud is chosen, choosing the 16450 16x clock will give you a modulation rate
+of 38 kHz.  <P>
+After this is set up, software can use the 16450 to communicate as though it were still
+connected to the Serial port.  <P>
+</BODY>
+</HTML>

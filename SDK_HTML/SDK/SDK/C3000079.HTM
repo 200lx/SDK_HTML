@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 41h: WAIT FOR EVENT </TITLE></HEAD>
+<BODY>
+<H3>AH = 41h: WAIT FOR EVENT </H3><P>
+This power-saving function tests a specified byte in either System RAM or in I/O space as a condition for return to the caller.  A timeout may also be specified.  <P>
+If the condition code (in register AL) is invalid, this function immediately returns to the caller with CARRY = 1.  <P>
+If the condition code is valid, the function enters the light sleep and waits for a wakeup event.  Periodic timer (both TIMER0 and TIMER1) wakeups, as well as keyboard and other hardware events occur to bring the CPU into a temporary RUN State.  Every wakeup causes the specified condition as well as timeout to be tested for a possible return to the caller.  If the condition is true, the function returns with CARRY=0.  If the return timeout occurs, the function returns with CARRY=1.  The return timeout (in BL) can vary between 1 and 255 TIMER0 ticks (55 msecs per tick).  If BL=0, return timeout is disabled.  The value in BL is recorded in HALTVAL (40h:7Bh).  The TIMER0 interrupt service decrements HALTVAL, and the return timeout condition is satisfied when HALTVAL=0.  <P>
+This function will also enter the Deep Sleep state if Auto-Timeout occurs and there is no AC Adaptor installed.  On wakeup from the Deep Sleep state, this function will return to the caller with CARRY=1 just as if the specified timeout had expired.  <P>
+<UL><LI>Input: AH = 41h <BR>
+AL = Condition code (specifies condition to test) <P>
+00h - Wait for any interrupt (Light Sleep till next int) <BR>
+01h - Compare RAM byte with BH, return when equal to BH <BR>
+02h - Compare RAM byte with BH, return when not equal to BH <BR>
+03h - Test RAM byte with BH mask, return when not equal to 0 <BR>
+04h - Test RAM byte with BH mask, return when equal to 0 <BR>
+10h - Wait for any interrupt (Light Sleep till next int) <BR>
+11h - Compare I/O byte with BH, return when equal <BR>
+12h - Compare I/O byte with BH, return when not equal <BR>
+13h - Test I/O byte with BH, return when not equal to 0 <BR>
+14h - Test I/O byte with BH, return when equal to 0 <P>
+BH = Value or mask <BR>
+BL = Timeout value in 55ms intervals; 0 = Timeout disabled <BR>
+Plus Either: <BR>
+ES:DI = Pointer to byte in memory to test (AL=1-4) <BR>
+DX = I/O port (AL = 11h-14h) <P>
+</UL>
+<UL><LI>Output: Carry Clear if test is true <BR>
+Carry Set if a) Invalid AL, b) return timeout, or c) display timeout <P>
+</UL>
+<UL><LI>Registers modified: AX, STATUS <BR>
+A bit more detail on the int 15h, function 41xxh algorithm follows.  <P>
+</UL>
+<UL><LI>If invalid condition code, go to TimeOutRet.  </LI><P>
+<LI>HALTVAL &lt;-- BL </LI><P>
+</UL>Begin: <P>
+<UL><LI>Show annunciators </LI><P>
+<LI>If Auto-Timeout and no AC Adaptor, Deep Sleep.  On wakeup, go to TimeOutRet.  </LI><P>
+<LI>Int 06h, Function 02h </LI><P>
+<LI>Light Sleep </LI><P>
+<LI>Int 06h, Function 03h </LI><P>
+<LI>INTLST &lt;-- INTLST OR [8259 PIC IntReq Register] </LI><P>
+<LI>If (AC Adaptor present) OR ((INTLST AND 0F8h) # 0), reset Auto-Timeout.  </LI><P>
+<LI>Test specified condition.  If true, go to OkRet </LI><P>
+<LI>If (BL=0 OR HALTVAL#0) go to Begin: </LI><P>
+</UL>TimeOutRet: CARRY &lt;-- 1.  go to WtEventExit <P>
+OKRET: CARRY &lt;-- 0.  go to WtEventExit <P>
+WtEventExit: Clear Annunciators, INTLST &lt;-- 0, Exit.  <P>
+<B>Notes: </B><P>
+<UL><LI>The annunciators are shown only during execution of the Int 15h, Fcn 41xxh service.  This generally avoids display contention with DOS programs which might otherwise overwrite the annunciator area.  </LI><P>
+<LI>This function does not test the Light Sleep Disable flag (See Int 15h, Fcn 4Eh).  The Light Sleep Disable flag is tested by Int 16h, Fcn's 01h and 11h which conditionally call this service.  </LI><P>
+<LI>This function is the sole caller of the Int 06h, Fcn's 02h and 03h hooks.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

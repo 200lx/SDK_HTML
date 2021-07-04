@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Synchronizing Transfers </TITLE></HEAD>
+<BODY>
+<H3>Synchronizing Transfers</H3>
+Because 80x86 processors have instruction caches, a prefetched instruction may start execution after the write to location -31h but before BitBlt gains control of the bus.  This may cause a race condition where software modifies a register before its contents are used.  A write to location -31h should be followed by either a check of the status bit in the mode/status register or several instructions that do not affect BitBlt registers.<P>
+<P>
+</BODY>
+</HTML>

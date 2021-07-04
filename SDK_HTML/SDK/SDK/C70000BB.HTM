@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_playback_macro </TITLE></HEAD>
+<BODY>
+<H3>m_playback_macro </H3>
+This function sets a macro to be played back. 
+<PRE><UL>
+<LI>Syntax:         int far m_playback_macro(int MacroNumber) </LI>
+<LI>Parameters:     int MacroNumber Number of macro to be played back </LI>
+<LI>Returns:        Size of retrieved macro </LI>
+                0 - if none assigned 
+                ERROR_MACRO_NUMBER (-1) - if illegal macro number 
+                ERROR_MACRO_RECORDING (-2) - if macro is currently being 
+                                             recorded (macro_save) 
+                ERROR_MACRO_PLAYING (-3) - if macro is currently being played 
+                                           back (macro_count) 
+                ERROR_MACRO_DISABLED (-4) - if macros are disabled (macros_off) </LI>
+<LI>Related Calls:  <A HREF="c70000b8.htm">m_enable_macros</A>.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 4Ah: RS-232 Power Control </TITLE></HEAD>
+<BODY>
+<H3>AH = 4Ah: RS-232 Power Control </H3><P>
+This function turns power to RS-232 device on or off.  <P>
+The Fcn 49h and 4Ah services were originally created for the HP95LX which has a single bit in its System Control Register which controls the power supply for both the IR and Wired Xmit/Receive circuitry.  The HP 95LX Fcn 49h service only selects the channel, and Fcn 4Ah controls power to the common Xmit/Receive circuitry.  Other HP palmtops have separate power controls for the IR and Wired Xmit/Rcv Circuitry.  In order to be backwards compatible, and to avoid turning on power for both IR and WIRED when only one is needed, the following changes have been made to the 95LX function: <P>
+<UL><LI>If the desired action is power OFF, both IR and WIRED power are turned off.  </LI><P>
+<LI>If the desired action is power ON, power is turned on to the currently selected channel and the non-selected channel is powered down.  </LI><P>
+<LI>Input: AH = 4Ah <BR>
+AL = 0h: RS232 power turned off <BR>
+AL = 1h: RS232 power turned on <BR>
+AL &gt; 1h: No Operation <P>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 45h: Window Keys & Cursor Tracking Control </TITLE></HEAD>
+<BODY>
+<H3>AH = 45h: Window Keys &amp; Cursor Tracking Control </H3><P>
+This function enables or disables display window movements that may be caused by two different mechanisms.  Window movement will occur only in zoomed text modes, regardless of whether or not the function is enabled.  This function writes to the WINFLG variable in BIOS RAM that records the control state.  <P>
+When cursor tracking is enabled, the window will be moved to maintain the cursor in the display.  <P>
+When the window key movement is enabled, the MENU-ARROW and MENU-SHIFT-ARROW keys may be used to control placement of the window.  On the HP palmtop, the MENU-ARROW keys repeat.  <P>
+<B>Window Control</B> <BR>
+<PRE>
+AL   Arrow_Keys   Cursor_Tracking   WINFLG 
+===========================================
+00h  Enabled      Enabled           00h 
+-------------------------------------------
+01h  Disabled     Disabled          03h 
+-------------------------------------------
+02h  Enabled      Disabled          02h 
+-------------------------------------------
+03h  Disabled     Enabled           01h 
+-------------------------------------------
+</PRE>
+<BR>
+<UL><LI>Input: AH = 45h <BR>
+AL = Window Control (0-3) <P>
+</UL>
+<UL><LI>Output: Windowing and cursor tracking enabled or disabled according to AL </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

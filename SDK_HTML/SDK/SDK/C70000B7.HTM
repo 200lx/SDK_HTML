@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_disable_macros </TITLE></HEAD>
+<BODY>
+<H3>m_disable_macros </H3>
+This call prevents the editing or display of macros.  m_disable_macros must be called when SETUP enters the macro editor or whenever macros might be changed by executing code. 
+If macro save or play is on when this call is made, m_disable_macros ends the current macro, saves it, turns off the macro function, and prevents it from being turned on until a call to m_enable_macros is made.  <P>
+<PRE><UL>
+<LI>Syntax:         int m_disable_macros (void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        0 - if nothing is turned off </LI>
+                1 - if a play is turned off 
+                2 - if a record is turned off </LI>
+<LI>Related Calls:  <A HREF="c70000b8.htm">m_enable_macros</A> </LI>
+</UL></PRE>
+</BODY>
+</HTML>

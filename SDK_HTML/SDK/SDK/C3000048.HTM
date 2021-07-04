@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 03h: Read Cursor Position </TITLE></HEAD>
+<BODY>
+<H3>AH = 03h: Read Cursor Position </H3><P>
+This function returns the attributes of the specified cursor.  It is useful for saving the current cursor state before a change.  If the page # p is invalid for the current video mode, p = 0 is used.  The cursor coordinates (r,c) are fetched from the RAM variable CURCOOR using p as an index.  The cursor size is fetched from the RAM Variable CURTYPE.  Note that the cursor size is not necessarily the same value stored in the hardware.  See Int 10h, Fcn 01h on <A HREF="C3000046.HTM">page 3-65</A> for details.  <P>
+<UL><LI>Input: AH = 03h </LI><BR>
+               BH = Display page number <BR>
+</UL>
+<UL><LI>Output: CH = Cursor Starting scan line </LI><BR>
+                CL = Cursor Ending scan line <BR>
+                DH = Cursor row number <BR>
+                DL = Cursor column number <BR>
+</UL>
+<UL><LI>Error conditions: None </LI><BR>
+<LI>Registers modified: AX, CX, and DX </LI><BR>
+</UL>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Timeout Errors </TITLE></HEAD>
+<BODY>
+<H3>Timeout Errors </H3><P>
+A timeout error may occur for several reasons whenever a serial read or a write function is requested.  The timeout duration is controlled by the value in the table in BIOS RAM at EIATOTBL (initialized to 01h).  Each count in the table value represents 64K passes through loops in the transmit and receive code.  The reasons for timeout are explained in the discussion of services 01h and 02h.  When a timeout does occur it is indicated by returning with the timeout bit (AH[7]) set.  <P>
+</BODY>
+</HTML>

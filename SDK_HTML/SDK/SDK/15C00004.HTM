@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Display Address Remapping </TITLE></HEAD>
+<BODY>
+<H3>Display Address Remapping</H3>
+The address lines can be sourced from either the CPU or from the display controller.  The
+display controller gains control of the CPU address bus using the Hold/Acknowledge
+sequence.  It then acts as a bus controller to read up to 80 words of display data from
+system memory into its refresh buffer.<P>
+
+The data for the display is stored in the devices connected to NRAS[3:0] (system RAM) at
+the device address nnnXXxxxh, where &quot;nnn&quot; is the 12-bit value (device address
+bits [25:14]) stored in the two 8-bit Disp Memory registers located at indexes -9Ah and
+-9Bh and &quot;XXxxx&quot; is the low-order 14-bit (device address bits [13:0]) of the
+device address bus.  The display data can be accessed at either the MDA/CGA CPU address
+spaces or via bank switching.  If the Disp Memory is located in devices NRAS[3:2], it is
+only accessible via bank switching.<P>
+
+When the five most significant bits of the CPU address are pointing into the CGA address
+space located between B8000h and BBFFFh or the MDA address space located between B0000h
+and B3FFFh, the Disp Memory remapper replaces these address bits with the contents of
+Disp Memory Reg0 (7-0) and Disp Memory Reg1 (7-4).  The two 16-KB blocks of memory at
+B4000h and BC000h each have 16 KB of ROM mapped into them.  See &quot;External Chip
+Selects&quot; on <A HREF="15C00005.HTM">page 15-498</A>.  It should be noted that only the CGA or the MDA address
+space can be remapped at a time, not both simultaneously.  The contents of these
+registers are always used when addresses are being sourced from the display controller.
+The Disp Memory registers must be initialized to point to a 16-KB boundary of RAM
+(NRAS[3:0]) as defined by the external chip select configuration.<P>
+
+The data for the Font table may be stored in any of the external memory devices (NRCE,
+NRAS[3:0], NCS[1:0]) at the device address nnnXXxxxh, where &quot;nnn&quot; is the 12 bit
+value (device address bits [25:14]) stored in the two 8-bit Font Table registers, located
+at indexes -9Ch and -9Dh, and &quot;XXxxx&quot; represents the low order 14-bits (device
+address bits [13:0]) of the device address bus.  The Font Table registers must be
+initialized to point to a 16-KB boundary of RAM (NRAS[3:0]) as defined by the external
+chip select configuration.  If the Font table is stored in devices NRAS[3:2], it is only
+accessible through bank switching.<P>
+
+As discussed in the &quot;Display Controller&quot; on <A HREF="15C00015.HTM">page 15-507</A>, the display controller
+can be used as a standalone display, it can be disabled and an external display adapter
+can be used instead, it may be used in addition to an external display adapter, or it can
+be used in parallel with an external display adapter.<P>
+
+If the Hornet display adapter is used as a standalone display, the font table and display
+memory are set up as discussed above.  If the Hornet display adapter is disabled and an
+external display adapter is used, the external adapter's display memory and optional BIOS
+ROM need to be mapped to the appropriate segments in the CPU's address space via the Disp
+Memory and Font Table registers as described above.  If the Hornet display adapter is
+used in addition to an external di splay adapter, the display memory and font tables must
+not conflict with one another.  Again, mapping can be done as necessary using the Disp
+Memory and Font Table registers.  If the Hornet display adapter is used in parallel with
+an external adapter, the display memories must be set to overlap.  Writes to the display
+memory of both are done simultaneously while reads from either the Hornet display adapter
+or the external display adapter must be disabled to prevent conflict.  For more information 
+see &quot;Programming&quot; on <A HREF="15C0001C.HTM">page 15-515</A>.<P>
+
+</BODY>
+</HTML>

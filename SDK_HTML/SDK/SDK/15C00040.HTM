@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Modulated Mode </TITLE></HEAD>
+<BODY>
+<H3>Modulated Mode</H3>
+The MDLD bit in the IRCNT register can be used by software to output any custom modulated
+waveform desired.  To output a waveform, software must first set the MDLTE bit in the
+IRFMAT register and choose the modulation source using the MDSEL bit.  If the 16450 baud
+rate 16x clock is chosen, its frequency must be set to the desired modulation frequency.
+Once this has been accomplished, software can set and clear the MDLD bit at desired to
+emulate the envelope of the output waveform.  Whenever MDLD is one, pul ses will be
+output of a 50% duty cycle for the given modulation source.  As before, care must be
+taken not to exceed the 29% communication duty cycle.  <P>
+</BODY>
+</HTML>

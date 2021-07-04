@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BitBlt Registers </TITLE></HEAD>
+<BODY>
+<H3>BitBlt Registers</H3>
+<PRE>
+Index   Bits    R/W Mode    Description
+==========================================================================================
+-30h    7-0     R/W         SrcPtrLow - source pointer low byte
+------------------------------------------------------------------------------------------
+-31h    4-0     R/W         SrcPtrHi - source pointer high byte
+------------------------------------------------------------------------------------------
+-32h    7-0     R/W         DstPtrLow - destination pointer low byte
+------------------------------------------------------------------------------------------
+-33h    4-0     R/W         DstPtrHi - destination pointer high byte
+------------------------------------------------------------------------------------------
+-34h    2-0     R/W         DstBitOff - destination bit offset
+------------------------------------------------------------------------------------------
+-35h    2-0     R/W         ChrW - character width
+------------------------------------------------------------------------------------------
+-36h    4-0     R/W         ChrH - character height
+------------------------------------------------------------------------------------------
+-37h                        BitBltMode - bitblt mode and status register
+        5       R           BitBltBusy - bitblt busy flag
+        4       R/W         InsaneFTF - select insane font table format
+        3-0     R/W         XferMode - transfer mode selection
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

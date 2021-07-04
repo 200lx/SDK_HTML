@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Compatibility </TITLE></HEAD>
+<BODY>
+<H3>Compatibility </H3><P>
+The HP palmtop's Int 16h service decrements AH by 12h when an invalid function code greater than 14h is passed to the service, because IBM KEYBXX utilities perform the following test to determine if the BIOS supports function 10h, 11h, and 12h: 
+<PRE>
+     mov          AH, 92h 
+     Int          16h 
+     cmp          AH, 80h 
+     ja           NoExtendedSupport 
+</PRE>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>6.  Working with the System Manager </TITLE></HEAD>
+<BODY>
+<H1>6.  Working with the System Manager </H1><P>
+<H1>Services Interface Guidelines </H1><P>
+The System Manager provides several classes of services, such as support for the display, sound, and file I/O.  Each class of service is maintained separately in its own source module.  The various classes of services may be grouped by their interface conventions.  Applications primarily use C language interfaces with stack-based argument passing.  <P>
+All services are invoked directly through the System Manager Services Interrupt (7Eh).  The requested service is specified by placing a value in the AX register.  The interrupt handler inspects AH to determine which class of service is being requested.  Control is then diverted through a jump to the appropriate dispatching routine for the given class.  AL contains the value used by this secondary dispatcher to direct control to the target function.  <P>
+The top-level interrupt handler should make no assumptions about the contents of registers, except for those shown below: <P>
+<UL><LI>AX = requested service, as described above.  </LI><P>
+<LI>SS = stack segment of caller.  </LI><P>
+<LI>SP = stack pointer of caller.  </LI><P>
+</UL>The interrupt handler pushes AX onto the stack and may alter the value in AX.  The handler then issues a jump instruction, with no further interaction with the stack.  Control will not be returned to the interrupt handler.  <P>
+Each class of service is identified by the index stored in AH.  Each contains a central dispatching function which receives control from the interrupt handler.  The first instruction issued by a dispatcher is POP AX, which restores the service request number supplied by the application.  The dispatcher then calls the appropriate function.  <P>
+Each class of service preserves the appropriate caller registers, according to its interface group.  Classes in the assembly language group preserve all registers, except for AX.  Classes in the C language group preserve DS, SI, DI, and BP, and use AX (and DX when necessary) to return values, according to the Microsoft C 6.0 standard.  Whether these registers are saved by the central dispatcher for the class or by the individual functions may vary among classes.  <P>
+All classes preserve the stack and return control to the caller through an IRET or RET 2.  <P>
+Certain classes which possess distinctive characteristics are described in detail in the next chapter.  Memory requests may alter the location of application data, which requires a concomitant change in the DS register.  See &quot;Memory Management Services&quot; on <A HREF="C700008D.HTM ">page 7-260</A> for more information on memory requests.  Application switching, or task switching, is performed through the Event class, which is discussed in &quot;Event Management Services&quot; on 
+<A HREF="C700005B.HTM">page 7-233</A>.  The Process class includes the service to terminate an application, which is described separately in &quot;Process Management Services&quot; on <BR>
+ <A HREF="C70000CB.HTM ">page 7-282</A>.  <P>
+Note:This description applies only to 100LX/200LX calls.  95LX calls or 95LX compatible calls on a 100LX/200LX use different registers (for example, the dispatch function is in DI), and use the stack differently.  <P>
+<H2><A HREF="c6000003.htm">C Language Convention -- Application Services </A></H2><P>
+<H2><A HREF="c6000006.htm">Assembly Language Convention -- General Services &amp; 1-2-3 Services </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

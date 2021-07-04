@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_CountRecords </TITLE></HEAD>
+<BODY>
+<H3>DB_CountRecords </H3><P>
+DB_CountRecords returns the number of reserved record locations for a recordtype.  This differs from the actual number of records in this way: deleted records retain their record numbers, effectively creating holes in the record table, and this function includes holes in its count.  The number returned is the number of the next record that would be written to during a DB_AddRecord (if no deleted record numbers have been reclaimed--use DB_NextRecord for the true record number).  This function cannot error.  <P>
+<UL><LI><Pre>Syntax:             int DB_CountRecords(DBBLOCK *dblk, char recordtype);
+</Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Writing Functions Through the HP Palmtop's API </TITLE></HEAD>
+<BODY>
+<H3>Writing Functions Through the HP Palmtop's API </H3><P>
+Some basic guidelines need to be followed when writing effective functions: <P>
+<UL><LI>All functions must be declared Far.  </LI><P>
+<LI>Parameters on the stack are at a displacement of 18 bytes from usual.  </LI><P>
+<LI>On entry the data structure, DS, is the System Manager's DS.  The function must not
+modify the System Manager's DS on exit.  If the function needs to return a modified DS,
+the function should replace the saved DS on the stack at a displacement of bp + 10 from
+the function entry point.  </LI><P>
+<LI>Functions must save registers suitably, depending on the calling interface.  </LI><P>
+<UL><LI>Microsoft C version 6.0 and 7.0 require SI, DI, SS, DS, and BP to be saved.
+<LI>The flags registers are automatically saved.  Note that the dispatching 
+mechanism guarantees that the direction flag is cleared on entry (the forward direction 
+is set on).</UL><P>
+<LI>Although parameter passing in registers is <I>not</I> recommended, parameters may be passed in
+registers, except for the AX register, which holds the Class/Function number.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

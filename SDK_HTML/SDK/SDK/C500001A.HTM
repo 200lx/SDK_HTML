@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Example Code for an Application Calling a Special TSR </TITLE></HEAD>
+<BODY>
+<H3>Example Code for an Application Calling a Special TSR </H3><P>
+The following code illustrates an example of an application loading and using a special TSR: 
+<PRE>
+// If service entry has not been located: 
+if( SVC_entry == NULL) 
+          { 
+          result =m_load_TSR(filespec_ptr); 
+          SVC_entry= m_locate_SVC( SVC_ID); 
+          if( SVC_entry != NULL) 
+          { 
+          //      get our tcb entry # 
+               passed_data[0] = CMD_SERVICE_LINK; 
+               passed_data[1] =(char) m_current_task();// Set TCB enty 
+               result =SVC_entry( passed_data); 
+               passed_data[0] = CMD_SERVICE_HOOK; 
+               result = SVC_entry( passed_data); 
+          } 
+for (;;) { 
+     m_action(&amp;Event); 
+     show_time(); 
+     switch(Event.kind) { 
+          case E_NONE: 
+               continue; 
+          case E_TERM: 
+               /* will return E_NONE */ 
+               m_no_fini(&amp;Event); 
+               return(KEY_REDRAW); 
+          case E_BREAK: 
+               return(KEY_ABORT); 
+          case E_ACTIV: 
+               m_get_settings(&amp;Settings,NULL); 
+               return(KEY_REDRAW); 
+          case E_DEACT: 
+               return(do_deactivate()); 
+          case E_KEY: 
+               if (Event.data == F1 &amp;&amp; !in_help) { 
+                    in_help = 1; 
+                    c = do_help(); 
+                    in_help = 0; 
+                    } 
+               return(c); 
+          case E_SERVICE: 
+               get_service_buffer(); /* Process handlers request*/ 
+               continue; 
+          default: 
+               return(0); 
+               } 
+          } 
+} 
+void get_service_buffer() 
+     { 
+     int run_mode; 
+     unsigned char ivar; 
+     int result; 
+/* Are we in backgound mode?  */ 
+     run_mode = m_get_run_mode(); 
+     total_count++; 
+//if( run_mode &amp; TASK_STS_BG) 
+// { 
+     back_ground_mode = TRUE; 
+     if( Event.e_svc_user_type == 0) 
+     { 
+     for(ivar=0;ivar&lt;0x80;ivar++) 
+          { 
+          if( (Event.e_svc_user_ptr)[ivar] != ivar) BREAKPOINT 
+          } // End for 
+     } else { // e_svc_type must be 1 = Write 
+          if( Event.e_svc_user_type == 1) 
+          for( ivar=0;ivar&lt;0x80;ivar++) 
+               (Event.e_svc_user_ptr)[ivar] = ivar; 
+     } 
+// Set background processing complete regardless of command 
+passed_data[0] = CMD_SERVICE_COMPLETE; /* Set to done */ 
+result= SVC_entry( passed_data); /* notify handler */ 
+Event.do_event = DO_SERVICE_COMPLETE; /* End back ground mode */ 
+back_ground_mode = FALSE; 
+if( total_count == 10) 
+     { 
+     total_count =0; 
+     passed_data[0] = CMD_SERVICE_UNHOOK; /* ReSet to timer vect */ 
+     result= SVC_entry( passed_data); /* notify handler */_ 
+     passed_data[0] = CMD_SERVICE_UNLOAD; /* Return static memory */ 
+     result= SVC_entry( passed_data); /* restore memory */ 
+     SVC_entry = 0; /* make call null */ 
+     } 
+} 
+
+</PRE>
+</BODY>
+</HTML>

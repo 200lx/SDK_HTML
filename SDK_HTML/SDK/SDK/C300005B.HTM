@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D4h: Reset Bit Map Stack (Unload All) </TITLE></HEAD>
+<BODY>
+<H3>AH = D4h: Reset Bit Map Stack (Unload All) </H3><P>
+This function clears the System Bit Map stack, effectively unloading all of the bit maps available in RAM.  The actual Bitmap data is not altered by this function, it simply becomes unreferenced by the Bit Map Stack.  However, the next invocation of function D1h will load the specified bit map data at the beginning of the dedicated 16K Bitmap buffer, overwriting any previous data.  <P>
+<UL><LI>Input: AH = D4h </LI><P>
+<LI>Output: None </LI><P>
+<LI>Registers modified: AH </LI><P>
+<LI>Error conditions: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

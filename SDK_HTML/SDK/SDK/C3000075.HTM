@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 03h: Get Serial Port Status </TITLE></HEAD>
+<BODY>
+<H3>AH = 03h: Get Serial Port Status </H3><P>
+This function reports the status of the serial port and the modem-control lines connected to the serial adapter.  <P>
+<UL><LI>Input: AH = 03h <BR>
+DX = Port# (0 = Built-In Serial Port) <P>
+</UL>
+<UL><LI>Output: AH = LSR Register (See &quot;AH = 00h: Initialize Serial Port&quot; on <A HREF="C3000072.HTM">page 3-92</A>.) <BR>
+AL = MSR Register (See &quot;AH = 00h: Initialize Serial Port&quot; on <A HREF="C3000072.HTM">page 3-92</A>) <P>
+</UL>
+<UL><LI>Error conditions: None reported </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

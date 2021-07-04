@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_yield </TITLE></HEAD>
+<BODY>
+<H3>m_yield </H3>
+This call causes voluntary suspension of an application.  When called, the application is placed at the end of the application stack, and the active state reverts to the next application.  Control will not return to the caller of m_yield until some external action causes it to be made active again (generally, the user pressing a hotkey, which restarts the application).  <P>
+Instead of calling this function, you should use <A HREF="c700005d.htm">m_action</A> with the do_event = DO_YIELD which provides the identical service. 
+<PRE><UL>
+<LI>Syntax:      int m_yield(EVENT far * pEvent) </LI>
+<LI>Parameters:  EVENT far * pEvent </LI>
+<LI>Returns:     The same as if the application had made an m_event() and had been 
+             suspended; that is, the expected event type on return is M_ACTIVE </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D6h: Get Bitmap </TITLE></HEAD>
+<BODY>
+<H3>AH = D6h: Get Bitmap </H3><P>
+This function returns information about a specified Bitmap table.  There are 3 subfunctions that correspond to different ways to specify the desired Bitmap table: <P>
+<B>Subfunction 00h: Get Bitmap from Level N of BMSTK </B><BR>
+<UL><LI>Input: AX = D600h <BR>
+BX = N (1-7: 1=Lowest Level) <P>
+</UL>
+<UL><LI>Output: If Successful - CC <BR>
+AX = ID <BR>
+BX = n (#Symbols) <BR>
+CX = [h,w] (Cell Dimensions) <BR>
+DH = Status (Hi Bit Set if Active) <BR>
+DL = Format (1,2,4,8) <BR>
+DI = Offset (From the start of 16K buffer) <BR>
+If Unsuccessful, CS <P>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, DI, FLAGS </LI><P>
+<LI>Error conditions: No bitmap at level N </LI><P>
+</UL>
+<B>Subfunction 01h: Get Bitmap with specified ID from BMSTK </B><BR>
+<UL><LI>Input: AX = D601h </LI><P>
+<LI>BX = ID (2^k; 0&lt;=k&lt;=15) </LI><P>
+</UL>
+<UL><LI>Output: If Successful, CC <BR>
+AX = ID <BR>
+BX = n (#Symbols) <BR>
+CX = [h,w] (Cell Dimensions) <BR>
+DH = Status (Hi Bit Set if Active) <BR>
+DL = Format (1,2,4,8) <BR>
+DI = Offset (From the start of 16K buffer) <BR>
+If Unsuccessful, CS <P>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, DI, FLAGS </LI><P>
+<LI>Error conditions: No bitmap with specified ID </LI><P>
+</UL>
+<B>Subfunction 02h: Get the active Bitmap from BMSTK </B><BR>
+<UL><LI>Input: AX = D602h <P>
+</UL>
+<UL><LI>Output: If Successful, CC <BR>
+AX = ID <BR>
+BX = n (#Symbols) <BR>
+CX = [h,w] (Cell Dimensions) <BR>
+DH = Status (Hi Bit Set) <BR>
+DL = Format (1,2,4,8) <BR>
+DI = Offset (From the start of 16K buffer) <BR>
+If Unsuccessful, CS <BR>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, DI, FLAGS </LI><P>
+<LI>Error conditions: No active bitmap </LI><P>
+</UL><P>
+</BODY>
+</HTML>

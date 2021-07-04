@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_enable_fnct_tbl </TITLE></HEAD>
+<BODY>
+<H3>m_enable_fnct_tbl </H3>
+enables the last disabled function table having the function.<BR>
+See &quot;Using Function Table Enabling and Disabling&quot;
+on <A HREF="C7000005.HTM">page 7-192</A> for more information on calling this function.
+<PRE><UL>
+<LI>Syntax:         int m_enable_fnct_tbl(unsigned ClassFnct) 
+<LI>Parameters:     unsigned ClassFnct - The function is required from the Disabled 
+                                      Function table.
+<LI>Returns:        0 - if successful
+                ERROR_INVALID_CLASS (-1) - if the class number specified is invalid
+                ERROR_FNCT_TBL_NOT_FOUND - if the function table is not found
+<LI>Related Calls:  This call is used to invoke a function which has been overridden 
+                by inserting a function table using the <A HREF="c700000f.htm">m_insert_fnct_tbl</A> call.  
+                The call to the overridden function must be preceded with an 
+                <A HREF="c700000a.htm">m_disable_fnct_tbl</A>, and followed by an m_enable_fnct_tbl call. 
+</UL></PRE>
+</BODY>
+</HTML>

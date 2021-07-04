@@ -1,0 +1,192 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>RAM Disk Driver (drive C) </TITLE></HEAD>
+<BODY>
+<H3>RAM Disk Driver (drive C) </H3><P>
+The HP palmtop RAM disk driver was written at HP and integrated into the DOS device driver layer so that it is built-in and consequently does not need to be loaded in config.sys.  <P>
+The size of drive C can be adjusted.  See the Modify RAM Disk Size, Initialize RAM Disk, and Get RAM Disk Size Parameters functions in the Int 13h section of the BIOS chapter.  This is the way the RAM Disk size is altered by the Setup application.  <P>
+The RAM disk driver utilizes two tables of static data, which are located at the beginning of the palmtop extended BIOS data area, which starts at 9000:f000.  For completeness these tables will be described here.  The word &quot;permanent&quot; refers to memory or sectors which are used by the RAM disk regardless of its size.  The word &quot;flexible&quot; refers to memory or sectors in the area that may be occupied by RAM disk.  <P>
+First, here are the structure and table definitions.  <P>
+<PRE>
+DRT_MEM_BLOCK STRUC                   ; disk resource table memory block 
+DRT_MEM_CHIP DB                 ?     ; chip select 
+DRT_MEM_START DW                ?     ; start offset in 1K units 
+DRT_MEM_LEN DW                  ?     ; length in 1K units 
+DRT_MEM_BLOCK ENDS 
+;---------------------------------------------------------------------------- 
+DDT_SBT                         STRUC ; disk desc table sector block table 
+                                      ; common to both PERM and FLEX SBTs 
+DDT_START_SECTOR DW             ?  
+DDT_END_SECTOR DW               ?  
+DDT_CHIP_SELECT DB              ?  
+DDT_START_OFFSET DW             ?     ; in 1K byte units 
+DDT_SBT                         ENDS 
+;---------------------------------------------------------------------------- 
+DDT_FLEX_INFO                STRUC      ; disk desc chip info which is 
+                                        ; special to the flex sector chips 
+DDT_FLEX_CHIP_BOT DW                ?   ; in 1K byte units 
+DDT_FLEX_CHIP_TOP DW                ?   ; in 1K byte units 
+DDT_FLEX_INFO                ENDS 
+; 
+;-------------- Disk Resource Table ---------------------------------------- 
+; 
+             PUBLIC DRTSignature 
+DRTSignature DW                ?       ; &quot;DR&quot; in finished table 
+             PUBLIC      DRTPermCount 
+DRTPermCount DB                ?       ; num of perm sector table entries 
+             PUBLIC      DRTFlexCount 
+DRTFlexCount DB                ?       ; num of flexible sector entries 
+; 
+; Allow for 6 memory blocks to allow for 4 chips of permanent sectors 
+; plus two chips of flexible sectors.  
+; 
+             PUBLIC           DRTMemBlocks 
+DRTMemBlocks DRT_MEM_BLOCK                     6 DUP (&lt;&gt;) 
+; 
+; Expansion space.  
+; 
+          DB               5 DUP (?) ; 
+          PUBLIC           DRTChkSum 
+DRTChkSum dw           ?  
+; 
+          PUBLIC           DRTLength 
+DRTLength           EQU           $ - DRTSignature 
+; 
+;-------------- Disk Description Table -------------------------------------- ; 
+     PUBLIC           DDTSignature 
+DDTSignature DW                ?          ; &quot;DD&quot; in finished table 
+     PUBLIC           DDTLastPermSect 
+DDTLastPermSect DW                ?       ; last sector in bank mapped RAM 
+     PUBLIC           DDTLastSect 
+DDTLastSect DW                ?           ; last sector period 
+     PUBLIC           DDTNumFlexChips 
+DDTNumFlexChips DB                ?       ; 1 or 2 depending on 512K case 
+; 
+; Allow for 4 permanent memory blocks to allow for 4 chips.  
+; 
+     PUBLIC           DDTPermSBT 
+DDTPermSBT DDT_SBT    4 DUP (&lt;&gt;) 
+; 
+; Expansion space.  
+; 
+          DB          7 DUP (?) 
+; 
+; Allow for 2 flexible memory blocks to correspond to the two RAM chips 
+; in a one meg Cougar.  
+; 
+     PUBLIC           DDTFlexSBT 
+DDTFlexSBT DDT_SBT                2 DUP (&lt;&gt;) 
+; 
+; Allow for 2 flexible sector info structures which correspond to the two 
+; flexible memory blocks above.  
+; 
+     PUBLIC           DDTFlexInfo 
+DDTFlexInfo DDT_FLEX_INFO 2 DUP (&lt;&gt;) 
+; 
+; 
+; System memory size in 1K units (available below the RAM disk) 
+; 
+     PUBLIC           DDTDosMemSize 
+DDTDosMemSize DW      1 DUP (?) 
+; 
+; Current number of 8KB blocks of flexible sectors that are used.  
+; 
+     PUBLIC           DDTBlocksUsed 
+DDTBlocksUsed DW                ?  
+; 
+; Maximum number of 8KB blocks of flexible sectors that can be used.  
+; If this is zero, it indicates that partition moving is not supported 
+; as will be the case for &quot;large&quot; disks.  
+; 
+     PUBLIC           DDTBlocksMax 
+DDTBlocksMax          DW           ?  
+     PUBLIC           DDTChkSum 
+DDTChkSum dw                ?  
+     PUBLIC           DDTLength 
+DDTLength EQU         $ - DDTSignature 
+</PRE>
+
+The disk resource table comes first.  It starts with 'DR', ends with a word checksum, and is 29h bytes long.  This table describes the RAM regions that are available for use by the RAM disk.  By default this table allocates the maximum amount of RAM for use by the RAM disk.  In theory, this table could be modified to save some RAM for other purposes.  By way of example, here is the disk resource table from a 1MB palmtop, which has two 512KB RAM chips.  <P>
+<PRE>
+
+Location      Symbolic          Value            Comment                            
+ 
+F000:9000     DRTSignature      &quot;DR&quot;               Table signature                    
+F000:9002     DRTPermCount      01               One device with permanent sectors  
+F000:9003     DRTFlexCount      02               Two devices with flexible sectors  
+                                                                                     
+     ; permanent sector description                                                  
+
+F000:9004     DRT_MEM_CHIP      02               Chip select 2 = NRAS[1] = 2nd RAM chip 
+F000:9005     DRT_MEM_START     00A0             Starts at offset 160K in chip 
+F000:9007     DRT_MEM_LEN       0160             352K long uses up rest of 512K chip 
+     ; 1st flexible sector description 
+
+F000:9009     DRT_MEM_CHIP      01               Chip select 1 = NRAS[0] = 1st RAM chip 
+F000:900A     DRT_MEM_START     0080             Starts at offset 128K in chip 
+F000:900C     DRT_MEM_LEN       0180             384K long uses up rest of 512K chip 
+     ; 2nd flexible sector description 
+
+F000:900E     DRT_MEM_CHIP      02               Chip select 2 = NRAS[1] = 2nd RAM chip 
+F000:900F     DRT_MEM_START     0000             Starts at offset 0 in chip 
+F000:9011     DRT_MEM_LEN       007C             124K long goes up to ext BIOS data 
+F000:9013 through F000:9026 unused and set to 0 
+F000:9027     DRTChkSum         031C             Checksum 
+
+The disk description table comes second.  It starts with 'DD', ends with a word checksum, and is 48h bytes long.  This table describes the location of the disk sectors.  By way of example, here is the disk description table for a 1MB system with the RAM disk expanded from the default 352K to 512K.  Note that the 8KB blocks are for compatibility with the HP 95LX.  <P>
+
+Location      Symbolic          Value            Comment 
+F000:9029     DDTSignature      &quot;DD&quot;   Table signature 
+F000:902B     DDTLastPermSect   02BF             Last permanent sector is number 703 
+F000:902D     DDTLastSect       03FF             Last sector of disk is number 1023 
+F000:902F     DDTNumFlexChips   02               2 flex sector chips since 2 512K RAMs 
+     ; 1st permanent sector block table 
+
+F000:9030     DDT_START_SECTOR  0000             First sector = 0 (boot sector) 
+F000:9032     DDT_END_SECTOR    02BF             Last sector = 703 
+F000:9034     DDT_CHIP_SELECT   02               Chip select 2 = NRAS[1] = 2nd RAM chip 
+F000:9035     DDT_START_OFFSET  00A0             Starts at offset 160K in chip.  This 
+                                                 derives from 128K used for system 
+                                                 RAM + 32K display and font RAM.  <P>
+; 2nd, 3rd, and 4th permanent tables are not used since we have only one chip holding permanent sectors.  <P>
+F000:9036 through F000:9052 unused <P>
+; 1st flexible sector block table <P>
+
+F000:9053     DDT_START_SECTOR  02C0             First sector = 704 
+F000:9055     DDT_END_SECTOR    0307             Last sector = 775 
+F000:9057     DDT_CHIP_SELECT   01               Chip select 1 = NRAS[0] = 1st RAM chip 
+F000:9058     DDT_START_OFFSET  01DC             Starts at offset 476K in chip 
+     ; 2nd flexible sector block table 
+
+F000:905A     DDT_START_SECTOR  0308             First sector = 776 
+F000:905C     DDT_END_SECTOR    03FF             Last sector = 1023 
+F000:905E     DDT_CHIP_SELECT   02               Chip select 2 = NRAS[1] = 2nd RAM chip 
+F000:905F     DDT_START_OFFSET  0000             Starts at offset 0 in chip 
+; 1st flexible sector information table 
+
+F000:9061     DDT_FLEX_CHIP_BOT 0000             Starts at CPU address 0 
+F000:9063     DDT_FLEX_CHIP_TOP 0200             Ends before 512K in CPU addrss space 
+; 2nd flexible sector information table 
+
+F000:9065     DDT_FLEX_CHIP_BOT 0200             Starts at CPU address 512K 
+F000:9067     DDT_FLEX_CHIP_TOP 027C             Ends before 636K in CPU addrss space 
+F000:9069     DDTDosMemSize     01DC             476K System RAM 
+F000:906B     DDTBlocksUsed     0014             20 8KB blocks of flex sectors used 
+F000:906D     DDTBlocksMax      003F             63 8KB blocks of flex sectors possible 
+F000:906F     DDTChkSum         081B             Checksum
+</PRE>
+
+The RAM disk format is that of a standard DOS disk.  The boot sector is stored in the first permanent sector and is following by the FAT and root directory in the standard fashion.  <P>
+The number of sectors allocated to the FAT is sufficient to accomodate the largest size that the disk can have given the amount of RAM in the system.  This means that the root directory sectors do not have to shift as the disk is expanded or contracted.  <P>
+As far as the disk size is concerned, the current size is stored in the boot sector.  A reboot is required after any change to the disk size so that DOS will reread the disk parameters.  <P>
+The disk parameters are determined as follows (actually this is for the 200LX, but the 100LX is the same for all RAM sizes found in the 100LX): <P>
+<UL><LI>Sector size is always 512 bytes.  </LI><P>
+<LI>If the disk has fewer than 4,087 sectors, then it uses a 12-bit FAT with one sector per cluster and four sectors of root directory.  </LI><P>
+<LI>If the disk has 4,087 or more sectors but fewer than 14,336 sectors then it uses a 16-bit FAT with one sector per cluster and four sectors of root directory.  </LI><P>
+<LI>If the disk has 14,336 or more sectors but fewer than 30,720 sectors then it uses a 16-bit FAT with two sectors per cluster and six sectors of root directory.  </LI><P>
+<LI>If the disk has 30,720 or more sectors then it uses a 16-bit FAT with four sectors per cluster and eight sectors of root directory.  </LI><P>
+</UL>The disk driver can support disks up to approximately 32MB.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>APM on the HP palmtop </TITLE></HEAD>
+<BODY>
+<H3>APM on the HP palmtop </H3><P>
+The CardBIOS software (see the PCMCIA chapter) was written to be APM aware which meant that it needed to be informed about suspend and resume events.  To accomodate this, a timer tick handler was added to DOS which broadcasts suspend and resume events in the APM style.  This is the only part of APM which is supported.  <P>
+The suspend request is posted by the BIOS and detected in the timer tick handler where the suspend request is broadcast.  There are two types of suspend requests posted by the BIOS - normal suspend and software shutdown.  Normal suspend would be posted when user turns the unit off or the unit times out.  Software shutdown is posted in response to a low battery situation.  Software shutdown can be posted either by the BIOS or by CardDrv when CardDrv is writing to a SunDisk card.  See the next section for more information on SunDisk card power management.  <P>
+The suspend and resume requests are broadcast via Int 2Fh calls as follows: <P>
+Entry:                AX = 530Bh <P>
+               BL = 2 for suspend or 3 for resume <P>
+               BH = 0 or 80h if another application has rejected request <P>
+Exit:                BH = 80h if application rejects request or unchanged otherwise <P>
+Note that LapLink Remote Access is an APM aware application which does make use of the APM suspend and resume broadcasts to provide clean disconnects and reconnects across power cycles.  Thus, this limited APM support came in handy when LLRA was included on the 200LX.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 13h: Disk Services Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 13h: Disk Services Interrupt </H1><P>
+The Int 13h services on the HP palmtop provide two categories of services, both of which are nonstandard services.  HP palmtops do not support standard disk services at the Int 13h level.  Instead, custom device drivers are used.  <P>
+One category of services (functions FF00, FF01, and FF02) applies to the RAM disk, which is drive C:.  The RAM disk always occupies some RAM outside the 640KB of conventional memory.  This RAM will be called bank-mapped RAM since it can only be accessed through the bank mapping areas.  If there is less than approximately 1.5 mega bytes of bank-mapped RAM available to the RAM disk, then the RAM disk size can be increased to use some conventional RAM.  The RAM disk size is normally manipulated through the Setup Application, although these functions can be used directly by an application.  These services are compatible with the corresponding services on the HP 95LX.  <P>
+The other category of services (functions FD00, FD01, and FD02) are documented here for completeness, but are not intended to be called by user applications.  They are used internally by the XIP support functions that are on Int 63h, which is described on <A HREF="C30000D1.HTM">page 3-138</A>.  These services are partially compatible with the corresponding services on the HP 95LX.  They only support one drive (drive A) and one port (Port 0).  <P>
+Both categories of services are described in the table below.  Specify the desired function code in register AX, with additional parameters passed in other registers as indicated in the table.  <P>
+<H2><A HREF="c3000068.htm">AX = 0FF00h: Modify RAM Disk (Drive C:) Size </A></H2><P>
+<H2><A HREF="c3000069.htm">AX = 0FF01h: Initialize RAM Disk (Drive C) </A></H2><P>
+<H2><A HREF="c300006a.htm">AX = 0FF02h: Get RAM Disk (Drive C) Size Parameters </A></H2><P>
+<H2><A HREF="c300006b.htm">AX = FD00: Find Logical Page and Offset for filename </A></H2><P>
+<H2><A HREF="c300006c.htm">AX = FD01: Set Checksum/Flag for Card in Port 0 </A></H2><P>
+<H2><A HREF="c300006d.htm">AX = FD02: Check Checksum/Flag for Card in Port 0 </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

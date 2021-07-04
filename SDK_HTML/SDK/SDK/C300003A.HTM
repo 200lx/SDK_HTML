@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MDA Mode 20h (Nonstandard HP 95LX Graphics Mode) </TITLE></HEAD>
+<BODY>
+<H3>MDA Mode 20h (Nonstandard HP 95LX Graphics Mode) </H3><P>
+When configured for MDA Mode 20h, the display memory is assumed to have the organization used by the HP 95LX for its Mode 20h graphics.  That is, the data appears as a 240- x 128-bit array at the MDA address B0000h.  In the HP 95LX, the scan line is 240 bits wide, and the data is accessed in row order (scan lines not interleaved as in CGA modes).  The image appears centered using a 480x128 window in the low resolution graphics display with each data bit corresponding to a &quot;2-dot pixel&quot; in the HP 100LX display.  <P>
+<A HREF="image/__dg0310.gif">Graphic</A><P>
+Within each byte of display memory, bit 7 maps to the leftmost pixel and bit 0 maps to the rightmost pixel.  The upper left pixel of the display image in the window used to show the image is bit 7 of 0B0000h.  <P>
+<P>
+</BODY>
+</HTML>

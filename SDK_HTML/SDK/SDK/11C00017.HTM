@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Undo </TITLE></HEAD>
+<BODY>
+<H3>DB_Undo </H3><P>
+DB_Undo removes all changes made to the database since the last Undo point was set.  Undo sets an Undo point before it begins executing so that Undoing an Undo is the same as doing nothing.  DB_CANTUNDO is returned if no actions have been performed on the database since the last Undo point.  If the
+<I>undocount</I> pointer is not NULL, the integer at undocount is filled with the number of records affected by the Undo.  <P>
+If the <I>undoret</I> pointer is not NULL, the pointer at
+<I>undoret</I> is filled with the address of the System Manager memory &quot;handle&quot; that points (doubly indirect) to an memory block.  This new memory block is allocated by the database, but the application is responsible for deleting the block when it is done examining the entries.  The
+<I>undoret</I> array that lies in this block gives the record numbers, types, and actions of any records that have changed.  The action code indicates what was done to restore the record, not what happened to the original record (i.e.  if after an Undo, a record that was previously deleted is re-added, the action code will be UNDO_ADDED).  If the
+<I>undoret</I> pointer is not NULL, and there is not enough memory to allocate the
+<I>undoret</I> array, DB_Undo returns with a DB_MEMORY error.  <P>
+DB_Undo also flushes the DOS file after completing.  <P>
+<UL><LI><Pre>Syntax:             int DB_Undo(DBBLOCK *dblk, int *undocount, 
+                    UNDORETURN far ***undoret); </LI><P>
+<LI>Returns:            DB_OK          Undo successful.  <P>
+                    DB_CANTUNDO    No changes have been made since the last 
+                                   undo point was set.  <P>
+                    DB_MEMORY      A undo table was requested, but there was 
+                                   not enough memory.  <P>
+                    DB_READ        The file is bad.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

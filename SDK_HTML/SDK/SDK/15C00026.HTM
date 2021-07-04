@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Test modes </TITLE></HEAD>
+<BODY>
+<H3>Test modes</H3>
+The DspTest bits of the DspSetUp register select one of eight modes of operation.
+Software must keep these bits clear for normal operation with a display module.  Other
+settings of these bits select various test modes which are only useful in out-of-circuit
+testing.  The test modes cause some of the dedicated display pins to be redefined.  The
+test modes are described in the table below:<P>
+
+<PRE>
+Mode    Description
+==========================================================================================
+000     Normal Operation
+------------------------------------------------------------------------------------------
+001     Clock divider test
+        The CP and LOAD pins are redefined as the DspClk and DotClk outputs of the clock
+        divider circuit.  The CCV and YD pins are redefined as the inputs DspClkReq and
+        DotClkReq.  These last two signals are request inputs to the clock divider
+        circuit.  When a request is made active, the corresponding clock is enabled.
+------------------------------------------------------------------------------------------
+010     Row timer test
+        The row timer is clocked from LFO instead of TCLK.  RTOUT, the output of the row
+        timer, appears on the CCV pin.
+------------------------------------------------------------------------------------------
+011     Vertical counter test
+        YDCK and LINECK are sourced from LFO.  CRMAT, ULMAT, NVBLANK, and FIRSTLINE appear
+        on the DD0 through DD3 pins.  YDCK clock is ordinarily a copy of the CP signal.
+        It determines the edges of the YD signal.  LINECK is ordinarily a copy of the LOAD
+        signal.  It clocks the vertical line and row counters.  CRMAT (cursor row match)
+        is true when the line counter is within the CurStartLine and CurStop values.
+        ULMAT (underline match) is true when the line counter is equal to the Underline
+        register.  NVBLANK (not ve rtical blank) is true in the vertically blanked
+        portions of the display.  FIRSTLINE is true on the first active line of the
+        display.
+------------------------------------------------------------------------------------------
+1xx     Reserved
+        These modes work just like normal mode but should not be used.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

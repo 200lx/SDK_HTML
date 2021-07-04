@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Operating </TITLE></HEAD>
+<BODY>
+<H3>Operating </H3><P>
+Operating mode can be entered from either of the other two modes.  If it is being entered from deep sleep then the Hornet chip will pause for 35ms after requesting high power mode from the external supply.  Following this delay the CPU will begin operation at the reset vector (ffff0h) with interrupts disabled by the CPU reset.  <P>
+When software is finished processing, it may exit operating mode and enter either light sleep or deep sleep.  Light sleep is entered by setting the SHT bit.  Deep sleep is entered by first clearing the DON bit, then setting the SHT bit.  The CPU will prefetch several instructions following the instruction that sets the SHT bit.  This requires that several NOP instructions follow setting the SHT bit.  When operating mode is again entered, hardware will clea r the SHT bit.  It is up to software to control the state of the DON bit.  <P>
+<P>
+</BODY>
+</HTML>

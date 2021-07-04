@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>8.  LHAPI </TITLE></HEAD>
+<BODY>
+<H1>8.  LHAPI </H1><P>
+The System Manager's Lotus Handheld Application Programming Interface (LHAPI) services provide a set of function calls to simplify building an application's user interface and to handle keyboard input.  These services provide menu-building functions, editing and display functions, window handling functions, as well as graphic display functions.  <P>
+Each of the LHAPI services is prefaced with a Distance constant in order to allow for mixed-memory model applications.  A developer can selectively set this constant to either &quot;_near&quot; or &quot;_far&quot;, or leave it NULL in order to have all calls to LHAPI use the same model as that specified to the compiler.  <P>
+As defined in Microsoft C Version 6.0, NULL is only used with pointers.  Set any other variable to 0 (zero) in order to clear it.  <P>
+Note that the system assumes it is in the following state: <P>
+<UL><LI>Mode = REP_RULE (Replace screen pixels) </LI><P>
+<LI>Color = 1 (Black) </LI><P>
+<LI>Pattern = Checkerboard (055h,0AAh,055h,0AAh,...) </LI><P>
+</UL>All LHAPI-provided functions return with the graphics parameters set this way, and any functions that change these parameters should restore them.  <P>
+<H2><A HREF="c8000002.htm">LHAPI Overview </A></H2><P>
+<H2><A HREF="c800000c.htm">Service Overview </A></H2><P>
+<H2><A HREF="c800000d.htm">LHAPI Structures </A></H2><P>
+<H2><A HREF="c8000013.htm">Messages </A></H2><P>
+<H2><A HREF="c800001d.htm">Call Descriptions </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

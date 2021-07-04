@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Keyboard Overview </TITLE></HEAD>
+<BODY>
+<H1>Keyboard Overview </H1><P>
+In a PC with hardware keyscan support, typically the Int 09h routine is invoked directly by the hardware to process (translate) the scan code that it has produced in response to the &quot;Make&quot; or &quot;Break&quot; keyboard interrupt.  The HP palmtop does not have this level of hardware support for the keyboard.  Instead much of the work is performed by software.  The goal is to make the lack of this resource transparent to applications that run on HP palmtop.  <P>
+In the HP palmtop, the hardware provides the first keyboard &quot;Make&quot; IRQ2 interrupt that is serviced by Int 0Ah (Hornet Specific Interrupts).  Keyboard &quot;Breaks&quot; or subsequent key presses while 1 or more keys are depressed do not produce an interrupt (except the hardware provides an interrupt on all keys up).  The HP palmtop BIOS deals with this situation by scheduling periodic keyboard scans (TIMER1: Int 0Ah interrupts) to detect changes in the keyboard state.  This cooperative effort between the KBD and TIMER1 interrupts eventually (key debounce, scan code creation, et al.) produces a produces a 1-byte scan code that is placed in I/O port 60h.  A hardware Int 09h is then invoked by software writing a bit in a specific hardware register.  This completes the software emulation process for hardware keyscans.  <P>
+It is now the responsibility of the Int 09h code to take the scancode and produce something meaningful to the application (e.g.; ASCII KeyCode), update necessary keyboard information (that is, shift status), or convert certain scan codes into ISR internal functions (e.g.; [CTL] [ALT] [DEL]).  When KeyCodes are produced, they are in a 2-byte format and placed in a a 16-word key buffer.  This provides the interface to the services provided by Int 16h.  <P>
+The application's interface to the keyboard is often at the Int 16h level.  The services provided by the Int 16h functions permit the application to determine if a key is available (ready for processing), remove the keycode from the key buffer, write a key code into the key buffer, etc.  In addition, many of the functions feature a low power mode (light sleep) while waiting for an event.  <P>
+In summary, the keyboard &quot;players&quot; are <P>
+<UL><LI>Int 0Ah: KBD Interrupt: Initial key &quot;Make&quot; Interrupt.  </LI><P>
+<LI>Int 0Ah: TIMER1 Interrupt: Keyboard Scans/Debounce/Create ScanCode/Invoke Int 09h </LI><P>
+<LI>Int 09h: Invoked by Int 0Ah to process ScanCodes.  </LI><P>
+<LI>Int 16h: Provides keyboard services at the application level.  </LI><P>
+</UL>More detail on the players is provided in &quot;Int 09h: Keyboard Translate Interrupt&quot; on <A HREF="C3000010.HTM">page 3-31</A>.  <P>
+<P>
+</BODY>
+</HTML>

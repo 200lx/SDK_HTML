@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Use of Services by Applications </TITLE></HEAD>
+<BODY>
+<H3>Use of Services by Applications </H3><P>
+Application code should contain calls to the services as if they were ordinary function calls.  Each source file containing service calls should also include the header file INTERFAC.H which contains macro definitions for each service.  The macro expands the source line to a call to a common service requestor and forces pointers to far pointers, as in the code example below.  <P>
+<PRE>
+#include &quot;interfac.h&quot; 
+
+Fun1() 
+{ 
+int x,y,attr; 
+char *str; 
+...  
+m_disp(x,y,str,attr); 
+...  
+} 
+effectively expands to 
+
+#define FUN_M_DISP ((SC_SCREEN &lt;&lt; 8)|SCR_M_DISP) 
+
+c_service(FUN_M_DISP ,x,y,(char far *)str,attr); 
+</PRE>
+
+The application must be linked with MSCVC.LIB or MSCVC_HP.LIB.  These libs contain the common service requestor function c_service(), which manages registers and issues the services interrupt.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Packed Lookup </TITLE></HEAD>
+<BODY>
+<H3>Packed Lookup </H3><P>
+Every record in the database has an entry in the lookup table.  These entries are formatted as follows: <P>
+<pre>
+Offset  Name     Type      Contents 
+------  -------  --------  --------
+0...1   Size     int       Size of record (including record header) 
+2...3   Filters  int       If bit 0x0001...0x8000 is set, this indicates that a switch
+                           to viewpoint 0...15 requires this record to be sorted/filtered
+                           afresh.  Filters gives the "dirty bit" for keeping track of
+                           what records have been changed since last visiting a
+                           viewpoint.  
+4       Flags     char     128 = Deleted 
+5...7   Offset    char[3]  3 bytes of offset (0...16 M) Lowest...Highest Offset gives
+                           disk seek address of record.  
+</pre>
+</BODY>
+</HTML>

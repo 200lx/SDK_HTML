@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Services </TITLE></HEAD>
+<BODY>
+<H3>System Services </H3>
+<PRE>
+AH    AL    Description 
+=============================================================
+41h         Wait For Event (Power Saving Feature).
+-------------------------------------------------------------
+42h         Enter Deep Sleep State (Very Low Power State).
+-------------------------------------------------------------
+45h         Window Key &amp; Cursor Tracking Control.  
+-------------------------------------------------------------
+46h         Set Display Timeout (for Deep Sleep).  
+-------------------------------------------------------------
+47h         Contrast95 (HP 95LX compatible contrast adjust)
+-------------------------------------------------------------
+48h         Set Beeper Volume.  
+-------------------------------------------------------------
+49h         Set RS-232 Channel (to WIRED or IR).  
+-------------------------------------------------------------
+4Ah         RS-232 Power Control.  
+-------------------------------------------------------------
+4Bh         Update BIOS Time.  
+-------------------------------------------------------------
+4Ch   00h   Select Keyboard (from those provided). 
+-------------------------------------------------------------
+      01h   Return Selected Keyboard Type. 
+-------------------------------------------------------------
+      02h   Return Available Keyboard Types.  
+-------------------------------------------------------------
+      10h   Select Language (English/Non-English).  
+-------------------------------------------------------------
+      11h   Return Selected Language.  
+-------------------------------------------------------------
+4Dh         Return Model Specific Information.  
+-------------------------------------------------------------
+4Eh         Light Sleep Control In Int 16h, Fcns {01h,11h}. 
+-------------------------------------------------------------
+4Fh         Keyboard Translation Hook. 
+-------------------------------------------------------------
+50h         Batt95 (HP 95LX-compatible battery measurement) 
+-------------------------------------------------------------
+51h         Mailbox Service 
+-------------------------------------------------------------
+60h         System Power Management 
+-------------------------------------------------------------
+      00h   Measure System Battery Voltage 
+-------------------------------------------------------------
+      01h   Measure Back Up Battery Voltage
+-------------------------------------------------------------
+      02h   Get System Power Status 
+-------------------------------------------------------------
+      03h   Set Battery Type 
+-------------------------------------------------------------
+      04h   Enable/Disable Battery Charging
+-------------------------------------------------------------
+      05h   Set Rate for Periodic Battery Measurements 
+-------------------------------------------------------------
+      06h   Voltage Compare 
+-------------------------------------------------------------
+61h         Set/Read Annunciator Control 
+-------------------------------------------------------------
+62h         Set/Read Display Contrast
+-------------------------------------------------------------
+C0h         Return Pointer to System Description Table
+-------------------------------------------------------------
+</PRE>
+<P>
+<H2><A HREF="c3000078.htm">AH = 00h, 01h, 02h, 03h, 04h: Cassette Functions </A></H2><P>
+<H2><A HREF="c3000079.htm">AH = 41h: WAIT FOR EVENT </A></H2><P>
+<H2><A HREF="c300007a.htm">AH = 42h: Request Deep Sleep </A></H2><P>
+<H2><A HREF="c300007b.htm">AH = 45h: Window Keys &amp; Cursor Tracking Control </A></H2><P>
+<H2><A HREF="c300007c.htm">AH = 46h: Set Display Timeout </A></H2><P>
+<H2><A HREF="c300007d.htm">AH = 47h: Contrast95 (HP 95LX Compatibility) </A></H2><P>
+<H2><A HREF="c300007e.htm">AH = 48h: Set Beeper Volume </A></H2><P>
+<H2><A HREF="c300007f.htm">AH = 49h: Set RS-232 Channel </A></H2><P>
+<H2><A HREF="c3000080.htm">AH = 4Ah: RS-232 Power Control </A></H2><P>
+<H2><A HREF="c3000081.htm">AH = 4Bh: Update BIOS Time </A></H2><P>
+<H2><A HREF="c3000082.htm">AX = 4C00h: Select Keyboard </A></H2><P>
+<H2><A HREF="c3000083.htm">AX = 4C01h: Return Selected Keyboard Type </A></H2><P>
+<H2><A HREF="c3000084.htm">AX = 4C02h: Return Available Keyboard Types </A></H2><P>
+<H2><A HREF="c3000085.htm">AX = 4C10h: Select Language </A></H2><P>
+<H2><A HREF="c3000086.htm">AX = 4C11h: Return Language Type </A></H2><P>
+<H2><A HREF="c3000087.htm">AH = 4Dh: Return Model-Specific Information </A></H2><P>
+<H2><A HREF="c3000088.htm">AH = 4Eh: Light Sleep Control In Int 16h, Fcns {01h,11h} </A></H2><P>
+<H2><A HREF="c3000089.htm">AH = 4Fh: Keyboard Translation Hook </A></H2><P>
+<H2><A HREF="c300008a.htm">AH = 50h: Batt95 (HP 95LX Compatibility) </A></H2><P>
+<H2><A HREF="c300008b.htm">AH = 51h: Mailbox Service (Store/Retrieve word at MailBox[i]) </A></H2><P>
+<H2><A HREF="c300008c.htm">AX = 6000h: Measure System Battery Voltage </A></H2><P>
+<H2><A HREF="c300008d.htm">AX = 6001h: Measure Backup Battery Voltage </A></H2><P>
+<H2><A HREF="c300008e.htm">AX = 6002h: Get System Power Status </A></H2><P>
+<H2><A HREF="c300008f.htm">AX = 6003h: Set Battery Type </A></H2><P>
+<H2><A HREF="c3000090.htm">AX = 6004h: Enable/Disable Battery Charging </A></H2><P>
+<H2><A HREF="c3000091.htm">AX = 6005h: Set Rate for Periodic Battery Measurements </A></H2><P>
+<H2><A HREF="c3000092.htm">AX = 6006h: Voltage Comparison </A></H2><P>
+<H2><A HREF="c3000093.htm">AH = 61h: Set/Read Annunciator Control </A></H2><P>
+<H2><A HREF="c3000094.htm">AH = 62h: Set/Read Display Contrast </A></H2><P>
+<H2><A HREF="c3000095.htm">AH = C0h: Return Pointer to System Description Table </A></H2><P>
+</BODY>
+</HTML>

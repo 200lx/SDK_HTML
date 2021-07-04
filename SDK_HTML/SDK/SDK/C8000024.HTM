@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DrawText </TITLE></HEAD>
+<BODY>
+<H3>DrawText </H3><P>
+This function draws text on the screen using the Style word.  If the Buffer pointer is NULL, or the string starts with a null-terminator, this routine returns without displaying anything.  The pointer can be considered NULL in one of two ways: either the entire pointer (both the segment and offset address parts) is set to NULL; or the offset portion of the pointer is NULL and the segment portion is set to the application's default data segment.  The latter method is provided in order to validate near pointers which are &quot;cast&quot; to far pointers by compilers.  <P>
+The text displayed is one line only, and is terminated by a NULL.  <P>
+<UL><LI>Syntax: UINT DISTANCE DrawText(int x, int y, char _far *Buffer, UINT Style, UINT Font) </LI><P>
+<LI>Parameters: </LI>
+</UL>
+<PRE>
+    int x               Horizontal location of the starting character.  
+    int y               Vertical location of the starting character.  
+    char _far *Buffer   Pointer to buffer containing the string to be displayed.  
+    UINT Style          Style for the text.  
+    UINT Font           Font for the text.  
+</PRE>
+<UL><LI>Returns: The width of the displayed string, in pixels.  </LI><P>
+<LI>Comments: The supported drawing styles are: </LI>
+</UL>
+<PRE>
+    DRAW_NORMAL.        The charactersare drawn as black on a white background.  
+    DRAW_INVERSE.       The characters are drawn as white on a black background.  
+    DRAW_UNDERLINE.     The characters are drawn underlined.  
+    DRAW_GRAY.          The characters are drawn in &quot;gray&quot;, i.e.  a checkerboard mask
+                        is ANDed over the characters.  
+    DRAW_AMPERSAND.     Any &quot;&amp;&quot;s in the string underline the following character.
+    DRAW_TAB_TERM.      The &lt;Tab&gt; character (0x09) is considered a string terminator.
+                        Like the null-termination character (0x00), all characters up to it
+                        are displayed.
+</PRE>
+The supported font values are 
+<PRE>
+    FONT_DEFAULT.       The current font setting.  
+    FONT_SMALL.         The 8x8 font.  
+    FONT_NORMAL.        The 10x11 font.  
+    FONT_LARGE.         The 16x12 font.  
+</PRE>
+<P>
+</BODY>
+</HTML>

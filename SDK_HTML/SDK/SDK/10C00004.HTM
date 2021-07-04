@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DBTimestamp </TITLE></HEAD>
+<BODY>
+<H3>DBTimestamp </H3><P>
+The timestamp structure is used in the database header for reconciliation.  The date portion (bytes 0...2) and the time portion (bytes 3...4) are used separately in subset strings.  <P>
+<P>
+<pre>
+Offset  Name    Type  Contents 
+------  ------  ----  --------
+0       Year    char  0...199 = 1900...2099 
+1       Month   char  0...11 = Jan...Dec 
+2       Day     char  0...30 = 1st...31st 
+3...4   Minute  int   0...1439 = 12:00am...11:59pm 
+</pre>
+</BODY>
+</HTML>

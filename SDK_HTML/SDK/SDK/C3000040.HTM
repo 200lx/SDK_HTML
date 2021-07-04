@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Video BIOS Font Services </TITLE></HEAD>
+<BODY>
+<H3>Video BIOS Font Services </H3><P>
+Several nonstandard services are provided in the Video BIOS to support soft fonts and the BitBlt hardware: <P>
+<UL><LI>Load Bitmap Table.  (Push onto stack) </LI><P>
+<LI>Unload Bitmap Table.  (Pop from stack) </LI><P>
+<LI>Activate Bitmap Table.  (Use &quot;this&quot; one) </LI><P>
+<LI>Reset Bitmap Stack.  (Pop all) </LI><P>
+<LI>Get Bitmap Table Status.  (What Bitmaps loaded?) </LI><P>
+<LI>Get Bitmap.  (Get specific Bitmap Information) </LI><P>
+<LI>Write BitBlt String.  (BitBlt Hardware, Active Bitmap) </LI><P>
+<LI>Load Byte-Wide Font.  (xxxxx) </LI><P>
+<LI>Get/Set CodePage.  (CodePage affects several services) </LI><P>
+<LI>Get ROMFONTS.  (Get ROMFONT structure) </LI><P>
+</UL>An application may use these services in graphics modes to provide the font and/or symbol table bit maps that it will use.  Generally the application will invoke the Load service once, during the initialization or re-entry phase, for each font or symbol table that will be required.  Thereafter, the Activate Bitmap service will be invoked as necessary to identify the bitmap table to be used for calls to the Write BitBlt String service.  The Unload Bitmap service will only be necessary if there is insufficient room on the System Bitmap stack, or in the dedicated 16-KB buffer used to load a desired bitmap table.  The Write BitBlt String service repeatedly invokes the BitBlt hardware for each character of the supplied string using the currently active bitmap table.  This will generally be substantially faster than the standard BIOS Write String services, in addition to supporting multi-sized fonts and special symbol output.  <P>
+<P>
+</BODY>
+</HTML>

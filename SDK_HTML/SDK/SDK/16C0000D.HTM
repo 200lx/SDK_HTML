@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Power-Fail Wakeup </TITLE></HEAD>
+<BODY>
+<H3>Power-Fail Wakeup </H3><P>
+A power-fail event (i.e.  VDDOK or VCCOK low) will not cause a wakeup even if this interrupt is enabled.  This will cause problems in light sleep (shutdown with display on) since software must be active to respond to a power-fail event by entering deep sleep (shutdown with display off) before the hardware can enter backup mode.  <P>
+On the palmtop product, this problem was solved by creating a signal on the PCB called &quot;PSF&quot; that is the logical NAND of VDDOK and VCCOK.  PSF is connected to Hornet's GPIO13 pin.  Before entering light sleep, software enables interrupts and wakeups on a high level of GPIO13.  In the event of a power fail, GPIO13 will cause a light sleep wakeup and allow the normal power-fail NMI to take effect.  <P>
+<P>
+</BODY>
+</HTML>

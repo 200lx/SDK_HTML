@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 63 Function 01 - Get/Set Page Map </TITLE></HEAD>
+<BODY>
+<H3>Int 63 Function 01 - Get/Set Page Map </H3><P>
+This set of four functions allows programs to get or set the page map for all nine mappable regions.  The storage for the page map state is provided by the calling program.  This function is the replacement for HP 95LX Int 63h function 4Eh and has identical usage except for function number.  <P>
+<B>Subfunction 00h - Get Page Map </B><BR>
+<UL><LI>Input: AX = 0100h <BR>
+ES:DI = pointer to destination save array <P>
+</UL>
+<UL><LI>Output: AH = 0.  The page map state has been copied into the destination array.  </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL>
+<B>Subfunction 01h - Set Page Map</B> <BR>
+<UL><LI>Input: AX = 0101h <BR>
+DS:SI = pointer to source save array <P>
+</UL>
+<UL><LI>Output: AH = 0 and the page map state has been changed to match the state represented in the source array.  </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><B>Subfunction 02h - Get and Set Page Map </B><BR>
+<UL><LI>Input: AX = 0102h <BR>
+ES:DI = pointer to destination save array <BR>
+DS:SI = pointer to source save array <P>
+</UL>
+<UL><LI>Output: AH = 0 and the entry page map state has been copied to the destination array and the page map state has been changed to match the state represented in the source array.  </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><B>Subfunction 03h - Get size of save array </B><BR>
+<UL><LI>Input: AX = 0103h </LI><P>
+<LI>Output: AH = 0 <BR>
+AL = 19 (size in bytes needed to save mapping state) <P>
+</UL>
+<UL><LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

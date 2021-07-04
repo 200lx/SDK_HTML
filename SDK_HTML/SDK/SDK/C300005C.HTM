@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D5h: Get Bitmap Data Status </TITLE></HEAD>
+<BODY>
+<H3>AH = D5h: Get Bitmap Data Status </H3><P>
+This function returns global information about the currently loaded Bitmap tables.  <P>
+<UL><LI>Input: AH = D5h. <P>
+</UL>
+<UL><LI>Output: AX = ID of Bitmap on top of BMSTK <BR>
+BX = ID of Currently Active Bitmap <BR>
+CX = Sum (Logical OR) of ID's of all Currently Loaded Bitmaps <BR>
+DX = Available Memory in Bit Map Buffer (Bytes) <BR>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, FLAGS </LI><P>
+<LI>Error conditions: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

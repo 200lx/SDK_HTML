@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_GetNamedField </TITLE></HEAD>
+<BODY>
+<H3>DB_GetNamedField </H3><P>
+Like the previous call, DB_GetNamedField gets a field from a preloaded data record.  The only difference is that a name is supplied instead of an index.  The error returns are the same.  <P>
+<UL><LI><Pre>Syntax:             int DB_GetNamedField(DBBLOCK *dblk, void far *srcrec, 
+                    char far *name,char far *string, int bufsize); </LI><P>
+<LI>Returns:            DB_OK          Field was returned.  <P>
+                        DB_NOFIELD     The requested field is deleted or does 
+                                       not exist.  <P>
+<LI>May Move Memory:        No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

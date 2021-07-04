@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_col_cpstr </TITLE></HEAD>
+<BODY>
+<H3>m_col_cpstr </H3>
+This function compares the specified CP850 strings.  Comparison is case and accent
+insensitive, so the characters a, A, and  are considered equivalent.  Graphical
+characters also evaluate together.
+<PRE><UL>
+<LI>Syntax:         int m_col_cpstr(str1,len1,str2,len2)
+<LI>Parameters:     char far *str1 - String 1 to compare
+                int len1 - Length of string 1
+                char far *str2 - String 2 to compare
+                int len2 - Length of string 2
+<LI>Returns:        0 - if the strings are equal
+                -1 - if string 1 characters precede string 2 (alpha-numerically)
+                +1 - if string 2 characters precede string 1 (alpha-numerically)
+                NOTE THAT THE NUMBERS RETURNED ARE EXACTLY OPPOSITE THAT OF THE 
+                STANDARD C FUNCTION strcmp!  
+</UL></PRE>
+</BODY>
+</HTML>

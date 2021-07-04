@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 50h: Batt95 (HP 95LX Compatibility) </TITLE></HEAD>
+<BODY>
+<H3>AH = 50h: Batt95 (HP 95LX Compatibility) </H3><P>
+This service provides the functional equivalent of Fcns 6000h and 6001h for programs written specifically for the HP 95LX.  The other HP palmtops have different battery measurement hardware (6 bit DAC) than the HP 95LX (8 bit ADC).  This service attempts to &quot;hide&quot; these hardware differences by converting the inputs and outputs to what one would expect if the code were running on an HP 95LX.  <P>
+This service measures the voltage of the specified channel and then converts the result to what would be returned by the HP 95LX service for the same voltage.  The CARRY flag will be set under the same conditions described in services 6000h and 6001h.  The actual voltage V can be obtained from the returned value v by <P>
+     V = [(5.0 - 0.0)/255]*v <P>
+The value v returned is obtained from the 60xxh service value v' by the formula: <P>
+     v = 81 + (7/5)*v' <P>
+<UL><LI>Input: AX = 50xxh (xx: 00h = Main, 01h = BackUp) </LI><P>
+<LI>Output: AX = Measured value v (0-255) <BR>
+CARRY set iff one or more samples is &quot;Out-Of-Range&quot;.  <P>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

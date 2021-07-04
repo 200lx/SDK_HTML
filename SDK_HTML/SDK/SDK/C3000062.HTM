@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = DBh: Get ROMFONTS </TITLE></HEAD>
+<BODY>
+<H3>AH = DBh: Get ROMFONTS </H3><P>
+This function copies a built-in ROM-based font structure into a user-supplied buffer.  The buffer must be large enough to contain the complete structure.  <P>
+ROMFONT Size = 5*2 + 6*2*128 + (8+8+11+12)*2*m = 29,392 bytes.  <P>
+<UL><LI>Input: AH = DBh <BR>
+ES:SI = Pointer to start of supplied buffer <BR>
+</UL>
+<UL><LI>Output: Font Structure in supplied buffer </LI><BR>
+<LI>Registers modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

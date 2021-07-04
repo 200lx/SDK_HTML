@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_FindRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_FindRecord </H3><P>
+This function finds a record by sequential search.  <I>Begin</I> and
+<I>end</I> delimit the range of records, and searchstring is the string to be searched for.  If
+<I>begin</I> is greater than <I>end</I>, the search is performed backwards.  The search uses the raw record bytes of the specified type; for data records, even non-field locations are searched. 
+<I>Flags</I> is a combination of the bits DB_FIND_CASE and DB_FIND_FIRST.  If DB_FIND_CASE is used, the search is case-sensitive; the default is non-case-sensitive.  <P>
+<B>Important</B>: If DB_FIND_FIRST is used, the search begins at the 0th byte of record at
+<I>begin</I>; otherwise, the byte after <I>pos</I> is used.  This allows sequential searches to pick up where they left off if the DB_FIND_FIRST flag is omitted.  If the int at
+<I>pos</I> is garbage and the DB_FIND_FIRST flag is not set, the find operation will be unreliable.  The position found in the record is returned in
+<I>pos</I>.  Note that this function does not search ROM data records.  This function is not typically used for data records.  For more information, see DB_FindDataRecord.  <P>
+<UL><LI><Pre>Syntax:             int DB_FindRecord(DBBLOCK *dblk, char recordtype, 
+                    void far *searchstring, RECORDNUM begin, RECORDNUM end,
+                    int flags, unsigned int *pos); </LI><P>
+<LI>Returns:            0..32767       Index of record found.  <P>
+                    DB_NOTFOUND    Find failed.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

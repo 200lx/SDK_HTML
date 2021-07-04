@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComPower </TITLE></HEAD>
+<BODY>
+<H3>ComPower </H3>
+This function allows the application to &quot;manually&quot; turn the communications port power on or off.  Note that if the AC adapter is connected to the handset, the power off request will have no effect.  <P>
+<PRE><UL>
+<LI>Syntax:      err_t far ComPower(int PowerFlag) </LI><P>
+<LI>Parameters:  int PowerFlag - COM_PORT_ON or COM_PORT_OFF
+                             Note that if PowerFlag is not COM_PORT_OFF
+                             we assume COM_PORT_ON.  
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  
+</UL></PRE>
+</BODY>
+</HTML>

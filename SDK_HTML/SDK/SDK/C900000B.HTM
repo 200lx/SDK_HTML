@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Edit </TITLE></HEAD>
+<BODY>
+<H3>Edit </H3><P>
+Edit is an edit field surrounded by a box.  The text is scrollable, and has normal text editing functions, including select, cut, copy, paste.  Edit is a single-line edit only.  <P>
+<B>Window Structure Details</B> <P>
+<UL><LI>int x,y,w,h: </LI><BR>
+If STYLE_XYRELATIVE is being used, Edit calculates the physical coordinates of the start of the window by using the x and y fields as an offset from the current position of the parent window.  If STYLE_NOBORDER is not being used, the box surrounding the edit able text begins to the right after the title.  <P>
+If STYLE_WHCHAR is not being used, w equals the total width of the title plus the width of the edit box, including borders, and h equals the height of the edit box, including borders.  If STYLE_WHCHAR is being used, w specifies the width, in text characters, of the editable text (the client portion of the window).  In this case, the total width of the window is automatically calculated to be the (length of the title + w) * CHAR_WIDTH (the window's Font); the height is automatically computed to be (h) * CHAR_HEIGHT (the window's Font).  <P>
+</UL>
+<UL><LI>PLHRES Title: </LI><BR>
+PLHRES points to the text label appearing directly to the left of the edit box.  <P>
+</UL>
+<UL><LI>PLHDATA Data: </LI><BR>
+PLHDATA points to the buffer being used to edit the text.  The user modifies this buffer is modified when editing.  An undo operation (pressing ESC) restores the buffer to its original state.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: </LI><BR>
+In the Edit class, LogicalSize defines the size (in bytes) of the edit buffer.  Compared to the size of the field on the screen, the logical size of an edit buffer may be larger (so that the text scrolls within the window) or smaller (so that the user is restricted to a specified length).  Note that the size of the buffer includes the ASCII 0 End of String character, so the number of characters the user can enter is LogicalSize-1.  <P>
+</UL>
+<UL><LI>UINT Style: </LI><BR>
+The following additional local styles are interpreted by Edit: <BR>
+EDIT_INSERT/EDIT_OVERWRITE: If Style is set to either EDIT_INSERT or EDIT_OVERWRITE, the edit box begins editing in the specified mode (reset at each SETFOCUS).  The default mode is EDIT_INSERT.  <P>
+EDIT_NOCURSOR: This style prevents an edit cursor from being displayed.  This style can be used in a subclass if you wish to provide your own cursor.  <P>
+EDIT_MULTI: The edit window contains multiple lines.  The MultiLine Edit window automatically sets this style.  <P>
+EDIT_NOWRAP: The multi-line edit text wrap will be disabled.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent:                Used by Object </LI><P>
+<LI>PLHFKEYS FKeys:                Used by Object </LI><P>
+<LI>PLHMENU Menu:                Used by Object.  </LI><P>
+<LI>BYTE Status: </LI><BR>
+The Edit class accepts the following status bits.  They can also be used by subclasses to monitor the internal state of the edit.  These flags should be considered read only unless otherwise noted.  <P>
+STATUS_INSERT is set if the edit is in insert mode; if it is clear, the edit is in overwrite mode.  This bit can be changed by the application.  <P>
+STATUS_NOT_EDITED is set if the field has not yet been edited.  This flag will be cleared after the first editing key is pressed.  The &lt;Tab&gt;, &lt;BackTab&gt;, &lt;Function keys&gt;, and &lt;Alt+Letter&gt; key sequences do not modify this flag.  <P>
+STATUS_CURSORON is set if the cursor is being displayed.  That is, if the BIOS cursor resource is tied up flashing the cursor for this particular Edit field, not if the cursor is currently visible (blinked on) or not (blinked off).  <P>
+</UL>
+<UL><LI>UINT Selection: </LI><BR>
+Selection is the offset of the cursor in the edit buffer.  <P>
+</UL>
+<UL><LI>UINT WindowTop: </LI><BR>
+WindowTop is the offset in the edit buffer of the left-most character showing in the edit box (for scrolling).  <P>
+</UL>
+<B>Messages </B><P>
+<UL><LI>KEYSTROKE: The Edit class responds to the following keys: </LI><BR>
+ESC: If the user has not yet edited the text, Edit passes the key through to the Object handler.  If the text has been edited, the Edit handler restores the original copy of the text buffer by copying it from the LHAPI-internal buffer it was saved in when the first editing key was pressed after the window received the focus.  The Edit handler then sends itself a SETFOCUS message in order to start the editing process over again.  <P>
+Left/Right Arrow: Edit moves the cursor one character to the left/right.  <P>
+Del: If any text is highlighted, the Edit handler deletes it.  Otherwise, Edit deletes the character at the current cursor position.  <P>
+Backspace: If any text is highlighted, Edit deletes it.  Otherwise, Edit deletes the character just before the current cursor position.  <P>
+Ctrl+Del: Edit deletes any highlighted text.  If no text is highlighted, Edit deletes the next word.  <P>
+Ctrl+Backspace: Edit deletes any highlighted text.  If no text is highlighted, Edit deletes the previous word.  <P>
+Ins: The Edit handler toggles the state of insertion between insert and overwrite.  The cursor for overwrite inverts the character underneath; the cursor for insert is opaque.  <P>
+Home/End: The Edit handler moves the cursor to the first/last character of the buffer.  <P>
+Shift+Movement key: Edit extends the highlight from the current cursor position to the position after the Movement key is processed.  The highlighted area displays in inverse video.  <P>
+Cut, Copy: If any text is highlighted, Edit cuts/copies that portion to the clipboard.  Otherwise Edit cuts/copies the entire field.  <P>
+Paste: If any text is highlighted, the current contents of the clipboard replace the highlighted text.  Otherwise, the Edit handler inserts the clipboard contents at the current cursor position.  <P>
+ASCII characters: If any text is highlighted, the key pressed replaces the highlighted text.  Otherwise the Edit handler inserts or places the character at the current cursor position (depending on the state of the Insert toggle), and the cursor advances one character to the right.  <P>
+Any other key is passed to the Object class handler.  The DialogBox handler thus receives dialog movement keys, such as&lt;Enter&gt;, &lt;TAB&gt;, or &lt;BackTab&gt;, because Object automatically sends any unused keystrokes to the window's parent.  <P>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+The Edit handler displays the edit box and the window Title.  The Edit DRAW message responds to the Data parameter sub-messages bits DRAW_TITLE, DRAW_FRAME, DRAW_CLIENT, DRAW_CLIENT_UPDATE and DRAW_CURSOR to draw the respective parts of the Edit window.  <P>
+</UL>
+<UL><LI>SETFOCUS: </LI><BR>
+Edit first passes the message to the Object class handler.  Object inverts the window's title and the editable text, and displays the cursor.  The Edit handler then sets the Selection field in the LHWINDOW structure to equal the last text character in the edit buffer and adjusts the WindowTop field accordingly.  The Edit handler then forces and updates the appropriate Insert mode via the STATUS_INSERT bit depending on the state of EDIT_INSERT / EDIT_OVERWRITE style.  Edit also sets the STATUS_NOT_EDITED bit.  <P>
+</UL>
+<UL><LI>LOSEFOCUS: </LI><BR>
+The Edit class handler removes the editable text highlight, text cursor, and the window title inverted.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, Edit converts w and h from the text character size of the edit box alone (the client portion of the window), to the total display size of the entire window, including the length of any window title and border surrounding the edit box.  Then the Edit handler sets The STATUS_XY_ABS bit.  In either case, Edit passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>DISAPPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, the Edit handler converts w and h back from the total display size of the entire edit window to the text character size of the edit box alone.  Then Edit clears the STATUS_XY_ABS bit.  In either case, Edit passes the message to the Object class handler.  <P>
+</UL>
+<UL><LI>NULLEVENT: Passed to Object class handler.  </LI><P>
+<LI>CREATE: Passed to Object class handler.  </LI><P>
+<LI>DESTROY: Passed to Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to Object class handler.  </LI><P>
+<LI>COMMAND: Passed to Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

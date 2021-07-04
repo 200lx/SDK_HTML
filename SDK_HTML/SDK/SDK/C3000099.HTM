@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>I16Clip </TITLE></HEAD>
+<BODY>
+<H3>I16Clip </H3><P>
+A routine called I16Clip is called by Int 16h, services 00h,01h,10h,11h,13h and 14h.  This routine acts to &quot;filter&quot; certain keycodes and translate others.  If the service is 00h or 01h, keycodes will be discarded which satisfy either &quot;AH &gt; 84h&quot; or &quot;AH#0 AND AL=F0h&quot;.  If the service is 10h,11h,13h, or 14h and the keycode satisfies &quot;AH#0 AND AL=F0h&quot; then AL will be reset to 00h.  <P>
+<P>
+</BODY>
+</HTML>

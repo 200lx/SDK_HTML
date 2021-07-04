@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Normal Deep Sleep Entry </TITLE></HEAD>
+<BODY>
+<H3>Normal Deep Sleep Entry </H3><P>
+Under normal circumstances the deep sleep state is entered in a systematic manner which includes steps to ensure system integrity when the unit is awakened and placed in the run state.  For example, checksums are computed for portions of user RAM, hardware registers, and CPU Registers.  These values are checked for integrity when the unit is awakened, and assuming valid, the unit will eventually continue execution from the code that requested the deep sleep.  The events which require the deep sleep state to be entered do not invoke the deep sleep code directly (exception NMI Low Power).  Instead, these events &quot;request&quot; entry to the deep sleep state.  Operating System code responsible for plug-in card management detects the request (TIMER0 tick) and causes the deep sleep state to be entered after orderly shutdown of plug-in card operations.  <P>
+</BODY>
+</HTML>

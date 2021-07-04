@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Localization, Sorting, and Omnibook Files </TITLE></HEAD>
+<BODY>
+<H3>Localization, Sorting, and Omnibook Files </H3><P>
+Normally on opening a database, the last used viewpoint table is loaded by the database engine.  However, this viewpoint table may be invalid if something about the system sort order has changed.  Changing how the sorting works (by changing the country, or numbers first, etc.) causes the database engine to invalidate all viewpoint tables so they can be reconstructed.  <P>
+Changing Country, CodePage, Sort, Keyboard, and Language codes in Setup will cause viewpoint invalidation, as well as the changing the presence of KeyBez.  A hash value is computed (called
+<I>magicviewptsort</I> in the DBHEADER) from these values, and if it changes, all the viewpoint tables have a word of 0xFFFF written to them.  This is how invalid viewpoints are marked; any viewpoint that has only 0xFFFF as the entry will be created from scratch when it is switched to.  The default value of this hash value (in the US only) is 0x8437, and it is always at location 0x0000001b in the file.  <P>
+The HP OmniBook uses the same database file format, but can be distinguished by having a magic hash value of 0x0000.  If the database opens what it recognizes as an OmniBook file, in addition to invalidating the viewpoint tables, another operation is applied to the file.  All database records are scanned, and those with upper ASCII data (values 0x80..0xff) are converted from Windows ANSI code page (i.e.  the OmniBook) to code page 850 (that in the 100LX).  The &quot;closest&quot; character in the 850 code page is chosen as a match.  The conversion is not lossless; a similar conversion is made by the Omnibook, and the original characters are not guaranteed to appear.  <P>
+Only the string portions of the following record types are converted: TYPE_CATEGORY, TYPE_FIELDDEF, TYPE_VIEWPTDEF, TYPE_DATA, TYPE_NOTE.  The bit DB_WASTRANSLATED is set in the database flags so the application can translate other portions of user records if necessary with the functions DB_WinStrTo850 and DB_WinGledTo850.  <P>
+<P>
+</BODY>
+</HTML>

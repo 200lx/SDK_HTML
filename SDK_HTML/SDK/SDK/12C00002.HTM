@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Introduction </TITLE></HEAD>
+<BODY>
+<H1>Introduction </H1><P>
+This chapter provides an overview of DOS and disk driver features in the HP palmtop.  Some terminology that will be used in this chapter: <P>
+<UL><LI>DOS external commands.  These are programs that come with DOS and which reside on disk and are loaded into RAM to execute just like user programs.  Examples are CHKDSK and FORMAT.  </LI><P>
+<LI>DOS Command Processor and DOS internal commands.  The Command Processor is the program which provides the user interface to DOS.  It prints the famous C:\&gt; prompt and parses the user commands.  It also contains the internal commands such as DIR and COPY.  </LI><P>
+<LI>DOS kernel, which is the heart of DOS.  The kernel contains the interrupt 21h handler and is device and hardware independent.  </LI><P>
+<LI>DOS device driver layer (also known as the DOS BIOS, but not to be confused with the ROM BIOS).  This layer resides between the DOS kernel and the ROM BIOS.  The DOS OEM adaptation kit comes with the source for the device drivers and it is expected that OEMs may have changes to make at this layer due to unique system requirements.  The DOS kernel talks to the device drivers who in turn talk to the ROM BIOS or hardware as necessary.  </LI><P>
+Historically, it was thought that OEMs would make major changes to the device drivers.  But, as PCs became so standard the device drivers typically required little change and almost all the system specific changes were done in the ROM BIOS.  <P>
+</UL>
+<UL><LI>ROM DOS refers to executing portions of DOS directly from ROM as opposed to reading it into RAM first.  The idea is to save RAM.  </LI><P>
+<LI>RAM Disk refers to a disk structure that is recorded in RAM.  The HP palmtop family uses a special RAM disk that is &quot;static&quot; in that it is preserved over reboots and can be adjusted in size without reformatting.  </LI><P>
+<LI>ROM Disk refers to a disk struture that is recorded on ROM at build time and is accessible by the user through the normal DOS file system.  On the HP palmtop family the ROM disk is drive D.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

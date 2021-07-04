@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Segmentation </TITLE></HEAD>
+<BODY>
+<H3>Segmentation </H3><P>
+An HP palmtop external application is limited to a small-model program.  It is created as a standard .EXE, except that it has special startup code to deal with the register conventions of the System Manager loader.  Its segmentation follows Microsoft conventions for high-level programs in small model: the code segment is first, followed by the DGROUP (the DGROUP contains the default data segment), the uninitialized data segment (_BSS), and the stack.  See the Microsoft C Compiler and Macro Assembler documentation for a full discussion of segmentation issues.  <P>
+The .EXE file is used as input to E2M.EXE, which determines what part of the executable is data, and what part is code.  The boundary line between code and data is written out to the EXM file, but the rest of the EXE is intact.  The boundary is used by the System Manager to determine what portion to load as code in a fixed memory location (and it can also throw away, and reload from disk if needed), and what portion is data that is in a moveable memory block.  <P>
+All data must be addressable through a single segment.  This is required because an application's data must be relocatable in memory by simply changing the value in the DS register.  Space for uninitialized variables and the stack will be provided when the application is launched, according to the information in the .EXE header.  Uninitialized data is guaranteed to be zeroed at startup time.  <P>
+Constant string values which are displayed to the user can be maintained in a resource file and accessed through the resource services of the System Manager.  There may be remaining constant values which might be placed in the _TEXT segment, so that they need not be copied into RAM at run-time.  Unless the total amount of this data is substantial (over 512 bytes), it may be left in DGROUP.  If it is to be placed in the _TEXT segment, the data must be defined in an assembly language source file to enforce the segmentation.  <P>
+Each application defines its own stack.  The application must provide at least 256 bytes of usable stack when making a call to System Manager's services.  It is recommended that the minimum stack for an application that makes Database Engine or LHAPI calls be 4K.  <P>
+<P>
+</BODY>
+</HTML>

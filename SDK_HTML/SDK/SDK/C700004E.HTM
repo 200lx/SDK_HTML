@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_nalarm </TITLE></HEAD>
+<BODY>
+<H3>m_nalarm </H3>
+This function queues an alarm for any time in the future and gets information on the most current pending alarm of a given type.  m_nalarm is called by the application and is run with the application's context and stack.  <P>
+Note that applications developed according to the System Manager API1 documentation used m_alarm to queue alarms.  m_alarm calls will automatically map to m_nalarm with System Manager API2 in order to take advantage of the fields for year, month, and date.  <P>
+Alarms are managed as a list and sorted in increasing order of time of alarm.  The array of alarm structures NEWALARM specifies the time, sound, and repeat factor for each alarm.
+<PRE><UL>
+<LI>Syntax:          int far m_nalarm(NEWALARM far *alarmptr, int setmode) 
+<LI>Parameters:      NEWALARM far *alarmptr - Points to NEWALARM structure 
+                      
+                                          The application must fill in the date and 
+                                          time entries, as well as the sound, message,
+                                          and special parameters.
+                 int setmode - Designates the action to be taken: 
+
+                               ALARM_IF_EARLY (0) specifies that if a matching alarm is
+                               found, it will not be replaced if the queued alarm is to
+                               go off sooner.  An error is returned if not queued.
+
+                               ALARM_FORCE (1) replaces any alarm of the same type with
+                               the new one.
+
+                               ALARM_IF_CLEAR (2) adds the alarm only if no other 
+                               alarm of this type exists.  An error is returned if a
+                               match is found.
+<LI>Returns:        A non-zero return indicates an error.  Typical errors include 
+                an attempt to issue an alarm that is stale or an attempt to add a new 
+                alarm to a full queue. 
+<LI>Related Calls:  <A HREF="c700005a.htm">m_xalarm</A>.  This call replaces calls to m_alarm in 
+                previous versions of the System Manager.  
+<LI>Comments:       The date and time format must be the same as that defined by 
+                 the DTM structure.
+  
+                If the sound parameter is set to -1, no sound is issued.  Otherwise,
+                valid values are 0-6 and used as an index to a table of sounds.  
+
+                The message cannot be greater than 36 characters in length 
+                (excluding the zero terminator).  
+
+                The special parameter can be set to any value and will be returned 
+                to the application as described above.  
+</UL></PRE>
+</BODY>
+</HTML>

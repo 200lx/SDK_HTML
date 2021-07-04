@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Viewpoint Table </TITLE></HEAD>
+<BODY>
+<H3>Viewpoint Table </H3><P>
+For every viewpoint definition, there is a corresponding viewpoint table.  This correspondence is one-to-one; the 0th VIEWPTDEF references the 0th VIEWPTTABLE.  The viewpoint table contains all the records in sorted order that meet that viewpoint's SSL filter.  The viewpoint table allows multiple viewpoints to be managed much quicker than reconstructing the viewpoint from scratch each time it is accessed.  <P>
+<pre>
+Offset  Name               Type          Description 
+------  -----------------  ------------  -----------
+0...5   Record Header      recordheader  See <a href="10C00003.HTM">recordheader</a> structure above.
+                                         0x0a 0x??  0x??  0x??  0x??  0x00 
+6...n   Data Record Index  int array     A data record index for all records in the
+                                         viewpoint.  If the table is a single entry of
+                                         -1, it has been invalidated.  The next switch to
+                                         the viewpoint will recreate it from scratch.  
+</pre>
+</BODY>

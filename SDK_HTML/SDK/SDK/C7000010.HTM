@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_remove_fnct_tbl </TITLE></HEAD>
+<BODY>
+<H3>m_remove_fnct_tbl </H3>
+This function removes a function table from the dispatching mechanism.
+<PRE><UL>
+<LI>Syntax:         int m_remove_fnct_tbl(int Class, far *FnctTbl)
+<LI>Parameters:     int Class - Class identifying function table to be removed
+<LI>Returns:        far *FnctTbl Pointer to function table to be removed.
+                0 - if successful 
+                ERROR_INVALID_CLASS (-1) - if the class number specified is invalid
+                ERROR_FNCT_TBL_NOT_FOUND - if the function table is not found
+<LI>Related Calls:  <A HREF="c700000f.htm">m_insert_fnct_tbl</A>
+</UL></PRE>
+</BODY>
+</HTML>

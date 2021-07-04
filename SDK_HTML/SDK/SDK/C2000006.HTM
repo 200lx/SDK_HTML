@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Interrupt Vector Table </TITLE></HEAD>
+<BODY>
+<H1>Interrupt Vector Table </H1><P>
+The interrupt vector table is in the address range from 0:0000h through 0:3ffh.  Vectors used by BIOS are initialized by the BIOS initialization code.  Each vector consists of a segment and an offset (4 bytes).  <P>
+The interrupt vector assignments, functions, and types are listed in the following table.  There are four types of interrupts: ISR, service, hook, and table.  <P>
+<UL><LI>An ISR is a interrupt service routine invoked by the processor or one of its peripherals.  These routines should not be called from applications since unpredictable results may occur.  Any ISR handler may be taken over (re-written), but this is recommended only as a last resort.  In some cases, this can be quite simple and safe.  In others, hardware details (eg; timing, current limitations, etc.) can make the task tricky.  In some cases, if taking over the ISR handler is not done with care, it is even possisible to damage the hardware.  </LI><P>
+<LI>A service is an application program callable interrupt.  Such interrupts provide functions that an application can call by using the appropriate Int instruction.  </LI><P>
+<LI>A hook is an interrupt service routine provided for applications to optionally take over.  Generally, the HP palmtop hook is invoked by a service or ISR, and its default action is a NOP.  An application writes a handler for the hook, and sets the Interrupt Ptr to point to the handler.  Thus when the service or ISR is invoked, the application gets a chance (thru the hook) to modify the action of the service or ISR.  </LI><P>
+<LI>A table is a pointer to a table of data bytes.  </LI><P>
+</UL><P>
+
+<PRE>
+INTERRUPT  ADDRESS       FUNCTION                               TYPE
+           RANGE (HEX)
+------------------------------------------------------------------------
+00h        000-003       Divide by Zero                         ISR
+01h        004-007       Single Step                            ISR
+02h        008-00B       NMI Interrupt                          ISR
+03h        00C-00F       Breakpoint                             ISR
+04h        010-013       Arithmetic Overflow                    ISR
+05h        014-017       Print Screen                           SERVICE
+06h        018-01B       BIOS Hook                              HOOK
+07h        01C-01F       ESC Opcode Trap                        ISR
+08h        020-023       IRQ0, Timer0 Interrupt                 ISR
+09h        024-027       IRQ1, PC Keyboard Interrupt            ISR
+0Ah        028-02B       IRQ2, Hornet Misc. Interrupt           ISR
+0Bh        02C-02F       IRQ3, Unused (GPIO) Interrupt          ISR
+0Ch        030-033       IRQ4, UART (COM1) Interrupt            ISR
+0Dh        034-037       IRQ5, Unused (GPIO) Interrupt          ISR
+0Eh        038-03B       IRQ6, Ready/Change Interrupt           ISR
+0Fh        03C-03F       IRQ7, Unused (GPIO) Interrupt          ISR
+10h        040-043       Video Services                         SERVICE
+11h        044-047       Equipment Check                        SERVICE
+12h        048-04B       Memory Size                            SERVICE
+13h        04C-04F       Flexible Disk Services                 SERVICE
+14h        050-053       Serial Port Services                   SERVICE
+15h        054-057       System Functions                       SERVICE
+16h        058-05B       Keyboard Services                      SERVICE
+17h        05C-05F       Dummy Return                           --
+18h        060-063       Reserved                               --
+19h        064-067       Boot                                   SERVICE
+1Ah        068-06B       Time-of-Day Services                   SERVICE
+1Bh        06C-06F       Keyboard Break                         HOOK
+1Ch        070-073       User Timer Tick                        HOOK
+1Dh        074-077       Video Parameter Table Pointer          Table
+1Eh        078-07B       Flexible Disk Parameter Table Pointer  Table
+1Fh        07C-07F       Graphics Character Table Pointer       Table
+20h-3Fh    080-0FF       Reserved for DOS                       --
+40h-49h    100-127       Reserved                               --
+4Ah        128-12B       User Alarm Interrupt                   HOOK
+4Bh-5Eh    12C-178       Reserved                               --
+5Fh        17C-17F       Low level graphics                     SERVICE
+60h-61h    180-187       System Manager Interrupts              SERVICE
+62h        188-18B       Reserved                               --
+63h        18C-18F       XIP Services                           SERVICE
+64h-6Fh    190-1BF       Reserved                               --
+70h        1C0-1C3       Reserved                               --
+71h-F0h    1C4-3C3       Reserved                               --
+F1h-FFh    3C4-3FF       Not Used                               --
+</PRE>
+<P>
+Most HP palmtop interrupts have the same function as the corresponding PSA interrupt.  Interrupts with different functions from the PSA BIOS definition are shown in the following table.  <P>
+<P>
+<PRE>
+INT (HEX)  PALMTOP FUNCTION  IBM-XT FUNCTION    TYPE          IRQ
+--------------------------------------------------------------------
+02h        Very Low Batt     RAM Parity Errors  Non-Maskable  NMI
+06h        BIOS Hook         Reserved           HOOK
+09h        Keyboard          Keyboard           ISR*          1
+0Ah        Hornet Misc       Reserved           ISR           2
+0Bh        GPIO[24:26]       COM2               ISR           3
+0Dh        GPIO[24:26]       Hard Disk          ISR           5
+0Eh        GPIO[24:26]       Floppy Disk        ISR           6
+0Fh        GPIO[24:26]       LPT                ISR           7
+</PRE>
+<P>
+Int 09h is a hardware interrupt in the IBM XT, but is invoked by software in the HP palmtop.  After an IRQ2 (Int 0Ah) Keyboard interrupt, the software scans and debounces the keyboard and writes the keycode to the keycode register (60h).  The software then invokes INT 09h indirectly by writing to a special Hornet register.  <P>
+<P>
+</BODY>
+</HTML>

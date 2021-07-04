@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComQryRxQue </TITLE></HEAD>
+<BODY>
+<H3>ComQryRxQue </H3>
+This function retrieves receive buffer size statistics for the specified port.  
+<PRE><UL>
+<LI>Syntax:      err_t far ComQryRxQue(handle_t Handle, int far *TotalSizeP, 
+                                   int far *FreeSizeP)
+<LI>Parameters:  handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+             int far *TotalSizeP - Far pointer to an integer which receives the total 
+                                   size (in bytes) of the receive queue 
+             int far *FreeSizeP - Far pointer to an integer which receives the number 
+                                  of free bytes available in the receive queue 
+              
+                                  Actual numbers of characters buffered in the receive
+                                  queue available for reading are: 
+                                  *TotalSizeP - *FreeSizeP 
+         
+                                  Note that this is a dynamic value that may change 
+                                  from millisecond to millisecond.  
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  
+             ENOTYOURS - The specified port has not been acquired by the calling 
+                         application.  
+<LI>Comments:    ComOpen() must first be called in order to get a valid handle to the 
+             communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 4Ah: User Alarm Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 4Ah: User Alarm Interrupt </H1><P>
+Int 4Ah is a hook called from the Real-Time Clock interrupt service routine (Int 0Ah) when an interrupt is issued by an alarm.  Applications may chain into this interrupt so that they may be alerted when an alarm is active.  (By default, the BIOS points the Int 4Ah vector to an IRET.) <P>
+Int 4Ah handlers should restore all registers.  Programs which chain into Int 4Ah are responsible for restoring the original Int 4Ah interrupt vector before exit to DOS.  <P>
+When the Int 4Ah routine is entered, the BIOS has established a stack frame as shown below:
+<PRE>
+                 -------------------------
+                 Saved Flags 
+                 -------------------------
+                 Saved CS 
+                 -------------------------
+                 Saved IP from Int 0Ah 
+                 -------------------------
+                 Saved AX 
+                 -------------------------
+                 Saved CX 
+                 -------------------------
+                 Saved DX 
+                 -------------------------
+                 Saved BX 
+                 -------------------------
+                 Saved SP 
+                 -------------------------
+                 Saved BP 
+                 -------------------------
+                 Saved SI 
+                 -------------------------
+                 Saved DI 
+                 -------------------------
+                 Saved DS 
+                 -------------------------
+                 Saved ES 
+                 -------------------------
+                 Saved HIR
+                 ------------------------- 
+                 Saved RTN 
+                 -------------------------
+                 Saved Flags 
+                 -------------------------
+                 Saved CS
+                 ------------------------- 
+          SP->   Saved IP (from Int 4Ah)
+                 -------------------------
+</PRE>
+<B>Note:</B> The above stack frame is PC incompatible.  There may be a few programs that expect the more compatible stack frame that looks like the one shown on the next page.  &quot;RTN&quot; is a local offset to the Int 0Ah dispatcher.  <P>
+The register contents are as shown below when Int 4Ah is called: <P>
+<UL><LI>AL = 0Dh.  </LI><P>
+<LI>AH, BX, CX, DX, BP, SI, DI: contain undefined values.  </LI><P>
+<LI>DS: 40h.  </LI><P>
+<LI>ES: Undefined.  </LI><P>
+</UL><H2><A HREF="c30000cb.htm">PC-Compatible Stack Frame </A></H2><P>
+</BODY>
+</HTML>

@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_ParseFISL </TITLE></HEAD>
+<BODY>
+<H3>DB_ParseFISL </H3><P>
+DB_ParseFISL parses a FISL string at <I>InFISL</I> and puts the resulting token string at
+<I>OutTOKEN</I>.  Any error condition sets the integer pointed to by
+<I>OutExpLen</I> to the character position where the error was first recognized.  If the parsing was successful,
+<I>OutExpLen</I> is set to the length of the token string returned.  <P>
+<UL><LI><Pre>Syntax:             int DB_ParseFISL(DBBLOCK *dblk,char far *InFISL,
+                    char far *OutTOKEN, int OutBufSize, int *OutExpLen); </LI><P>
+<LI>Returns:            DB_OK          Expression parsed ok.  <P>
+                    DB_SYNTAX      Syntax error in expression.  <P>
+                    DB_OVERFLOW    Expression was too large for specified 
+                                   buffer or usertype subexpression was too 
+                                   large for internal buffer.  <P>
+                    DB_TYPEMISMATCH Comparisions made between non-compatible 
+                                    types.  <P>
+                    DB_COMPLEX     Expression was too complex to be parsed.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><B>Note:</B> If DB_Init has not been called before this function, parsing will return strange results.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ListBox </TITLE></HEAD>
+<BODY>
+<H3>ListBox </H3><P>
+A ListBox gives a list of choices, listed in rows, where only one option can be selected (highlighted) at a time.  Note that the CUA standard drop-down list is actually a variation of the LHAPI ComboBox class, and is not treated here.  <P>
+<B>Window Structure Details</B> <P>
+<UL><LI>int x,y,w,h: </LI><BR>
+The coordinates (x,y) specify the point to display title.  The actual ListBox sits below the window title.  The ListBox itself (the client portion of the window) is w-(width of border) display units wide and h-(height of title and height of border) units tall.  If STYLE_WHCHAR is being used, w and h refer to the size, in text characters, of the client portion of the ListBox; w=10, h=5 will auto-size the width and height to accommodate a ListBox 10 columns wide by 5 lines long.  <P>
+</UL>
+<UL><LI>PLHRES Title: </LI><BR>
+Title points to the label appearing above the actual ListBox.  Note: If Title==NULL, then ListBox aligns the actual box vertically with y.  If Title != NULL, the ListBox handler displays the box at y+ (one text row height), to give the Title room.  For ListBoxes not using STYLE_WHCHAR, this affects the number of displayed lines in the box; ListBoxes without a Title have one more row in the client portion of the window.  For ListBoxes using STYLE_WHCHAR however, the h field, when converted to the entire window size, take the height of the Title line into account.  <P>
+</UL>
+<UL><LI>PLHDATA Data: </LI><BR>
+Data is a &quot;near&quot; pointer to an array of &quot;near&quot; pointers to null-terminated text strings.  The strings are the actual items displayed in the list box.  If any of these pointers is set to NULL, or the string pointed to by any of them doesn't contain any text, then ListBox displays a blank line at that list box entry.  Note that the highlight bar will still move to any of these &quot;blank&quot; list box items.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: </LI><BR>
+LogicalSize gives the total number of elements in the array of strings.  This is not the same as the number of list box items displayed on the screen at any one time.  Note that the highlight bar will not move to a line in the list box window which is beyond the number of list box items specified in this field.  <P>
+</UL>
+<UL><LI>UINT Style: </LI><BR>
+If Style is defined as STYLE_NOTIFY, the ListBox handler sends the parent window a NOTIFY message (submessage NOTIFY_CHILDCHANGED) whenever the user changes the current selection.  ListBox sets the Extra field to point to the currently selected item.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by Object.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by Object.  </LI><P>
+<LI>PLHMENU Menu: Used by Object.  </LI><P>
+<LI>UINT Selection: </LI><BR>
+Selection gives the index into the array of list-item strings array of the currently highlighted item.  <P>
+</UL>
+<UL><LI>UINT WindowTop: </LI><BR>
+WindowTop is the index into the list-item strings array of the first item displayed (for scrolling).  <P>
+</UL>
+<B>Messages</B> <P>
+<UL><LI>KEYSTROKE: Responds to the following keys: </LI><BR>
+<UL>
+<LI>Up/Down Arrow moves selection highlight up/down to another item.  <P>
+<LI>PgUp/PgDn moves selection highlight up/down by as many lines as are displayed.  <P>
+<LI>Home/End moves selection highlight to first/last item.  <P>
+<LI>ASCII characters: If any list item begins with the character that was pressed, ListBox moves the cursor selection to the next item that begins with that character.  Otherwise, ListBox ignores the key.  <P>
+<LI>The ListBox handler passes all other keys to the Object class handler.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: </LI><BR>
+If STYLE_INVISIBLE is set, ListBox ignores the DRAW message.  Otherwise, the ListBox handler draws the title and the actual list and then highlights the currently selected item.  ListBox sets Local clipping to prevent the list elements from overflowing the box.  If the Title==NULL, the ListBox does not reserve room for a title.  The Listbox responds to the Data bits DRAW_TITLE, DRAW_FRAME and DRAW_CLIENT to draw those portions of the ListBox window, respectively.  <P>
+</UL>
+<UL><LI>SETFOCUS: </LI><BR>
+The ListBox handler redisplays the list box's title inverted, then passes the SETFOCUS message to Object.  <P>
+</UL>
+<UL><LI>LOSEFOCUS: </LI><BR>
+The ListBox handler redisplays the list box's title normally, then passes the SETFOCUS message to Object.  <P>
+</UL>
+<UL><LI>NOTIFY: The sub-messages for NOTIFY are </LI><BR>
+<UL>
+<LI>NOTIFY_SORT sorts the list of pointers.  ListBox uses the Extra parameter to specify ascending (=0) or descending (!=0) sort.  <P>
+<LI>NOTIFY_UPDATE uses the string pointed to by the Extra parameter as a search string.  If the string at Extra is found in the list, ListBox updates the window's Selection and WindowTop fields to point to the match, and the window is redisplayed.  If the string is not found, the ListBox handler leaves the window display untouched.  The search is case-insensitive, but all characters of the search string are significant.  <P>
+</UL>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, ListBox calculates the size (w,h) of the entire window from the specified size of the list itself (the client portion of the window), the size of the window and border, if any, and the specified font type the window is using.  ListBox passes the message to the Object class handler, regardless of whether or not STYLE_WHCHAR is being used.  <P>
+</UL>
+<UL><LI>DISAPPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, the ListBox handler converts the size of the window (w,h) back to the size, in text characters, of the list itself.  In any event, the ListBox handler passes the messageto the Object class handler.  <P>
+</UL>
+<UL><LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>CREATE: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</UL><H2><A HREF="c900000e.htm">ComboBox </A></H2><P>
+<H2><A HREF="c900000f.htm">CheckBox </A></H2><P>
+<H2><A HREF="c9000010.htm">StaticText </A></H2><P>
+<H2><A HREF="c9000011.htm">StaticRect </A></H2><P>
+<H2><A HREF="c9000012.htm">GroupBox </A></H2><P>
+<H2><A HREF="c9000013.htm">MessageBox </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

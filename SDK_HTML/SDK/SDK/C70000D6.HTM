@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_spawn </TITLE></HEAD>
+<BODY>
+<H3>m_spawn </H3>
+For this service to succeed, the calling application must be the only application in memory.  <P>
+If the filespec identifies a .COM or a .EXE file, then the string should be null-terminated and <I>sysflag</I> should be 0.  If the filespec identifies a batch file, <I>sysflag</I> should be 1 and the string should be terminated with a newline character (0x0d).  
+<PRE><UL>
+<LI>Syntax:         int m_spawn(char far * file, int len, int sysflag, char far *message) </LI>
+<LI>Parameters:     char far * file - Points to the fully qualified path of the file to be
+                                  executed by COMMAND.COM 
+                int len - Specifies the length of the path string 
+                int sysflag1 = batch file
+                
+                               0 = other type of file, such as .COM or .EXE, as 
+                                   specified in filespec 
+                               2 = reserved for System Manager use; bypasses the 
+                                   requirement that no other application be open 
+                                   when invoked 
+                char far *message - Points to a null-terminated string that will be
+                                    displayed by the System Manager at the top of the
+                                    screen prior to invoking the program </LI>
+<LI>Returns:        0 - if successful 
+                513 - if another application is active 
+                DOS error code as returned by EXEC (INT 21h, AH == 4bh) - otherwise 
+<LI>Related Calls:  This call replaces any reference to m_spawnarg.  </LI>
+<LI>Comments:       For this service to succeed, the calling application must be the only 
+                application in memory. 
+                COMMAND.COM is always loaded for these requests, so that it may load 
+                its exception handlers.  
+                100LX/200LX applications should use m_action with the do_event field
+                set to DO_FINI.  See m_action for details.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_AddRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_AddRecord </H3><P>
+This function appends a record to the next available record.  The integer returned is the number of the record written to.  Note that since DB_WriteRecord appends if the record is past existing records, this function is implemented through a call to DB_WriteRecord.  The record is marked as modified for reconciliation.  See &quot;DB_WriteRecord&quot; for possible errors.  <P>
+<UL><LI><Pre>Syntax:             int DB_AddRecord(DBBLOCK *dblk, char recordtype, 
+                    void far *src, unsigned int recsize, int *viewptindex); </Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

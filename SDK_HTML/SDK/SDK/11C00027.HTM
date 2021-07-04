@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_UnparseFISL </TITLE></HEAD>
+<BODY>
+<H3>DB_UnparseFISL </H3><P>
+This function takes a tokenized string and returns the ASCII representation of it.  A FISL string tokenized by DB_ParseFISL and then untokenized by DB_UnparseFISL does not, in general, return the same string.  A semantically equivalent string is returned, with all redundant parenthesis removed, and/or different spacing or formatting.  <P>
+<UL><LI><Pre>Syntax:             DB_UnparseFISL(DBBLOCK *dblk, char far *InTOKEN,
+                    int tokenlen, char far *OutFISL, int OutBufSize); </LI><P>
+<LI>Returns:            DB_OK          String was unparsed.  <P>
+                    DB_MEMORY      Not enough memory to allocate unparsing 
+                                   stack.  <P>
+                    DB_COMPLEX     Expression too complex to be unparsed.  <P>
+                    DB_OVERFLOW    Resulting ASCII text overflows OutFISL 
+                                   buffer <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

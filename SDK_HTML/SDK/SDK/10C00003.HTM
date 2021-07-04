@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>RecordHeader </TITLE></HEAD>
+<BODY>
+<H3>RecordHeader </H3><P>
+A RecordHeader structure precedes every record in the database (including the DBHeader, but not the 4 byte file signature).  <P>
+<P>
+
+<pre>
+Offset Name           Type          Contents
+------ ------------   -----------   --------
+0      Record Type    char          Type of record
+                                    See the following <a href="#10C00003_1">table</a> for specific record types.  
+1      Record Status  char          Record status (0x01=Garbage, 0x02=Modified) 
+2...3  Length         unsigned int  Length of record *including* header
+                                    A zero byte record would have 6 as the length.  
+4...5  Record Number  int           Sequential record index
+                                    Each record type uses its own index starting at 0. 
+</pre>
+
+<p>The types of records are: </P>
+<a name="10C00003_1"><p>
+<pre>
+Number   Name              Content 
+------   -------------     -------
+0        TYPE_DBHEADER     Header for database; first record in the database.  
+4        TYPE_CARDDEF      Information on the card layout 
+5        TYPE_CATEGORY     List of categories for the database 
+6        TYPE_FIELDDEF     Definition record for each field 
+7        TYPE_VIEWPTDEF    Viewpoint (sort and subset) definition 
+9        TYPE_NOTE         Note record 
+10       TYPE_VIEWPTTABLE  Table of viewpoint entries 
+11       TYPE_DATA         Data record 
+12       TYPE_LINKDEF      Smart clip record 
+13       TYPE_CARDPAGEDEF  Info struct for multiple card database 
+14...30  TYPE_USER         Defined by the application 
+31       TYPE_LOOKUPTABLE  Pointers to all other records in the database.  
+</pre>
+</BODY>
+</HTML>

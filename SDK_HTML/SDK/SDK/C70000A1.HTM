@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_far_handle </TITLE></HEAD>
+<BODY>
+<H3>m_get_far_handle </H3>
+This call returns a near handle to a free far pointer entry, to be used in far pointer addressing.  m_get_far_handle assumes that block_size is defined in DS segment.  <P>
+Note that this call will not search the user-only section of the pointer table. 
+<PRE><UL>
+<LI>Syntax:         int m_get_far_handle(void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        Returns a pointer (in AX) to an entry in the user's registered far 
+                pointer table 
+                The pointer is the actual near offset to far pointer entry.
+                ERROR_TABLE_NOT_REGISTERED - Table not registered 
+                ERROR_TABLE_FULL - No room in far table </LI>
+<LI>Related Calls:  <A HREF="c70000a2.htm">m_get_far_user_handle</A> </LI>
+</UL></PRE>
+</BODY>
+</HTML>

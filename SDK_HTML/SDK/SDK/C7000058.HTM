@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_tell_anytime </TITLE></HEAD>
+<BODY>
+<H3>m_tell_anytime </H3>
+This function formats the date or time represented in dtm, according to content.  m_tell_anytime returns a pointer to a System Manager buffer containing the formatted time.  The content field uses the same values as does m_telltime().  Row, col, and dtinfo are ignored, but are left in to preserve existing calls.  
+<PRE><UL>
+<LI>Syntax:      char far *m_tell_anytime(int content, int row, int col, 
+                                      DTINFO far *dtinfo, DTM far *dtm)
+<LI>Parameters:  int content - This flag defines the content and display of 
+                           the date/time stamp: 
+           
+                           Bit 1,2 0 = date only in default format 
+                           1 = time only in default format 
+                           2 = date and time in default format 
+                           3 = date prefixed with day of week 
+                           Bit 4 If set, suppress AM/PM, even if format calls for it.  
+                           Bit 5 If set, suppress seconds display, even if format 
+                                         calls for it. 
+                           Bit 6 If set, display year, even if format does not 
+                                         call for it.  
+             int row - Ignored in System Manager Version 2
+             int col - Ignored in System Manager Version 2 
+             DTINFO far *dtinfo - Pointer to location to post formatted date/time 
+                                  stamp
+             DTM far *dtm - Pointer to date/time information to be formatted 
+<LI>Returns:     A pointer to a system manager buffer containing the formatted time 
+</UL></PRE>
+</BODY>
+</HTML>

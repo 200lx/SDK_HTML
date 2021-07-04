@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 1Fh - Graphics Character Table Pointer </TITLE></HEAD>
+<BODY>
+<H1>Int 1Fh - Graphics Character Table Pointer </H1><P>
+This interrupt provides a pointer to the last half (chars 128-255) of the standard byte wide bitmap table for the font in the current code page.  Each character in the character table is defined by eight bytes.  The first byte defines eight dots along the top row of the character.  The next byte defines eight dots along the next row down, and so on.  <P>
+For example, the following is the bit representation for the A-acute character taken out of the Code Page 850 font file:
+<PRE>
+        Code Page 850, Char B5h, A-Acute
+
+        DB   0Eh  ;           . . . . X X X .  
+        DB   3Ch  ;           . . X X X X . . 
+        DB   66h  ;           . X X . . X X .  
+        DB   66h  ;           . X X . . X X .  
+        DB   7Eh  ;           . X X X X X X .  
+        DB   66h  ;           . X X . . X X .
+        DB   66h  ;           . X X . . X X .  
+        DB   00H  ;           . . . . . . . .
+</PRE>
+The BIOS also has a built in bitmap table for the common first half (chars 0-127) of the supported code page fonts.  There is no interrupt vector pointing to this table, but it is fixed in location at 0f000h:0fa6eh.  <P>
+</BODY>
+</HTML>

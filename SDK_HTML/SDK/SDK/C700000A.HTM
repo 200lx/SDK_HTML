@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_disable_fnct_tbl </TITLE></HEAD>
+<BODY>
+<H3>m_disable_fnct_tbl </H3>
+This function disables the <I>first</I> non-disabled function table having the function.  
+More information on calling this function can be found in 
+&quot;Using Function Table Enabling and Disabling&quot; on <A HREF="c7000005.htm">page 7-192</A>
+<PRE><UL>
+<LI>Syntax:         int m_disable_fnct_tbl(unsigned ClassFnct)
+<LI>Parameters:     unsigned ClassFnct - Function call is no longer needed in 
+                Active Function table.
+<LI>Returns:        0 - if successful
+                ERROR_INVALID_CLASS (-1) - if the class number specified is invalid
+                ERROR_FNCT_TBL_NOT_FOUND - if the function table is not found
+<LI>Related Calls:   <A HREF="c700000b.htm">m_enable_fnct_tbl</A>
+</UL></PRE>
+</BODY>
+</HTML>

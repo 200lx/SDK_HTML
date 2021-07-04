@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>External Chip Selects </TITLE></HEAD>
+<BODY>
+<H3>External Chip Selects</H3>
+<PRE>
+SIGNAL      FUNCTIONAL DESCRIPTION
+==========================================================================================
+NRCE        This ROM chip select is hard-addressed (non-programmable) into four separate
+            address ranges within the CPU address space.  The first 64 KB of the ROM chip
+            are addressed at F0000h to FFFFFh.  The next 64 KB of the ROM chip are
+            addressed at A0000h to AFFFFh.  The next 16 KB of the ROM chip are addressed
+            at BC000h to BFFFFh.  The next 16 KB of the ROM chip are addressed at B4000h
+            to B7FFFh.  The remaining portion of a ROM that is larger than 160 KB can be
+            accessed using bank switching as described in a later section.
+------------------------------------------------------------------------------------------
+NRAS[1:0]   These RAM chip selects have a starting address of 00000h within the CPU
+            address space.  The size is programmable to any multiple of 128 KB from 0 KB
+            to 640 KB.  Following a reset, the size defaults to 128 KB for NRAS[0] and
+            0KB for NRAS[1].
+------------------------------------------------------------------------------------------
+NRAS[3:2]   These RAM chip selects are intended for additional built- in RAM.  These
+            devices can only be accessed through bank switching.
+------------------------------------------------------------------------------------------
+NCS[1:0]    These RAM/ROM chip selects are intended for plug-in memory.  These devices
+            can only be accessed through bank switching.
+------------------------------------------------------------------------------------------
+ISA Bus     ISA Bus cycles occur when no chip selects are active.  In this mode, the 20
+            bits of CPU address are passed to the device address bus along with the
+            appropriate memory or I/O read/write signals from the GPIO ports.
+------------------------------------------------------------------------------------------
+</PRE>
+<P>
+Unused upper-order device address lines are driven low during an access.  This means that the accesses will be made to the lower portion of devices that are larger than their configured size.  The remaining portion can be accessed via bank switching as described in the following section.<P>
+If two or more chip select configurations are programmed to overlap at some addresses, the priority is as shown below.  In order for NRAS[1] to be generated, the starting address register must be configured (written to) after a system reset.<P>
+
+<PRE>
+        CHIP SELECT     PRIORITY
+        =========================
+        NRCE            1
+        -------------------------
+        NRAS[0]         2
+        -------------------------
+        NRAS[1]         3
+        -------------------------
+</PRE>
+
+<H2><A HREF="15c00006.htm">Wait State Registers </A></H2>
+<H2><A HREF="15c00007.htm">Start Addresses </A></H2>
+<H2><A HREF="15c00008.htm">Size Registers </A></H2>
+<H2><A HREF="15c00009.htm">Write Enable/Protect Registers </A></H2>
+<H2><A HREF="15c0000a.htm">Bank Switching </A></H2>
+<H2><A HREF="15c0000b.htm">Bank C </A></H2>
+<H2><A HREF="15c0000c.htm">Banks D0 through D3 and E0 through E3 </A></H2>
+<H2><A HREF="15c0000d.htm">Bank Control Registers </A></H2>
+<H2><A HREF="15c0000e.htm">Disp Memory and Font Table Control Registers </A></H2>
+<H2><A HREF="15c0000f.htm">Attribute Memory </A></H2>
+<H2><A HREF="15c00010.htm">An Example </A></H2>
+</BODY>
+</HTML>

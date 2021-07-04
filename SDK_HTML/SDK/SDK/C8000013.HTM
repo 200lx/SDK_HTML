@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Messages </TITLE></HEAD>
+<BODY>
+<H1>Messages </H1><P>
+Messages are the way programs communicate with the various classes of window.  Window classes in LHAPI and in the application are treated identically.  Since all windows do not respond to all messages, those messages that are not acknowledged should be passed on to the parent class.  <P>
+Note that although not all messages have a meaningful return value, return values are provided for windows to give feedback to the caller.  This happens for DESTROY, LOSEFOCUS, and other messages that the window may wish to reply to; these two messages allow a FALSE return value to abort the process.  The return value TRUE is used for most messages.  <P>
+Messages have optional components, Data and Extra, that are needed in some cases to give specifics about the type/meaning of the sent message.  This would be a key character for KEYSTROKE, a command number for COMMAND, etc.  <P>
+The messages are: <P>
+<UL><LI>KEYSTROKE: Sent to the focus window when a key is pressed.  </LI><P>
+<LI>DRAW: A message for the window to redraw itself.  The Data field is set to an bit mask indicating the requested draw area.  See the DRAW_ submessages below.  </LI><P>
+<LI>CREATE: To create a window, a CREATE message is sent to that window.  </LI><P>
+<LI>DESTROY: To destroy a window, a DESTROY message is sent to that window </LI><P>
+<LI>TERMINATE: Sent to all windows when the application is terminated.  </LI><P>
+<LI>ACTIVATE: Sent to all windows when returning from a context switch.  </LI><P>
+<LI>DEACTIVATE: Sent to all windows when the app is being switched away.  </LI><P>
+<LI>SETFOCUS: Sent to the window that is going to get the focus.  The message's Data field can be set to SETFOCUS_SELECT to force the window to respond with an implicit selection (i.e.  &quot;check&quot; itself).  </LI><P>
+<LI>LOSEFOCUS: Sent to the window about to lose the focus.  This is automatically done by the system when another window receives a SETFOCUS message.  </LI><P>
+<LI>NULL: Sent for E_NONE or &quot;NULL&quot; messages.  The type of E_NONE event is specified in the Data fieldsee NULL_ submessages below.  </LI><P>
+<LI>NOTIFY: Used to notify either the child or parent window.  The Data field is set to the submessage; see NOTIFY_ messages below.  </LI><P>
+<LI>COMMAND: Sent to a window that doesn't register a menu or function key handler and uses FKEY/MENU_SENDCOMMAND style bit.  </LI><P>
+<LI>APPEAR: Sent to a window to make it visible.  If the window is employing the STYLE_SAVEUNDER style, and there is enough room in the LHAPI screen save buffer, the area underneath the window defined by (x,y)-(x+w-1,y+h-1) is saved with a GetImage.  </LI><P>
+<LI>DISAPPEAR: Send to a window to make it invisible.  If the window is employing the STYLE_SAVEUNDER style, and the area underneath the window was saved on the APPEAR message, the area underneath the window defined by (x,y)-(x+w-1,y+h-1) is restored with a PutImage.  </LI><P>
+</UL><H2><A HREF="c8000014.htm">Submessages </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

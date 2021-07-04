@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 80h: Return File Location and Lock Card Port </TITLE></HEAD>
+<BODY>
+<H3>AH = 80h: Return File Location and Lock Card Port </H3><P>
+This function searches the root directory of the plug-in card in drive A for the specified file.  If the file is found, the file's location is returned and the card port is locked.  <P>
+This function is intended to be used by an XIP loader program to locate an XIP program on a plug-in ROM card.  If successful, the port is &quot;locked,&quot; which means that a warm start will result if the card is removed prior to unlocking the port.  Thus, the program is assured that the logical pages containing the file are available for mapping until the program explicitly unmaps the pages and unlocks the port.  <P>
+<UL><LI>Input: AH = 80h <BR>
+ES:BX = Pointer to an 11-byte buffer containing the file name in the same format as used in a DOS disk directory.  That is, the file name left justified and blank filled in bytes 0 through 7 and the extension left justified and blank filled in bytes 8 through 10.  <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success (No Error) <BR>
+A2h = Error - File not found <BR>
+BX = logical page which contains the beginning of the file <BR>
+CX = offset from beginning of logical page to beginning of file <BR>
+DX = port number of card that contains the file <P>
+</UL>
+<UL><LI>Error conditions: As given in AH </LI><P>
+<LI>Registers modified: AH, BX, CX, DX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

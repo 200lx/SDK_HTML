@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D3h: Activate Bitmap </TITLE></HEAD>
+<BODY>
+<H3>AH = D3h: Activate Bitmap </H3><P>
+This function specifies the bit patterns that will be used by invocations of the BIOS Write BitBlt String function.  This service will mark the active Bit Map by setting the high bit in its Status field.  It will also clear this bit for other bitmaps currently loaded.  See Function D1h for the Bit Map ID Format.  <P>
+<UL><LI>Input: AH = D3h <BR>
+BX = Bit Map ID <P>
+</UL>
+<UL><LI>Output: If successful, CC <BR>
+If unsuccessful, CS <P>
+</UL>
+<UL><LI>Registers modified: AH, FLAGS </LI><P>
+<LI>Error conditions: Specified Bitmap not loaded </LI><P>
+</UL><P>
+</BODY>
+</HTML>

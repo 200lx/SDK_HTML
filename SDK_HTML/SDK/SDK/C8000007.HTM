@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>LHAPI Window Data </TITLE></HEAD>
+<BODY>
+<H3>LHAPI Window Data </H3><P>
+Each window in an application requires a window structure: even control windows.  A window structure for an application's main window might look like this.  <P>
+<PRE>LHWINDOW MyTopWindow={MyTopHandler, </PRE><P>
+<PRE>     0,0,640,190, </PRE><P>
+<PRE>     &amp;msgAppTopLine,0, </PRE><P>
+<PRE>     0,0, </PRE><P>
+<PRE>     NULL,MyFKeys,TopMenu,NO_HELP}; </PRE><P>
+This sets up a window called MyTopWindow that uses MyTopHandler to process the window's messages.  The size of the window is full screen except the function key area, has a title pointed to by msgAppTopLine, and function keys and menu called MyFKeys and TopMenu.  <P>
+A dialog window, its controls, and associated data might look something like this: <P>
+<PRE>/* Prototype for function key handlers */ </PRE><P>
+<PRE>void far CompleteMyDialog(void); </PRE><P>
+<PRE></PRE><P>
+<PRE>/* Actual data buffers that are filled in by the user */ </PRE><P>
+<PRE>char NameBuffer[50]; </PRE><P>
+<PRE>int IsEccentric; </PRE><P>
+<PRE>int Gender; </PRE><P>
+<PRE></PRE><P>
+<PRE>/* Titles of the dialog, controls, and function keys */ </PRE><P>
+<PRE>char far *msgMyDialogTitle      =&quot;A Silly Dialog Example&quot;; </PRE><P>
+<PRE>char far *msgNameTitle          =&quot;Name&quot;; </PRE><P>
+<PRE>char far *msgEccentricTitle     =&quot;Eccentric?&quot;; </PRE><P>
+<PRE>char far *msgSex                =&quot;Gender&quot;; </PRE><P>
+<PRE>char far *msgFemale             =&quot;Female&quot;; </PRE><P>
+<PRE>char far *msgMale               =&quot;Male&quot;; </PRE><P>
+<PRE>char far *fkeyOK                =&quot;OK&quot;; </PRE><P>
+<PRE>char far *fkeyCancel            =&quot;Cancel&quot;; </PRE><P>
+<PRE></PRE><P>
+<PRE>/* Function keys used by the dialog */ </PRE><P>
+<PRE>LHFKEY MyFKeys[] = { </PRE><P>
+<PRE>{ &amp;fkeyCancel, (PFUNC)CMD_ESC,                     9,      FKEY_SENDMSG}, </PRE><P>
+<PRE>{ &amp;fkeyOK,           CompleteMyDialog,                10+LAST_FKEY,0} </PRE><P>
+<PRE>}; </PRE><P>
+<PRE></PRE><P>
+<PRE>/* Array of dialog controls for MyDialogBox */ </PRE><P>
+<PRE>LHWINDOW MyDialogArray[]={ </PRE><P>
+<PRE>{Edit,10,15,24,1,                     /* 0 = Name */ </PRE><P>
+<PRE>&amp;msgNameTitle,NameBuffer, </PRE><P>
+<PRE>sizeof(NameBuffer), </PRE><P>
+<PRE>EDIT_INSERT|STYLE_WHCHAR,NULL,PARENT_FKEYS,NO_MENU,NO_HELP}, </PRE><P>
+<PRE>{CheckBox,496,39,1,1,                     /* 1 = Eccentric */ </PRE><P>
+<PRE>&amp;msgEccentricTitle,(PLHDATA)IsEccentric, </PRE><P>
+<PRE>1,STYLE_WHCHAR,NULL,PARENT_FKEYS,NO_MENU,NO_HELP}, </PRE><P>
+<PRE>{GroupBox,306,61,329,37,                     /* 2 = Sex */ </PRE><P>
+<PRE>&amp;msgSex,NULL, </PRE><P>
+<PRE>0,0,NULL,PARENT_FKEYS,NO_MENU,NO_HELP}, </PRE><P>
+<PRE>{RadioButton,426,76,1,1,                     /* 3 = Female */ </PRE><P>
+<PRE>&amp;msgFemale,(PLHDATA)Gender, </PRE><P>
+<PRE>`F',0,MyDialogArray+2,PARENT_FKEYS,NO_MENU,NO_HELP}, </PRE><P>
+<PRE>{RadioButton,514,76,1,1,                     /* 4 = Male */ </PRE><P>
+<PRE>&amp;msgMale,(PLHDATA)Gender, </PRE><P>
+<PRE>`M',0,MyDialogArray+2,PARENT_FKEYS,NO_MENU,NO_HELP}, </PRE><P>
+<PRE>}; </PRE><P>
+<PRE></PRE><P>
+<PRE>LHWINDOW MyDialogBox={DialogBox, </PRE><P>
+<PRE>     5,8,480,160, </PRE><P>
+<PRE>     &amp;msgMyDialogTitle,(PLHDATA)MyDialogArray, </PRE><P>
+<PRE>     countof(MyDialogArray),0, </PRE><P>
+<PRE>     NULL,MyFKeys,NO_MENU,NO_HELP}; </PRE><P>
+<P>
+A couple of things to note about this example.  <P>
+<UL><LI>The Radio Buttons are children of the Group Box.  The parent field is set to &quot;MyDialogArray+2&quot;, which is the address of the Group Box control in MyDialogArray.  </LI><P>
+<LI>The function &quot;CompleteMyDialog&quot; will get called if the user presses F10.  This function should save or process the information that will be stored in the NameBuffer, IsEccentric, and Gender fields, and destroy the dialog by sending it a DESTROY message.  </LI><P>
+<LI>The titles in the controls are actually near pointers to far pointers to strings.  Since your DS can move, you need to be able to &quot;fix&quot; these far pointers.  That is, the DOS loader will set the segment values of those far pointers to the initial Data Segment that the program is loaded at, but the System Manager can move the Data Segment.  This will cause the far pointers to be pointing into space, since there isn't any automatic support for fixing this.  The standard way of handling this is to keep all far pointers in a table, and fix the entries in that table when your application is reactivated.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

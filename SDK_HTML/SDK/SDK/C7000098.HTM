@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_free_static_block </TITLE></HEAD>
+<BODY>
+<H3>m_free_static_block </H3>
+This call frees up a block of static RAM previously allocated by the m_get_static_block call.
+<PRE><UL>
+<LI>Syntax:         int m_free_static_block(_far * static_ptr) </LI>
+<LI>Parameters:     _far *static_ptr - The System Manager uses the address pointed 
+                                   to by this parameter to get the 32-bit buffer start
+                                   address.  The pointer is not modified, although its 
+                                   use after the call has been made is not advisable.  
+                                   The buffer pointed to is freed and combined with 
+                                   other free blocks adjacent to it.  If possible, 
+                                   excess free static RAM will be returned to general 
+                                   use. </LI>
+<LI>Returns:        0 - if static memory block is successfully freed
+                Any other value indicates an error condition.  Error code is stored in
+                AX.</LI>  
+<LI>Related Calls:  <A HREF="c70000a4.htm">m_get_static_block</A></LI>
+</UL></PRE>
+</BODY>
+</HTML>

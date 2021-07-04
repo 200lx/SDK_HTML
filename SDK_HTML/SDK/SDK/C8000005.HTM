@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Quitting a LHAPI Application </TITLE></HEAD>
+<BODY>
+<H3>Quitting a LHAPI Application </H3><P>
+When the user signifies that they want to terminate the application, the application falls out of the event loop, and quits.  This quitting usually involves nothing more than: <P>
+<PRE>     app_event.do_event = DO_FINI; </PRE><P>
+<PRE>     m_action(&amp;app_event); </PRE><P>
+<P>
+</BODY>
+</HTML>

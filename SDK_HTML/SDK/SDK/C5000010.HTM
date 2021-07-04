@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>First Code Module--Owner App ("A") </TITLE></HEAD>
+<BODY>
+<H1>First Code Module--Owner App (&quot;A&quot;) </H1>
+<PRE>
+#define API2 
+#define DISTANCE _far 
+
+#include &quot;interfac.h&quot; 
+#include &quot;task.h&quot; 
+#include &quot;sysdefs.h&quot; 
+#include &quot;event.h&quot; 
+
+void test_launch(void) 
+{ 
+struct task far *TCB_ptr; 
+static char app_link_hotkey = 0x7100; /* Assume Alt+F10 is the app's hot key */ 
+int index, i; 
+int _far **icblock; 
+int error; 
+/* 
+     Test program launch capability as well as inter task communication 
+     The following tasks are executed: 
+     [1] Launch a designated task in background mode 
+     [2] Establish a channel with app 
+     [3] Close channel 
+     [4] Close app 
+*/ 
+/* Get pointer to task control block */ 
+TCB_ptr = m_get_TCB(); 
+/* locate target task */ 
+for (index = -1,i=0;i&lt;m_get_TCB_size();i++) { 
+     if (TCB_ptr[index].t_hotkey == app_link_hotkey) index=i; 
+} 
+if( index != -1) 
+      { 
+if(TCB_ptr[index].t_state == PS_CLOSED) 
+      { 
+     Event.e_launch_task = index; 
+     Event.e_launch_type = LT_LAUNCH_THEN_RETURN ; 
+     Event.do_event = DO_LAUNCH; 
+     m_action(&amp;Event); 
+     /* Now make sure we have returned from swap */ 
+     while ( Event.kind != E_SWAP) 
+          { 
+          error = Event.kind; 
+          Event.do_event = DO_EVENT; 
+          m_action(&amp;Event); 
+          }; 
+     /* Return back from swap */ 
+     /* Now get a block of memory */ 
+          error= m_get_far_block( &amp;icblock,0x200); 
+          if(error)_ 
+               { 
+               error = error*2; 
+               return; 
+               } 
+     /* Initialize block of data */ 
+     for (i=0;i&lt;0x100;i++) 
+          { 
+          (*icblock)[i]=i; 
+     } 
+     /* Use first byte for command */ 
+// (*icblock)[0] = 0x35; 
+     /* We have inited block, now let linked app know about it */ 
+     Event.e_icdata_ptr = icblock; 
+     Event.e_link_task = index; 
+     Event.do_event = DO_IC_INIT; 
+     m_action( &amp;Event); 
+/* At this point control moves to the slave app until it returns */ 
+     if( Event.return_status != 0) 
+          { 
+          error = Event.return_status; 
+          } 
+               /* filler for now */ 
+          error = Event.kind; 
+     /* Check for returned value set by slave */ 
+     if ( (*icblock)[0] != 0x44) 
+          { 
+          error = 0x24; 
+          } 
+     error = 0; 
+          /* Now we will close the slave app */ 
+     Event.do_event = DO_IC_CLOSE; 
+     m_action( &amp;Event); 
+     /* We should be immediately back */ 
+     error= 33; 
+     } 
+} 
+
+</PRE>
+</BODY>
+</HTML>

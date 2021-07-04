@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Ah: Read Day Counter </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Ah: Read Day Counter </H3><P>
+The BIOS maintains a count of the number of times the software clock has accumulated 24 hours worth of timer ticks.  This variable allows an application to determine how many days have passed since it last read the date.  <P>
+<UL><LI>Input: AH = 0Ah </LI><P>
+<LI>Output: AH = 00h <BR>
+CX = Day count (# times the software clock has overflowed) <BR>
+Carry Clear <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX, CX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

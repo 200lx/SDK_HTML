@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_col_cpsearch </TITLE></HEAD>
+<BODY>
+<H3>m_col_cpsearch </H3>
+This call searches a specified block of CP850 data for a match to a specified string.  The
+search may be conducted either forward or backward from the specified starting point. 
+<PRE><UL>
+<LI>Syntax:         int m_col_cpsearch(sptr, slen, dptr, dlen, dir)
+<LI>Parameters:     char far *sptr - Pointer to the beginning of the string to be matched
+                int slen - Length of the string to match
+                char far *dptr - Pointer to the beginning or end of the data 
+                                 block to search
+                int dlen - Length of the data block to search
+                int dir  - -1 = Search in a forward direction
+                           +1 = Search backwards through data block 
+                           (NOTE: Searching backwards does not work reliably.  
+                            CALL AT YOUR OWN RISK.)
+<LI>Returns:        0 - no match found
+                Offset to the start of the matched string in the data - if found
+<LI>Comments:       This function returns 0 if the string is not found, however 0 is also
+                a valid offset in the data.  To obtain a useful return, always make 
+                this call with the pointer directed to the byte before the data block 
+                to be searched.
+</UL></PRE>
+</BODY>
+</HTML>

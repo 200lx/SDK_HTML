@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Light Sleep and Deep Sleep </TITLE></HEAD>
+<BODY>
+<H3>Light Sleep and Deep Sleep </H3><P>
+Int 16h services 00h,01h,10h,11h,13h, and 14h all conditionally invoke light sleep (Int 15h, Fcn 41xxh).  See &quot;Power Management&quot; for a discussion of the Light Sleep and Deep Sleep states.  In addition to preserving battery life, the light sleep code handles Shift annunciator updates and display timeouts (Auto-Timeout) as scheduled by the RAM counter TimOutCnt.  If the [ON] key is detected in the keybuffer by any of these Int 16h services, a deep sleep (turn off) is requested (the request will be denied if the unit is charging the batteries).  On wakeup from the deep sleep, the service will continue as if the deep sleep had not occurred (The [ON] key is &quot;eaten&quot;).  The 00h and 01h services &quot;discard&quot; certain keys and the 10h,11h,13h, and 14h services will &quot;translate&quot; certain keys (See I16Clip).  The behavior with respect to light sleep depends on which Int 16h service is called, whether or not the AC Adaptor is plugged in, whether or not the software can discern &quot;useful activity&quot;, and the state of the RAM variable LiteSlpFl.  <P>
+<P>
+</BODY>
+</HTML>

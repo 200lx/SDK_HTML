@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_CardToFISL </TITLE></HEAD>
+<BODY>
+<H3>DB_CardToFISL </H3><P>
+This function takes the fielddef referred to by index and a pointer to a data buffer typically pointed to by a card window.  Converts the result into a valid FISL string; appends to an existing FISL string by &quot;&amp;&quot; if there is already a string there.  This function is used by the database application to convert a Card Subset Definition into a &quot;SSL&quot; (FISL) string for subsetting.  The data buffer pointed to by fielddata can prefixed by *, -, =, &lt;, &gt;, &lt;=, &gt;=, or &lt;&gt; to more specifically control the FISL string generated (see the User's Manual).  <P>
+<UL><LI><Pre>Syntax:             DB_CardToFISL(DBBLOCK *dblk, int index, 
+                    char far *fielddata, char far *fislbuffer, 
+                    int fislbuffersize); </LI><P>
+<LI>Returns:            DB_OK          Was able to extract FISL info from the 
+                                       card window buffer.  <P>
+                    DB_OVERFLOW    FISL buffer provided was too small to 
+                                   hold the result.  <P>
+                    DB_COMPLEX     Internal error caused resulting string 
+                                   DB_SYNTAX to not parse correctly.  <P>
+                    DB_TYPEMISMATCH <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

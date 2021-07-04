@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Disp Memory and Font Table Control Registers </TITLE></HEAD>
+<BODY>
+<H3>Disp Memory and Font Table Control Registers</H3>
+The Disp Memory and Font Table Control registers are read/write registers.  The Disp
+Memory Control registers consist of two 8-bit registers that select the memory location
+at which the display memory resides.  One register contains the 8 MSBs of the frame
+select (FS) value, which specify device address bits [25:18] of the 26-bit address to the
+device.  Bits [7:4] of the second register specify device address bits [17:14] of the FS
+value.  The 3 LSBs (bits [2:0]) of this second register contain the chip sel ect (CS).
+which must only point to NRAS(3:0).  If the chip select does not point to NRAS(3:0),
+(reset default = NRCE), the chip select value is forced to NRAS(3).  However, when the
+register is read, the returned Chip Select value will be the actual written value (NRCE,
+NCS[0], NRAS[0], etc.).  Bit 3 of this register is unused.  Together this pair of
+registers specifies the 12 MSBs (device address bits [25:14]) of the 26-bit address to
+the device, thereby selecting a 16-KB section.  It should be noted that devices connected
+to NRAS[3:0] do not use device address bit [25] resulting in that address bit being a
+&quot;don't care&quot; for those devices.<P>
+
+The Font Table Control registers consist of two 8-bit registers that select the memory
+location at which the font table resides.  One register contains the 8 MSBs of the FS
+value which specify device address bits [25:18] of the 26-bit device address.  Bits [7:4]
+of the second register specify device address bits [17:14] of the FS value.  The 3 LSBs
+(bits [2:0]) of this second register contain the CS.  Bit 3 of this register is unused.
+Together this pair of registers specifies the 12 MSBs (device address bit s [25:14]) of
+the 26-bit address to the device, thereby selecting a 16-KB section.  It should be noted
+that devices connected to NRAS[3:0] do not use device address bit [25] resulting in that
+address bit being a &quot;don't care&quot; for those devices.<P>
+
+The Disp Memory and Font Table Control registers are read/write registers.<P>
+
+The format of the Disp Memory and Font Table registers is given below.<P>
+
+<PRE>
+Index   Name                Bits    Comments
+==========================================================================================
+-9Ah    Disp Memory Reg0    [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-9Bh    Disp Memory Reg1    [7:4]   next 4 MSBs of device address (address bits [17:14])
+                            [3]     unused
+                            [2:0]   Disp Memory device select code
+------------------------------------------------------------------------------------------
+-9Ch    Font Table Reg0     [7:0]   8 MSBs of device address (address bits [25:18])
+------------------------------------------------------------------------------------------
+-9Dh    Font Table Reg1     [7:4]   next 4 MSBs of device address (address bits [17:14])
+                            [3]     unused
+                            [2:0]   Font Table device select code
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

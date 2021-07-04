@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_unlock </TITLE></HEAD>
+<BODY>
+<H3>m_unlock </H3>
+This call decrements the system lock count.  If calls are not nested, it allows the system to take control from the current application.  
+<PRE><UL>
+<LI>Syntax:         void m_unlock(void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        None </LI>
+<LI>Related Calls:  <A HREF="c70000d4.htm">m_lock</A> </LI>
+<LI>Comments:       This call (and its complement, m_lock) work by 
+                decrementing/incrementing the lock counters.  Correct nesting is 
+                therefore required for use.  For example, two successive m_lock() 
+                calls, followed by a single m_unlock() call, will still leave the 
+                lock on.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

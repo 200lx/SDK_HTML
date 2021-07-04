@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bank-Switch Algorithm </TITLE></HEAD>
+<BODY>
+<H3>Bank-Switch Algorithm </H3><P>
+All bank-switching information is stored on the caller's stack.  This guarantees that a
+returning function call can switch back any banks that were switched to accommodate the
+call.  This leaves the banks in their original state before the call was made.  <P> A
+table is maintained to hold the current ROM pages for each of the switchable banks in
+RAM, along with the call nesting level.  The call nesting level indicates the depth of
+API calls when an API call makes another API call before returning.  <P> When any API
+call is made, irrespective of whether the call is made to an overlaid section of code,
+and bank switching is required, pertinent information is stored on the caller's stack. 
+If the call is made to an overlaid area, the current ROM page in the table, along with
+other information is saved on the caller's stack, and the call nesting level is
+incremented.  Only if the current ROM page does not match the ROM page required, is the
+ROM page actually banked in.  <P> When the call returns, a check is made to see if the
+call was an overlay call.  If the return was from an overlay call, the old ROM page on
+the stack is used to check if a bank-switch back is required.  A bank-switch back is
+required if the current ROM page is not the same as the old RAM page on the stack, and if
+so, the bank is switched back in.  The nesting level for the RAM page is decremented.  To
+avoid unnecessary bank-switching back, a bank-switch back is performed only if the
+nesting level is greater than 1.  This leaves the last bank-switch in, as the current
+bank. <P>
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 00h: Set Video Mode </TITLE></HEAD>
+<BODY>
+<H3>AH = 00h: Set Video Mode </H3><P>
+This function sets the display mode.  The new mode is determined by the value passed in the AL register.  <P>
+<UL><LI>Input: AH = 00h <BR>
+               AL = MODE (see below) 
+<P>
+00h = Text, 40x25, 16x8 char, B&amp;W <BR>
+01h = Text, 40x25, 16x8 char, Color <BR>
+02h = Text, 80x25, 8x8 char, B&amp;W <BR>
+03h = Text, 80x25, 8x8 char, Color <BR>
+04h = Graphics, 320x200, Std.  char 16x8, Color <BR>
+05h = Graphics, 320x200, Std.  char 16x8, B&amp;W <BR>
+06h = Graphics, 640x200, Std.  char 8x8, B&amp;W (MDA) <BR>
+07h = Text, 40x16 HP95LX, 16x12 char, B&amp;W Zoom into 80x25(MDA) <BR>
+20h = Graphics, 240x128 HP95LX, 12x8 char, B&amp;W (MDA) <BR>
+21h = Text, 80x25, 8x8 char, B&amp;W <BR>
+80h = Text, 64x18, 10x11 char, B&amp;W Zoom into 80x25 <BR>
+82h = Text, 40x25, 16x8 char, B&amp;W Zoom into 80x25 <BR>
+84h = Text, 40x16, 16x12 char, B&amp;W Zoom into 80x25 <BR>
+81h = Text, 64x18, 10x11 char, Color Zoom into 80x25 <BR>
+83h = Text, 40x25, 16x8 char, Color Zoom into 80x25 <BR>
+85h = Text, 40x16, 16x12 char, Color Zoom into 80x25 <BR>
+</UL>
+<P>
+<UL><LI>Output:                None </LI><P>
+<LI>Error conditions:                None </LI><P>
+<LI>Registers modified:                AX </LI><P>
+<LI>The mode is changed in the BIOS and hardware.  </LI><P>
+<LI>The screen is cleared as a side effect of changing the mode.  </LI><P>
+<LI>If the mode is Text, the font loader is called to load 8x8, 16x12, and 10x11 fonts in the current code page.  </LI><P>
+<LI>See BIOS Int 10h, function D0h for zoom switching.  </LI><P>
+<LI>The value stored in the BIOS RAM Variable &quot;CRTMODE&quot; will be 0-7, or 20h.  </LI><P>
+</BODY>
+</HTML>

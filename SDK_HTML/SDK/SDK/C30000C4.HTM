@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Dh: Set Future Power-On Alarm </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Dh: Set Future Power-On Alarm </H3><P>
+This function is identical to Function 08h except that the alarm may be set at any date in the future.  <P>
+<UL><LI>Input: AH = 0Dh <BR>
+AL = Year in BCD <BR>
+BH = Month in BCD <BR>
+BL = Day in BCD <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <BR>
+DL = Century in BCD <P>
+</UL>
+<UL><LI>Output: AH = 00h </LI><P>
+<LI>Error conditions: Carry Set iff alarm inputs invalid, an alarm is already set, or RTC data is invalid </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

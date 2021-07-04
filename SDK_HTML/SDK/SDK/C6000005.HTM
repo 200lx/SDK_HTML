@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Implementation of Services </TITLE></HEAD>
+<BODY>
+<H3>Implementation of Services </H3><P>
+The target function must be defined in a slightly different manner from the prototype provided in INTERFAC.H.  The first argument of the actual function must be a structure (not a pointer to a structure) which is used to account for the additional stack space used between the initial call to c_service() and the arrival of control at the function itself.  <P>
+<P>
+<PRE>
+struct dummy_space { 
+     int space[C_INT_STACK_OVRHD]; 
+}; 
+
+</PRE>
+C_INT_STACK_OVRHD is used to account for the extra elements on the stack between the current stack pointer and the first item of the argument list.  This is currently 18 bytes.  <P>
+Services use the stack of the calling application.  When implementing services code in the C language, the compiler must be told that the stack and data segments will not be equal.  This is done by using the /Aw switch.  <P>
+<P>
+</BODY>
+</HTML>

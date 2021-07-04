@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>LHWINDOW - Window Structure </TITLE></HEAD>
+<BODY>
+<H3>LHWINDOW - Window Structure </H3><P>
+The window is the basic unit of interface construction; at any one time, one window has focus and determines how keys are handled.  The window also determines what menu and function keys are available.  Either by itself or with other windows, this window creates the display presented to the user.  <P>
+The application defines each of its windows in a Window structure.  Most windows are completely defined before execution, but some, like menus and error messages, are filled in on the fly by LHAPI.  All windows, whether filled in by the application or by LHAPI must be supplied by the application; LHAPI does not allocate any memory for window creation.  <P>
+<UL><LI><B>Class:</B> The class field is either a far code pointer to the class handler code for the window, or a long integer that is a handle into an internal table of LHAPI-provided base classes.  The segment portion/high word of the long=0 indicates to LHAPI that the class is a built-in class.The LHAPI-provided base classes are described in detail in Chapter 7.  </LI><P>
+<LI><B>x,y:</B> These values define the screen position of the upper-left corner of the window.  If STYLE_XYRELATIVE is being used, then the signed values in these fields specify the relative pixel offset from the parent window's upper-left corner.  When using STYLE_XYRELATIVE, the Object class handler converts the relative position of the window to the corresponding absolute position when it receives an APPEAR message, storing the resulting value in these same fields.  The window's status bit STATUS_XY_ABSis set in this case.  It then converts the position back when it receives a DISAPPEAR message (it looks at the STATUS_XY_ABS bit to determine whether or not to convert x and y back).  If STYLE_XYRELATIVE is not being used, the x and y fields contain the absolute pixel position of the start of the window, which is not changed on APPEAR or DISAPPEAR messages.  </LI><P>
+<LI><B>w,h:</B> These fields define the size of window area.  If STYLE_WHCHAR is being used, the values in these fields specify the size, in terms of text characters, of the client portion of the window only.  In this case, each sub-class window handler is responsible for converting the window text character size to pixel size when it receives an APPEAR message, storing the resulting values in these same fields.  Similarly to the STYLE_XYRELATIVE bit, during the APPEAR message, if the STYLE_WHCHAR bit is set, the STATUS_WH_PIXEL bit should be set to indicate the reverse translation needs to happen on the DISAPPEAR.  (Each handler must then convert the size back again, if necessary, when it receives a DISAPPEAR message.) All of the LHAPI-provided window classes automatically perform these services.  If STYLE_WHCHAR is not being used, the w and h parameters refer to pixel sizes, and are not touched during APPEAR/DISAPPEAR messages.  </LI><P>
+<LI><B>Title:</B> Title is a resource pointer (a near pointer to a far pointer to a string) that &quot;names&quot; the field for the user.  Normally, this name will show on screen, but it is not required for all window types.  </LI><P>
+<LI><B>Data:</B> This field points to the data area that the window should modify.  The meaning and format of this data area is different for each window.  </LI><P>
+<LI><B>LogicalSize:</B> The meaning of this field varies with the class it is describing.  </LI><P>
+<LI><B>Style:</B> This field is a word of bit flags.  Styles for a window should be ORed together.  Style consists of two parts: global styles that apply to all windows and local styles that apply to a specific window class.  </LI><P>
+</UL>The global window styles are: <P>
+<H3>STYLE_INVISIBLE (0x80000000L)</H3> <P>
+The window will not display itself.  Although the built-in LHAPI classes handle this automatically, for user supplied classes, you must test for this bit before drawing if you wish to use it.  <P>
+<H3>STYLE_SAVEUNDER (0x40000000L) </H3><P>
+The window will save the background underneath the window during an APPEAR message, and restore it upon a DISAPPEAR, if there is enough room in LHAPI's screen save buffer.  The buffer is 8K system-wide, and all window screen-saves(including LHAPI-owned menu windows) go into it.  Although there is only one buffer, switching between apps causes LHAPI to re-APPEAR all the active windows, which regenerates the screen-save buffer.  If there wasn't enough space on creating the window, the DISAPPEAR will handle the screen restore as it normally does, i.e., set global clipping and refresh all windows.  See the DISAPPEAR message for more information.  <P>
+<H3>STYLE_NOFOCUS (0x20000000L) </H3><P>
+The window cannot receive the focus.  <P>
+<H3>STYLE_NOTIFY (0x10000000L) </H3><P>
+For a child window, this style tells the window to notify the parent when it changes state via NOTIFY_CHILDKILLED and NOTIFY_CHILDCHANGED messages.  <P>
+<H3>STYLE_LEAF (0x08000000L) </H3><P>
+For dialog controls or other terminal windows, this style prevents DESTROY messages from cascading any further down the window chain to child windows, and causes the Menu field in this LHWINDOW structure to be ignored.  <P>
+Note: Only use STYLE_LEAF when safe.  Improper use of STYLE_LEAF can destroy the window chain.  The DialogBox handler automatically sets STYLE_LEAF in any child windows, so it is not necessary to explicitly employ it.  <P>
+<H3>STYLE_NOBORDER (0x04000000L) </H3><P>
+The window will be displayed without a border <P>
+<H3>STYLE_WHCHAR (0x02000000L) </H3><P>
+The window size specified in the w and h fields is specified in terms of text characters, not pixels.  In addition, the size specified includes only the client portion of the window, not any window title or border.  LHAPI-provided base class handlers, except the Object handler, convert the window character size to the corresponding window pixel size when they receive a CREATE message.  The STATUS_WH_PIXEL bit in the Status field gets set when the w and h are converted from character measurements into pixel measurements.  <P>
+<H3>STYLE_XYRELATIVE (0x01000000L) </H3><P>
+The window position specified in the x and y fields is relative to the parent window.  If the STATUS_XY_ABS bit in the window Status field is not set, the Object class handler will convert the relative offset to the corresponding absolute display coordinates when it receives a CREATE message.  <P>
+<H3>STYLE_GRAY (0x00800000L) </H3><P>
+STYLE_GRAY indicates that the window should be displayed as gray.  This style is used for dialog controls that should not be accessed.  <P>
+<H3>STYLE_RADIO (0x00400000L) </H3><P>
+This style is automatically set for RadioButton windows so that the DialogBox handler will correctly perform special handling for them.  <P>
+<H3>STYLE_COMBOLIST (0x00200000L) </H3><P>
+This style is set by the application in the window structure for the ListBox portion of a ComboBox.  This style signals to the DialogBox handler not to CREATE this window when it automatically creates all the others in the dialog box control field array.  The window is however, sent a DESTROY message when the dialog box itself is destroyed.  This style should be used if the window structure for the listbox portion of a comboxbox is defined in the dialog control field array.  <P>
+<H3>STYLE_PUSHBUTTON (0x00100000L) </H3><P>
+This needs to be set so that the DialogBox handler will correctly perform special pushbutton handling.  Note that the application is responsible for setting this bit, as it will not be set by the PushButton handler.  The reason for this is that the DialogBox handler looks at this bit before the PushButton handler would get an opportunity to set it.  <P>
+<H3>STYLE_PUSHB_WIDTH (0x00080000L) </H3><P>
+This style is Set by an application if it wants the DialogBox handler to automatically calculate and set the width of each of the PushButtons in the dialogbox.  The pushbutton width will be calculated based on the longest label that will appear in any of the pushbuttons.  Note that this Style bit is to be set in the DialogBox window structure, not each of the PushButton window structure.  <P>
+<H3>STYLE_NO_PARENT_KEY (0x00040000L) </H3><P>
+Object will not send any unused keystrokes it receives to a window's Parent.  This bit is usually temporarily set by a window handler before it passes keystrokes on to Object in order to allow Object to check for menu or function keys, but does not allow it to do anything else.  <P>
+<H3>STYLE_CHECKBOX (0x00020000L) </H3><P>
+This style is automatically set for CheckBox windows so that the DialogBox handler will correctly perform special handling for them.  <P>
+<H3>STYLE_DATETIME (0x00001000L) </H3><P>
+This style is automatically set by the DateTime window handler so that the displayed date and time can be kept updated to the current system date &amp; time.  <P>
+<H3>STYLE_COMBOEDIT (0x00008000L) </H3><P>
+This style is automaticlly set by the ComboBox handler to signal that the combobox LHWINDOW structure is actually the window structure for the edit portion of the combobox.  <P>
+<H3>STYLE_NOSHADOW (0x00004000L) </H3><P>
+In DialogBoxes and MessageBoxes, the window border will be drawn without a shadow around it.  <P>
+Local window styles are described with each base class description in chapter 7.  <P>
+<UL><LI><B>Parent:</B> This field specifies the window that &quot;owns&quot; this window.  The parent relationship is used to </LI><P>
+</UL><OL><LI>Send messages that are not understood back through the chain of windows.  </LI><P>
+<LI>Stack menus and function keys.  </LI><P>
+<LI>Provide levels of windows that can be acted upon all at once.  By destroying a parent window, all its children are destroyed.  </LI><P>
+</OL><UL><LI><B>Fkey:</B> This field points to an FKEYS structure that defines the active function keys if this window gets the focus.  Other acceptable values are PARENT_FKEYS and NO_FKEYS.  PARENT_FKEYS means &quot;look to my parent window for function-key definitions,&quot; and NO_FKEYS means that no function keys are supplied.  </LI><P>
+<LI><B>Menu:</B> Menu points to the array of MENU structures which will be activated by pressing the MENU key, PARENT_MENU, or NO_MENU.  PARENT_MENU means &quot;look at my parent for a menu,&quot; and NO_MENU disables the menu.  </LI><P>
+</UL>Note that for dialog controls (or any other windows with the STYLE_LEAF bit set) the Menu field is ignored, and the parent's menu is looked at automatically.  <P>
+<UL><LI><B>Help:</B> Help gives the help screen number, which is used to show context-sensitive help.  A value of NO_HELP means that this window does not have any help text associated with it.  </LI><P>
+<LI><B>Status:</B> Status gives the byte for window status.  Used by Edit control for insert/overwrite and First Key flag, and reserved for other windows.  The following status bits are globally defined bits.  Application-defined window handlers may use the rest of the status bits for their own use.  </LI><P>
+</UL>
+<H3>STATUS_VISIBLE </H3><P>
+(0x80) This style is set when the window is currently being displayed on the screen.  <P>
+<H3>STATUS_SAVEUNDER </H3><P>
+(0x40) This style is set when the display image underneath the window was saved in an internal LHAPI buffer.  <P>
+<H3>STATUS_XY_ABS </H3><P>
+(0x20) This style is set when the x and y fields are converted from a relative offset from the parent window to the corresponding absolute display coordinates (when STYLE_XYRELATIVE is being used).  <P>
+<H3>STATUS_WH_PIXEL </H3><P>
+(0x10) This style is set when the w and h fields are converted from text-character based to pixel based (when STYLE_WHCHAR is being used).  <P>
+<H3>STATUS_INCREATE </H3><P>
+(0x08) This style is set by the Object class handler before issuing a SETFOCUS message as part of the CREATE_FOCUS message processing.  This is used by window handlers that need to differentiate this case from the other times it can receive a SETFOCUS message.  <P>
+<H3>STATUS_NOT_EDITED </H3><P>
+(0x04) If this style is set, data has yet to be edited.  This style is cleared each time the Edit window is used in some way.  <P>
+<UL><LI><B>Selection:</B> Selection gives the current cursor selection.  This means different things in different windows.  For Edit windows, Selection is the cursor position, for list boxes and combo boxes, it is the current line.  </LI><P>
+<LI><B>WindowTop:</B> The top of the area being displayed.  For single-line scrolling edit windows, it is the first character to show in the window.  For multi-line edit windows, it is the first line to show in the box.  For list boxes, WindowTop is the first string showing at the top of the box, etc.  </LI><P>
+<LI><B>Font:</B> Font is a bitmapped ID of the default font type for this window.  This is the font type ID, which LHAPI will use for all of the drawing which it does within this window (also used by the DrawText service).  The high byte of Font is the width of the font in pixels while the low byte is the height of the font.  The possible values are: </LI><P>
+</UL><H3>FONT_DEFAULT </H3><P>
+(0) Use the whatever the currently selected default font is (as specified by a prior call to SetDefaultFont) when the window is DRAWn.  This use of FONT_DEFAULT does not hold true for the TitleBar window class, which will always use FONT_SMALL, unless a particular font type is specified in the titlebar window structure.  <P>
+<H3>FONT_PARENT </H3><P>
+(1) Use the same font the window's Parent is using.  <P>
+FONT_SMALL , FONT_NORMAL, and FONT_LARGE use the specified font, as defined below: </LI><P>
+FONT_SMALL_W                                    8 <P>
+FONT_SMALL_H                                    8 <P>
+FONT_SMALL                                    (FONT_SMALL_W&lt;&lt;8) + FONT_SMALL_H <P>
+FONT_NORMAL_W                                    10 <P>
+FONT_NORMAL_H                                    11 <P>
+FONT_NORMAL                                    (FONT_NORMAL_W&lt;&lt;8) + FONT_NORMAL_H <P>
+FONT_LARGE_W                                    16 <P>
+FONT_LARGE_H                                    12<P>
+FONT_LARGE                                    (FONT_LARGE_W&lt;&lt;8) + FONT_LARGE_H <P>
+<UL><LI><B>NextWnd,PrevWnd:</B> These are internally maintained pointers to the next or previous window in the window list.  They are used by LHAPI to traverse the list.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

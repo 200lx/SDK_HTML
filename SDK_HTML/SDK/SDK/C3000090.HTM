@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6004h: Enable/Disable Battery Charging </TITLE></HEAD>
+<BODY>
+<H3>AX = 6004h: Enable/Disable Battery Charging </H3><P>
+This function enables or disables the battery charging feature of the HP Adaptor.  When the adaptor is plugged in, and charging is enabled, the unit will recharge the installed NICAD batteries.  This service sets/resets bit 3 (UCHG) of [BATTFL1].  <P>
+Warning: battery charging should be enabled only if NiCad batteries are installed.  Attempts to charge other types can be hazardous.  <P>
+<UL><LI>Input: AX = 6004h <BR>
+BL = Enable Charging (0 = Disable, Else = Enable) <P>
+</UL>
+<UL><LI>Output: AL: System Power Status (See Fcn 6002h) <BR>
+[CX DX]: Charge time (See Fcn 6002h) <P>
+</UL>
+<UL><LI>Registers modified: AX, CX, DX </LI><P>
+</UL>This function sets or resets bit3 (UCHG) of the RAM Variable BATTFL1.  <P>
+<P>
+</BODY>
+</HTML>

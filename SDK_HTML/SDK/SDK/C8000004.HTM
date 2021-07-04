@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>The LHAPI Event Loop </TITLE></HEAD>
+<BODY>
+<H3>The LHAPI Event Loop </H3><P>
+After a LHAPI application is done initializing itself, it usually falls into the event loop.  The event loop just gets events, and doles them out.  The entire life of an application is normally spent inside an event loop.  One single event loop (as opposed to multiple event loops or nested event loops) is preferred; the System Manager can lose track of the thread of execution in deeply nested LHAPI calls with multiple event loops.  A somewhat standard event loop might look like this: <P>
+<PRE>int EventLoop(void) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>int Done=0;                     /* Application termination flag */ </PRE><P>
+<PRE>EVENT app_event; </PRE><P>
+<PRE></PRE><P>
+<PRE>while (!Done) {                 /* While app not terminated */ </PRE><P>
+<PRE>app_event.do_event = DO_EVENT;  /* Grab event from system manager */ </PRE><P>
+<PRE>m_action(&amp;app_event); </PRE><P>
+<PRE></PRE><P>
+<PRE>switch (app_event.kind) {       /* Branch on SysMgr event */ </PRE><P>
+<PRE>case E_REFRESH:                 /* SysMgr wants to redisplay our screen*/ </PRE><P>
+<PRE>case E_ACTIV:                   /* Swapping back to our app */ </PRE><P>
+<PRE>FixupFarPtrs();                 /* If app needs to fix pointers, do it here */ </PRE><P>
+<PRE>ReactivateLHAPI(&amp;LHAPIData); </PRE><P>
+<PRE>break; </PRE><P>
+<PRE>case E_DEACT:                   /* User swapping to another app */ </PRE><P>
+<PRE>DeactivateLHAPI(); </PRE><P>
+<PRE>break; </PRE><P>
+<PRE>case E_TERM:                    /* User wants to kill our app */ </PRE><P>
+<PRE>FixupFarPtrs();                 /* Fix up any far pointers */ </PRE><P>
+<PRE>Done = TRUE;                    /* Set application terminate flag */ </PRE><P>
+<PRE>break; </PRE><P>
+<PRE>case E_NONE:                    /* Nothing has happened for 1/2 second */ </PRE><P>
+<PRE>SendFocusMsg(NULLEVENT, app_event.shifts, app_event.scan); </PRE><P>
+<PRE>break; </PRE><P>
+<PRE>case E_KEY:                     /* User has pressed a key */ </PRE><P>
+<PRE>SendFocusMsg(KEYSTROKE,app_event.data,app_event.scan); </PRE><P>
+<PRE>break; </PRE><P>
+<PRE>     } </PRE><P>
+<PRE>} </PRE><P>
+<PRE>} </PRE><P>
+Obviously, application may need to modify this basic event loop.  For example, an application that supports the database engine needs to take other precautions.  This event loop can serve a starting place, however.  <P>
+<P>
+</BODY>
+</HTML>

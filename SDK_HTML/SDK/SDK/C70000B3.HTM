@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_task_info </TITLE></HEAD>
+<BODY>
+<H3>m_task_info </H3>
+This function allows access to task control block information. 
+<PRE><UL>
+<LI>Syntax:      int m_task_info(int InfoType, int TaskNo, void far *RetArea) </LI>
+<LI>Parameters:  int InfoType Information to be reported 
+             int TaskNo -1 refers to the current task 
+             void far *RetArea - Pointer to location to store returned information </LI>
+<LI>Returns:     0 - if successful 
+             ERROR_TASK_INFO_TYPE - if InfoType is out of range 
+             ERROR_TASK_NO - if invalid task number 
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>FieldDef</TITLE></HEAD>
+<BODY>
+<H3>FieldDef</H3><P>
+FieldDef defines each field in the database.  There is one FieldDef record for every field (even non-data fields).  The FieldDef records refer to the position of information in data records in the file.  The database engine uses the information in the FieldDefs to provide sort, subset, and string retrieval functions.  Although in the general databases, all information in the data records is pointed to by FieldDefs, data records can contain additional information.  This allows you to keep binary or non-user accessible info in the records (the appointment book does this with record links).  <P>
+<pre>
+Offset  Name                  Type          Contents 
+------  --------------------  ------------  --------
+0...5   Record Header         RecordHeader  See <a href="10C00003.HTM">RecordHeader</a> structure above.
+                                            0x06 0x??  0x??  0x??  0x00 0x??  
+6       FieldType             char          Type of field:
+        Num  Name             Description
+        0    BYTEBOOL_FIELD   Checkbox: points to a bit in a byte
+        1    WORDBOOL_FIELD   points to a bit in a word
+        2    STRING_FIELD     Points to ASCIIZ string
+        3    PHONE_FIELD      Treated as a string by the database
+        4    NUMBER_FIELD     Numbers are stored as ASCIIZ strings, but compare as
+                              numbers
+        5    CURRENCY_FIELD   Treated as a number by the database
+        6    CATEGORY_FIELD   Stored as an ASCIIZ string with ";" separating each
+                              selection
+        7    TIME_FIELD       int: Minutes since midnight
+        8    DATE_FIELD       Points to char array[3];
+                              array[0] is Year: 0 starts at 1900
+                              array[1] is Month from 0...11
+                              array[2] is Day from 0...30
+        9    RADIO_FIELD      DataOffset points to actual offset of radio button byte.
+        10   NOTE_FIELD       The field is a note (which resides in a separate record);
+                              dataoffset points to the record number of the note.  If no
+                              note is attached, the record number pointed to should be -1.
+        11   GROUP_FIELD      Used for groupboxes; no data is attached.
+        12   STATIC_FIELD     Used for Static Text; no data is attached.
+        13   MULTILINE_FIELD  Same as a string, but the field can have CR/LFs.
+        14   LIST_FIELD       Doubles as a STATIC_FIELD
+        15   COMBO_FIELD      Doubles as a STRING_FIELD
+        16   USER_FIELD       The applications can define their own field types starting
+                              at USER_FIELD.
+                              NOTE: The FieldDef for user defined fields must have the
+                              status bit set to FIELDDEF_CALLBACK and a FieldCallback
+                              function provided.
+7       FieldID               char          Used to identify unique fields by
+                                            applications--not used.
+8...9   DataOffset            int           Offset of data into data record. If infor-
+                                            mation is at a fixed position in the record,
+                                            do not set FIELDDEF_RELATIVE.  If it is in a
+                                            variable position, set FIELDEF_RELATIVE. Then
+                                            DataOffset points at a fixed place in the
+                                            record where the true offset of the data (a
+                                            int) can be found.
+10      Flags                 char          Combination of the following bits:
+        FIELDDEF_NODATA       0x80          The FieldDef does not have any associated
+                                            data.
+        FIELDDEF_RESERVED     0x40          The FieldDef record is reserved (don't use).
+        FIELDDEF _RELATIVE    0x20          The DataOffset does not point to the actual
+                                            data, but points to a word.  This word is the
+                                            offset to the data.
+        FIELDDEF_NULLTITLE    0x10          The window related to the fielddef has no
+                                            title.
+11..12  Reserved              int           Only used by some fields:
+        BYTEBOOL_FIELD,WORDBOOL_FIELD: bitmask of bit to check.
+        RADIO_FIELD: value to stuff into data byte.
+        CATEGORY_FIELD: record number of associated CATEGORY_TYPE record.
+13..33  Name                  char          Space for 20 chars with trailing 0.
+</pre>
+</BODY>

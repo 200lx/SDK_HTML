@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComReset </TITLE></HEAD>
+<BODY>
+<H3>ComReset </H3>
+This call resets the specified port's buffers or modem.  ComReset is used to flush transmit or receive buffers, reset the transmitter flow control state (useful when the port received an XOFF, but no corresponding XON), or reset the modem connected to the port.  <P>
+<PRE><UL>
+<LI>Syntax:      err_t far ComReset(handle_t Handle, int Option) 
+<LI>Parameters:  handle_ t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>. 
+             int Option - The logical OR of any of the following reset options:
+             
+                          COM_RESET_LINE indicates no operation (included for HP 
+                          95LX compatibility only).  
+
+                          COM_RESET_TXB flushes the transmit buffer.  Any characters 
+                          in the UART buffers will still be transmitted.  
+
+                          COM_RESET_TXFLOW (for XON/XOFF flow control) forces the 
+                          transmitter into an &quot;unflow controlled&quot; state, i.e. assumes 
+                          an XON was received.  This option is useful when there
+                          is a possibility of a lost XON after an XOFF.  
+                          This parameter is ignored when hardware based flow control 
+                          is selected.  
+
+                          COM_RESET_RXB flushes the receive buffer.  
+
+                          COM_RESET_MODEM issues the modem's escape sequence 
+                          (DELAY, &quot;+++&quot;, DELAY) to place the modem in 
+                          command mode, then issues an &quot;ATZ&quot; command to 
+                          reset the modem, and wait the prescribed modem 
+                          &quot;settling time&quot; (.75 seconds?) before returning.  
+                          (Included for HP 95LX compatibility only.) 
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition. 
+             ENOTYOURS - The specified port has not been acquired by the calling 
+                         application.
+<LI>Comments:    ComOpen() must first be called in order to get a valid handle to the 
+             communications port.
+</UL></PRE>
+</BODY>
+</HTML>

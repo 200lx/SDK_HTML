@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MessageBox </TITLE></HEAD>
+<BODY>
+<H3>MessageBox </H3><P>
+A MessageBox pops up to warn or notify the user of some condition.  In many cases, this will be an error message, but can also be confirmation or informational message.  The message box displays the same as a dialog box, as a white box with a black border and gray shadow.  The title is also displayed the same way that it is with a dialog box, in a separate region above the client portion of the window.  The title is also drawn in reverse video when the message box receives the focus.  Inside the client portion of the message box are multiple text messages.  <P>
+<B>Window Structure Details</B> <P>
+<UL><LI>int x,y,w,h: These parameters give the display position and area of the message box.  </LI><P>
+<LI>PLHRES Title: Title defines the title of the MessageBox (displayed in a separate, rectangular region above the message box contents).  </LI><P>
+<LI>PLHDATA Data: Data is a &quot;near&quot; pointer to an array of indirect pointers (array of &quot;near&quot; pointers to &quot;far&quot; pointers) to the text strings that will be displayed inside the message box.  MessageBox displays each text string starting at the next line, and requires that each text string be null-terminated.  MessageBox displays the text following a &lt;CR&gt;&lt;LF&gt; sequence in any of the strings, starting at the next line in the message box.  That is, a two line message may be created by having an array of two pointers (each that points to a single line) or one pointer to a string with an embedded CR/LF.  </LI><P>
+<LI>UINT LogicalSize: LogicalSize gives the number of individual, null-terminated text strings to be displayed inside the message box.  LogicalSize should not reflect the number of lines displayed, only the number of pointers that Data is pointing to.  </LI><P>
+<LI>UINT Style: In addition to the global styles, MSG_NOSHADOW causes the window border to be drawn without a shadow around the bottom and right edges.  MSG_CENTER_LINES causes each of the text strings to be horizontally centered within the width of the message box.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object class handler.t </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>KEYSTROKE: The following keys are recognized: </LI><BR>
+Esc, and Enter destroy the message box.  <P>
+</UL>
+<UL><LI>DRAW: MessageBox draws the message box with any border and shadow and/or title.  </LI><P>
+<LI>APPEAR: If STYLE_WHCHAR is being used, the MessageBox handler converts the specified size of the window in terms of text characters to the corresponding display units size, including any window border and shadow.  MessageBox saves the resulting value in the w and h fields.  </LI><P>
+<LI>DISAPPEAR: If STYLE_WHCHAR is being used, MessageBox converts the calculated size of the window in terms of display units (w,h) back to the original size of the window in terms of text characters.  </LI><P>
+<LI>SETFOCUS: MessageBox passes the message on to Object and then causes the window title to be drawn in reverse video by issuing a DRAW, DRAW_TITLE message.  </LI><P>
+<LI>CREATE: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

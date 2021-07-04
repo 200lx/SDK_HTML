@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Init </TITLE></HEAD>
+<BODY>
+<H3>DB_Init </H3><P>
+This function is called at the beginning of the application to register the application with the database engine.  It is only called once per run for each application.  Before calling DB_Init, the application should register a far pointer table with the System Manager; failing to do this prevents the database from functioning.  You should reserve ten far pointer entries for each database file you plan on having open concurrently.  Two of these handles must be &quot;user&quot; handles.  See the code sample on
+<A HREF="11C0003B.HTM">page 11-444</A> for an example of registering the far pointer table.  <P>
+<UL><LI><Pre>Syntax:             int DB_Init(void); </Pre></LI><P>
+<LI><Pre>Returns:            DB_OK     Database was initialized.</Pre></LI><P>
+</UL><B>Note:</B> No error is returned if the far pointer table is not initialized when this function is called.  <P>
+<UL><LI><Pre>May Move Memory:    No <Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

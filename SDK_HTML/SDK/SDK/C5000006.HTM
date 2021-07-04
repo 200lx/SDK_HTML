@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Application Initialization and Termination </TITLE></HEAD>
+<BODY>
+<H3>Application Initialization and Termination </H3><P>
+The System Manager implements non-preemptive task swapping for System Manager compliant applications.  Hence, compliant applications are event driven and must make timely calls to the m_action function to receive keyboard input and other events.  <P>
+The System Manager reports keystrokes for normal keys, but reports a deactivate event when another application's hotkey is pressed.  In response to a deactivate event, the application is expected to do any necessary housekeeping to prepare for suspension and then request the next event.  The next event, which will be an activate event, will not be returned until this application is activated again.  Activation occurs when the application's hotkey is pressed, when all subsequently activated applications are quit, or when the application has been selected for termination from the Low Memory Close-Out menu (in which case, an E_TERM event will be returned rather than an E_ACTIVate).  <P>
+In response to an activate event, the application must redraw its screen.  For RAM efficiency, it is recommended that applications have a means of redisplaying the screen from primary data, rather than by saving a copy of display memory.  <P>
+The System Manager may also return a termination event at any time.  The application is required to respond to this as if the user issued a quit command, preceded by any user-interface variations needed to make clear what is happening.  For example, if an editor is being terminated and its buffer has been modified, the user should be prompted to save the file.  <P>
+If possible, when an application terminates, it should save its state information in a file.  When the application is subsequently relaunched, it can then inspect the file and reconstruct its state prior to termination.  <P>
+<P>
+</BODY>
+</HTML>

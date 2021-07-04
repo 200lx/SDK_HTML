@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_open_printer </TITLE></HEAD>
+<BODY>
+<H3>m_open_printer </H3>
+This call initializes the active printer's character translation table, establishes the baud rate, and prepares the communication channel (serial port) to converse with the printer.
+<PRE><UL>
+<LI>Syntax:         void m_open_printer() </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        None </LI>
+<LI>Related Calls:  <A HREF="c70000c8.htm">m_init_printer</A> is not necessary before this call.
+                <A HREF="c70000c3.htm">m_close_printer</A> must be called to release the printer when done.  </LI>
+<LI>Comments:       The active printer character translation table is determined by the
+                current setting of PrDriver in the SETTINGS data structure. 
+                A value of        0 = Epson FX-80
+                                  1 = HP LaserJet II and HP DeskJet
+                                  2 = IBM ProPrinter
+                The default setting in the Setup application is 1.  
+                The current character translation table may be changed by the user by
+                selecting a new printer type through the Setup application. </LI>
+</UL></PRE>
+</BODY>
+</HTML>

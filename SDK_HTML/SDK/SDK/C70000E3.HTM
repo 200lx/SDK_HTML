@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_asound </TITLE></HEAD>
+<BODY>
+<H3>m_asound </H3>
+This call generates one of several various sound patterns, as specified by <I>index</I>.  There are ten (0-9) supported patterns.  The first four (0-3) are used to generate tones for 1-2-3.  These sounds roughly match 1-2-3 sounds generated on an 8 MHz IBM AT .  (Note that 1-2-3 sounds are clock- dependent.) The remaining six sounds are more complicated alarm sounds.  
+<PRE><UL>
+<LI>Syntax:         void m_asound(index) </LI>
+<LI>Parameters:     int index - Number from 0-9 indicating desired sound to be played </LI>
+<LI>Returns:        None </LI>
+<LI>Related Calls:  <A HREF="c70000e6.htm">m_soundoff</A> may be used to stop a sound in progress.  </LI>
+<LI>Comments:       This call has been superceded by the full functionality available in 
+                the <A HREF="c70000e5.htm">m_play</A> call.  It is still available for use, but you will find more
+                flexibility in generating sounds through the m_play function call.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

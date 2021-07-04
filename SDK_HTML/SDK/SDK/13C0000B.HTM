@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>PCMCIA Wakeup </TITLE></HEAD>
+<BODY>
+<H1>PCMCIA Wakeup </H1><P>
+To date, there is no PCMCIA standard way defined for a card to wake up a unit.  However, the HP palmtop does have a plug-in card wake up scheme on GPIO pin 6.  GPIO pin 6 goes to the battery voltage detect 1 (BVD1) pin on the card, but is INVERTED in the process.  <P>
+The card must have a power supply independent from the palmtop because the card will not receive any power from the palmtop when the palmtop is off.  <P>
+The basic wakeup scheme is: <P>
+<UL><LI>The card should hold the BVD1 signal low until a wake up is desired at which time the signal should be driven high.  </LI><P>
+<LI>The palmtop should be configured to cause an interrupt on a low signal on GPIO 6 (remember that GPIO 6 is inverted from BVD1).  </LI><P>
+</UL>Some special considerations are: <P>
+<UL><LI>A low signal on BVD1 means a dead card battery for memory cards and hence if the card holds this signal low, the palmtop will give low card battery messages.  </LI><P>
+<LI>The GPIO 6 wakeup interrupt should not in general be left enabled all the time.  This is because you will be unable to turn the unit off if certain types of cards are present.  For example, a RAM card may cause a wakeup because a rising edge may be detected on BVD1 as the BVD1 signal decays from high (good battery) to low as power is removed from the card after turnoff.  Consequently, the GPIO 6 wakeup interrupt should only be enabled on the way into deep sleep when an appropriate card is inserted.  </LI><P>
+</UL>See the example program WAKEDEMO for a skeleton of code which enables plug-in card wakeup on an HP palmtop.  A RAM card can be used to demonstrate that this program is working as mentioned above.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 13h: Write Teletype String </TITLE></HEAD>
+<BODY>
+<H3>AH = 13h: Write Teletype String </H3><P>
+This function transfers a string to the video buffer for the active page starting at the specified cursor position.  There are 4 modes of operation controlled by the two least significant bits of AL.  If it is set, Bit-0, Cursor_Move, causes the cursor to be updated.  When Bit-1, Attributes_Present, is set, it specifies that the string contains alternating characters and attributes.  When clear, Bit-1 specifies that the string consists of characters only.  This function uses the Write Teletype Character mode so that BELL, CR, LF, and BS are treated as commands and not written into the video buffer.  <P>
+<UL><LI>Input: AH = 13h <BR>
+AL = Mode <BR>
+00h - String shares attribute in BL, cursor unchanged.  <BR>
+01h - String shares attribute in BL, cursor advanced <BR>
+02h - Each char has attribute, cursor unchanged <BR>
+03h - Each char has attribute, cursor advanced <BR>
+BH = Page (For Text Modes) <BR>
+BL = String attribute byte (for AL=00h or 01h only) <BR>
+(Bit 7 set means XOR pixel data if in graphics mode) <BR>
+CX = Length of string <BR>
+DH = y (Starting character Row address) <BR>
+DL = x (Starting character column address) <BR>
+ES:BP = Pointer to start of string <BR>
+Format of string is: <BR>
+Char, Char, ...  or <BR>
+Char, Attr, Char, Attr, ...  <BR>
+</UL>
+<UL><LI>Output: None (display memory is updated) </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>
+<P>
+</BODY>
+</HTML>

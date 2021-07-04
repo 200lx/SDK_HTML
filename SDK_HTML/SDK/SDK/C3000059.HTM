@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D2h: Remove (POP) Bitmap Data </TITLE></HEAD>
+<BODY>
+<H3>AH = D2h: Remove (POP) Bitmap Data </H3><P>
+This function will remove the top entry on the Bitmap stack (BMSTK), thus freeing the memory previously allocated to the referenced Bitmap data in the 16-KB Bitmap buffer, and the 10 bytes used for it's entry on the stack.  The referenced Bitmap data is not altered, it simply becomes unreferenced.  If the Load Bitmap function is subsequently invoked, the new Bitmap data will be written over the area that has become free.  See Function D1h for the interpretation of the output registers.  <P>
+<UL><LI>Input: AH = D2h <P>
+</UL>
+<UL><LI>Output: CC - AX = Bit Map ID (of popped Bit Map Entry) <BR>
+BX = n (#Symbols) <BR>
+CX = [h,w] (Cell Dimensions) <BR>
+DH = Status (1=Active, 0=NonActive) <BR>
+DL = Format (1,2,4,8) <BR>
+DI = Offset (From Start of 16K Buffer) <BR>
+CS - Error <BR>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX, DI, FLAGS </LI><P>
+<LI>Error conditions: BMSTK Empty </LI><P>
+</UL><P>
+</BODY>
+</HTML>

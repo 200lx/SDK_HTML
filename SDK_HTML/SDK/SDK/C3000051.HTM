@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Ch: Write Graphics Pixel </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Ch: Write Graphics Pixel </H3><P>
+This function writes a pixel on the screen in graphics video modes.  If bit 7 of register AL is set, an exclusive OR (XOR) is performed on the current pixel value in display memory and the bit value given in bit 0 (or bits 0,1 if in low resolution graphics modes) of register AL.  If bit 7 is clear, the specified pixel value REPLACES the current one at the given address.  The range of valid pixel (x,y) addresses depends on the video mode.  <P>
+<UL><LI>Input: AH = 0Ch <BR>
+AL = Pixel Color (bit 7 is XOR flag): <BR>
+  Bit 7: <BR>
+     If 1, XOR pixel with current value <BR>
+     If 0, replace current value with pixel <BR>
+  Bit 0: Pixel value if in hi-res graphics <BR>
+  Bits 1,0: Pixel value if in lo-res graphics <BR>
+BH = Page (not used for HP 100LX) <BR>
+CX = x (Column or Horizontal pixel address) <BR>
+DX = y (Row or Vertical pixel address) <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

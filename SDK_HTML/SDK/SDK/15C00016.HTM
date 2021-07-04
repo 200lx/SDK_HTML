@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Description </TITLE></HEAD>
+<BODY>
+<H3>Description</H3>
+
+The display system consists of the display controller, the display module, the display
+power supply, and dedicated portions of system RAM.<P>
+
+
+System RAM must be allocated for the display system when the display system is running
+and unblanked.  One portion of system RAM is called the frame buffer.  In text modes, the
+frame buffer is used for storing the characters to be displayed.  In graphics modes, the
+frame buffer is used for storing the pixel values.  Another portion of system RAM, called
+the font buffer, must be allocated when using text modes.  It is used to define the pixel
+information of characters in the current character set.<P>
+
+The display controller is the portion that resides on the Hornet chip.  Its function is
+to format the information in system RAM and generate the waveforms to display that
+information on the display module.  It may be divided into temporary storage buffers,
+control registers, processing modules, and the display interface.  The temporary storage
+buffers are transparent to programming.  They are used to reduce the system performance
+impact of using system RAM for the frame buffer and font buffer .  The control registers
+are used by software to control the format of the display.  The function of the various
+processing modules will be described by describing the registers that control them.<P>
+
+<A HREF="image/__dg1502.gif">Graphic</A><P>
+<P>
+</BODY>
+</HTML>

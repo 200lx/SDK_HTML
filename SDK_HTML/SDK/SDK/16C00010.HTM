@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Testing </TITLE></HEAD>
+<BODY>
+<H1>Testing </H1><P>
+A test pad (NTEST) has been included to force the part into test mode.  The following sections are be implemented as macro-cells and are tested using the appropriate off-the-shelf test program: <P>
+<UL><LI>The 80C186 CPU core </LI><P>
+<LI>The 8254 PIT </LI><P>
+<LI>The 8259 PIC </LI><P>
+<LI>The 16450 UART </LI><P>
+<LI>The GAHAN DAC </LI><P>
+<LI>The 2 80x16 RAM blocks </LI><P>
+</UL>The remaining blocks are tested using custom test programs.  <P>
+The XCPU pin allows the internal CPU to be disabled.  This allows for direct access to internal circuitry by driving external bus cycles.  GPIO provides an external clock input in this mode.  <P>
+There are two major test modes, DA test mode and HP test mode.  In HP test mode the NRES pad is inactive and the NTEST pad active.  Most HP mode testing will occur with the chip in XCPU mode to allow access that is direct as possible to the HP designed blocks on the chip.  DA test mode connects a specified macro cell to the chip pads for direct access testing.  All DA testing is done with the NRES and NTEST pads active.  <P>
+States for the NTEST and NRES pads are listed below.  <P>
+<P>
+<PRE>
+State:            NRES      NTEST     
+---------------------------------
+DA TEST MODE      0         0
+RESET             0         1
+HP TEST MODE      1         0
+NORMAL OPERATION  1         1
+---------------------------------
+</PRE>
+Clock pad bypass, forcing of the ONST on state signal, and refresh disable are provided by a three-bit register that is loaded on the falling edge of NTEST.  This register is only used in HP test mode and is reset when NRES=0.  The the pin assignments for loading the register are: <P>
+<P>
+<PRE>
+Function          Pad         Bit Name
+--------------------------------------
+BYPASS OSC.       KBI22       BYPASS 
+FORCE ON STATE    KBI23       FONST 
+DISABLE REFRESH   ON          NERFSH 
+--------------------------------------
+</PRE>
+When the BYPASS bit is set the NDSR pad is used instead of HXI for high frequency clock input, and the NDCD pad is used instead of LXI for low frequency clock input.  When the FONST bit is set, the ONST &quot;on state&quot; signal is forced active inside the Hornet chip.  When the NERFSH bit is set, no refresh cycles will occur.  <P>
+When in DA test mode, the contents of the TSEL register determine what DA macro-cell is under test.  TSEL data is loaded through the pads listed in the table below.  TSEL bit 6 is used for only one purpose, as an input to the 186 CPU core.  The TSEL register is clocked and selected by the KBI22, KBI23, and ON pads.  When KBI22=0 and KBI23=0, data will be clocked in on the rising edge of ON.  One possible procedure for loading data into the register is: <P>
+<OL><LI> Set KBI22, KBI23 to 1, set NRES, ON to 0.  Set the TSEL register pads to the desired values.  </LI><P>
+<LI> Set NTEST to 0.  At this point the MITE mode will be selected.  </LI><P>
+<LI> Set KBI22 and KBI23 to 0.  </LI><P>
+<LI> Set ON to 1.  </LI><P>
+<LI> At this point, the TSEL register will contain the value set on the TSEL register input pads.  </LI><P>
+</OL><P>
+<H2><A HREF="16c00011.htm">TSEL Register Pad and Bit Listing: </A></H2><P>
+<H2><A HREF="16c00012.htm">TSEL Register Decoding: </A></H2><P>
+<H2><A HREF="16c00013.htm">DA Test Mode Input Bus Mapping: </A></H2><P>
+<H2><A HREF="16c00014.htm">DA Test Mode Output Mapping: </A></H2><P>
+<H2><A HREF="16c00015.htm">DA Test Mode Bidirectional Mapping: </A></H2><P>
+</BODY>
+</HTML>

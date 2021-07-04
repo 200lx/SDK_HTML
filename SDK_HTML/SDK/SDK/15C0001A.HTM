@@ -1,0 +1,196 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Display Control Registers </TITLE></HEAD>
+<BODY>
+<H3>Display Control Registers</H3>
+These registers control the compatibility model and format of the display.  These
+registers are accessible at I/O location 0023h when the index register at I/O location
+0022h contains the index of that register.  These registers are cleared by a chip reset.
+<P>
+<PRE>
+Index   Bits    R/W     Description
+==========================================================================================
+-20h                    DspSetUp, the display setup register, is used for testing the
+                        display controller, for setting display operating modes, and for
+                        selecting the compatibility model and display environment.
+                        Standard display adapters do not have a similar register.
+        7-5     R/W     DspTest, the display test mode selection bits, are described
+                        later.  Set them to zero for correct display operation.
+        4       R/W     NoRTLmode, the disable row-then-line (line fetch on first line)
+                        mode, is rather difficult to describe.  In normal text mode
+                        display controller operation, the first scan line of every
+                        character row causes the characters and attributes to be fetched
+                        into the row buffer.  Then the pixels that make up the first line
+                        of the characters in that row are fetched into the line buffer.
+                        For subsequent lines, only the pixels are fetched, the data in
+                        the row buffer is re-used.  Setting this bit changes this action
+                        so th at only the row buffer is updated on the first scan line of
+                        every character row.  The pixel data for that line is ignored so
+                        that the font is forced to have vertical space for the first line
+                        of the character.
+        3       R/W     This bit, UCmode, enables update-on-change mode.  If this bit is
+                        clear, the display is refreshed continuously from system RAM.  If
+                        this bit is set, the display refreshes from system RAM only if the
+                        frame buffer was accessed within the last frame time.  The display
+                        will also refresh every half second to insure that characters and
+                        cursors blink properly.  If this bit is set and the criteria above
+                        are not met, the refresh is performed so that RAM on the display
+                        module is used, which should save power.  Note th at this mode
+                        will not work correctly for frame rate shaded modes or if a text
+                        mode uses a flashing (not blinking) cursor.
+        2       R/W     JagGrMode selects jaguar (HP 95LX) graphics.  When this bit is set
+                        in graphics modes:
+                        1) The display module is logically reduced in width by 160 dots
+                           by blanking 80 dots on the left and right sides,
+                        2) Blank lines caused by the vertical total adjust register are
+                           taken from the top and bottom of the display instead of just
+                           the bottom, and
+                        3) The graphics resolution is forced to high-resolution (1-bit per
+                           pixel) and the high-resolution graphics bit in the mode
+                           register is ignored.  These features can be combined with the
+                           dot doubler to display a 240x128 pixel Jaguar compatible
+                           graphics display as 480x128 dots centered on a 640x200 dot
+                           display module.  This bit is ignored in text modes.
+        1       R/W     CGAMode selects CGA registers.  When this bit is clear, the
+                        MDA/CGA registers are mapped at the MDA I/O addresses
+                        (03B0h-03BFh) and the frame buffer is mapped at the MDA frame
+                        buffer address (B0000h-B3FFFh).  When this bit is set, the MDA/CGA
+                        registers are mapped at the CGA I/O addresses (03D0h- 03DFh) and
+                        the frame buffer is mapped at the CGA frame buffer address
+                        (B8000h-BBFFFh).
+        0       R/W     DspEnable enables MDA/CGA registers and memory.  When this bit is
+                        clear, the MDA/CGA register spaces and the frame buffer memory
+                        are unmapped, meaning that the MDA/CGA register are not
+                        accessible, and the frame-buffer is not accessible at either of
+                        its designated addresses.  The frame-buffer could still be
+                        accessed via the bank mapper.  When this bit is clear the display
+                        controller will stop sending waveforms to the display module.
+                        The display voltage should be disabled.  When this bit is set,
+                        those register and memory spaces are enabled for writing.  Then
+                        the waveforms can be enabled with the DON bit in the system
+                        control register.
+------------------------------------------------------------------------------------------
+-21h                    DspSpd, the clock speed selection register, is used to adjust the
+                        clocks used internally by the display controller.
+        3-2     R/W     DotClk, the dot clock frequency bits, are used to set the
+                        frequency of the column clock to the display module.  Increasing
+                        values of these bits will divide the HFO frequency by values of 6,
+                        4, 3, and 2, respectively.
+        1-0     R/W     DspClk, the display DRAM access speed bits, are used to set the
+                        rate at which display accesses are made to the font buffer and
+                        the frame buffer.  Increasing values of these bits will divide the
+                        HFO frequency by values of 3, 2, 1.5, and 1.0, respectively.
+------------------------------------------------------------------------------------------
+-22h    7-0     R/W     RowTime, the row timer register controls the time interval between
+                        row updates and therefore the frame rate.  See &quot;Setup: Row Time
+                        and Frame Rate&quot; on <A HREF="15C0001C.HTM">page 15-516</A> for more information.
+------------------------------------------------------------------------------------------
+-23h    4-0     R/W     Contrast, the contrast control register, controls the duty-cycle
+                        of the waveform on the CCV pin which is used to control the
+                        contrast on the display module.  Low values should correspond to
+                        light-on-light displays and high values should correspond to dark-
+                        on-dark displays.  Setting this register to zero disables the
+                        contrast generation circuit.
+------------------------------------------------------------------------------------------
+-24h    6-0     R/W     HorzDsp, the horizontal displayed register, determines the number
+                        of characters displayed per line.  Graphics displays should be
+                        programmed as if the character cell was 16 pixels wide.  Standard
+                        IBM MDA and CGA adapters have an 8-bit horizontal displayed
+                        register with a similar function at index -01h in the CRTC.
+------------------------------------------------------------------------------------------
+-25h                    ChrWidth, the character width register, is used for controlling
+                        the width in dots and pixels of characters on the display.
+                        Standard adapters do not have a similar register.
+        2       R/W     DoubDot is the enable dot doubler.  When set this bit causes each
+                        dot to be sent to the display twice so that the display
+                        effectively has half as many dots of horizontal resolution.  This
+                        function is applicable to all display modes.  In text modes, it
+                        can be used to implement a low resolution alpha mode similar to
+                        that obtained by setting bit 0 of the mode register on standard
+                        adapters.  This bit should be cleared to obtain CGA compatible
+                        graphics modes.  This bit should be set and used in conjunction
+                        with the Jaguar compatibility bit in the setup register to obtain
+                        Jaguar-compatible graphics.
+        1-0     R/W     CellWid, the character cell width bits, determine the width in
+                        bits of the character cell.  Graphics modes (that are compatible)
+                        should be programmed for a character cell of 16-bits.  The width
+                        is determined as follows:
+                        Value   Description
+                        00      8-bits
+                        01      16-bits
+                        1x      10-bits
+------------------------------------------------------------------------------------------
+-26h    5-0     R/W     RowOff, the window row size offset register, is used to define a
+                        logical display in the frame buffer that is larger than the
+                        physical window.  Its value specifies the number of characters to
+                        skip at the end of each row.  The display controller skips over
+                        this number of words (two bytes per character) to the character
+                        that is to be displayed in the first column of the next row.
+                        Standard adapters do not have a similar register.
+------------------------------------------------------------------------------------------
+-27h    4-0     R/W     FontOff, the font offset register, points to the base of the font
+                        table within the font buffer.  Its value corresponds to the page
+                        number of the 256-word page that contains the first scan lines of
+                        all the characters in the character set.  Standard adapters do not
+                        have a similar register.
+------------------------------------------------------------------------------------------
+-28h    7-0     R/W     VertDsp, the vertical displayed register, should be set to the
+                        number of character rows to be displayed.  A 200 line MDA/CGA
+                        graphics display has 100 rows of 2 pixel high characters.  A
+                        128-line Jaguar graphics display has 128 rows of 1 pixel high
+                        characters.  Standard adapters have a 7-bit vertical displayed
+                        register with a similar function but at index -06h in the CRTC.
+------------------------------------------------------------------------------------------
+-29h    4-0     R/W     MaxScan, the maximum scan line register, should be set to one less
+                        than the pixel height of the character row.  Standard adapters
+                        have a similar register at index -09h in the CRTC.
+------------------------------------------------------------------------------------------
+-2Ah    5-0     R/W     VertAdj, the vertical adjust register, should be set to the number
+                        of unused scan lines (if any) at the bottom of the display.  The
+                        number of character rows times the height of characters plus this
+                        register should equal the number of scan lines in the display.  In
+                        Jaguar compatible graphics mode, this number of unused scan lines
+                        also appears at the top of the display.  Standard adapters have a
+                        similar register that is 5- bits wide at index -05h in the CRTC.
+------------------------------------------------------------------------------------------
+-2Bh    4-0     R/W     Underline, the underline scan line register, sets the scan line
+                        position of the underline within the character cell.  If the value
+                        of this register exceeds the value in the maximum scan line
+                        register, then underline attributes are ignored.  This register is
+                        ignored in graphics modes.  Standard adapters do not have a
+                        similar register.  Standard MDA adapters hard wire the underline
+                        to line 12 and program the cursor to overlay lines 11 and 12 of a
+                        14-line character cell (numbered 0-13).  Standard CGA adapters do
+                        not support underline.
+------------------------------------------------------------------------------------------
+-2Ch                    ShadeReg is the shading and color mapping register.  Standard
+                        adapters don't have anything like this.
+        3-2     R/W     ShadeMode determines shading technique selection.  These bits
+                        select the frame-rate shading technique used in 4-color text modes
+                        and frame-rate shaded low-resolution graphics modes.  They also
+                        select the bit- dithering technique used in bit-dithered
+                        low-resolution graphics modes.  See the sections on shading
+                        techniques.  These bits have no effect in high resolution
+                        graphics or jaguar graphics modes.
+        1       R/W     MAPSEL is the color mapping selection (color text modes) bit.
+                        Keep this bit clear in black and white (MDA compatible) text
+                        modes.  In color (CGA compatible) text modes, this bit determines
+                        the color mapping technique.  Clearing this bit selects a
+                        monochrome mapping style.  Setting the bit selects a color mapping
+                        style.  EnFRS is the enable frame-rate shading (low-resolution
+                        graphics modes) bit.  In low- resolution graphics modes, this bit
+                        enables frame-rate shading techniques.  Clearing this bit selects
+                        the use of a bit-dithered shading technique.  Setting this bit
+                        selects the use of a frame-rate shading technique.  The technique
+                        used is determined by the ShadeMode bits.  In high-resolution and
+                        Jaguar graphics modes, this bit has no effect.
+        0       R/W     Invert is the invert shades bit.  In black and white and 2-color
+                        modes, ON pixels normally appear dark and OFF pixels normally
+                        appear light.  In 4-color modes, pixels have a color value ranging
+                        from 0-3 with 3 corresponding to the darkest pixels.  Setting this
+                        bit will reverse these definitions.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

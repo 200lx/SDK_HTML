@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Manager Task Management and Task Control Blocks (TCB's) </TITLE></HEAD>
+<BODY>
+<H3>System Manager Task Management and Task Control Blocks (TCB's) </H3><P>
+Task Control Blocks (also known as TCB's) are the System Manager's method of tracking all the System Manager compliant applications in memory.  The SysMgr maintains a fixed array of TCB's, and each entry is fixed for a particular application (this explains why each application can only be open once).  This array contains the information necessary for the SysMgr to be able to swap back to an application, such as the SP and IP when the app was switched away, the ROM bank of the app (if it is in ROM), the applications hot key, the app's DS, etc.  <P>
+Although applications should not modify this array (something that is likely to confuse the System Manager and cause a machine crash), there are occasions where it is advantageous to read the TCB array.  Probably the most common of these is for intertask communication, where one task needs to know about another task's existance.  TCB indicies of applications are also required for launching or closing other apps.  The System Manager doesn't provide for direct calls to get other another task's status, but using the TCB array and the following information, you can figure it out.  <P>
+Two functions are important for TCB exploration: m_get_TCB and m_get_TCB_size.  m_get_TCB returns a far pointer to the System Manager TCB array (this location is fixed), and m_get_TCB_size returns the number of apps in the array.  The file TASK.H contains the structure definition for a Task Control Block.  The Application Manager also has a debugging tool to assist in determining what is going on with TCB's.  Get into the AppMgr, and hold down the Alt key.  Now press F9 four times, followed by F10.  Keep the Alt key down during the whole thing, and a screen will appear that looks something like this (this example is from the 200LX): <P>
+<PRE>
+n=001E N=001E TCB=18EB:3E48
+WQ:&gt;04
+#        DS        Key       Para      St        Name 
+00)      0000      0000                00        
+01)      3E09      B000                00        ApptBook 
+02)      3E09      AB00                00        LLRA Server 
+03)      0000      AC00                00        QHPLOADR.EXE 
+04)      2E6F      EE00      00E8      02        JTASK0.EXE 
+05)      0000      BF00                00        CCMAIL.EXE 
+06)      3E09      B400                00        Phone 
+07)      4552      BA00                00        Database 
+08)      3E09      BE00                00        NoteTaker 
+09)      4ADA      C600                00        WorldTime 
+0A)      3E09      BC00                00        1-2-3 
+0B)      2C19      FF00      0255      02        CALARMAP.EXE
+.
+.
+.
+</PRE>
+Notice in looking at the screen that COMMAND.COM is the last entry; this TCB is reserved for the DOS Box, and is specially treated by the System Manager.  <P>
+The first column is the index of the app in the TCB array, the second is the segment of the DS (which may be invalid if the application isn't loaded), the next is the hot key (BIOS scan key) that activates the application.  Para is the size of the app's DS in paragraphs, determined by examining DOS's MCB 16 bytes before the t_memseg of the TCB--see a good DOS reference for an explanation of Memory Control Blocks.  (This size information is absent in the AppMgr screen in the 100LX.) The next column is the application's status; the meaning of these is in SYSDEFS.H--PS_CLOSED, PS_ACTIVE, etc.  The last column is either the name of the executable (if it hasn't been launched yet), or the name that is registered with the system manager with m_reg_app().  <P>
+Since the name of the application changes depending on whether or not the app has been launched, and whether or not the name has been localized for foreign languages, the safest way to locate a particular application is to look for that application's hot key.  Hot keys are guaranteed to be unique by the System Manager; notice that even applications that cannot be launched by the user, such as the top card task (JTASK0), the alarm manager (CALARMAPP), and COMMAND.COM have unique &quot;invalid&quot; hot key entries.  Finding an application's hot key in the TCB array gives you a TCB index--this index is used in functions that communicate TASK information to the System Manager, such as setting up an InterTask Link, Launching, or Closing applications.  <P>
+<P>
+</BODY>
+</HTML>

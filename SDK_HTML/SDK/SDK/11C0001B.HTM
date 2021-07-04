@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_LoadFieldDefs </TITLE></HEAD>
+<BODY>
+<H3>DB_LoadFieldDefs </H3><P>
+This function loads the field definition blocks from the database, which happens automatically when the database is opened.  The field definitions are used by viewpoints and the FISL interpreter to determine the fields that can be sorted and filtered against.  The field definitions define the field name, type, and location in the record.  (The phonebook/general database also use field defs to maintain the fields input by the user.) Although this function is not typically needed, if the application writes to TYPE_FIELDDEF records, this function must be called to update the fielddefs in memory.  <P>
+<UL><LI><Pre>Syntax:             int DB_LoadFieldDefs(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          Fielddefs were read.  <P>
+                    DB_MEMORY      Not enough memory to load in the new 
+                                   fielddefs.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+<}Pre></UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB Header </TITLE></HEAD>
+<BODY>
+<H3>DB Header </H3><P>
+Only one of these records is in a database.  It immediately follows the signature.  <P>
+<pre>
+Offset  Name           Type          Contents 
+------  -------------  ------------  --------
+0...5   Record Header  RecordHeader  Although the format of a <a href="10C00003.HTM">RecordHeader</a> is above,
+                                     specifically for this record it is:
+                                     0x00 0x00 0x19 0x00 0x00 0x00.  
+6...7   Release Ver    int           Database release ver (0x0102) 
+8       FileType       char          'D' = General database and phone book
+                                     'W' = World Time
+                                     'N' = Notetaker
+                                     '2' = Appointment book 
+9       File Status    char          Bits: 0x01=Database already open
+                                     0x02=A record modified since last reconcile. This
+                                     bit is currently not used by anything except the
+                                     database engine.  
+10..11  CurrentViewpt  int           Record number of current viewpoint 
+12..13  NumRecords     int           Count of all records in database 
+14..17  LookupSeek     longint       File offset of lookup table
+                                     If LookupSeek is 0, the lookup table is missing
+                                     (i.e., the user has rebooted before the file was
+                                     closed), and it must be reconstructed by walking
+                                     through the database and reading record headers.
+18..22  LastReconcile  DBTimestamp   When database was last reconciled (or creation date
+                                     if never reconciled).  
+23..24  ViewptHash     int           "Magic" hash generated from the following system
+                                     settings:
+                                     Country, CodePage, Sort, Keyboard, Language, KEYBEZ
+                                     active.
+                                     Normally (on a US 100LX with no changes to these
+                                     settings) this is 0x8437.  ViewptHash is used to
+                                     keep viewpoint tables from going out of date if
+                                     system sort order changes.  If this number
+                                     mismatches on DB_Open, all viewpoint tables are
+                                     flagged as invalid and are recreated as needed.
+</pre>
+</HTML>
+</BODY>

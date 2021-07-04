@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Special TSR - System Manager Interface </TITLE></HEAD>
+<BODY>
+<H3>Special TSR - System Manager Interface </H3><P>
+The following Special handler header structure (represented here in MASM 5.1 compatible syntax) must be located starting at offset 0 of the load module.  The structure name is S_spec_tsr_hdr and is located in the file spectsr.mac.: <P>
+<PRE>
+TSR_hdr_init         DD           ? 
+</PRE>
+Set at compile (or link) time to the offset of the handler's initialization code.  System manager fills in the next word in the structure with the handler's code segment.  <P>
+<PRE>
+TSR_mem_bytes        DD           ? 
+</PRE>
+This field does not have to be set unless the handler's memory needs are greater than the file's size.  <P>
+<PRE>
+TSR_hdr_sig          DD           ? 
+</PRE>
+Validating bytes for identifying file as special handler.  <P>
+<PRE>
+TSR_hdr_parent       DB           ?  
+</PRE>
+Indicates load origin.  Value equals TCB index of loading application.  A value of 0ffh indicates that no application is currently associated with the handler.  <P>
+<P>
+</BODY>
+</HTML>

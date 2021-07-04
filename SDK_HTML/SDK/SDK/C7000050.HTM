@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_parse_date </TITLE></HEAD>
+<BODY>
+<H3>m_parse_date </H3>
+This function parses a null-terminated input string according to rule, and fills in the day, date, week, and year fields of the DTM structure (the time-of-day fields are unaffected).  m_parse_date sets unspecified fields that do not cause parsing errors to 0.  <P>
+The available rules are as follows (found in SETTINGS.H): <P>
+Years with the rules above must be in the range of 1900 to 2099.  Two-digit input of years is assumed to be in the range of 1980 to 2079.  For parsing of arbitrary years, or DR_ANY_YEAR (0x8) onto the rule code.  <P>
+0 - rule appropriate to currently selected system date format.<BR>  
+1 - DR_DMY_LIM - date, month, year and year must be in limited range. <BR>
+2 - DR_MDY_LIM - month, date, year and year must be in limited range.  <BR>
+3 - DR_YMD_LIM - year, month, date and year must be in limited range.  <BR>
+4 - DR_MD - just month and date <BR>
+5 - DR_DM - just date and month <BR>
+6 - DR_MY_LIM - month and year and year must be in limited range.  
+<PRE><UL>
+<LI>Syntax:      int m_parse_date(int rule, char *input, DTM *dtm) 
+<LI>Parameters:  int rule Rule - by which to parse date information
+             char *input - Pointer to data to be parsed 
+             DTM *dtm - Pointer to DTM structure to receive parsed data 
+<LI>Returns:     0 - if parsing is successful 
+             Non-zero value - if input is improperly formatted or an invalid value
+</UL></PRE>
+</BODY>
+</HTML>

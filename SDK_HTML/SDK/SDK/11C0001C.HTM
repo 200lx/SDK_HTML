@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_GetField </TITLE></HEAD>
+<BODY>
+<H3>DB_GetField </H3><P>
+This function gets a field from a preloaded data record.  <I>srcrec</I> points to the buffer in memory that the record has been loaded into,
+<I>index</I> is the index of the field you want to retrieve, and <I>string</I> and <I>bufsize</I> indicate the buffer and size of the area that will contain the field's contents (in string form) after the call.  <P>
+<UL><LI><Pre>Syntax:             int DB_GetField(DBBLOCK *dblk, void far *srcrec,int index, 
+                    char far *string, int bufsize); </LI><P>
+<LI>Returns:            DB_OK          Field was returned.  <P>
+                    DB_NOFIELD     The requested field is deleted or does not 
+                                    exist.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

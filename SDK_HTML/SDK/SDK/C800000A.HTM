@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Other LHAPI Details </TITLE></HEAD>
+<BODY>
+<H1>Other LHAPI Details </H1><P>
+Other miscellaneous topics on how to make LHAPI work for you.  <P>
+<B>Global and Local Clipping.</B>  <P>
+When a window is destroyed, how does the underneath screen get restored?  If the window was created with the style STYLE_SAVEUNDER, the screen underneath the window was (probably) saved in a buffer, which will just be restored to the screen.  If that style is not used (and its use is only encouraged sparingly), then LHAPI needs to send the windows underneath DRAW messages to repair that portion of the screen.  To prevent distracting flashing of the screen, LHAPI, in cooperation with the 100LX/200LX graphics subsystem, sets clipping regions.  When a window is destroyed, a Global clipping region is set to encompass that window's screen extent.  All graphics output through the ROM graphics routines will be clipped to the rectangle that formerly displayed that window's output.  All active windows are then sent a DRAW message.  They will all draw themselves, but only if their window surface intersects the destroyed window will it actually show up.  <P>
+In addition to a GlobalClipping region, a LocalClipping region can be set by an application to prevent it from drawing outside a certain area.  The Edit and ListBox classes do this to keep long words from overflowing the bounds of the box on screen.  The 100LX/200LX graphics only directly supports one level of clipping--LHAPI internally manages intersecting the two and passing the results on to the graphics subsystem.  <P>
+LHAPI provides calls for managing clipping regions.  If an application window needs to clip, it should use SetLocalClipping().  LHAPI should be the only one calling SetGlobalClipping, and it should be the only one calling the clipping services in the ROM graphics directly.  <P>
+<B>Invisible Windows, or How do I prevent flashing?</B>  <P>
+If you read the previous topic about clipping, you might wonder &quot;With all that redrawing going on, how come the built-in applications don't flash as much as mine does?&quot; This might involves a little optimization of your application.  In the 100LX/200LX software, where there are full screen dialogs or card views, the underlying index view is still a window, but we mark it invisible.  This prevents a useless redraw of the underlying index view if you task switch to the application, or if another window comes up and is destroyed.  If you have a dialog that is full screen, or another window that completely overlays another, you may want to put code in its CREATE case that makes the underlying window invisible and code in its DESTROY case to make it visible again.  Another way to use invisible/visible windows is in a dialog that has options that are dependent on other selections.  Checking a check box might make more options on that page accessible, which could be done by hiding the windows initially, and tying the check box checking to make those extra windows visible.  <P>
+Invisible windows are automatically handled in all the LHAPI supplied classes, but LHAPI doesn't do anything for your own window classes.  For windows that you want to respond to STYLE_INVISIBLE, you will need to put a test in your window's draw handler to break, like this: <P>
+<PRE>int far MyHandler(PLHWINDOW Wnd, WORD Message, WORD Data, WORD Extra) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>switch (Message) { </PRE><P>
+<PRE>     case DRAW: </PRE><P>
+<PRE>          /* Make this window ignore all drawing if it is marked as Invisible */ </PRE><P>
+<PRE>          if (Wnd-&gt;Style&amp;STYLE_INVISIBLE) break; </PRE><P>
+<PRE></PRE><P>
+<PRE>          /* Do the rest of the window's drawing...  */ </PRE><P>
+<PRE>          .  </PRE><P>
+<PRE>          .  </PRE><P>
+<PRE>          .  </PRE><P>
+<PRE>          } </PRE><P>
+<PRE>} </PRE><P>
+<P>
+If you set windows to be visible or invisible, you need to not only set the STYLE_INVISIBLE bit, but also the STATUS_VISIBLE bit.  Keeping these two bits in sync is important when LHAPI trys to redraw all your windows on a ReactivateLHAPI; some of the windows might be ignored if they don't have the STATUS_VISIBLE bit set accordingly.  So to set a window Wnd Invisible, use: <P>
+<PRE>     Wnd-&gt;Style |= STYLE_INVISIBLE; </PRE><P>
+<PRE>     Wnd-&gt;Status &amp;= ~STATUS_VISIBLE; </PRE><P>
+and to set it visible again use: <P>
+<PRE>     Wnd-&gt;Style &amp;= ~STYLE_INVISIBLE; </PRE><P>
+<PRE>     Wnd-&gt;Status |= STATUS_VISIBLE; </PRE><P>
+Obviously, when making the window visible again, you will need to send the window a draw message at some point to cause the window to be redrawn!  <P>
+<B>Dynamic Function Keys.</B>  <P>
+In another attempt to minimize screen flash, LHAPI will not redraw the function keys if it can help it.  If many windows are being created and destroyed with the same set of function keys, LHAPI does a good job of not wasting CPU cycles redrawing the function keys that are already there.  If you are trying to manage a set of dynamic function keys, i.e.  a LHFKEY array that you are setting up at run time, you might have problems.  LHAPI will only display the function keys the first time they are displayed, since it &quot;knows&quot; whether the set is new or not by comparing pointers.  Setting the FkeyPtr field in your LHAPI block to 0 after you make changes to you function keys will ensure they will be displayed the next time around.  <P>
+If you want to prevent function keys from being displayed, you can set the focus window's Fkey field to NO_FKEYS (the static approach).  Another way to do the same thing that is a little bit more dynamic is by clearing the DRAW_FKEYS bit from the Data word in that windowhandler before passing it on to Object.  The Object handler is the one that updates the function keys (if the DRAW message's Data field has the DRAW_FKEYS bit set).  <P>
+<B>Title Windows and Maintaining Far Pointers. </B> <P>
+Since Titles of windows need to be near pointers to far pointers to strings, this means that if the data segment of the application moves, those far title pointers need to be fixed with the new DS.  These are called &quot;resourced&quot; strings, since the double indirection is there to allow the messages to be read in from resource files.  Resource files are very convienent when localizing your product for foreign environments, since the resource file contains the strings, and that is the only piece of your product that needs to change.  See the System Manager chapters for more information on resourcing strings.  <P>
+There are two common ways to fix up your pointers.  The first and safest method is to let the System Manager automatically manager these pointers.  In your far pointer table, allocate enough extra entries for all of your resourced strings.  When you register the table with the System Manager, set the number of user entries (the 3rd parameter) to the number of these far title pointers.  In initialization, fill the user entries with your far pointers to the strings.  Make sure you use entries starting from the back of the table, not the front.  For example: <P>
+You need to allocate 10 memory blocks, and you have 125 messages that are resourced.  Your m_reg_far statement would look like this: <P>
+<PRE>     char far *MyFarPointerTable[135]; </PRE><P>
+<PRE>     m_reg_far(&amp;MyFarPointerTable,135,125); </PRE><P>
+Now when filling the table with your far pointers to your resourced strings, start at the end of the table; the 125 user entries that you reserved are the last 125 entries.  The first 10 entries are reserved for the System Manager to manage any far memory blocks you allocate within your application.  Your windows will have near pointers that will point into the far pointer table, and the far pointer entries will point to the strings.  The simplest possible scenario for this would be: <P>
+<PRE>char MyMessage[]=&quot;Hello World!&quot;; </PRE><P>
+<PRE></PRE><P>
+<PRE>char far *MyFarPointerTable[1]; </PRE><P>
+<PRE></PRE><P>
+<PRE>LHWINDOW MyDialogBox={DialogBox,0,0,640,180,&amp;MyFarPointerTable[0]}; </PRE><P>
+<PRE></PRE><P>
+<PRE>void Initialize(void) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>m_reg_far(&amp;MyFarPointerTable, 1, 1); </PRE><P>
+<PRE>MyFarPointerTable[0] = MyMessage; </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>} </PRE><P>
+The benefit of this method is that the System Manager will automatically take care of fixing the far pointers any time your application's DS moves.  Once it is set up, you never have to worry about it again.  Herein lies the biggest problem with this method; setting it up is not trivial because your windows have to give a far pointer table entry.  This isn't very descriptive in the Window Title since it is just a table index, and also makes managing lots of messages difficult.  <P>
+Another approach that requires more dilligence on the application writer's part, but that preserves an easy naming scheme, is to manually fix the pointers.  This approach requires that you put all the far pointers into a table that you fix up during Initialization, Reactivates, and Memory allocation calls.  This might look a lil' sumthin' like this: char far *MyMessage=&quot;Hello World!&quot;; <P>
+<PRE>char far **StringTable[]={ </PRE><P>
+<PRE></PRE><P>
+<PRE>&amp;MyMessage, </PRE><P>
+<PRE>}; </PRE><P>
+<PRE></PRE><P>
+<PRE>LHWINDOW MyDialogBox={DialogBox,0,0,640,180,&amp;MyMessage}; </PRE><P>
+<PRE></PRE><P>
+<PRE>void FixupFarPtrs(void) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>int i; </PRE><P>
+<PRE>int dataseg; </PRE><P>
+<PRE>_asm { </PRE><P>
+<PRE>mov ax,ds </PRE><P>
+<PRE>mov dataseg,ax </PRE><P>
+<PRE>} </PRE><P>
+<PRE>for (i=0; i&lt;countof(StringTable); i++) </PRE><P>
+<PRE>*(((int *)(StringTable[i]))+1) = dataseg; </PRE><P>
+<PRE>} </PRE><P>
+<PRE></PRE><P>
+<PRE>void Initialize(void) </PRE><P>
+<PRE>{ </PRE><P>
+<PRE>FixupFarPtrs(); </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>.  </PRE><P>
+<PRE>} </PRE><P>
+With this approach, you will need to be very careful to make sure you call FixupFarPtrs() whenever you get an E_ACTIV event, or whenever you allocate memory.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>FileListBox </TITLE></HEAD>
+<BODY>
+<H3>FileListBox </H3><P>
+FileListBox is a subclass of list that is aware of the file tree.  The ListBox will show a sorted list of files.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>PLHMENU Menu: <BR>
+FileListBox uses Menu as a UINT that contains the maximum number of elements possible in the list.  Note that this differs from the ListBoxes LogicalSize field because the number of elements that the list contains at any one time (LogicalSize) will be less than or equal to the maximum (Menu).  Use This maximum while refreshing the list contents with the files from the current directory so the list is not overflowed.  </LI><P>
+<LI>All other details: See the List class.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>NOTIFY: If the subclass is (i.e.  Data set to) NOTIFY_UPDATE, the FileListBox refreshes its file list for the file path and specification passed in Extra.  The list is resorted and DRAWn.  </LI><P>
+<LI>KEYSTROKE: Passed to the ListBox class handler.  </LI><P>
+<LI>DRAW: Passed to the ListBox class handler.  </LI><P>
+<LI>CREATE: Passed to the ListBox class handler.  </LI><P>
+<LI>SETFOCUS: Passed to the ListBox class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the ListBox class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the ListBox class handler.  </LI><P>
+<LI>DESTROY: Passed to the ListBox class handler.  </LI><P>
+<LI>TERMINATE: Passed to the ListBox class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the ListBox class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the ListBox class handler.  </LI><P>
+<LI>COMMAND: Passed to the ListBox class handler.  </LI><P>
+<LI>APPEAR: Passed to the ListBox class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the ListBox class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

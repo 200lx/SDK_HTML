@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Miscellaneous Registers </TITLE></HEAD>
+<BODY>
+<H3>Miscellaneous Registers</H3>
+<PRE>
+        R/W
+Index   Mode    Description
+==========================================================================================
+-10h    R/W     IR Format Register (IRFMAT)
+                bit 7 = 1 invert sense of LED signal
+                      = 0 normal sense of LED signal
+                bit 6 = 1 enable LED buffer empty interrupt
+                bit 5 = 1 LED buffer full (read only)
+                bit 4 = 0 single pulse transmission mode
+                      = 1 multiple pulse transmission mode
+                bit 3 = 0 modulate using 32.768KHz
+                      = 1 modulate using baud rate generator
+                bit 2 = 1 IR UART communication mode
+                bit 1 = 1 modulated communication mode
+                bit 0 = 1 REDEYE transmit mode
+------------------------------------------------------------------------------------------
+-11h    R/W     IR Transmit / Receive Register
+                bit 7     state of the IRI pin (read only)
+                bit 6 = 1 enable IR interrupt on IRI = 1
+                bit 5 = 1 IR event has occurred, must be cleared by software
+                bits 4-3  unused
+                bit 2 = 1 gate output when in modulated communication mode
+                bit 1 = 0 transmit &quot;off&quot; half-bit in REDEYE format
+                      = 1 transmit &quot;on&quot; half-bit in REDEYE format
+                bit 0 = 1 turn on LED driver, used for software controlled transmissions
+------------------------------------------------------------------------------------------
+-12h    R/W     ADC Control Register
+                bits 7-5  unused except for testing
+                bit 4 = 1 ADC is busy doing a conversion; read only
+                bit 3 = 1 DAC value above analog input; read only (comparator output)
+                bits 2-1  input Voltage Channel Select, where:
+                      = 00 system batteries
+                      = 01 backup battery
+                      = 10 reference voltage
+                      = 11 VSS
+                bit 0 = 1 enable ADC
+------------------------------------------------------------------------------------------
+-13h    R/W     ADC Value Register
+                bits 5-0  ADC value
+                bits 7-6  unused (read zero)
+------------------------------------------------------------------------------------------
+-18h    R/W     First Byte of Interrupt Enable Register
+                bits 7-2  unused
+                bit 1 = 1 force PC Keyboard interrupt (IRQ1)
+                bit 0 = 1 enable timer 0 interrupt/wakeup (IRQ0)
+------------------------------------------------------------------------------------------
+-19h    R/W     Second Byte of Interrupt Enable Register
+                bit 7 = 1 IR interrupt/wakeup (IRQ2)
+                bit 6 = 1 keyboard interrupt/wakeup (IRQ2)
+                bit 5 = 1 ring detect interrupt/wakeup (IRQ2)
+                bit 4 = 1 RX pad interrupt/wakeup (IRQ2)
+                bit 3 = 1 timer 1 interrupt/wakeup (IRQ2)
+                bit 2 = 1 RTC interrupt/wakeup (IRQ2)
+                bit 1 = 1 display cursor interrupt (IRQ2)
+                bit 0 = 1 low power interrupt (NMI)
+------------------------------------------------------------------------------------------
+-1Ah    R/W     Interrupt Source Register
+                bit 7 = 1 IR interrupt (IRQ2)
+                bit 6 = 1 keyboard interrupt (IRQ2)
+                bit 5 = 1 ring detect interrupt (IRQ2)
+                bit 4 = 1 RX pad interrupt (IRQ2)
+                bit 3 = 1 timer 1 interrupt (IRQ2)
+                bit 2 = 1 RTC underflow (IRQ2)
+                bit 1 = 1 display cursor interrupt (IRQ2)
+                bit 0 = 1 low power interrupt (NMI)
+------------------------------------------------------------------------------------------
+-1Eh    R/W     System Control Register
+                bits 7-6 speaker volume
+                      = 00 off (0V)
+                      = 01 soft (3V)
+                      = 10 medium (5V)
+                      = 11 loud (8V)
+                bits 5-4 crystal speed selection
+                      = 00 10.738636 MHz
+                      = 01 15.836773 MHz
+                      = 10 21.477272 MHz
+                      = 11 31.673550 MHz
+                bit 3      unused
+                bit 2 = 1  display on
+                bit 1 = 1  unit has been in backup mode
+                bit 0 = 1  CPU shutdown (set only)
+------------------------------------------------------------------------------------------
+-1Fh    R/W     System Status Register
+                bit 7 = 0  A reset has occurred.  This bit will be cleared by a system
+                           reset; it is initialized to a one by the warmstart code.
+                bit 6      unused
+                bit 5      unused
+                bit 4 = 1  Internal 8254, 8259, or 8255 has been accessed.
+                bit 3 = 1  External /IO device has been accessed.
+                bit 2 = 1  PC-compatible MDA/CGA register has been accessed
+                bit 1 = 1  video RAM has been accessed
+                bit 0 = 1  UART has been accessed
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

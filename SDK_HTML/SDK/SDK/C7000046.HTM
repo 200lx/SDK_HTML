@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Alarm Protocol Information </TITLE></HEAD>
+<BODY>
+<H3>Alarm Protocol Information </H3>
+The alarm functions permit an application to queue an alarm for any time into the future and to get information on the most current pending alarm of a given type.  The system alarm queue size is set to 5.  Although an application may queue more than one alarm by specifying a different type (<I>na_special</I>), this practice is discouraged.  <P>
+If an application supports alarm queueing, it must make sure upon initialization that the System Manager's alarm queue is synchronized with its version of pending alarms.  To do this, the application must remove all pending alarms set by that application by issuing the <A HREF="c700005a.htm">m_xalarm</A> call with the type field set for each possible alarm type.  Next, the application must queue up the most current alarm of each type <A HREF="c700004e.htm">m_nalarm</A>.  <P>
+After the alarm has been shown to the user or audible-only completed, the owing application is invoked and receives an E_ALARM_EXP event type.  The application determines which alarm went off by examining a field passed in the event structure, <I>e_alm_special</I>.  If other alarms are pending, the application can then queue the next alarm with m_nalarm, thus beginning a new cycle.  <P>
+</BODY>
+</HTML>

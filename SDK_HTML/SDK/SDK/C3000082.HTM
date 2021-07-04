@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 4C00h: Select Keyboard </TITLE></HEAD>
+<BODY>
+<H3>AX = 4C00h: Select Keyboard </H3><P>
+This service selects the keyboard type from among those provided.  If more than one keyboard is requested or the requested type is not provided, the service will return with an error indication.  If successful, the keyboard type is recorded in the BIOS RAM Variable KYBFLG.  <P>
+<UL><LI>Input: AX = 4C00h <BR>
+BX = keyboard code <BR>
+= 0008h FINLAND <BR>
+= 0010h FRANCE <BR>
+= 0020h GERMANY <BR>
+= 0040h ITALY <BR>
+= 0200h PORTUGUL <BR>
+= 0400h SPAIN <BR>
+= 0800h SWEDEN <BR>
+= 8000h US <P>
+</UL>
+<UL><LI>Output: AH = 0ffh if more than one keyboard requested or keyboard type is not supported <BR>
+AH = 000h if keyboard successfully selected <P>
+</UL>
+<UL><LI>Registers modified AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

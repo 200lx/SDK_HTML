@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Manager and Task Management </TITLE></HEAD>
+<BODY>
+<H3>System Manager and Task Management </H3><P>
+The System Manager manages tasks differently under different circumstances.  First, consider the case in which an application is being selected while no applications are currently active and the Business Card screen is showing.  <P>
+When the user starts an application, the System Manager loads the application into memory, sets up the segment registers, and transfers control to the application's entry point.  For built-in applications, the load step involves allocating enough system RAM for the application's data and copying the initialized data from ROM to RAM.  For loading external applications, the System Manager must allocate system RAM for the application's code.  In this case, both the code and initialized data are read from disk into memory.  <P>
+Once started, an application enters an event loop which calls the System Manager m_action function to get the next keystroke or other event.  An application is considered to be open until it calls the System Manager m_action(DO_FINI) or the m_fini function, which is normally when the user quits the application.  An open application is considered active if it has control, and inactive if another application has control.  <P>
+Next, consider the case in which an application is being selected but a different application is currently active.  In this case, the System Manager not only needs to load and launch the new application, but also needs to deactivate the previous application.  <P>
+When switching to a new application, the System Manager sends a deactivate event to the current application, which changes its status from active to inactive, and then starts the new one.  If there is insufficient memory to load the new application, the System Manager displays a Low Memory Close Down screen and allows the user to terminate one of the open applications.  Once there is sufficient memory, the System Manager loads and launches the new application, while the data for the other open (but inactive) applications remain in memory.  <P>
+Special handling of the code space is required for external applications.  Only one external application's code is kept in memory at any one time, so if the new application is an external application, and another external application is opened, this code space (after possible expansion) is reused for the code of the new external application.  This means that EXM's cannot take over interrupt vectors, without taking very complex, extensive precautions.  It is recommended that a &quot;Special TSR&quot; be used instead.  Special TSRs are System Manager compliant TSRs, and are detailed elsewhere in this manual.  It also means that no variable data may be stored in the code segment; only constants.  <P>
+Note that whenever there is an additional external (EXM) application open, the external application code space is not reduced in size.  The reason is that there must always be enough code space to restart any of the open (but inactive) external applications.  <P>
+<H2><A HREF="c500000b.htm">System Manager Task Management and Task Control Blocks (TCB's) </A></H2><P>
+</BODY>
+</HTML>

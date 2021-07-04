@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 06h: Scroll Window Up </TITLE></HEAD>
+<BODY>
+<H3>AH = 06h: Scroll Window Up </H3><P>
+This function scrolls the contents of a specified rectangular region in the display up a specified number of lines.  Text that is scrolled beyond the top of the window is lost.  The new lines that appear at the bottom of the window are filled with ASCII blanks having the specified attribute.  The number of lines to be scrolled is passed in AL.  If AL=0, the entire window is blanked.  <P>
+<UL><LI>Input: AH = 06h <BR>
+AL = Number of lines to scroll (0 = blanks entire scroll area) BH = Attribute of blanked lines (alpha mode) or Fill character for blanked lines (graphics mode) <BR>
+CH = r1 Row address of character in upper left corner of window <BR>
+CL = c1 Column address of character in upper left corner of window <BR>
+DH = r2 Row address of character in lower right corner of window <BR>
+DL = c2 Column address of character in lower right corner of window <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL>As a special case (AL = 0), this routine may be used to initialize a rectangular section of the display to all blanks with a specified attribute.  <P>
+In text modes that support multiple pages, this function affects only the page currently being displayed.  The window is specified by providing the row and column addresses of the upper left and lower right corners.  The video mode may be either Text or Graphics.  <P>
+<P>
+</BODY>
+</HTML>

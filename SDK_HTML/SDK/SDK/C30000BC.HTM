@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 05h: Set RTC Date </TITLE></HEAD>
+<BODY>
+<H3>AH = 05h: Set RTC Date </H3><P>
+This function sets the date in the real-time clock.  Also, this function sets bit 7 of the BIOS RAM variable [SysFlags].  <P>
+<UL><LI>Input: AH = 05h <BR>
+CH = Century in BCD: <BR>
+     19h if 20th century <BR>
+     20h if 21st century <BR>
+CL = Year in BCD <BR>
+DH = Month in BCD <BR>
+DL = Day in BCD <BR>
+Carry Clear <P>
+</UL>
+<UL><LI>Output: AH = 00h </LI><P>
+<LI>Error conditions: Carry Set if RTC inputs invalid, or old RTC data invalid.  </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

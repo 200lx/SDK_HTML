@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Pre-Processing (Before Int 09h) </TITLE></HEAD>
+<BODY>
+<H3>Pre-Processing (Before Int 09h) </H3><P>
+In HP palmtops, the special hardware that would normally scan and debounce the keyboard and generate the IRQ1 interrupt is replaced by software that uses two of the interrupt sources (KBD, TIMER1) tied to IRQ2 (Int 0Ah) to perform a function similar to a PC with keyboard hardware.  While the KBD interrupt is dedicated to key processing, the TIMER1 interrupt has other responsibilities.  When in use for keyboard processing, TIMER1 operates in Mode 0 (Terminal Count).  Otherwise, TIMER1 operates in Mode 3 (square wave) at a frequency of 18.2 Hz performing periodic system maintenance services (battery measurements, charger timing, and graphics cursor blink).  A state variable [T1_State] controls the action taken on the next TIMER1 Interrupt service.  The TIMER1 states are: <P>
+<PRE>
+State    Action
+----------------------------------------------------
+0        Polling (Periodic System Maintenance)
+1        KeyDebounce (Software Keyboard Debounce)
+2        MakeScan (Scancode creation)
+3        SendScan (Int 09h invocation)
+</PRE>
+Normally, when all keys are up, KBD is enabled and TIMER1 is in the polling state.  When a key is pressed, the KBD service routine schedules a TIMER1 KeyDebounce interrupt and the KBD interrupt is disabled.  <P>
+KeyDebounce scans the keyboard and produces a Keyboard Bitmap (80 bits, with bit1 = 1 for a key down) in the RAM variable TMPBM and detects changes in this variable from the previous scan.  If there were changes, a stability counter, Debounce, is reset, and the KeyDebounce service is rescheduled to occur after a brief duration.  If there were no changes since the last keyboard scan, Debounce is incremented.  If Debounce is less than the value used to indicate a stable keyboard, the KeyDebounce service is rescheduled on TIMER1.  <P>
+If the keyboard appears stable, a Timer1 MakeScan interrupt is scheduled.  The MakeScan service generates and then pushes the appropriate ScanCode(s) into a dedicated buffer (not the usual keyboard buffer).  The KBD interrupt is re-enabled, and a SendScan interrupt is scheduled on TIMER1.  <P>
+The SendScan service pops the stored Scancodes and invokes Int 09h, completing simulation of what is normally done in Hardware on a standard PC.  The invocation of the Int 09h service routine in HP palmtop is not done with an Int 09h instruction.  Instead, a special feature of the &quot;Hornet&quot; hardware chip is used which makes the invocation look like a Hardware Interrupt to the 8259 Interrupt Controller.  Finally, when all keys have come up, and the Int 09h invocations have been completed, Timer1 is put back into the Polling state.  <P>
+<P>
+</BODY>
+</HTML>

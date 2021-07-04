@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Deep Sleep Wakeup Sources </TITLE></HEAD>
+<BODY>
+<H3>Deep Sleep Wakeup Sources </H3><P>
+The RTC, [ON] key, RX, and RING Interrupts are typical events that will &quot;awaken&quot; a unit from deep sleep, causing a transition to the RUN State.  The CPU will not begin processing instructions for between 35 and 44 milliseconds after the actual wakeup event occurs.  For serial RX wakeups at any reasonable baud rate, data will surely be lost due to overrun errors.  In addition, the software requires about 750 microseconds to arrive at the code that begins to monitor the serial port.  These delays must be considered for serial code designed to be capable of waking up the HP palmtop from deep sleep.  A true serial RING wakeup from the deep sleep state requires RING to be asserted for about 0.4 seconds.  A genuine RX wakeup requires four valid characters to be received before two data errors are detected.  Note that one of these data errors will almost certainly be the guaranteed overrun error.  <P>
+</BODY>
+</HTML>

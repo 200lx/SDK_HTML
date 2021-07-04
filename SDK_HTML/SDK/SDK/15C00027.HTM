@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BitBlt Co-Processor </TITLE></HEAD>
+<BODY>
+<H3>BitBlt Co-Processor</H3>
+BITBLT is an acronym for bit block level transfer.  The Hornet BitBlt block is a
+specialized co-processor designed to accelerate bit-mapped block transfers into the CGA
+compatible graphics frame-buffer.  It operates as a DMA co-processor where the transfer
+is set up and then enabled by the CPU.  The BitBlt block then obtains control of the bus
+from the CPU and performs the transfer.<P>
+This BitBlt is rather limited in its capabilities.  It supports the following
+features/limitations:<P>
+<UL>
+<LI>Horizontal sizes in even numbers from 2-16 pixels are supported.<P>
+<LI>Vertical sizes from 1-32 pixels are supported.<P>
+<LI>Characters must be placed horizontally on even bit boundaries.<P>
+<LI>Clipping is marginally supported.<P>
+<LI>16 transfer modes allow any logical function of source and destination.<P>
+<LI>&quot;Insane&quot; font table format of display controller is supported.<P>
+<LI>Transfers are only supported to CGA compatible graphics frame buffers.<P>
+</UL>
+<H2><A HREF="15c00028.htm">BitBlt Registers </A></H2>
+<H2><A HREF="15c00029.htm">Programming </A></H2>
+</BODY>
+</HTML>

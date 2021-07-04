@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D8h: Load Byte-Wide Font </TITLE></HEAD>
+<BODY>
+<H3>AH = D8h: Load Byte-Wide Font </H3><P>
+This function loads the last half (chrs 128-255) of the specified code page into a dedicated 1-KB buffer at 9000h:StdFontHi.  The Int 1Fh vector points to this buffer on power-up.  The Int 1Fh vector is used by the standard BIOS Write String functions for access to character data in Graphics video modes.  For more information on Int 1Fh, see <A HREF="C30000C9.HTM">page 3-133</A>.  <P>
+The HP palmtop Display Controller hardware does not use this data in text video modes.  In order to utilize font data in text video modes, it must be loaded in a word wide format.  See Int 10h, Fcn D1h on <A HREF="C3000058.HTM">page 3-74</A> for details.  <P>
+<UL><LI>Input: AH = D8h <BR>
+BX = Bitmap ID (1=6x8, 4=8x8) <P>
+</UL>
+<UL><LI>Output:           None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>Notes: <P>
+<UL><LI>This service invokes the Int 06h, Function 04h hook to provide for localization and/or customization of the font data.  </LI><P>
+<LI>This service reads the BIOS RAM variable 40h:CodePage to determine which code page should be used for the load.  If an unsupported code page is requested, and the Int 06h hook does not handle it, Code Page 437 (US) is used.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

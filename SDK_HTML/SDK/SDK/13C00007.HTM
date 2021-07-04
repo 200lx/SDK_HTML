@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Software Architecture </TITLE></HEAD>
+<BODY>
+<H1>Software Architecture </H1><P>
+The PCMCIA model contains the following layers: <P>
+<UL><LI>Client layer which is made up of card drivers which register as clients of Card Services.  As clients, these drivers can be informed as cards come and go and thus be in a position to perform card recognition and configuration.  </LI><P>
+<LI>Card Services layer which performs PCMCIA resource management functions as well as just about everything else that a client needs to do with a card.  Card Services supports multiple clients and is the sole client of Socket Services.  </LI><P>
+<LI>Socket Services layer which talks to the hardware and supports one client, which is Card Services.  </LI><P>
+On the HP palmtop, these general layers are present, but not in the form of the current standard.  Specifically, the situation on the HP palmtop is: <P>
+</UL>
+<UL><LI>Client layer </LI><BR>
+<UL>
+<LI>CardDrv which supports RAM cards and SunDisk cards.  <BR>
+<LI>CIC100 which supports modem cards.  <P>
+</UL>
+</UL>
+<UL><LI>Card Services layer </LI><BR>
+CardBIOS which is a proprietary layer specified by Microsoft and written by the OmniBook 300 team.  This specification was drafted about the time that the PCMCIA Card Services committee was just getting underway.  Consequently it has some of the flavor of Card Services 2.x, but is much less comprehensive.  In particular, the specification deals with memory cards but not with IO cards.  <P>
+</UL>
+<UL><LI>Socket Services layer </LI><P>
+Socket Services version 1.01 is implemented on the HP palmtop.  This was essentially the first version of Socket Services that was a PCMCIA standard and lasted until the major update to version 2.0.  <P>
+</UL>
+<P>
+</BODY>
+</HTML>

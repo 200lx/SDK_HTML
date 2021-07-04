@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Memory Management </TITLE></HEAD>
+<BODY>
+<H3>Memory Management </H3><P>
+The System Manager is responsible for managing memory for System Manager compliant applications.  <P>
+For example, to prevent memory fragmentation, an inactive application's data space may be moved in memory as other applications are launched and exited.  This means that applications should not save the DS value in memory unless the application is prepared to modify the DS value if its data segment has moved.  <P>
+Overlaying multiple external applications is another example of the System Manager's involvement in memory management.  As an additional external application is opened, the code for an inactive external application is not kept in memory.  This dictates that variable data or self-modifying code must not be stored in the code segment.  <P>
+<P>
+</BODY>
+</HTML>

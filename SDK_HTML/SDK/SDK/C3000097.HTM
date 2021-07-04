@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Introduction </TITLE></HEAD>
+<BODY>
+<H3>Introduction </H3><P>
+Int 16h is used to access keycode information in the keyboard buffer.  Each keycode is stored in the buffer as a two-byte pair by the Int 09h (IRQ1 ISR - PC Keyboard) Interrupt Service.  Normally, one byte of the keycode is the scancode for the character and the other byte is the equivalent ASCII character code.  When key information is desired, the operating system or an application calls Int 16h, which reads the scancode and character code from the buffer and returns them.  The scancode is returned in AH; the ASCII character code is returned in AL.  <P>
+<H2><A HREF="c3000098.htm">Light Sleep and Deep Sleep </A></H2><P>
+<H2><A HREF="c3000099.htm">I16Clip </A></H2><P>
+<H2><A HREF="c300009a.htm">Compatibility </A></H2><P>
+<H2><A HREF="c300009b.htm">Service 00h or 10h (Read Char): </A></H2><P>
+<H2><A HREF="c300009c.htm">Service 01h or 11h (Char Available?): </A></H2><P>
+<H2><A HREF="c300009d.htm">Service 13h or 14h (Keyboard Change?): </A></H2><P>
+<H2><A HREF="c300009e.htm">Scancode Processing </A></H2><P>
+</BODY>
+</HTML>

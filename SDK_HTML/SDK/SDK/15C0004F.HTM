@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Reading and Writing to the RTC </TITLE></HEAD>
+<BODY>
+<H3>Reading and Writing to the RTC</H3>
+If the 1Hz clock occurs in the middle of a sequence of reads of the RTC, then the value read from the RTC will be corrupt.  The RTC should be read again, and the value compared.  If the two values don't match, then the RTC should be read again.<P>
+If the RTC is being written to, and a F1HZ clock occurs, then the value written to the RTC will be corrupt OR the RTC will miss a decrement.  To prevent this from happening, bits 6 and 7 can be read at 0Bh to find out if a F1HZ clock is going to happen in the next 1.024Ms.  Bit 6 follows the RTC clock signal 1mS before it happens, bit 7 reads the state of the clock signal.  The RTC will decrement on the rising edge of the clock.  If bit 6 is high and bit 7 is low, then the softwar e should wait for 1.024Ms befo re attempting to write.<P>
+The table below shows the actions required and time left to decrement for the four possible states of bits 6 and 7.  It is recommended that all read values be verified against a second read, and all write values be verified by a read to double check correct access of the RTC.  If a second read or a read after a write shows an incorrect value, then a clock tick has been lost.  If bit 7 is 0 when checked, then reads 1 after read/writes are complet ed, a clock rising edge has occurred.  If the bits are in state 1, 3 or 4, then the software can safely access the RTC.  It should read back the written value or read again and compare.<P>
+If the bits are in state 1 when access occurs, then bit 7 should be checked after access.  If bit 7 is high, assume an edge has occurred.  If you are writing, decrement your value and write again.  If you are reading, just read again.  Interrupts should be masked off during access.  The reason for a lost clock tick in s tate 1 will be a non-maskable interrupt that s tarted in the middle of your access.  If it takes long enough to delay the rest of the access until after the rising edge of the clock, then bit 7 will be high after access is completed.<P>
+<PRE>
+STATE   BIT6    BIT7    TIME UNTIL CLOCK    SOFTWARE ACTION
+==========================================================================================
+1       0       0       0.5S&gt;t&gt;1mS          Write then check
+2       1       0       1mS&gt;t&gt;0S            Wait
+3       1       1       1S&gt;t&gt;0.501S         Write
+4       0       1       0.501S&gt;t&gt;0.5S       Write
+</PRE>
+</BODY>
+</HTML>

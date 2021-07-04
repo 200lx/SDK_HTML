@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Interrupt Enable Registers </TITLE></HEAD>
+<BODY>
+<H3>Interrupt Enable Registers</H3>
+Each Hornet-specific interrupt source has an enable bit located in the Interrupt Enable
+Registers (IERs).  These registers are read/write and reset to zero.  <P>
+
+<PRE>
+Index   Bit     Interrupt   Description
+===================================================================
+-18h    0       IRQ0        Enable Timer 0 interrupt
+        1       IRQ1        Force PC Keyboard interrupt
+        2-7     -           unused
+-19h    0       NMI         Enable low power interrupt
+        1       IRQ2        Enable display cursor write interrupt
+        2       IRQ2        Enable Real Time Counter interrupt
+        3       IRQ2        Enable Timer 1 interrupt
+        4       IRQ2        Enable RX pad interrupt
+        5       IRQ2        Enable ring detect interrupt
+        6       IRQ2        Enable keyboard interrupt
+        7       IRQ2        Enable IR interrupt
+</PRE>
+
+Note: UART interrupts (IRQ4) are enabled in the UART registers.  <P>
+Note: The GPIO pads have separate IER registers.  This is discussed in &quot;General
+Purpose I/O&quot; on <BR><A HREF="15C00034.HTM">page 15-545</A>.<P>
+</BODY>
+</HTML>

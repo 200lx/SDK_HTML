@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 63 Function 00 - Map/Unmap Pages </TITLE></HEAD>
+<BODY>
+<H3>Int 63 Function 00 - Map/Unmap Pages </H3><P>
+This function maps one or more consecutive pages from a chip into consecutive physical pages, or unmaps one or more consecutive pages from the physical page frame.  This function replaces the Int 63h function 44h in the HP 95LX.  <P>
+<UL><LI>Input: AH = 00h <BR>
+AL = Physical page#, 0, 4, 5, 6, 7, 8, 9, 0Ah, or 0Bh <BR>
+BX = Logical page# <BR>
+CX = Number of consecutive logical pages to map (or unmap) <BR>
+DX = Device select code (0-6) <P>
+</UL>
+<UL><LI>Output: AH = Completion status; <BR>
+00h Success (No Error) <BR>
+83h Error - Invalid DX <BR>
+8Ah Error - Invalid BX (physical page 0, logical page not multiple of 4) <BR>
+8Bh Error - Invalid AL <BR>
+A4h Error - Invalid CX <P>
+</UL>
+<UL><LI>Error conditions: AH non-zero (See above) </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL>Special constraints apply if the physical page is 0 since page 0 is a 64-KB page.  The number of pages to map must be at least 4 and the logical page number must be a multiple of 4.  <P>
+Logical page# = FFFFh indicates that the physical page(s) are to be unmapped.  <P>
+Device select codes (some PC board sites may be unoccupied): <P>
+<UL><LI>0 -NRCE (Built-in system ROM) </LI><P>
+<LI>1 - NRAS[0] Built-in RAM; hard configured to start at 00000h.  </LI><P>
+<LI>2 -NRAS[1] Built-in RAM </LI><P>
+<LI>3 - NRAS[2] Built-in RAM </LI><P>
+<LI>4 - NRAS[3] Built-in RAM </LI><P>
+<LI>5 - NCS[0] Plug-in slot 0 </LI><P>
+<LI>6 - Unused </LI><P>
+</UL><P>
+</BODY>
+</HTML>

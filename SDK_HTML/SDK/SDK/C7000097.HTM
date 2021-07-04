@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_free_large </TITLE></HEAD>
+<BODY>
+<H3>m_free_large </H3>
+This call shrinks the data space claimed by the application beginning at <I>ptr</I>.  Applications must make sure that the value of <I>ptr</I> is above or equal to the first value returned by <A HREF="c7000093.htm">m_alloc_large()</A>. 
+<PRE><UL>
+<LI>Syntax:         int m_free_large(unsigned int pgraph_free+range) </LI>
+<LI>Parameters:     unsigned int pgraph_free+range - Pointer to paragraph offset 
+                                                 identifying following memory space 
+                                                 for release </LI>
+<LI>Returns:        0 - if successful
+               -1 in AX - if an illegal value is detected 
+<LI>Related Calls:  <A HREF="c7000096.htm">m_free</A> </LI>
+<LI>Comments:       Do not call after making calls to <A HREF="c70000a0.htm">m_get_far_block</A>.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

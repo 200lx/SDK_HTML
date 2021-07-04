@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_getattr </TITLE></HEAD>
+<BODY>
+<H3>m_getattr </H3>
+For the file specified by <I>bp</I>, returns in the <I>*attr</I> the file attributes as returned by DOS. 
+<PRE><UL>
+<LI>Syntax:      int far m_getattr(char far *bp, int len, int sys, unsigned far *attr) </LI>
+<LI>Parameters:  char far *bp - Pointer to the file to obtain attributes from 
+             int len - Length of the file specification 
+             int sys - If non-zero, indicates that the System Manager should build a 
+                       path using the System Directory 
+             unsigned far *attr - Pointer to the location to post the attributes from 
+                                  the file </LI>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

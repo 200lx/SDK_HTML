@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Fh: Get Video State and Mode </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Fh: Get Video State and Mode </H3><P>
+This function returns the current state of the display, including the current mode, number of characters per line, and current display page.  Refer to the Set Mode function (AH = 00h) on <A HREF="C3000045.HTM">page 3-64</A> for a description of the modes.  <P>
+<UL><LI>Input: AH = 0Fh <BR></UL>
+<UL><LI>Output: AH = Number of characters per line <BR>
+AL = Current Display Mode (0-7,20h) <BR>
+BH = Active Display page <BR>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>This function cannot be used to distinguish Zoom state.  See function DFh on <A HREF="C3000064.HTM">page 3-85</A>.  <P>
+<P>
+</BODY>
+</HTML>

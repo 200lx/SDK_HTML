@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_ColLicsChar </TITLE></HEAD>
+<BODY>
+<H3>m_ColLicsChar </H3>
+This call Compares two LICS characters according to the selected sort type.  m_ColLicsChar
+is only used by applications which run with LICS.
+<PRE><UL>
+<LI>Syntax:         m_ColLicsChar
+<LI>Parameters:     ch    Character 1
+                cl    Character 2
+<LI>Returns:        0  - if characters are equal
+               +1 - if character 1 precedes character 2 (alpha-numerically)
+               -1 - if character 2 precedes character 1 (alpha-numerically)
+<LI>Comments:       This call is designed for easy access in assembly language from 
+                the 1-2-3 driver.  m_ColLicsChar does not conform to the C interface 
+                structure.  Although it is available for ISV applications, it is 
+                not recommended.  
+</UL></PRE>
+</BODY>
+</HTML>

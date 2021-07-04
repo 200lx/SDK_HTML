@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_FindDataRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_FindDataRecord </H3><P>
+DB_FindDataRecord finds a string in a data record only (on disk or ROM).  This find will search the string representations of the record, not the raw binary data.  This search would find a date string &quot;2/12/1992&quot; in the record, whereas DB_FindRecord would not.  In addition to the comments above for DB_FindRecord: the additional flags DB_FIND_AUTOGOTO, DB_FIND_DIRECT, DB_FIND_NOTES are available.  <P>
+DB_FIND_AUTOGOTO searches match only if the position found is at the first character of the field, and only searches the single field passed in
+*<I>field</I>.  DB_FIND_DIRECT interprets <I>begin</I> and <I>end</I> as direct record numbers; by default, the numbers refer to viewpoint entries.  <P>
+DB_FIND_NOTES will search any associated notes with the data records.  If a match is found in a note, the record number returned is that of the data record, not that of the attached note.  <P>
+<UL><LI><Pre>Syntax:             int DB_FindDataRecord(DBBLOCK *dblk, 
+                    char far *searchstring, RECORDNUM begin, RECORDNUM end, 
+                    int flags, int *field, unsigned int *pos); </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

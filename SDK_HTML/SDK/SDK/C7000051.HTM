@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_parse_time </TITLE></HEAD>
+<BODY>
+<H3>m_parse_time </H3>
+This function parses a null-terminated input string according to rule, and fills in the hour, minute, second, and hundredth fields of the DTM structure, leaving the date fields unaffected.  Unspecified fields that do not cause parsing errors are set to 0.  <P>
+The available rules are as follows (found in SETTINGS.H): <P>
+0 = rule appropriate to currently selected system time format.  <BR>
+1 - TM_H_M_S_P = 12 hour clock, with optional am/pm specifier.  <BR>
+2 - TM_H_M_S+24 = 24 hour clock.  <BR>
+3 - TM_HM_S_24 = 24 hour clock with hours and minutes together.  <BR>
+4 - TM_H_M_S_C_24 = 24 hour clock to hundredth resolution.  <BR>
+5 - TM_H_M_P = 12 hour clock, without seconds.  <BR>
+6 - TM_H_M_24 = 24 hour clock, without seconds.  <BR>
+7 - TM_HM_24 = 24 hour clock with hours minutes together, without seconds.  
+<PRE><UL>
+<LI>Syntax:      int m_parse_time(int rule, char *input, DTM *dtm) 
+<LI>Parameters:  int rule - Rule by which to parse date information 
+             char *input - Pointer to data to be parsed 
+             DTM *dtm - Pointer to DTM structure to receive parsed data.  
+<LI>Returns:     0 - if parsing is successful
+             Non-zero value - if input is improperly formatted or invalid value 
+</UL></PRE>
+</BODY>
+</HTML>

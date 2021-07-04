@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 01h: Set BIOS Time </TITLE></HEAD>
+<BODY>
+<H3>AH = 01h: Set BIOS Time </H3><P>
+This function sets the number of timer ticks in the BIOS clock.  <P>
+<UL><LI>Input: AH = 01h <BR>
+[CX,DX] = BIOS tick count [HITIME,LOTIME] <P>
+</UL>
+<UL><LI>Output: AH = 00h <BR>
+The RAM Variable HOUR24 is cleared.  <BR>
+Carry Clear <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AH, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

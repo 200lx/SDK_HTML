@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>8259 Interrupt Sources </TITLE></HEAD>
+<BODY>
+<H3>8259 Interrupt Sources</H3>
+The 8259 PIC supports 8 vectored priority interrupts.  Each interrupt is described in
+detail in a separate chapter.  These interrupt sources are defined as follows: <P>
+
+<PRE>
+INPUT   INT     SOURCE
+==========================================================================================
+IRQ0    08h     PIT Timer 0 (same as PC)
+                See &quot;Int 08h - Timer_0 Hardware Interrupt&quot; for more information.
+IRQ1    09h     Forced by software (PC Keyboard) interrupt
+                IRQ1 interrupts can be forced by software by setting bit 1 of index 18h.
+                This capability is provided so that software can implement a PC
+                compatible keyboard scheme.  This interrupt occurs on the rising edge of
+                this bit.  See &quot;Int 09h - Keyboard Translate Interrupt&quot; for details.
+IRQ2    0Ah     Hornet-specific interrupts including GPIO pads (PC reserved)
+                See &quot;Int 0Ah: Hornet-Specific Hardware Interrupt&quot;, &quot;Interrupt Source
+                Registers&quot; , and &quot;General Purpose I/O&quot; on <A HREF="15C00034.HTM">page 15-545</A> for more
+                detailed descriptions of these interrupt sources.
+IRQ3    0Bh     GPIO[24:26] pads if properly configured (PC COM2)
+IRQ4    0Ch     UART (PC COM1)
+IRQ5    0Dh     GPIO[24:26] pads if properly configured (XT fixed disk)
+IRQ6    0Eh     GPIO[24:26] pads if properly configured (PC diskette)
+IRQ7    0Fh     GPIO[24:26] pads if properly configured (PC LPT1)
+                The 8259 will default to this interrupt vector if the signal requesting
+                interrupt has gone away before the interrupt acknowledge cycle.  These
+                spurious interrupts should be handled gracefully.
+</PRE>
+</BODY>
+</HTML>

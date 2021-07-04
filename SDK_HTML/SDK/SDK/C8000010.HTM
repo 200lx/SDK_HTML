@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>FKEY - Function key structure </TITLE></HEAD>
+<BODY>
+<H3>FKEY - Function key structure </H3><P>
+Function key sets are compressed; only the function keys that have definitions need to be present.  The KeyNum field indicates which function key the definition is for.  <P>
+Valid numbers are <P>
+<UL><LI>1..12.  </LI><P>
+<LI>FKEY_SHIFT+(1..12).  </LI><P>
+<LI>FKEY_ALT+(1..12).  </LI><P>
+<LI>FKEY_CTRL+(1..12).  </LI><P>
+</UL>The last function key in the set should have FKEY_LAST added to it's function key number.  <P>
+<P>
+</BODY>
+</HTML>

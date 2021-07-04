@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Smart Clip Definition </TITLE></HEAD>
+<BODY>
+<H3>Smart Clip Definition </H3><P>
+Smart-clip (also called link-def) definitions are used for smart-clipping and printing.  At least one must be present to print.  <P>
+<pre>
+Offset  Name           Type          Description 
+------  -------------  ------------  -----------
+0...5   Record Header  recordheader  See <a href="10C00003.HTM">recordheader</a> structure above.
+                                     0x0c 0x??  0x??  0x??  0x??  0x??  
+6...7   String Length  int           Length of Link string (following name) 
+8...9   Flags          int           Flags:
+                                     0x02 = Link def can't be deleted by user 
+10..41  Name           char [32]     Name 
+42...n  Link String    char          Info representing the smart clip.  
+</pre>
+</BODY>

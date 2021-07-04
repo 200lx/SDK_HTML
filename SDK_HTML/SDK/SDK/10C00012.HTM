@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Viewpoint Definition </TITLE></HEAD>
+<BODY>
+<H3>Viewpoint Definition </H3><P>
+Every viewpoint (that is, sort/filter/column arrangement combination) has a viewpoint definition.  It describes the columns and their widths, the sort fields, and the SSL string for filter matching.  Only 16 viewpoints can be created.  <P>
+<pre>
+Offset   Name           Type              Description 
+-------  -------------  ----------------  -----------
+0...5    Record Header  recordheader      See <a href="10C00003.HTM">recordheader</a> structure above.
+                                          0x07 0x??  0x??  0x??  0x??  0x00 
+6...7    Token Length   int               Length of SSL Token representation 
+8...9    String Length  int               Length of SSL String representation 
+10...11  Flags          int               Flags for the viewpoint:
+                                          1 Viewpoint Unnamed: Viewpoint is the "Unnamed
+                                            viewpoint"
+                                          2 Viewpoint NoDelete: Viewpoint cannot be
+                                            deleted by user
+                                          4 Viewpoint General: Viewpoint was entered as
+                                            SSL string, not card 
+12       Reserved       char 
+13...44  Name           char [32]         Name of viewpoint 
+45...50  Sort Field     int [3]           Index of fielddef to sort; -1 means no more
+                                          fields.  
+51...56  Ascending      int [3]           1=ascending
+                                          0=descending for above corresponding Sort fields 
+57...96  ColumnArrange  column info [20]  Array of column information; -1 is last column 
+97...n   SSL Tokens     char              SSL Tokens in RPN-style; The length is given
+                                          by Token Length.  
+n+1..m   SSL String     char              String form of SSL statement
+</pre>
+Although a complete description will not be given on how to create SSL token strings, here is a list of the recognized tokens: <P>
+<pre>
+0x00  ERROR_TOKEN        (used only in parsing--not in SSL token strings) 
+0x0c  LPAREN_TOKEN       (used only in parsing--not in SSL token strings) 
+0x0d  RPAREN_TOKEN       (used only in parsing--not in SSL token strings) 
+0x01  NOT_TOKEN          ( !  ) 
+0x02  OR_TOKEN           ( | ) 
+0x03  AND_TOKEN          ( & ) 
+0x04  EQ_TOKEN           ( = ) 
+0x05  LE_TOKEN           ( <= ) 
+0x06  LT_TOKEN           ( < ) 
+0x07  GE_TOKEN           ( >= ) 
+0x08  GT_TOKEN           ( > ) 
+0x09  NE_TOKEN           ( <> ) 
+0x0a  IN_TOKEN           ( -> ) 
+0x0b  CONTAINS_TOKEN     ( # ) 
+0x0e  SEPARATOR_TOKEN    ( , ) 
+0x0f  TO_TOKEN           ( ...  ) 
+0x10  NUMBER_TOKEN       Followed by number in ASCIIZ (e.g.  "0.235") 
+0x11  STRING_TOKEN       Followed by string in ASCIIZ (e.g.  "Hello" ) 
+0x12  NAME_TOKEN         Followed by Name index (int; fielddef index) 
+0x13  BOOLNAME_TOKEN     Followed by BoolName index (int; fielddef index) 
+0x14  TIME_TOKEN         Followed by time (int; minutes since midnight) 
+0x15  DATE_TOKEN         Followed by date (3 bytes; Year+1900, Month(0..11), Date(0..30)) 
+0x16  CATEGORY_TOKEN     Followed by Category in ASCIIZ (e.g.  "New;Old") 
+0x17  USERTYPE_TOKEN     Followed by user type (char), size (int), and actual user type
+                         data 
+0x1a  STAR_TOKEN         ( * ) 
+0x19  PLACEHOLDER_TOKEN 
+0x18  EOL_TOKEN          END OF TOKEN string 
+</pre>
+</Body>

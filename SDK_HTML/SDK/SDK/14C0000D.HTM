@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Keyboard</TITLE></HEAD>
+<BODY>
+<H3>Keyboard</H3>
+<PRE>
+        R/W
+Index   Mode  Description
+==========================================================================================
+-00h    W     Low byte of keyboard output register (KB[0-7]) A write to this location
+              starts keyboard precharge.
+------------------------------------------------------------------------------------------
+-01h    W     Middle byte of keyboard output register (KB[8-15])
+------------------------------------------------------------------------------------------
+-02h    W     High 6 bits of keyboard output register (KB[16-21])
+              bits 0-5   KB[16-21]
+              bits 6-7   unused
+------------------------------------------------------------------------------------------
+-03h    W     A write to this location ends keyboard precharge.
+------------------------------------------------------------------------------------------
+-00h    R     Low byte of keyboard input register (KB[0-7])
+------------------------------------------------------------------------------------------
+-01h    R     Middle byte of keyboard input register (KB[8-15])
+------------------------------------------------------------------------------------------
+-02h    R     High byte of keyboard input register (KB[16-21], KBI[22-23]))
+              bits 0-5      KB[16-21]
+              bits 6-7      KBI[22-23]
+------------------------------------------------------------------------------------------
+-03h    R     bit 0      ON Key Pressed flag
+              bits 1-7   unused
+              Note: bit 0 will be set while the ON key is pressed and after it is
+              released, reading this register after the ON key is released clears bit 0.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

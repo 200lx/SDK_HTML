@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Repeating To-Do Data Record </TITLE></HEAD>
+<BODY>
+<H3>Repeating To-Do Data Record </H3><P>
+<pre>
+Offset   Name                     Type           Contents 
+-------  -----------------------  -------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)*** 
+0        Item Length              int 
+2        Offset to Category       int 
+4        Offset to Location       int            Offset to end of Category 
+6        Offset to Repeat         int            Offset to Repeat Factor 
+8        Note record#             int            Record Number or -1 
+10       Prev Multi-Item Record#  int 
+12       Next Multi-Item Record#  int 
+14       ToDoState                unsigned char  Flags<a href="#one_star">*</a>
+15       Start (Origination) Date<a href="#four_stars">****</a>: 
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+
+18       Priority                 char[2] 
+
+20       Due Date                 unsigned int   #days after origination date
+                                                 (0-65535)<a href="#three_stars">***</a>
+22       1st Stub Record#         int 
+24 --2 unused bytes-- 
+26       RepeatType               char           RadioButton Field<a href="#two_stars">**</a>
+27       Description Text         ASCIIZ 
+27+....  Category Text            ASCIIZ 
+27+....  Location Text            ASCIIZ         0 
+27+....  Repeat Factor: 
+          Frequency               char 
+          Days                    int 
+          Months                  int            Appropriate bits set 
+32+....  Duration Start Date: 
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+35+....  Duration End Date: 
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (1-31) 
+38+....  #Deleted ToDos           unsigned char  0-255 
+39+....  Deleted Occurrences: 
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+          flag                    unsigned char  Bit 0 = Deleted occurrence
+                                                 Bit 1 = Checked off occurrence 
+
+<a name="one_star">* Bit 1 clear -> Not checked off
+  Bit 2 set -> Carry Forward enabled
+  Bit 4 set -> To-do Item
+  Bit 6 clear -> Not a stub for a repeating completed todo
+
+<a name="two_stars">**2-> Daily Repeat
+  4-> Weekly Repeat
+  8-> Monthly Repeat
+ 16-> Yearly Repeat
+ 32-> Custom Repeat
+
+<a name="three_stars">***Stored DueDate=0 -> No specified due date
+   Stored DueDate#0 -> SpecifiedDueDate = StartDate + DueDate-1
+</pre>
+
+<a name="four_stars">****This should be maintained as an occurrence such that the following occurrence is beyond 'today'.  Occurrences prior to this date are not to be displayed by this record.  When carry-forward is enabled, the to-do carries over from this date to 'today'; no other instances of this repeat are concerned with carry-forward.  <P>
+If the current occurrence is checked-off, this date is bumped to show the next occurrence.  If some other future occurrence is checked-off, in addition to creating an independent instance of the completed task, it must be logged in this record as a deleted instance.  Deleted instances can be removed from the record when the date stored in the Origination Date field moves beyond them.  <P>
+<P>
+</BODY>

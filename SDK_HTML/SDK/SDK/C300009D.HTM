@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Service 13h or 14h (Keyboard Change?): </TITLE></HEAD>
+<BODY>
+<H3>Service 13h or 14h (Keyboard Change?): </H3><P>
+These services conditionally invoke Int 15h, Fcn 4103h with BL either 8 (for Service 13h) or equal to CL (for Service 14h), and ES:DI --&gt; INTLST, and BH = 11h.  When Int 15h, Fcn 4103h is called, it has the effect of waiting for either bit 1 or bit 4 of INTLST to be set.  INTLST[1] is set by keyboard interrupts (Int 09h code), and by calls to Int 16h, Fcn 05h.  INTLST[4] is set inside the Int 15h, Fcn 4103h code when an IRQ4 (UART) Interrupt Request is detected.  These services return immediately to the caller when a keyboard flags change is detected.  If a key is placed in the keybuffer, it may be translated (See I16Clip) before return.  Another condition for return is timeout (which may be disabled for service 14h).  <P>
+An application that calls service 00h or 10h (Read Char) will save power because the machine quickly goes back to light sleep after each timer interrupt.  The percentage of time that the machine is in the Sleep state depends on numerous factors including presence and rate of graphics cursor, battery check rate, etc.  <P>
+An application that repeatedly tests for a key down by calling Int 16h services 01h or 11h (Char Available?) will get some power savings, because the machine goes to low power mode on each call to Int 16h.  However, the percentage of time the CPU is in low power mode will be lower than that of Int 16h services 00h or 10h.  For this reason, it is recommended that services 00h or 10h be used whenever possible.  <P>
+<P>
+</BODY>
+</HTML>

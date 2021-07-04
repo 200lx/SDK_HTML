@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>General Information </TITLE></HEAD>
+<BODY>
+<H3>General Information </H3><P>
+The main or system battery consists of two 1.5 volt batteries in series.  These batteries may be either NiCad or Alkaline, and feed the HP palmtop power supply in normal operation.  The low main battery warning condition is nominally 2.2 (2.3 for NiCad) Volts.  When the level reaches about 1.8 volts, the power supply can no longer reliably operate off of the main batteries, and an NMI Low Power Interrupt triggers a transition to Backup mode.  <P>
+In Backup mode the system is shut down to conserve power and maintain RAM integrity.  The power supply is supported in this state by the backup battery until it also is depleted.  At this point RAM integrity will be compromised.  Recovery from Backup mode (*) will always result in a warmstart.  This means that the system memory is reset (but not the RAM Disk) and some of the work may be lost.  <P>
+Because it is desirable to avoid warmstart, there is an intermediate state between the first low battery warnings and the time of the Low Power NMI that MAY be entered.  This state, called Software Shutdown, will be entered when the battery voltage reaches 2.0 Volts (NiCad or Alkaline).  In this state the unit will be shut down, and attempts to wake it up will result in a pair of hi pitched beeps.  Recovery from this state (*) will not result in a warmstart provided that System Memory still appears to have integrity.  It should be noted that Software Shutdown is not triggered by hardware, but is instead the result of periodic battery measurements that take place every 15 seconds or so.  Abrupt power transitions such as loss of battery contact, or very heavy loads being applied may result in a direct transition from a low battery warning state to BackUp Mode without ever entering the Software Shutdown state.  <P>
+Plug-in cards may (depending on their type) require a battery of their own.  The HP palmtop power supply may also be fed directly from a plug-in AC adaptor.  In this mode, the HP palmtop's power supply is supported completely by the adaptor - the main batteries, if present, are isolated and not used.  HP palmtops also support in-unit charging of NiCad main batteries from the same AC adaptor.  <P>
+(*) - By inserting the AC adaptor or installing fresh main batteries.  <P>
+</BODY>
+</HTML>

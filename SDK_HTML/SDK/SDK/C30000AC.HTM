@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Timeout Errors </TITLE></HEAD>
+<BODY>
+<H3>Timeout Errors </H3><P>
+A timeout error may occur for two reasons whenever service 00h (Write Char) is requested.  The timeout duration is controlled by the value corresponding to the specified port# in the table in BIOS RAM at LPTOTBL (40:78h).  All values in this table are initialized by the BIOS to 14h.  Each count in the table value represents 64K passes through one of two loops in the Write Char code.  The reasons for timeout are explained in the discussion of service 00h on the next page.  When a timeout does occur it is indicated by returning with the timeout bit (AH[0]) set.  <P>
+</BODY>
+</HTML>

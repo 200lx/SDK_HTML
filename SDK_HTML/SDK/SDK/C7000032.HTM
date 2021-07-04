@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComClose </TITLE></HEAD>
+<BODY>
+<H3>ComClose </H3>
+This function relinquishes ownership and closes a communication port.  <P>
+ComClose is not a graceful close of the specified communication port; any data buffered for transmission 
+will not be transmitted, and any data ready to be received will be flushed.  If a graceful close must be 
+performed, see the transmit/receive queue testing routines identified below.  <P>
+If other applications are also using this communications port, this function simply decrements the open count and exits.  
+Until all applications which performed a <A HREF="c700003a.htm">ComOpen</A> also perform a ComClose, the port is considered 
+open and controlled by the System Manager (i.e., the interrupt vector points into the System Manager).  When the last 
+application with the port open performs its ComClose, the UART resets to its previous state, the interrupt vector is 
+returned to its initial value, and the PICs return to their initial state.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComClose(handle_t Handle) 
+<LI>Parameters:      handle_t Handle The handle returned via a successful ComOpen.  
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Related Calls:   <A HREF="c7000040.htm">ComRelease</A> should be called prior to ComClose.  If not, the port will 
+                 be implicitly called.  
+
+                 ComOpen must first be called in order to get a valid handle to the 
+                 communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

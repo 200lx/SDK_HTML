@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Manager TSR Notification </TITLE></HEAD>
+<BODY>
+<H3>System Manager TSR Notification </H3><P>
+On the 200LX, additional support has been provided for those writing TSRs for the HP palmtops that must interact with the System Manager.  These calls are there to get around the fact that is desireable to load TSR's before entering the System Manager, but doing that prevents the TSR from intercepting any of the above listed interrupts before the System Manager does.  There are several callouts that the 200LX System Manager calls to notify a TSR hooked to those callouts when certain events happen.  They are chained to the Multiplex interrupt (02FH), function 7072h as follows: <P>
+<UL><LI>System Manager Startup.  Int 2Fh, AX=7072H, BX=0000H </LI><P>
+Called when System Manager is firing up.  All the System Manager related interrupts have already been hooked at the time this is called.  Any TSR responding to this interrupt must hook any vectors it cares about before it chains to the old mux interrupt.  This ordering is important to make sure that vectors don't get trampled by multiple TSR's on the way out of the System Manager.  <P></UL>
+<UL><LI>System Manager Terminate.  Int 2Fh, AX=7072H, BX=0001H </LI><P>
+Called when System Manager is terminating.  No System Manager interrupts have yet been released.  Any TSR responding to this interrupt must call old chain with a pushf and far call (not a jump), and unhook stolen vectors after returning.  This ordering is important to make sure that vectors don't get trampled by multiple TSR's on the way out of the System Manager.  </UL><P>
+<UL><LI>TopCard Display: Int 2Fh, AX=7072H, BX=0100H </LI><P>
+The System Manager is about to display the top card.  CX:DX points to the filename of the file (PCX) to be displayed.  CX:DX+50h points to the Owner's name, CX:DX+6eh points to the Owner's title, and CX:DX+8ch points to the Company.  If a TSR seeing this interrupt wishes to respond to it, it should return AX=5979H to supress the existing topcard display.  If AX!=5979H, the standard top card processing code is executed. </UL> <P>
+<UL><LI>TopCard Null Event: Int 2Fh, AX=7072H, BX=0101H </LI><P>
+The System Manager is displaying the top card, and 1/2 second has elapsed.  If an application wishes to write a &quot;screen-saver&quot;, any animation should be done on this notification, instead of continuously.  Since the unit will go into light sleep between TopCard Null Events, the battery won't be constantly drained. </UL> <P>
+<UL><LI>TopCard Key Event: Int 2Fh, AX=7072H, BX=0102H </LI><P>
+A key was pressed while the top card was up.  CX is the key code, and DX is the scan code.  If the TSR wants to provide it's own action for the key, it should suppress the default TopCard key handling by returning AX=5979H.  If AX!=5979H, the standard TopCard key processing is used (normally a beep, or F1 for help). </UL> <P>
+<UL><LI>TopCard Deactivate: Int 2Fh, AX=7072H, BX=0103H </LI><P>
+An app key or alarm has gone off, and the top card display is about to be removed. </UL> <P>
+<B>The 100LX does not suport these callout functions. </B> If a TSR written for the 100LX wishes to hook interrupts after the System Manager has hooked them (so it can get the first shot), there is a workaround.  The &quot;standard&quot; kludge for this is to postpone your interrupt hooking, but hook the timer-tick, and keep looking at int 60h/61h or 7eh/7fh.  When they change, the System Manager has started up, since it hooks them to supply the SysMgr interface calls.  You can hook your interrupts then.  Needless to say, this is not a very clean method, so only resort to it if there is no other recourse.  <P>
+<P>
+</BODY>
+</HTML>

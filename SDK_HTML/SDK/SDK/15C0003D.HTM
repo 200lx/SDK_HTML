@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>IR Communication </TITLE></HEAD>
+<BODY>
+<H3>IR Communication</H3>
+The IR communication block enables the Hornet IC to have wireless communication using an
+external infrared LED and IR receive circuit.  The IR communication block supports 5
+separate communication formats.  These formats are REDEYE, Software controlled
+communication, Modulated communication, IR UART with both single pulse and multiple pulse
+communication.  To control the IR transmission of these formats, the hardware uses 2
+control registers, the IRCNT register and the IRFMAT register.  The IRFMAT register which
+is addressed at indexed -10h contains control bits that choose which format is chosen for
+IR communication.  These bits are as follows: <P>
+
+<PRE>
+Bit Name    Description
+==========================================================================================
+0   RED     This bit when set activates REDEYE transmit mode.  It turns on the REDEYE
+            transmit hardware and sets it to a state where it is waiting for input from
+            software.
+------------------------------------------------------------------------------------------
+1   MDLTE   This bit when set activates Modulated communication mode.  It turns on the
+            modulation source and allows the MDLD bit in the IRCNT register to control the
+            output of a modulated waveform.
+------------------------------------------------------------------------------------------
+2   IRURT   This bit when set activates IR UART communication mode.  This bit disconnects
+            the 16450 from the Serial interface pins and connects it to the IR
+            communication block.  Software after setting the PMOD and MDSEL bits in this
+            register, just transmits and receives using the 16450 as though it were
+            connected to the Serial port.  CTS, DSR and DCD inputs to the 16450 are held
+            active and IR is held inactive in this mode.  Note that altering this bit can
+            cause spurious UART interrupts if modem status interrupts are enabled in the
+            UART at the time the bit is changed.
+------------------------------------------------------------------------------------------
+3   MDSEL   This bit is used to select the modulation source for both IR UART mode and
+            Modulation communication mode.  If this bit is 0, the 32kHz low frequency
+            clock is chosen as the modulation source.  If it is set to 1, the 16450 baud
+            rate generator 16x clock is used for the modulation source.  This allows the
+            modulation source to be set a 38kHz to be remote control compatible.
+------------------------------------------------------------------------------------------
+4   PMOD    This bit is used in IR UART mode to select between single pulse transmission
+            and multiple pulse transmission.  If it is set to 0, a single pulse of
+            duration equal to a half cycle time of the modulation source will be
+            transmitted for a 0 output bit.  If it is set to 1, a pulse train of the
+            modulation frequency will be used to transmit a 0.
+------------------------------------------------------------------------------------------
+5   LBF     Led Buffer Full
+            This bit is used in REDEYE mode to indicate that the contents of the LBR bit
+            have not yet been transmitted and should not be written at this time.  Writing
+            to the LBR automatically sets this bit.  This bit is cleared when the LBR is
+            transferred to the REDEYE formatter.
+------------------------------------------------------------------------------------------
+6   ELBE    Enable Interrupt on LBR bit Empty (LBF clear)
+            If this bit is set and LBF is clear, an IR interrupt will occur.
+------------------------------------------------------------------------------------------
+7   -       When set, this bit inverts the sense of the IR LED signal.  It can be used to
+            allow use of either inverting or non-inverting drivers for the LED.
+------------------------------------------------------------------------------------------
+</PRE>
+
+The IRCNT register which is addressed at indexed -11h contains bits that are used to
+transmit a bit or waveform out on the IRO pad.  The IRCNT register also allows software
+to receive IR data in any of the formats that can be transmitted.  The contents are as
+follows: <P>
+
+<PRE>
+Bit     Name    Description
+==========================================================================================
+0       LED     This bit is used to turn on the IR LED connected to the HPIRO pad.  It is
+                used for software controlled IR transmission.  When it is set to a 1, the
+                IR LED is turned on.
+------------------------------------------------------------------------------------------
+1       LBR     This bit contains the half-bit to be transmitted in REDEYE format.
+                Write a one to send an &quot;on&quot; half-bit or write a zero to send an &quot;off&quot;
+                half-bit.
+------------------------------------------------------------------------------------------
+2       MDLD    This bit is used for software to output a serial waveform to be modulated
+                by the chosen modulation source.  This allows compatibility with remote
+                control format.
+------------------------------------------------------------------------------------------
+5       IRE     IR Event
+                This bit is set by a logic low voltage on the IRI pin.  It is set to
+                indicate that an IR event has occurred.  Once set, software must reset
+                this bit.
+------------------------------------------------------------------------------------------
+6       EIRI    Enable IR interrupt
+                An IR interrupt will occur if this bit and the IRE bit are both set.
+------------------------------------------------------------------------------------------
+7       IRI     This IR Input pin bit allows software to monitor the state of the IRI pin.
+                It is a read only bit.  Using the last three bits, software can receive
+                each of the transmission formats described later.  Also, if IR UART mode
+                is set, software can receive data using the 16450 the same as it would in
+                Serial mode.
+------------------------------------------------------------------------------------------
+</PRE>
+<H2><A HREF="15c0003e.htm">REDEYE Format </A></H2>
+<H2><A HREF="15c0003f.htm">Software-Controlled Mode </A></H2>
+<H2><A HREF="15c00040.htm">Modulated Mode </A></H2>
+<H2><A HREF="15c00041.htm">IR UART Modes </A></H2>
+</BODY>
+</HTML>

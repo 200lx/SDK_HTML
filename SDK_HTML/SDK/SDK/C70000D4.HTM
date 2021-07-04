@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_lock </TITLE></HEAD>
+<BODY>
+<H3>m_lock </H3>
+This call increments the system lock count, which prevents interruption of the currently running application while it is non-zero.  That is, it causes other applications' hotkeys to be ignored, prevents alarm-induced task switching, and controls background task activation.  <P>
+This could be used, for example, to prevent a task-switch until after an error message is acknowledged by the user.  
+<PRE><UL>
+<LI>Syntax:         void m_lock(void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        None </LI>
+<LI>Related Calls:  <A HREF="c70000d7.htm">m_unlock</A> </LI>
+<LI>Comments:       This call (and its complement, m_unlock) work by incrementing and 
+                decrementing the lock counters.  Correct nesting is therefore required
+                for use.  For example, two successive m_lock() calls, followed by a 
+                single m_unlock() call, will still leave the lock on.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

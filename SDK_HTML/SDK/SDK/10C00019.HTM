@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Non-Repeating Appointment Data Record </TITLE></HEAD>
+<BODY>
+<H3>Non-Repeating Appointment Data Record </H3><P>
+<pre>
+Offset   Name                     Type           Contents
+------   -----------------------  -------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)***
+0        Item Length              int 
+2        Offset to Category       int 
+4        Offset to Location       int 
+6        Offset to Repeat         int            Offset to End of Record 
+8        Note record#             int            Record Number or -1 
+10       Prev Record# Today Link  int 
+12       Next Record# Today Link  int 
+14       ApptState                unsigned char  Flags<a href="#one_star">*</a> 
+15       Start Date: 
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+18      Start Time                int            Minutes since midnight 
+20      End Date                  unsigned int   Days since start date(0-98)<a href="#three_stars">***</a>
+22      End Time                  int            Minutes since midnight 
+24      Lead-Time                 int            Minutes (0-1439) 
+26      RepeatType                char           1 (RadioButton Field) 
+27      Description Text          ASCII 
+27+...  Category Text             ASCII 
+27+...  Location Text             ASCII 
+
+<a name="one_star">* Bit 0 set -> Alarm Enable
+  Bit 1 set -> Display in monthly view
+  Bit 2 set -> Display in weekly view
+  Bit 5 set -> Event (also StartTime=-1 and EndTime=-1)
+  Bit 7 set -> Appointment
+
+<a name="three_stars">***0-> 1 day duration
+
+End Date is computed as = StartDate+StoredDuration
+</pre>
+<P>
+</BODY>

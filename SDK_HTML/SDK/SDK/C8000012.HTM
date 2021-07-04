@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>LHEDITDATA - Multi-Line Edit Window Data Field Structure </TITLE></HEAD>
+<BODY>
+<H3>LHEDITDATA - Multi-Line Edit Window Data Field Structure </H3><P>
+This structure contains the definition of the LHWINDOW Data field for a Multi-line Edit window.  This structure is needed because the standard LHWINDOW structure is not sufficient for use by the LHAPI-provided multi-line edit class handler.  All the fields specified in the LHWINDOW structure are still valid and used in a multi-line edit window.  <P>
+<UL><LI><B>Buffer:</B> This field points to the text data buffer, in RAM, which will actually be edited.  </LI><P>
+<LI><B>SaveBuffer:</B> This field points to the data buffer in which a copy of the original edit text will be saved when the user begins editing it, and from which it will be restored when the user presses the &lt;ESC&gt; key.  If this pointer is set to NULL, the original edit text will not be saved anywhere by LHAPI, and thus it also cannot be restored by it.  </LI><P>
+<LI><B>LineStarts:</B> This field is the indirect pointer to the array which will hold the offset into the edit text buffer of the start of each of the lines in the buffer.  If all of the available entries in this array are used, the user will be unable to enter any data past the end of the last line.  An entry in this array is used for each line, regardless of whether or not that line is currently visible on the screen (the multi-line edit buffer can contain more data than is visible at any one time with the edit window being scrollable up and down).  These fields are initialized and maintained by the LHAPI multi-line edit handler.  </LI><P>
+<LI><B>MaxLines:</B> The maximum number of lines in the entire edit buffer, this number differs from the number of lines which is seen in the edit window at any one time.  This field is also the total size, in entries, of the LineStarts array.  </LI><P>
+<LI><B>WrapLen:</B> WrapLen is the number of text characters at which to word wrap each line in the multi-line edit window.  If this field is initialized to 0 by an application before a CREATE message is issued, LHAPI will automatically adjust it to the total width of the multi-line edit window box.  The word wrap can be changed on the fly by an application by first updating this field to the desired value and then issuing a NOTIFY,NOTIFY_UPDATE message to the multi-line edit window handler.  </LI><P>
+<LI><B>CurrentLine, CurrentCol:</B> These fields define the line and column, relative to the start of the edit data text, the cursor is currently on.  A line and column of 0,0 signifies that the cursor is currently on the first character in the edit data buffer.  These fields are initialized and maintained by the LHAPI multi-line edit handler.  </LI><P>
+<LI><B>NumLines:</B> This field indicates the number of lines of data currently in the edit buffer.  NumLines has a value in the range of 1 to MaxLines and is initialized and maintained by the LHAPI multi-line edit handler.  </LI><P>
+<LI><B>TextLen:</B> This field gives the length, in characters, of the text string being edited, not inluding the null-termination character at the end the edit text string.  TextLen also represents the character offset into the edit buffer of the null-terminator.  This field is initialized and maintained by the LHAPI multi-line edit handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

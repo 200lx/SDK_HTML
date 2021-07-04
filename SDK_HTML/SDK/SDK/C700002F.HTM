@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComAcqSendBytes </TITLE></HEAD>
+<BODY>
+<H3>ComAcqSendBytes </H3>
+This is a special function which is a one-step <A HREF="c7000030.htm">ComAcquire</A> and <A HREF="c7000042.htm">ComSendBytes</A> call.  The call's 
+parameters are identical to ComSendBytes.  ComAcqSendBytes will start the UART transmitter, if necessary.  Note that 
+errors relating to port acquisition may also be returned.  <P>  Because ComAcqSendBytes attempts to acquire the port 
+exclusively, the caller is responsible for releasing exclusive port access when it is no longer needed.  If the port 
+cannot be acquired, the acquisition error returns.  Exclusive acquisition is requested because this function is provided 
+for subsystems that call the function after polling for and finding an appropriate message.  <P>
+Note that the companion function ComAcqReceiveBytes does not gain exclusive access, as it will typically be called in 
+a polling mode where exclusive access will be a burden.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComAcqSendBytes(handle_t Handle, char far *Datap, int Mode, 
+                                           int far *DataLenp) 
+<LI>Parameters:      handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 char far *Datap - Far pointer to the buffer containing the data the 
+                                   application wishes to send 
+                 int Mode - flag indicating how the data is to be treated.  
+                            Pick one of the following values:
+
+                            COM_CTL_WHOLE dictates that the application wants all of 
+                            the data to be copied into the transmit buffer in one 
+                            operation; partial sends are not permitted.  This option 
+                            is useful when sending protocol packets out, or when the 
+                            application buffer must be reusable immediately after the 
+                            call completes.  If the data cannot be copied into the 
+                            internal buffer, then the call returns an error, and no 
+                            data was copied.
+  
+                            Note that if the application specifies this option and 
+                            specifies a buffer length that is larger than the internal 
+                            transmit buffer length, this call can never complete 
+                            successfully.
+
+                            COM_CTL_NORMAL permits partial writes.
+                 int far *DataLenp - This variable is a far pointer to an integer 
+                                     which, on entry, contains the number of bytes 
+                                     available in the application's buffer.  On exit, 
+                                     ComAcqSendBytes sets this variable to the actual 
+                                     number of bytes copied from the application's 
+                                     buffer.  
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition 
+<LI>Related Calls:   <A HREF="c700002e.htm">ComAcqReceiveBytes</A>
+<LI>Comments:        <A HREF="c700003a.htm">ComOpen()</A> must first be called in order to get a valid handle to the 
+                 communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

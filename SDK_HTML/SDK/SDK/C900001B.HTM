@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Titlebar </TITLE></HEAD>
+<BODY>
+<H3>Titlebar </H3><P>
+The Titlebar is a text line at the top of the display which contains an application's title, status, and, optionally, the current system date and time.  It is the application's responsibility to properly format the title/status string, while LHAPI is responsible for updating the date and time to keep them current.  Titlebar displays the title/status string left-justified and the date/time right-justified on the titlebar line.  (If you choose to create a titlebar with a date/time, you must subclass all of your NULLEVENT messages on to Object, not filter them out.  Object is the one responsible for calling the DateTime window with a NOTIFY, NOTIFY_UPDATE message during NULLEVENT processing.) <P>
+<B>Window Structure Details </B><P>
+n int x,y,w,h: LHAPI automatically sets these values during the CREATE message processing to the entire extent of the titlebar, including any DateTime window which is automatically created by LHAPI.  <P>
+<UL><LI>PLHRES Title: Title is a near pointer to a far pointer to a string buffer containing the main application name and status.  Titlebar displays this string left-justified on the titlebar line.  It is the responsibility of the application to properly format this string (padding it with spaces when necessary).  </LI><P>
+<LI>PLHDATA Data: Not used.  </LI><P>
+<LI>UINT LogicalSize: Not used.  </LI><P>
+<LI>UINT Style TITLE_NODATETIME: When set, LHAPI does not display the current system date &amp; time.  By default (when this bit is not set), LHAPI automatically creates and updates a DateTime window on the right side of the TitleBar window.  </LI><P>
+DateTime Window Styles <BR>
+These styles are valid only for the DateTime window (the one pointed to by TitleBar's Menu field).  They are not to be set in the TitleBar's style field.  <BR>
+DATETIME_BOTH: Display date and time.  <BR>
+DATETIME_INVERSE: Show the text as white on black.  <BR>
+DATETIME_DATE: Display the date only.  <BR>
+DATETIME_TIME: Display the time only.  <BR>
+DATETIME_RIGHT: Right-justify the date/time string.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu (cast to PLHWINDOW); Menu points to the DateTime window structure which is filled in and created by LHAPI (unless the TITLE_NODATETIME style is being used).  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+<LI>Font: Automatically set by LHAPI.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>DRAW: Titlebar only responds to the DRAW_TITLE submessage to display the Title string in reverse video on the left side of the titlebar line.  Titlebar passes all draw messages to the Object class handler.  </LI><P>
+<LI>CREATE: Titlebar sets the x,y,w,h and Font fields to LHAPI internally-specified values.  Titlebar sets the Style field to STYLE_NOFOCUS.  Once the message is passed to the Object class handler, Object creates a child DateTime window if the TITLE_NODATETIME style bit is not set.  LHAPI automatically fills in the LHWINDOW structure pointed to by the Menu field to be used as the DateTime window structure.  </LI><P>
+<LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>APPEAR: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</UL><P>
+<P>
+</BODY>
+</HTML>

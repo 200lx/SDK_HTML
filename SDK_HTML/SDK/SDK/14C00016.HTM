@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Memory Configuration and Bank Switching </TITLE></HEAD>
+<BODY>
+<H3>Memory Configuration and Bank Switching</H3>
+<PRE>
+Index   R/W Mode    Description
+==========================================================================================
+-80h    R/W         bit 7      unused
+                    bits 6-4 = 111b 3-bit NRCE 1st half wait state value (default)
+                    bit 3      unused
+                    bits 2-0 = 111b 3-bit NRCE 2nd half wait state value (default)
+------------------------------------------------------------------------------------------
+-81h    R/W         bit 7    = 0b 512 cycles/8mS DRAM refresh rate (default)
+                    bits 6-2   unused
+                    bits 1-0 = 11b 2-bit NRAS[3:0] wait state value (default)
+------------------------------------------------------------------------------------------
+-82h    R/W         bits 7-4 = 1111b 4-bit NCS[1] wait state value (default)
+                    bits 3-0 = 1111b 4-bit NCS[0] wait state value (default)
+------------------------------------------------------------------------------------------
+-83h    R/W         bits 7-4   unused
+                    bits 3-0 = 1111b 4-bit ISA wait state value (default)
+------------------------------------------------------------------------------------------
+-84h    R/W         bits 7-3   unused
+                    bits 2-0 = 001b size of NRAS[0] RAM mapped into CPU address space
+------------------------------------------------------------------------------------------
+-85h    R/W         bits 7-3   unused
+                    bits 2-0 = 001b size of NRAS[1:0] RAM mapped into CPU address space
+------------------------------------------------------------------------------------------
+-86h    R/W         bit 7      unused
+                    bit 6 = 0  NCS[1] write disabled (default)
+                    bit 5 = 0  NCS[0] write disabled (default)
+                    bit 4 = 1  NRAS[3] write enabled (default)
+                    bit 3 = 1  NRAS[2] write enabled (default)
+                    bit 2 = 1  NRAS[1] write enabled (default)
+                    bit 1 = 1  NRAS[0] write enabled (default)
+                    bit 0 = 0  NRCE write disabled (default)
+------------------------------------------------------------------------------------------
+-87h    R/W         bits 7-0 = A0h Write protect register (CPU address bits [19:12])
+------------------------------------------------------------------------------------------
+-88h    R/W         bits 7-0   Bank D0 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-89h    R/W         bits 7-4   Bank D0 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank D0 not enabled (default)
+                    bits 2-0 = 000 NRCE Bank D0 device select code
+                             = 001 NRAS[0]
+                             = 010 NRAS[1]
+                             = 011 NRAS[2]
+                             = 100 NRAS[3]
+                             = 101 NCS[0]
+                             = 110 NCS[1]
+                             = 111 unused
+------------------------------------------------------------------------------------------
+-8Ah    R/W         bits 7-0   Bank D1 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Bh    R/W         bits 7-4   Bank D1 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank D1 not enabled (default)
+                    bits 2-0   Bank D1 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-8Ch    R/W         bits 7-0   Bank D2 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Dh    R/W         bits 7-4   Bank D2 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank D2 not enabled (default)
+                    bits 2-0   Bank D2 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-8Eh    R/W         bits 7-0   Bank D3 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-8Fh                bits 7-4   Bank D3 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank D3 not enabled (default)
+                    bits 2-0   Bank D3 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-90h    R/W         bits 7-0   Bank E0 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-91h    R/W         bits 7-4   Bank E0 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank E0 not enabled (default)
+                    bits 2-0   Bank E0 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-92h    R/W         bits 7-0   Bank E1 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-93h    R/W         bits 7-4   Bank E1 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank E1 not enabled (default)
+                    bits 2-0   Bank E1 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-94h    R/W         bits 7-0   Bank E2 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-95h    R/W         bits 7-4   Bank E2 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank E2 not enabled (default)
+                    bits 2-0   Bank E2 device select code (see -89h)
+------------------------------------------------------------------------------------------
+-96h    R/W         bits 7-0   Bank E3 frame select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-97h    R/W         bits 7-4   Bank E3 frame select (device address bits [17:14])
+                    bit 3 = 0  Bank E3 not enabled (default)
+                    bits 2-0   Bank E3 Device Select code (see -89h)
+------------------------------------------------------------------------------------------
+-98h    R/W         bits 7-0   Bank C Frame Select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-99h    R/W         bits 7-6   Bank C Frame Select (device address bits [17:16])
+                    bit 5      unused
+                    bit 4 = 0  Bank C Attribute Memory Select
+                    bit 3 = 0  Bank C not enabled (default)
+                    bits 2-0   Bank C Device Select code (see -89h)
+------------------------------------------------------------------------------------------
+-9Ah    R/W         bits 7-0   Disp Memory Frame Select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-9Bh    R/W         bits 7-4   Disp Memory Frame Select (device address bits [17:14])
+                    bit 3      unused
+                    bits 2-0   Disp Memory Device Select code (NRAS[3:0] only)
+------------------------------------------------------------------------------------------
+-9Ch    R/W         bits 7-0   Font Table Frame Select (device address bits [25:18])
+------------------------------------------------------------------------------------------
+-9Dh    R/W         bits 7-4   Font Table Frame Select (device address bits [17:14])
+                    bit 3                     unused
+                    bits 2-0   Font Table Device Select code (see -89h)
+------------------------------------------------------------------------------------------
+-9Eh    R/W         bit 7 = 0  Bank E3 Attribute Memory Select
+                    bit 6 = 0  Bank E2 Attribute Memory Select
+                    bit 5 = 0  Bank E1 Attribute Memory Select
+                    bit 4 = 0  Bank E0 Attribute Memory Select
+                    bit 3 = 0  Bank D3 Attribute Memory Select
+                    bit 2 = 0  Bank D2 Attribute Memory Select
+                    bit 1 = 0  Bank D1 Attribute Memory Select
+                    bit 0 = 0  Bank D0 Attribute Memory Select
+------------------------------------------------------------------------------------------
+-9Fh    R/W         bits 7-0   unused
+------------------------------------------------------------------------------------------
+-A0h    R/W         bits 7-0   I/O Window 0 start address upper byte (I/O address bits
+                               [15:8])
+------------------------------------------------------------------------------------------
+-A1h    R/W         bits 7-0   I/O Window 0 start address lower byte (I/O address bits
+                               [7:0])
+------------------------------------------------------------------------------------------
+-A2h    R/W         bits 7-0   I/O Window 0 size register (must be power of 2)
+------------------------------------------------------------------------------------------
+-A3h    R/W         bits 7-5   unused
+                    bit 4 = 0  Overlapping I/O-Address Window 0 not enabled (default)
+                    bit 3 = 0  I/O Window 0 not enabled (default)
+                    bits 2-0 = 101 NCS[0] I/O Window 0 Device Select code
+                             = 110 NCS[1]
+------------------------------------------------------------------------------------------
+-A4h    R/W         bits 7-0   I/O Window 1 start address upper byte (I/O address bits
+                               [15:8])
+------------------------------------------------------------------------------------------
+-A5h    R/W         bits 7-0   I/O Window 1 start address lower byte (I/O address bits
+                               [7:0])
+------------------------------------------------------------------------------------------
+-A6h    R/W         bits 7-0   I/O Window 1 size register (must be power of 2)
+------------------------------------------------------------------------------------------
+-A7h    R/W         bits 7-5   unused
+                    bit 4 = 0  Overlapping I/O-Address Window 1 not enabled (default)
+                    bit 3 = 0  I/O Window 1 not enabled (default)
+                    bits 2-0 = 101 NCS[0] I/O Window 1 Device Select code
+                             = 110 NCS[1]
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

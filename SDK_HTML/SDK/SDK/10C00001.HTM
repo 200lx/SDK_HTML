@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>10.  Database Formats </TITLE></HEAD>
+<BODY>
+<H1>10.  Database Formats </H1><P>
+The structure of all database files in an HP palmtop is essentially the same.  The built-in applications that use the database engine are the Phone Book, General Database, Note Taker, World Time, and Appointment Book.  (The Appointment book has additional structure that is discussed in detail on <BR>
+<A HREF="10C00016.HTM">page 10-394.</A>) <P>
+The database engine is designed around a few primary principles.  A look at these goals may help in seeing why certain design decisions were made.  <P>
+The first goal is to maintain flexibility.  All the information to enter and view data for a database is contained within the file.  Except for the appointment book, all the database applications are actually different incarnations of the same program, differentiated by the initial file that is created.  <P>
+The second principle is that the data modifications are made to the file on disk as they happen.  Only enough of the file to work with is in memory at one time.  Thus, the file can grow much larger than available RAM (unlike the 95LX which kept the entire file in memory).  It also provides higher protection for the data from disasters, such as reboots, lockups, and battery dying.  <P>
+The third principle is that all actions are &quot;undoable&quot;.  This means that the engine cannot throw away information that might be undone until that data is no longer accessible.  There is only one level of undo.  <P>
+The structures given are in Microsoft C for an IBM PC or compatible.  All multiple-byte numbers are given lowest byte to highest byte.  <P>
+<UL><LI>A char is -128 .  .  .  127.  </LI><P>
+<LI>An unsigned char is 0 .  .  .  255.  </LI><P>
+<LI>An int is -32,768 .  .  .  32,767.  </LI><P>
+<LI>An unsigned int is 0 .  .  .  65,535.  </LI><P>
+<LI>A longint is -2,147,483,648 .  .  .  2,147,483,647.  </LI><P>
+<LI>The codepage used in 100LX databases is CP850.  </LI><P>
+</UL><H2><A HREF="10C00002.HTM">Structures Used In This Chapter </A></H2><P>
+<H2><A HREF="10C00008.HTM">Database Records (In Approximate Order) </A></H2><P>
+<H2><A HREF="10C00015.HTM">Sample Database </A></H2><P>
+<H2><A HREF="10C00016.HTM">Appointment Book Overview </A></H2><P>
+</BODY>
+</HTML>

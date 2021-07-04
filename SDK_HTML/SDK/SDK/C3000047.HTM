@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 02h: Set Cursor Position </TITLE></HEAD>
+<BODY>
+<H3>AH = 02h: Set Cursor Position </H3><P>
+This function sets the cursor position to the specified character cell row and column address on the specified page.  This function applies to both text and graphics modes.  In graphics mode, the cursor is invisible, but is used to define a position on the screen.  Sixteen bytes (2 bytes per page) are maintained in BIOS RAM starting at CURCOOR.  The first of each pair of bytes is the cursor column number.  This routine updates this RAM with the new cursor position.  <BR>
+<UL><LI>Input: AH = 02h </LI><BR>
+               BH = Display page # <BR>
+               DH = Row address of cursor <BR>
+               DL = Column address of cursor <BR>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI>
+</UL><BR>
+<PRE>
+CRTMODE  Max c   Max r   Max p 
+-------------------------------
+0,1      39      24      8 
+2,3      79      24      4 
+4,5      39      24      0 
+6,7      79      24      0 
+20h      39      15      0 
+</PRE>
+<BR>
+<B>Notes:</B><BR>
+<UL><LI>Text coordinates (x,y)=(0,0) correspond to the upper left corner of the display.  </LI><P>
+<LI>Separate cursors are maintained for each page in text video modes.  These cursors can be set independently.  </LI><P>
+<LI>If the page # is invalid in a CGA text video mode (0-3), this service simply exits.  If the video mode, CRTMODE, is 4,5,6,7,or 20h, the page # parameter is ignored and p = 0 is used.  </LI><P>
+<LI>If the page # parameter is the currently active display page, the CTRC hardware Registers (0Eh, 0Fh) are updated to reflect the new cursor location.  </LI><P>
+<LI>The cursor coordinates (r,c) are not checked for validity.  Applications sometimes use &quot;off screen&quot; cursor coordinates as a means of making the cursor disappear.  However, as explained o the previous page, such practice will not have as reliable results as turning off the cursor directly.  </LI><P>
+<LI>The HP palmtop BIOS supports a set of graphics cursor services.  See Int 10h, Fcn DCxxh on <BR><A HREF="C3000063.HTM">page 3-82</A> for more information.  </LI><P>
+<LI>If the window scrolling feature is enabled, off screen writes of the cursor in the text zoom modes will invoke a window scroll to maintain view of cursor (cursor tracking).  The cursor will not be tracked off of the currently active display page.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

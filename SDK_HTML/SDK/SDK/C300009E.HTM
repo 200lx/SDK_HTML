@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Scancode Processing </TITLE></HEAD>
+<BODY>
+<H3>Scancode Processing </H3><P>
+The scancodes for some keys do not have an ASCII equivalent.  Int 09h processes such scancodes in one of the following ways, depending on the key: <P>
+<UL><LI>Int 09h may discard the scancode (no keycode data is entered into the keyboard input buffer).  For example, if a scancode for a keyboard state-defining key ([LSHF], [RSHF], [Ctrl], [Alt], [Caps Lock], [Num Lock], or [Scroll Lock]) is received, the state of the keyboard is updated, but the scancode is discarded.  </LI><P>
+<LI>Int 09h may enter a two-byte pair &quot;XXh/00h&quot; into the keyboard input buffer.  &quot;XXh&quot; may be the original scancode, or it may be a translated hexadecimal code for the key or key combination pressed.  Int 16h processes these keycodes differently depending on which service is called.  If a value is returned, it will be AX = XX00h.  </LI><P>
+<LI>Int 09h may enter a two-byte pair &quot;XX/F0h&quot; with XX non-zero into the keyboard input buffer.  This occurs on certain ALT keycodes and Int 16h processes these keycodes differently depending on which service is called.  If a value is returned, it will be AX = XX00h.  </LI><P>
+<LI>If the [ON] key is pressed with the machine running, an ON keycode is placed into the keybuffer.  The Int 16 services invoke deep sleep when the [ON] keycode is detected.  No keycode is returned to the calling routine.  </LI><P>
+<LI>There are some HP palmtop keys that are not PC Compatible.  These include FILER, CCMAIL, APPT, PHONE, MEMO, 123, CALC, and MORE.  There are special key codes for these keys, which are not part of the PC-compatible keycode set.  These keycodes are passed on to the calling application the same as PC-compatible keycodes.  See the keycode table in &quot;Scancode Conversion Tables&quot; for a complete list of HP palmtop keycodes.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

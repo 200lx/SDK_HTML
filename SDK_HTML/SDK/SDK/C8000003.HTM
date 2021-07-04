@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>LHAPI Initialization </TITLE></HEAD>
+<BODY>
+<H3>LHAPI Initialization </H3><P>
+A LHAPI application is also a System Manager application.  First, a LHAPI app must register itself as a System Manager application, then register itself as a LHAPI application.  The two are very distinct, and although you can have a System Manager application without LHAPI, you cannot have a LHAPI application without the System Manager.  Here is a typical initialization: <P>
+//Register ourself with the System Manager: <P>
+<PRE>     m_init_app(SYSTEM_MANAGER_VERSION); </PRE><P>
+//Register our application's name (the user will see this): <P>
+<pre>     m_reg_app_name(&quot;My Test App&quot;); </pre><P>
+//Register our far pointer table (in case we need to make dynamic memory allocations: <P>
+<pre>     #define countof(x) (sizeof(x)/sizeof(x[0])) </pre><P>
+<pre>     char far *SysMgrFarPtrs[10]; </pre><P>
+<pre>     m_reg_far(&amp;SysMgrFarPtrs, countof(SysMgrFarPtrs), 0); </pre><P>
+<pre>     Next, any initialization required for LHAPI should be done.  </pre><P>
+//Register our application with LHAPI.  <P>
+<pre>     LHAPIBLOCK LHAPIData; </pre><P>
+<pre>     InitializeLHAPI(&amp;LHAPIData); </pre><P>
+//Set the default font and the menu font to 64x18 <P>
+<pre>     SetMenuFont(FONT_NORMAL); </pre><P>
+<pre>     SetFont(FONT_NORMAL); </pre><P>
+<pre></pre><P>
+</BODY>
+</HTML>

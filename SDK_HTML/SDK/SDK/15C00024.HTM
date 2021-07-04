@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System memory interface </TITLE></HEAD>
+<BODY>
+<H3>System memory interface</H3>
+The display controller requires two 16 kByte blocks of RAM called the frame buffer and the font buffer.  These blocks are allocated by registers in the memory controller.  The display controller accesses these blocks using a special high-speed interface to the memory controller.  This interface accesses the RAM in fast-page mode for the fastest possible transfers.  Font tables within the font buffer are arranged by scan lines in order maximize the benefit of fast-page mode.<P>
+The following figure shows a sample display RAM access.  Three accesses are made before a page fault occurs (the row address changes), then two more accesses are made.  The signal NRAS is the one of the four NRAS[3:0] (row address strobe) pins that the buffer is mapped to.<P>
+<A HREF="image/__dg1520.gif">Graphic</A><P>
+The following figure shows a group of column accesses interrupted by a RAM refresh.  In this figure, NRAS-b is the NRAS for the memory device containing the accessed buffer and NRAS-o are the remaining (other) NRASs.<P>
+<A HREF="image/__dg1521.gif">Graphic</A><P>
+<H2><A HREF="15c00025.htm">Performance Impact </A></H2>
+</BODY>
+</HTML>

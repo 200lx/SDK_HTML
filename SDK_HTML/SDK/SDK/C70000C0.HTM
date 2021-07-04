@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_update_apname_list </TITLE></HEAD>
+<BODY>
+<H3>m_update_apname_list </H3>
+This function causes a refresh of the A:\APNAME.LST and C:\_DAT\APNAME.LST files.  Any new EXM applications in those files are added to the System Manager Task Control Blocks, and any EXM apps no longer in those files relinquish their TCB entries.  
+<PRE><UL>
+<LI>Syntax:      int m_update_apname_list(char a) </LI>
+<LI>Parameters:  a is a dummy argument.  </LI>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  
+            -1 - Parameter out of range </LI>
+<LI>Comments:    All RAM applications must be closed before calling this function.  
+             Since this function rearranges TCB entries, applications communicating 
+             with eachother through intertask events should &quot;refind&quot; each other.
+             It may take several subsequent m_actions before any modifications 
+             noticably take effect.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

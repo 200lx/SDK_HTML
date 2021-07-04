@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Communication Services </TITLE></HEAD>
+<BODY>
+<H1>Communication Services </H1><P>
+The System Manager's Communication services provide access to the HP palmtop's serial port.
+ <P> Applications using the Communication services must include COMIO.H and INTERFAC.H. 
+<P> Note that all Communication driver calls are &quot;non-blocking,&quot; that is, if
+the operation cannot be completed in a short enough time interval (actual time depends
+upon the operation), the operation is declared complete, with partial results returned. 
+This typically only affects operations such as read or write where large delays may be
+experienced.  <P> For example, an application can try to read 1000 characters, but if
+1000 characters are not currently available, then the read will return with fewer
+characters than requested.  This, however, is not an error.  Similarly, if an application
+tries to write 10,000 characters, the Communication driver will copy as many characters
+as possible into internal buffers, and notify the caller of the number of characters
+actually accepted.  It is up to the caller to repeat the request until the operation is
+completed.  <P>
+<H2><A HREF="c700002c.htm">Acquiring the Communication Port </A></H2><P>
+<H2><A HREF="c700002d.htm">Call Descriptions </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

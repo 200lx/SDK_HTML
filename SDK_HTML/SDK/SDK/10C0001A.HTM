@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Non-Repeating To-Do Data Record WithCarry Forward Enabled </TITLE></HEAD>
+<BODY>
+<H3>Non-Repeating To-Do Data Record WithCarry Forward Enabled </H3><P>
+<pre>
+Offset   Name                     Type           Contents 
+-------  -----------------------  -------------  --------
+***Standard Record Header (first 6 bytes--add six to all offsets below)*** 
+0        Item Length              int 
+2        Offset to Category       int 
+4        Offset to Location       int            Offset to end of Category field 
+6        Offset to Repeat         int            Offset to end of Record 
+8        Note record#             int            Record Number or -1 
+10       Prev Multi-Item Record#  int            (If carry forward is not enabled, this
+                                                 link would be Prev Record# Today.) 
+12       Next Multi-Item Record#  int            (If carry forward is not enabled, this
+                                                 link would be Next Record# Today.) 
+14       ToDoState                unsigned char  Flags<a href="#one_star">*</a>
+15       Start (Origination) Date:
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30)
+18       Priority                 char[2] 
+20       Due Date                 unsigned int   # days after todo origination date
+                                                 (0-65535)<a href="#three_stars">***</a>
+22       Check-Off Date:
+          Year                    unsigned char  Year# since 1900 
+          Month                   unsigned char  Month# (0-11) 
+          Day                     unsigned char  Day# (0-30) 
+26       RepeatType               char           1->No Repeat 
+27       Description Text         ASCIIZ 
+27+....  Category Text            ASCIIZ 
+27+....  Location Text            ASCIIZ         0 
+
+<a name="one_star">*  Bit 1 clear -> Not Checked Off
+   Bit 2 set -> Carry Forward Enabled
+   Bit 4 set -> To-do Item
+   Bit 6 clear -> Not a Stub for a repeating completed to-do
+
+<a name="three_stars">***Stored DueDate=0 -> No specified due date
+   Stored DueDate#0 -> SpecifiedDueDate = StartDate + DueDate-1
+</pre>
+</BODY>

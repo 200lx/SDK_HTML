@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Interruptible Processes </TITLE></HEAD>
+<BODY>
+<H3>Interruptible Processes </H3><P>
+An &quot;interruptible&quot; process within a program is one which the user can interrupt by pressing a key.  An example of an interruptible process is function plotting in HP Solve in the built-in calculator application.  <P>
+During an interruptible process, the program must periodically check the keyboard to see if the user has requested interruption.  The HP palmtop BIOS uses keyboard checks as an occasion to go into light sleep.  This is done as a power saving feature and is only done when running on batteries.  In many cases, keyboard checks are only done when a program is otherwise idle.  In these cases going into light sleep does not affect performance and is an effective way to conserve batteries.  However, during an interruptible process, going to light sleep can substantially slow down the process.  The system manager provides a function m_QuickKeyCheck that will test whether or not the keyboard has a key waiting, and does not enter light sleep.  <P>
+The BIOS provides a service (INT 15h, function 4Eh) which controls whether light sleep will be entered during a key test.  This function can be used to disable going into light sleep during an interruptible process and again to re-enable light sleep for power conservation reasons.  Wherever possible, m_QuickKeyCheck should be used instead of disabling light sleep.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_trans_printer_atb </TITLE></HEAD>
+<BODY>
+<H3>m_trans_printer_atb </H3>
+This call copies the appropriate characters to initiate or cancel the desired attribute, to the specified buffer.  The specified buffer must be at least 48 bytes long.  
+<PRE><UL>
+<LI>Syntax:         int m_trans_printer_atb(AtbNo, buffer) </LI>
+<LI>Parameters:     int AtbNo - Number of the attribute change desired See table below. 
+                char far *buffer - Pointer to a buffer - at least 48 bytes long-to hold
+                                   the attribute change string </LI>
+<LI>Returns:        The number of characters copied to the buffer 
+               -1 - if AtbNo is invalid 
+                0 - if the associated attribute string is of length 0 </LI>
+<LI>Related Calls:  <A HREF="c70000c8.htm">m_init_printer</A> must be issued before this call will be accepted.  </LI>
+<LI>Comments:       Attributes supported are bold, italics, underline, and combinations 
+                thereof.  Manifest constants for the attributes are available in 
+                printer.h, as shown below.  
+
+                ATB_B_ON     1   /* bold on */ 
+                ATB_B_OFF    2   /* bold off */ 
+                ATB_I_ON     3   /* italics on */ 
+                ATB_I_OFF    4   /* italics off */ 
+                ATB_U_ON     5   /* underline on */ 
+                ATB_U_OFF    6   /* underline off */ 
+                ATB_BI_ON    7   /* bold + italics on */ 
+                ATB_BI_OFF   8   /* bold + italics off */ 
+                ATB_BU_ON    9   /* bold + underline on */ 
+                ATB_BU_OFF  10   /* bold + underline off */ 
+                ATB_BIU_ON  11   /* bold + underline + italics on */ 
+                ATB_BIU_OFF 12   /* bold + underline + italics off */
+                ATB_IU_ON   13   /* italics + underline on */ 
+                ATB_IU_OFF  14   /* italics + underline off */ 
+</UL></PRE>
+</BODY>
+</HTML>

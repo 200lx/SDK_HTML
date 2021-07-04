@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_init_printer </TITLE></HEAD>
+<BODY>
+<H3>m_init_printer </H3>
+This call initializes the character translation table for the selected printer.  m_init_printer does not initialize the communication channel (serial port).  It is provided for applications with existing printer routines that wish to use the character translation table information provided by the HP palmtop. 
+<PRE><UL>
+<LI>Syntax:      unsigned int m_init_printer() </LI>
+<LI>Parameters:  None </LI>
+<LI>Returns:     A segment value used by 1-2-3 only.  This value has no meaning otherwise.</LI>
+<LI>Comments:    This call does not initialize the communication channel.  To utilize the 
+             System Manager's full printer support, use <A HREF="c70000c4.htm">m_open_printer</A> instead.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

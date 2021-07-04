@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Display Cursor Update Request Interrupt </TITLE></HEAD>
+<BODY>
+<H3>Display Cursor Update Request Interrupt </H3><P>
+The DCI interrupt performs a service for text-mode HP palmtop displays.  When an attempt is made to update the cursor to an off-screen position, a Display Cursor Update Request interrupt is issued and vectored to the Int 0Ah code for service.  The Int 0Ah service simply sets a bit in the RAM variable CurFlag and exits.  The responsibility for actual &quot;screen adjustment&quot; to maintain the cursor in view is left to the Int 08h Code (IRQ0, Heartbeat Timer).  The Int 08h Code polls the CurFlag value to detect the screen adjust request.  The Int 08h Code also performs some &quot;debounce&quot; on the CurFlag value to avoid erratic display operation during off-screen writes.  <P>
+</BODY>
+</HTML>

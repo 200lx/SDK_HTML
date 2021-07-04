@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Software-Controlled Mode </TITLE></HEAD>
+<BODY>
+<H3>Software-Controlled Mode</H3>
+The LED bit in IRCNT register is provided for software generated IR formats.  This bit is
+OR-ed with the output of the REDEYE formatter, and the other IR format outputs.
+Therefore, two IR formats may not be used simultaneously.  <P>
+Due to LED current limitations, the LED output driver duty cycle must be limited to a
+time average of 29%.  The duty cycle is automatically limited to 1/2 x 8/14 or 28.6% by
+the REDEYE formatter.  The format of a full REDEYE frame yields a duty-cycle of only
+14.3%.  If a different format is used (by using the LED bit) software must limit the
+duty-cycle.  <P>
+</BODY>
+</HTML>

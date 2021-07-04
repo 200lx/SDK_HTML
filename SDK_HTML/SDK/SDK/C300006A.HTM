@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 0FF02h: Get RAM Disk (Drive C) Size Parameters </TITLE></HEAD>
+<BODY>
+<H3>AX = 0FF02h: Get RAM Disk (Drive C) Size Parameters </H3><P>
+This function reports certain RAM disk size parameters.  These parameters are independent of any user data that may be stored on the RAM disk at the time of the call.  In particular, the amount by which the disk can be shrunk is the theoretical amount assuming that the disk is not so full with user data that any of these blocks are needed.  <P>
+<UL><LI>Input: AX = 0FF02h.  DL = 1h.  </LI><P>
+<LI>Output: AX = Number of 8-KB blocks by which the RAM disk can be shrunk <BR>
+BX = Number of 8-KB blocks by which the RAM disk can be grown <BR>
+This number is limited by a minimum system RAM size of approximately 128KB.  <BR>
+CX = Number of 1-KB blocks occupied by the current RAM disk <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX, BX, CX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

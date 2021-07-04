@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Additional Detail </TITLE></HEAD>
+<BODY>
+<H3>Additional Detail </H3><P>
+<UL>
+<LI><B>00h</B>
+This hook is called within the Deep Sleep Power Down code just before the display is turned off.  It is also called before checksums are computed.  <P>
+<P>
+<LI><B>01h</B>
+This hook is called within the Deep Sleep Power Up code just before return to the code that invoked the deep sleep.  <P>
+<P>
+<LI><B>02h</B>
+This hook is called within the Int 15h, Fcn 41xxh code (Wait-For- Event, see <A HREF="C3000079.HTM">page 3-97</A>) just before putting the unit into the Light Sleep state.  <P>
+<LI><B>03h</B>
+This hook is called within the Int 15h, Fcn 41xxh code (Wait-For- Event, see <A HREF="C3000079.HTM">page 3-97</A>) immediately after a Wakeup event has brought the unit into the Run State.  <P>
+<P>
+<LI><B>04h</B>
+This hook is called within the LoadByteFont procedure.  This procedure is called to load the default data for the Int 1fh vector - last half (chars 128-255, <A HREF="C30000C9.HTM">page 3-133</A>) of the standard byte wide font.  LoadByteFont is called within 3 BIOS video services: Int 10h, Fcns {00h, D0h, D8h} See <A HREF="C300002D.HTM">page 3-51</A> for more information on Int 10h.  <P>
+<P>
+<LI><B>05h</B>
+This hook is called within Int 10h, Fcn D1h (Bitmap Loader, see <A HREF="C3000058.HTM">page 3-74</A>) BIOS Service.  This service is called 3 times inside the LoadStdFonts procedure to load the three standard fonts (8x8, 10x11, 16x12).  LoadStdFonts is called inside the Int 10h, Fcn 00h (Set Video, see <A HREF="C3000045.HTM">page 3-64</A>) BIOS Service if the video mode is text.  LoadStdFonts is also called inside the Int 10h, Fcn D0h (TextZoom, see <A HREF="C3000057.HTM">page 3-73</A>) BIOS Service.  <P>
+<P>
+<LI><B>06h</B>
+This hook is called within the DspLowMain procedure and allows an application the opportunity to substitute a different handler for the warning.  DspLowMain is conditionally called to warn the user of a low main battery condition.  The calls occur in the Deep Sleep wakeup code and during periodic battery measurements.  <P>
+<P>
+<LI><B>07h</B>
+This hook is called within the DspLowBkUp procedure and allows an application the opportunity to substitute a different handler for the warning.  DspLowBkUp is conditionally called to warn the user of a low Back Up battery condition.  The calls occur in the Deep Sleep wakeup code and during periodic battery measurements.  <P>
+<P>
+<LI><B>08h</B>
+This hook is called within the DspLowCard procedure and allows an application the opportunity to substitute a different handler for the warning.  DspLowCard is conditionally called to warn the user of a low plug-in card battery condition.  The calls occur in the Deep Sleep wakeup code and during periodic battery measurements.  <P>
+<P>
+<LI><B>09h</B>
+This hook is called within the DspOverVolt procedure and allows an application the opportunity to substitute a different handler for the warning.  DspOverVolt is conditionally called to warn the user of a battery error condition (Over Voltage Detected).  The calls occur in the Deep Sleep wakeup code and during periodic battery measurements.  <P>
+<P>
+<LI><B>0Ah</B>
+This hook is called within the DspVLB procedure and allows an application the opportunity to substitute a different handler for the warning.  DspVLB is conditionally called to warn the user of a very low main battery condition.  The calls occur in the Deep Sleep Wakeup code, the Software ShutDown code, and during periodic battery measurements.  <P>
+<P>
+<LI><B>0Bh</B> 
+This hook is called within the InitDisplay procedure.  This procedure is called by the BIOS Video Services Int 10h, Fcns {00h, D0h} to initialize various display control registers for the specified video mode.  For additional detail see the XCRTPRM Table discussed in the Int 10h, Fcn DFh service on <A HREF="C3000064.HTM">page 3-85</A>.  <P>
+</UL>
+<P>
+<P>
+</BODY>
+</HTML>

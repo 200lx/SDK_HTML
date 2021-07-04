@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ProgressMeter </TITLE></HEAD>
+<BODY>
+<H3>ProgressMeter </H3><P>
+The ProgressMeter is used to display progress to the User during lengthy operations.  A horizontal &quot;thermometer&quot; with the percent complete inside is drawn.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: <BR>
+The extent of the thermometer.  </LI><P>
+<LI>PLHRES Title: Title is a near pointer to a far pointer to the title of the meter.  </LI><P>
+<LI>PLHDATA Data: Not used.  </LI><P>
+<LI>UINT LogicalSize:<BR>
+The denominator (total) of the fraction displayed as a percent.  Selection is used as the numerator.  That is, if LogicalSize=2048 and Selection=1024, the Meter would display 50%.  LogicalSize should not be 0!  </LI><P>
+<LI>UINT Style: PROGRESS_NOPERCENT allows a ProgressMeter that is empty inside.  If that flag is clear (the default), a percent is displayed inside the meter.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Not used.  </LI><P>
+<LI>UINT Selection: <BR>
+The numerator of the percentage fraction.  Selection/LogicalSize should be a &quot;reasonable&quot; int; that is, make sure that you can multiply Selection by 100 and divide by LogicalSize without giving overflows, truncation problems, or sign-extend errors.  </LI><P>
+<LI>UINT WindowTop: Should be set to 0.  This amount is subtracted from Selection to determine percentage.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>DRAW: Draws the meter.  A DRAW_CLIENT or DRAW_CLIENT_UPDATE only updates the meter, not the title.  </LI><P>
+<LI>CREATE: Sets the STYLE_NOFOCUS bit; ProgressMeters cannot recieve focus.  </LI><P>
+<LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>APPEAR: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

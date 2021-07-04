@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_free </TITLE></HEAD>
+<BODY>
+<H3>m_free </H3>
+This function shrinks the data space claimed by the application by releasing all memory beyond <I>ptr</I>.  Applications should make sure that the value of <I>ptr</I> is above or equal to the first value returned by <A HREF="c7000092.htm">m_alloc()</A>.  m_free() tests to make sure that the offset is within the range of the currently allocated block, but it does not test to see that it is beyond the initial allocation at load time.  
+<PRE><UL>
+<LI>Syntax:         int m_free(char near *ptr) </LI>
+<LI>Parameters:     char near *ptr - Pointer identifying following memory space for release
+                                 This value will be rounded to the next paragraph 
+                                 boundary.</LI>
+<LI>Returns:        0 - if successful 
+               -1 in AX - if an illegal value is detected</LI>
+<LI>Related Calls:  <A HREF="c7000097.htm">m_free_large</A> </LI>
+<LI>Comments:       Do not call after making calls to <A HREF="c70000a0.htm">m_get_far_block</A>.  
+                <A HREF="image/__dg0702.gif">Memory Stack</A></LI>
+</UL></PRE>
+</BODY>
+</HTML>

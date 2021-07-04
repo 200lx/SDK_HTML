@@ -1,0 +1,23 @@
+<HTML> <HEAD> 
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. --> 
+<TITLE>API Management Services </TITLE></HEAD>
+<BODY> 
+<H1>API Management Services </H1>
+The System Manager's Application Programming Interface Management
+services provide a  two-level dispatch table mechanism.  They allow portions of the
+System Manager to be  bank-switched, and add support to replace API functions, even when
+the functions are  in ROM.  <P> The API for both the HP 95LX and other HP palmtops are
+supported simultaneously by the HP palmtop System Manager.  Where necessary to
+distinguish between the two versions of API, &quot;API1&quot; and &quot;API2&quot; will
+be used, otherwise &quot;API&quot; refers to API2.  To compile API2 applications, the C
+compile time switch /DAPI2 needs to be added to the compiler options.  Note that API2
+uses Int 7Eh as the interrupt of communication between the applications and the System
+Manager, while the API1 in the HP 95LX uses Int 60h.  <P> 
+<H2><A HREF="c7000003.htm">Dispatch Table Mechanism </A></H2><P> 
+<H2><A HREF="c7000004.htm">Function Table Header </A></H2><P> 
+<H2><A HREF="c7000005.htm">Using Function Table Enabling and Disabling </A></H2><P> 
+<H2><A HREF="c7000006.htm">Writing Functions Through the HP Palmtop's API </A></H2><P> 
+<H2><A HREF="c7000007.htm">Bank-Switch Algorithm </A></H2><P> 
+<H2><A HREF="c7000008.htm">Call Descriptions </A></H2><P> 
+</BODY>
+</HTML>

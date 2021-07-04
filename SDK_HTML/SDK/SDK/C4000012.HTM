@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BIOS ID Block </TITLE></HEAD>
+<BODY>
+<H1>BIOS ID Block </H1><P>
+The BIOS ROM contains a block of information which encodes the identification of the machine, and indicates the date the BIOS was created.  The BIOS ID Block begins at FFFF:5. 
+<PRE>
+----------------------------------------------------------
+FFFF:5   Date of BIOS release (format: MM/DD/YY; 8 bytes)
+----------------------------------------------------------
+FFFF:D   00h (Reserved) 
+----------------------------------------------------------
+FFFF:E   FEh (System model ID)
+----------------------------------------------------------
+FFFF:F   00h (CkSum - Unused) 
+----------------------------------------------------------
+</PRE>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 00h: Initialize Serial Port </TITLE></HEAD>
+<BODY>
+<H3>AH = 00h: Initialize Serial Port </H3><P>
+This service sets the baud rate, parity, number of stop bits, and character frame size for the specified serial port from data passed in Register AL.  The function returns the LSR and MSR registers as shown in the figure below: <P>
+<UL><LI>Input: AH = 00h <BR>
+DX = Port# (0 = Built-In Serial Port) <P>
+</UL>
+<UL><LI><A HREF="image/__dg0313.gif">AL = Parameters)</A><P></UL>
+<P>
+<UL><LI><A HREF="image/__dg0314.gif">Output: AH: Line Status</A><P></UL>
+<P>
+<UL><LI><A HREF="image/__dg0315.gif">Output: AL: Modem Status</A><P></UL>
+<P>
+<UL><LI>Error conditions: None reported </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

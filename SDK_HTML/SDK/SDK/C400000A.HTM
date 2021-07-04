@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Power Management </TITLE></HEAD>
+<BODY>
+<H1>Power Management </H1><P>
+The HP palmtop has several features to extend battery life and maintain system RAM.  For a discussion of the features designed to protect system RAM integrity, see &quot;Battery Check&quot; on <A HREF="C4000002.HTM">page 4-142</A>.  There are three states that the HP palmtop enters regularly during normal operation: <P>
+<UL><LI>Run state (CPU running, display on).  </LI><P>
+<LI>Light sleep state (CPU idle, display on).  </LI><P>
+<LI>Deep sleep state (CPU idle, display off, other devices off).  </LI><P>
+</UL>In the run state the unit is doing useful work.  This may or may not result in display changes.  For example, the unit will typically be placed in the run state 18 or more times each second due to Timer0 Interrupts without any noticeable effect in the display.  <P>
+Most units that are turned on, stay in the light sleep state a good percentage of time.  When in this state, the unit will use less power than in the run state.  This state is entered from the BIOS Int 15h, Function 41xxh (Wait-For-Event) service.  Some of the Int 16h services invoke the Wait-For-Event function and will enter the light sleep state.  TIMER0, TIMER1, KBD, and RTC Interrupts are typical events that cause transition from the light sleep to the run state.  <P>
+When a unit is placed in the deep sleep state it will use significantly less power than one in the run or light sleep states.  When the unit is placed in this state the CPU is reset (register contents lost).  When &quot;awakened&quot; from this state, execution starts at the reset vector.  Under normal circumstances the BIOS makes this transparent to the application, and execution is eventually returned to the code that caused the deep sleep state to be entered.  The deep sleep state may be entered in one of several ways: <P>
+<UL><LI>Power Off.  </LI><P>
+<LI>Keyboard turn-off ([ON] key detected inside Int 16h).  </LI><P>
+<LI>Auto-timeout (3 minutes with no activity).  </LI><P>
+<LI>Int 15h, Function 42h BIOS call.  </LI><P>
+<LI>Software Shutdown (low batteries).  </LI><P>
+<LI>Backup mode (NMI Interrupt, very low power response) </LI><P>
+</UL><H2><A HREF="c400000b.htm">Normal Power Up Behavior </A></H2><P>
+<H2><A HREF="c400000c.htm">Warmstart Behavior </A></H2><P>
+<H2><A HREF="c400000d.htm">Coldstart Behavior </A></H2><P>
+<H2><A HREF="c400000e.htm">Deep Sleep Wakeup Sources </A></H2><P>
+<H2><A HREF="c400000f.htm">Normal Deep Sleep Entry </A></H2><P>
+<H2><A HREF="c4000010.htm">NMI Deep Sleep Entry </A></H2><P>
+<H2><A HREF="c4000011.htm">Software Shutdown Deep Sleep Entry </A></H2><P>
+</BODY>
+</HTML>

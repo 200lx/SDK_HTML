@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Power Management </TITLE></HEAD>
+<BODY>
+<H1>Power Management </H1><P>
+The power management circuitry controls the transitions between the modes shown in the table below.  The VDD supply can operate in one of 2 modes, low power or high power.  The low frequency oscillator (LFO) is always enabled.  <P>
+<P>
+<PRE>
+-----------------------------------------------------------------------
+Mode        Vcc Supply   CPU Clock    Display      Timer Clock    HFO
+-----------------------------------------------------------------------
+Static      -            OFF          OFF          OFF            OFF
+Deep Sleep  OFF          OFF          OFF          OFF            OFF
+Light Sleep ON           OFF          ON           ON             ON
+Operating   ON           ON           ON           ON             ON
+Backup      OFF          OFF          OFF          OFF            OFF
+-----------------------------------------------------------------------
+</PRE>
+
+<H2><A HREF="16c00003.htm">Static Test Condition </A></H2><P>
+<H2><A HREF="16c00004.htm">Deep Sleep </A></H2><P>
+<H2><A HREF="16c00005.htm">Light Sleep </A></H2><P>
+<H2><A HREF="16c00006.htm">Operating </A></H2><P>
+<H2><A HREF="16c00007.htm">Backup </A></H2><P>
+<H2><A HREF="16c00008.htm">Wakeups </A></H2><P>
+<H2><A HREF="16c00009.htm">System Resets </A></H2><P>
+<H2><A HREF="16c0000a.htm">System Control Register </A></H2><P>
+<H2><A HREF="16c0000b.htm">System Status Register </A></H2><P>
+</BODY>
+</HTML>

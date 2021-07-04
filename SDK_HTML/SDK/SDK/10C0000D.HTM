@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CardPageDef </TITLE></HEAD>
+<BODY>
+<H3>CardPageDef </H3><P>
+This record is only present if there is more than one card per record in the database.  This record can't be used if there is only one card in the database.  <P>
+<pre>
+Offset   Name           Type          Contents 
+-------  -------------  ------------  --------
+0...5    Record Header  RecordHeader  See <a href="10C00003.HTM">RecordHeader</a> structure above.
+                                      0x0d 0x??  0x28 0x00 0x00 0x00 
+6...25   Reserved       PWindow 
+26...27  CurrPage       int           Used by Card to track current page 
+28...29  PageCount      int           2...4 for number of pages 
+30...33  PageStart      char [4]      Index of control starting each page 
+34...37  PageSize       char [4]      Number of controls on each page 
+</pre>
+</BODY>

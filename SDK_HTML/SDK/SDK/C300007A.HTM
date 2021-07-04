@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 42h: Request Deep Sleep </TITLE></HEAD>
+<BODY>
+<H3>AH = 42h: Request Deep Sleep </H3><P>
+This function puts the HP palmtop into a very low power state in which the display is off and the CPU is not running.  The HP palmtop remains in deep sleep until a Wake Up event occurs.  Several potential wake up events are disabled prior to entering deep sleep.  Some wake-ups will be transparent to the user, resulting in a brief wake up followed by an immediate return to deep sleep.  This is intended to avoid spurious wake ups due to electrical noise, and/or ESD.  When a wake up occurs, the machine services the wake up and exits back to the calling program.  <P>
+<UL><LI>Input: AH = 42h </LI><P>
+<LI>Output: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL>Any enabled interrupt source is a potential wake up source (including enabled GPIO interrupts), but NMI interrupts should not be enabled during deep sleep.  Most interrupt sources are disabled.  Sources that are enabled by the BIOS are <P>
+<UL><LI>ON key press.  </LI><P>
+<LI>RX pad.  </LI><P>
+<LI>RING detect.  </LI><P>
+<LI>RTC alarms.  </LI><P>
+<LI>AC Adaptor Insertion (Only if NiCad and Charging are enabled).  </LI><P>
+</UL>If the wake up is due to RX or RING, the serial port is briefly monitored to determine whether or not the unit will remain awake.  The code attempts to filter spurious wakeups due to noise on these 2 lines.  From a deep sleep state, the HP palmtop's CPU will not start &quot;running&quot; until 35-44 msec after the wakeup event has occurred.  Additional latency can be expected due to code execution before the RX and RING wakeup checks are made.  <P>
+The HP palmtop will remain awake during several states, including:<BR>
+RX WAKEUP: If 4 valid chars are received before two invalid chars (framing, parity, overrun, break) then the HP palmtop will wake up.  There is a time_out consisting of a loop counter that gets reset every time a valid char is received.  If a time out is received before getting 4 valid chars or getting 2 errors, the unit is put back into deep sleep.  Note that by the time that the code which performs the wakeup check is executed, several characters (baud rate dependent) will probably have been lost due to overrun errors.  This unavoidable error is counted as the first of the 2 allowed errors.  <P>
+RING WAKEUP: The RING line (RI = Bit6) of the UART is debounced.  The ring is considered stable if it lasts about 0.4 seconds.  If there is a stable ring, the unit wakes up.  <P>
+<UL><LI>This service invokes the DPSLEEP procedure.  The Int 06h, Fcn's 00h and 01h hooks are called from within DPSLEEP.  </LI><P>
+<LI>The request for DPSLEEP will be denied if the unit is currently charging batteries.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

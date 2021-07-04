@@ -1,0 +1,245 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Sample Event Loop </TITLE></HEAD>
+<BODY>
+<H1>Sample Event Loop </H1><P>
+<H4>/* Sample C Code of a Database Event Loop */ </H4><P>
+<H4>/* NOTE: The following code is not complete and provided for purposes of learning about the event loop.  For experimentation, and as a typing aid, this portion of this file appears in </H4><P>
+<H4>\SOURCE as DBEVENT.C */ </H4><P>
+<H4>/**************************************************************************** </H4><P>
+<H4>************************************************************************* </H4><P>
+<H4>*************************************************************************** </H4><P>
+<H4>***************************************************************************/ </H4><P>
+<H4>/***************************************************************************** </H4><P>
+<H4>****************************************************************************** </H4><P>
+<H4>* </H4><P>
+<H4>* Global Data </H4><P>
+<H4>* </H4><P>
+<H4>****************************************************************************** ****************************************************************************** </H4><P>
+<H4>/ </H4><P>
+<H4>EVENT app_event; /* System manager event struct */ </H4><P>
+<H4>LHAPIBLOCK CapData; /* LHAPI application data block */ </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* far ptrs to be managed by sysmgr in event that memory moves.  They must </H4><P>
+<H4>* be registered with the sysmgr during initialization.  The first </H4><P>
+<H4>* MAX_CARD_WNDS are used to handle local titles for card windows, while the </H4><P>
+<H4>* remainder are for database engine, note, multiline edit in general filter, </H4><P>
+<H4>* and other miscellaneous uses that involve allocating memory block.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>char far *CardWndTitlePtrs[MAX_CARD_WNDS + 27]; /* sysmgr farptrs */ </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Multitudinous other data declarations specific to your program would </H4><P>
+<H4>* normally appear here, but are excluded from this example.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>/***************************************************************************** ****************************************************************************** </H4><P>
+<H4>* </H4><P>
+<H4>* Main entry point and event loop.  </H4><P>
+<H4>* </H4><P>
+<H4>* Main contains init calls, event loop, error check, and uninit calls.  </H4><P>
+<H4>* This event loop is the ONLY one in the entire application.  </H4><P>
+<H4>* ****************************************************************************** *****************************************************************************/ </H4><P>
+<H4>void main(int argc, char *argv[]) </H4><P>
+<H4>{ </H4><P>
+<H4>*/ </H4><P>
+<H4>Initialize(); </H4><P>
+<H4>/*----------------------------------------------------------- </H4><P>
+<H4>* loop repeatedly for events until Done goes TRUE.  </H4><P>
+<H4>*-----------------------------------------------------------*/ </H4><P>
+<H4>eventloopstart: </H4><P>
+<H4>while (!IndexBlock.Done) { </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* if there is stuff that could be lost from buffered disk i/o, send it </H4><P>
+<H4>* on through before asking for keystroke.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>if (Db.flags &amp; DB_SHOULDFLUSH) { /* protect against warmstart */ </H4><P>
+<H4>if (DB_FlushFile(&amp;Db) == DB_CLOSE) </H4><P>
+<H4>SetError(ERR_WRITE); </H4><P>
+<H4>} </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Create error dlg if any errors reported during last event (or init).  </H4><P>
+<H4>* if db is closed and nofilewnd (DummyWnd) has not yet been launched, </H4><P>
+<H4>* do it before creating error dlg.  If no errors, cruise on by.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>if (err = GetError()) { /* report errors if any */ </H4><P>
+<H4>SendMsg(&amp;ErrorDlg,CREATE,CREATE_FOCUS,0); </H4><P>
+<H4>} </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Get an event (a keystroke or null(timer) event are the usuals.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>maction: </H4><P>
+<H4>app_event.do_event = DO_EVENT; </H4><P>
+<H4>m_action (&amp;app_event); /* Grab system manager event */ </H4><P>
+<H4>if (DB_CardChanged(&amp;Db)&lt;0) </H4><P>
+<H4>goto restart; </H4><P>
+<H4>switch (app_event.kind) { /* Branch on SysMgr event */ </H4><P>
+<H4>case E_KEY: /* users, the source of all troubles */ </H4><P>
+<H4>if (GetFocus()) </H4><P>
+<H4>SendFocusMsg(KEYSTROKE, app_event.data, app_event.scan); </H4><P>
+<H4>else </H4><P>
+<H4>goto restart; </H4><P>
+<H4>break; </H4><P>
+<H4>case E_REFRESH: /* redraw after sysmgr mucks up screen */ </H4><P>
+<H4>SendAllMsg(DRAW, DRAW_ALL, 0); </H4><P>
+<H4>break; </H4><P>
+<H4>case E_ACTIV: /* reactivate on rtn from other app */ </H4><P>
+<H4>HourglassOn(-1,-1); </H4><P>
+<H4>if (DB_Reactivate(&amp;Db) != DB_OK) { /* some file badness, restart app */ </H4><P>
+<H4>restart: </H4><P>
+<H4>RestartApp(MyAppsHotKey); </H4><P>
+<H4>m_fini(); /* but just in case, */ </H4><P>
+<H4>return; /* bail out cuz windows can't be operated */ </H4><P>
+<H4>} </H4><P>
+<H4>ReactivateLHAPI(&amp;CapData); /* things are OK, Hello LHAPI */ </H4><P>
+<H4>SyncLHAPIKeyState(); </H4><P>
+<H4>break; </H4><P>
+<H4>case E_DEACT: /* switch to another app */ </H4><P>
+<H4>DB_Deactivate(&amp;Db); </H4><P>
+<H4>DeactivateLHAPI(); </H4><P>
+<H4>goto maction; </H4><P>
+<H4>break; </H4><P>
+<H4>case E_TERM: /* enforced bailout */ </H4><P>
+<H4>IndexBlock.Done = TRUE; </H4><P>
+<H4>break; </H4><P>
+<H4>case E_NONE: </H4><P>
+<H4>SendMsg(GetFocus(), NULLEVENT, app_event.shifts, app_event.scan); </H4><P>
+<H4>HandleClock(); /* show ticking clock (if enabled) */ </H4><P>
+<H4>break; </H4><P>
+<H4>} /* end of switch on event type */ </H4><P>
+<H4>} /* end of event loop */ </H4><P>
+<H4>/*----------------------------------------------------------- </H4><P>
+<H4>* Proof that miracles exist: no reboot this time.  </H4><P>
+<H4>*-----------------------------------------------------------*/ </H4><P>
+<H4>HourglassOn(-1,-1); </H4><P>
+<H4>CloseDbFile(&amp;Db); /* close current database */ </H4><P>
+<H4>m_fini(); /* Tell System Manager goodbye */ </H4><P>
+<H4>} </H4><P>
+<H4>/***************************************************************************** ****************************************************************************** </H4><P>
+<H4>* </H4><P>
+<H4>* Initialize CAP, SysMgr, Database, and data structures </H4><P>
+<H4>* </H4><P>
+<H4>****************************************************************************** ****************************************************************************** </H4><P>
+<H4>/ </H4><P>
+<H4>void Initialize(void) </H4><P>
+<H4>{ </H4><P>
+<H4>int i, size, err = 0; </H4><P>
+<H4>char *titleptr; </H4><P>
+<H4>char *bufptr; </H4><P>
+<H4>char *pstuffptr; </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Greet all the important local personalities </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>m_init_app(SYSTEM_MANAGER_VERSION); /* Hello SysMgr */ </H4><P>
+<H4>InitializeLHAPI(&amp;CapData); /* Hello LHAPI */ </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* setup far internal far pointers to be maintained by sysmgr.  Initialize </H4><P>
+<H4>* the first block for use by card window titles.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>HourglassOn(-1,-1); </H4><P>
+<H4>titleptr = CardWndTitles; </H4><P>
+<H4>m_reg_far(&amp;CardWndTitlePtrs, countof(CardWndTitlePtrs), 4); </H4><P>
+<H4>for (i=0; i&lt;MAX_CARD_WNDS; i++) { </H4><P>
+<H4>CardWndTitlePtrs[i] = titleptr; </H4><P>
+<H4>titleptr += DB_FIELDNAMELENGTH + 1; </H4><P>
+<H4>CardWindow[i].Title = &amp;CardWndTitlePtrs[i]; </H4><P>
+<H4>} </H4><P>
+<H4>MultiBuffer = FilterBuffer; </H4><P>
+<H4>EscBuffer = FileSpace; </H4><P>
+<H4>LineStarts = Scratch2; </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Set fonts, map in the resource file and init resource ptrs.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>RegisterFont(FONT_NORMAL); /* be as normal as possible */ </H4><P>
+<H4>SetMenuFont(FONT_NORMAL); </H4><P>
+<H4>SetDefaultFont(FONT_NORMAL); </H4><P>
+<H4>map_resource_file(&quot;CDBAPP.RI&quot;); /* map in resourced msgs */ </H4><P>
+<H4>Init_Db_Strings(); /* create access to those msgs */ </H4><P>
+<H4>/*----------------------------------------------------------- </H4><P>
+<H4>* App specific initialization </H4><P>
+<H4>* </H4><P>
+<H4>* Must set EnvFileName, DfltDataFileName, ResourceFileName, </H4><P>
+<H4>* DfltSmartClipName1/2, DfltCategory.  </H4><P>
+<H4>*-----------------------------------------------------------*/ </H4><P>
+<H4>InitAppPhone(); </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* register the name of the application </H4><P>
+<H4>* with the system manager for use in case low memory prompting is </H4><P>
+<H4>* needed.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>m_reg_app_name(*IndexBlock.AppName); /* register appname */ </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Init file dlgs, empty index window, and no-file window.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>InitializeFileDialogs(); /* Hello File Dialogs */ </H4><P>
+<H4>*BackupFileName = 0; /* No 2nd chance if loadfile fails */ </H4><P>
+<H4>SendMsg(&amp;TopWnd,CREATE,CREATE_FOCUS,0); /* Create main application window */ </H4><P>
+<H4>SendMsg(&amp;DummyWnd, CREATE, CREATE_FOCUS, 0); </H4><P>
+<H4>HourglassOn(-1,-1); /* put hourglass up again now that windows up */ </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* Get name of current data file from environment file, use default file </H4><P>
+<H4>* name if no environment file exists.  </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>if (_dos_open(EnvFileName, O_RDWR, &amp;EnvHandle)) </H4><P>
+<H4>lstrcpy(FileSpec, DfltDataFileName); </H4><P>
+<H4>else { </H4><P>
+<H4>_dos_lseek(EnvHandle, 0, SEEK_SET); </H4><P>
+<H4>_dos_read(EnvHandle, FileSpec, sizeof(Db.filename), &amp;size); </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* get printer setup information.  dflts are already in place if read fails </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>i = sizeof(INDEXPRINTBLOCK); </H4><P>
+<H4>bufptr = Record; </H4><P>
+<H4>_dos_read(EnvHandle, bufptr, i, &amp;size); /* read print setup info */ </H4><P>
+<H4>if (size == i) { </H4><P>
+<H4>pstuffptr = (char *)&amp;PStuff; </H4><P>
+<H4>for (;i;i--) *(pstuffptr++) = *(bufptr++); </H4><P>
+<H4>} </H4><P>
+<H4>close: </H4><P>
+<H4>_dos_close(EnvHandle); </H4><P>
+<H4>} </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* init the db engine </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>err = DB_Init(); </H4><P>
+<H4>if (err || GetError()) { </H4><P>
+<H4>SetError(ERR_DBINIT); </H4><P>
+<H4>HourglassOff(); </H4><P>
+<H4>return; </H4><P>
+<H4>} </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* if file is not default and does not exist, create no file state </H4><P>
+<H4>* instead </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>if ((lstrcmp(FileSpec, DfltDataFileName)) &amp;&amp; (!(Exists(FileSpec)))) { </H4><P>
+<H4>SetError(ERR_OPEN); </H4><P>
+<H4>HourglassOff(); </H4><P>
+<H4>return; </H4><P>
+<H4>} </H4><P>
+<H4>/*---------------------------------------------------------------------- </H4><P>
+<H4>* open up the datafile </H4><P>
+<H4>*----------------------------------------------------------------------*/ </H4><P>
+<H4>LoadFileShell(NULL); </H4><P>
+<H4>} </H4><P>
+<H4>/***************************************************************************** ****************************************************************************** </H4><P>
+<H4>* </H4><P>
+<H4>* Launches app; closes current app and launches again - last ditch </H4><P>
+<H4>* recovery system when datafile deleted underneath.  </H4><P>
+<H4>* </H4><P>
+<H4>****************************************************************************** ******************************************************************************/ </H4><P>
+<H4>int RestartApp(int HotKey) </H4><P>
+<H4>{ </H4><P>
+<H4>struct task far *TCB = m_get_TCB(); </H4><P>
+<H4>int i; </H4><P>
+<H4>for (i=0; i&lt;TASKCOUNT; i++, TCB++) </H4><P>
+<H4>if (HotKey==TCB-&gt;t_hotkey) goto launch; </H4><P>
+<H4>return -1; </H4><P>
+<H4>launch: </H4><P>
+<H4>app_event.e_launch_task = i; /* Index of the app we want */ </H4><P>
+<H4>app_event.e_launch_type = LT_CLOSE_THEN_LAUNCH; /* Close us out first */ </H4><P>
+<H4>app_event.do_event = DO_LAUNCH; </H4><P>
+<H4>m_action(&amp;app_event); /* Launch our app */ </H4><P>
+<H4>return 1; </H4><P>
+<H4>} </H4><P>
+<H4></H4><P>
+</BODY>
+</HTML>

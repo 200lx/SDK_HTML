@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Call Descriptions </TITLE></HEAD>
+<BODY>
+<H3>Call Descriptions </H3><P>
+Function calls associated with Memory Management Services include: <P>
+<UL>
+<LI><A HREF="c7000092.htm">m_alloc </A> Attempts to expand the data space occupied by the application by exp_size bytes.  </LI><P>
+<LI><A HREF="c7000093.htm">m_alloc_large </A> Attempts to expand the data space occupied by the application by exp_paras paragraphs (16 bytes).  </LI><P>
+<LI><A HREF="c7000094.htm">m_current_task </A> Returns the current task number.  </LI><P>
+<LI><A HREF="c7000095.htm">m_enable_app_key </A> Enables use of application key after lock.  </LI><P>
+<LI><A HREF="c7000096.htm">m_free </A> Shrinks the data space claimed by the application by releasing all memory beyond the pointer.  </LI><P>
+<LI><A HREF="c7000097.htm">m_free_large </A> Shrinks the data space claimed by the application beginning at pointer.  </LI><P>
+<LI><A HREF="c7000098.htm">m_free_static_block </A> Frees up a block of static RAM previously allocated by the m_get_static_block call.  </LI><P>
+<LI><A HREF="c7000099.htm">m_free_SVC_entry </A> Frees a pointer to an S_SERVICE entry.  </LI><P>
+<LI><A HREF="c700009a.htm">m_get_active_DOS_size </A> Returns memory size of open DOS box.  </LI><P>
+<LI><A HREF="c700009b.htm">m_get_avail_123_mem </A> Returns the number of bytes available for a 123 memory allocate call.  </LI><P>
+<LI><A HREF="c700009c.htm">m_get_avail_mem </A> Returns the number of bytes available for a memory allocate call.  </LI><P>
+<LI><A HREF="c700009d.htm">m_get_avail_static_mem </A> Returns the total bytes of the largest free block of static RAM that can be allocated.  </LI><P>
+<LI><A HREF="c700009e.htm">m_get_DOS_hot_key </A> Returns scan code of DOS box (normally Ctrl+123).  </LI><P>
+<LI><A HREF="c700009f.htm">m_get_DOS_part_size </A> Returns Setup's DOS box memory size (may not be the same as the size of an open DOS box).  </LI><P>
+<LI><A HREF="c70000a0.htm">m_get_far_block </A> Allocates an initial indirect far pointer block of memory.  </LI><P>
+<LI><A HREF="c70000a1.htm">m_get_far_handle </A> Returns the offset of the next free far table entry.  </LI><P>
+<LI><A HREF="c70000a2.htm">m_get_far_user_handle </A> Returns a near handle to a free USER far pointer entry.  </LI><P>
+<LI><A HREF="c70000a3.htm">m_get_initial_mem </A> Returns the number of bytes of memory available to an application at startup.  </LI><P>
+<LI><A HREF="c70000a4.htm">m_get_static_block </A> Initial call to allocate a block of static RAM.  </LI><P>
+<LI><A HREF="c70000a5.htm">m_get_static_size </A> Returns size of static memory reserved by the system manager.  </LI><P>
+<LI><A HREF="c70000a6.htm">m_get_static_used </A> Returns amount of static RAM currently in use by Special TSR's.  </LI><P>
+<LI><A HREF="c70000a7.htm">m_get_SVC_entry </A> Gets a pointer to an S_SERVICE entry.  </LI><P>
+<LI><A HREF="c70000a8.htm">m_load_client </A> Loads the Redirector application.  NOT SUPPORTED ON 200LX.  </LI><P>
+<LI><A HREF="c70000a9.htm">m_load_TSR </A> Installs special TSR module into static RAM area.  </LI><P>
+<LI><A HREF="c70000aa.htm">m_locate_SVC </A> Gets a pointer to a particular S_SERVICE entry.  </LI><P>
+<LI><A HREF="c70000ab.htm">m_lock_out_app_key </A> Locks out usage of application key and updates the TCB.  </LI><P>
+<LI><A HREF="c70000ac.htm">m_modify_hot_key </A> Modifies the hot key of the current task.  </LI><P>
+<LI><A HREF="c70000ad.htm">m_QuickKeyCheck </A> Enables an application to peek ahead at the next key in the keyboard buffer without having to do an m_action from the main event loop.  </LI><P>
+<LI><A HREF="c70000ae.htm">m_reg_far </A> Registers an indirect far pointer table with the System Manager.  </LI><P>
+<LI><A HREF="c70000af.htm">m_set_DOS_hot_key </A> Used by the Setup application to set DOS's hot key.  </LI><P>
+<LI><A HREF="c70000b0.htm">m_set_DOS_part_size </A> Used by the Setup application to set the default DOS box size.  </LI><P>
+<LI><A HREF="c70000b1.htm">m_set_far_block </A> Expands/shrinks or frees a previously allocated indirect far pointer memory block.  </LI><P>
+<LI><A HREF="c70000b2.htm">m_set_static_size </A> Used by the Setup application to set the amount of static RAM.  </LI><P>
+<LI><A HREF="c70000b3.htm">m_task_info </A> Allows access to task control block information.  </LI><P>
+<LI><A HREF="c70000b4.htm">m_unload_client </A> Unloads the Redirector application.  NOT SUPPORTED ON 200LX.  </LI><P>
+</UL>
+<H2><A HREF="c7000091.htm">Error Codes </A></H2>
+</BODY>
+</HTML>

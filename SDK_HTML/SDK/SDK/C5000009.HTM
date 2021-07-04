@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Accessing System Manager Services From ASM </TITLE></HEAD>
+<BODY>
+<H3>Accessing System Manager Services From ASM </H3><P>
+Assembler programs access the services by pushing any required arguments onto the stack and then using the SMCALL macro to &quot;call&quot; the service.  For example, usage of m_disp might appear as the following: <P>
+<P>
+<PRE>
+include     interfac.mac 
+
+... 
+
+
+push        dx   ; ostyle (not actually used)
+push        dx   ; style 
+push        cx   ; string length 
+push        ds   ; string segment 
+push        si   ; string offset
+push        ax   ; column 
+push        bx   ; row 
+
+SMCALL F_M_DISP  ; display the string 
+
+add      sp,14   ; remove arguments from the stack
+
+</PRE>
+There are three things to note in this example: <P>
+<UL><LI>The arguments are pushed in right-to-left order, as is done by C.  </LI><P>
+<LI>Pointers are passed as far pointers.  See INTERFAC.H for argument specifics where, in general, pointers are cast as far pointers.  </LI><P>
+<LI>The function numbers such as F_M_DISP and the SMCALL macro can be found in INTERFAC.MAC.  </LI><P>
+</UL><B>Note:</B> it is very important that API2 be defined before #including interface.h or interface.mac, unless the program is a &quot;95-style&quot; program.  Either use <P>
+<B>#define API2 </B><BR>
+for a C program, or <BR>
+<B>API2 equ 0 </B><BR>
+for an assembly program.<P>
+</BODY>
+</HTML>

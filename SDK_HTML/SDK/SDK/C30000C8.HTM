@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 1Dh: Video Parameter Table Pointer </TITLE></HEAD>
+<BODY>
+<H1>Int 1Dh: Video Parameter Table Pointer </H1><P>
+Int 1Dh is a pointer to a standard video parameter table.  This table contains parameters that are used to initialize the display controller for a particular display mode in a standard PC.  Data for the nonstandard HP 95LX Mode 20h has been removed to conform to the standard table format.  An effort is made to make the data in this table meaningful for application programs that may read it.  The HP palmtop Display controller requires additional data, and some of the old data in this table is not meaningful.  The HP palmtop Display controller is initialized from a separate table that may be accessed by using the Int 10h, Fcn DFh service.  <P>
+The standard video parameter table is structured into fields as shown below.
+<PRE>
+Field Length   Definition 
+(Bytes) 
+=======================================================
+16             Init parameters: Modes 0,1 (text 40x25) 
+-------------------------------------------------------
+16             Init parameters: Modes 2,3 (text 80x25) 
+-------------------------------------------------------
+16             Init parameters: Modes 4,5,6 (Graphics) 
+-------------------------------------------------------
+16             Init parameters: Mode 7 (text 40x16) 
+-------------------------------------------------------
+2              Buffer size: Modes 0,1 
+-------------------------------------------------------
+2              Buffer size: Modes 2,3 
+-------------------------------------------------------
+2              Buffer size: Modes 4,5,6 
+-------------------------------------------------------
+2              Buffer size: Mode 7 
+-------------------------------------------------------
+1              Number of Columns: Mode 0
+-------------------------------------------------------
+1              Number of Columns: Mode 1 
+-------------------------------------------------------
+1              Number of Columns: Mode 2 
+-------------------------------------------------------
+1              Number of Columns: Mode 3 
+-------------------------------------------------------
+1              Number of Columns: Mode 4 
+-------------------------------------------------------
+1              Number of Columns: Mode 5 
+-------------------------------------------------------
+1              Number of Columns: Mode 6 
+-------------------------------------------------------
+1              Number of Columns: Mode 7 
+-------------------------------------------------------
+1              Mode parameter: Mode 0 
+-------------------------------------------------------
+1              Mode parameter: Mode 1 
+-------------------------------------------------------
+1              Mode parameter: Mode 2 
+-------------------------------------------------------
+1              Mode parameter: Mode 3 
+-------------------------------------------------------
+1              Mode parameter: Mode 4 
+-------------------------------------------------------
+1              Mode parameter: Mode 5 
+-------------------------------------------------------
+1              Mode parameter: Mode 6 
+-------------------------------------------------------
+1              Mode parameter: Mode 7 
+-------------------------------------------------------
+
+<P>
+</BODY>
+</HTML>

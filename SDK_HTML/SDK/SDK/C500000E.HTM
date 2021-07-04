@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ITC Error Contingencies </TITLE></HEAD>
+<BODY>
+<H3>ITC Error Contingencies </H3><P>
+For asthetic and performance purposes a slave app typically will not have control of the screen.  The owner apps screen will still be displayed.  Error conditions or other factors may require the slave app to issue a message to the user.  Since the slave app does not have the ability to redraw the owner app's screen after message display, the slave must request the owner to redraw the display (through a DO_REFRESH event (E_REFRESH event type is sent to owner).  <P>
+Note that the E_REFRESH event type must be supported by all compliant apps regardless of whether they support shared channel communications.  The currently active app must redraw it's screen and immediately return to system manager through a DO_RETURN event call.  <P>
+In addition, it may make sense to allow for automatic resumption of processing if the slave does not respond within a predetermined time interval (implementation of this may be difficult).  <P>
+Also, because the design of ITC allows another application to become active during an ITC session, the channel activity should be short and quick.  If ITC communication is interrupted by another task becoming active, ITC will not continue until one of the two talking tasks is reactivated.  Because of this, you may wish to bracket your ITC session with calls to m_key_lock() and m_key_unlock(), which will prevent hot-key switching (unlike m_lock/m_unlock, which will prevent all switching, including the ITC!).  <P>
+<P>
+</BODY>
+</HTML>

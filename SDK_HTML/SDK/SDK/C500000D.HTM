@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Flow of Control of ITC </TITLE></HEAD>
+<BODY>
+<H3>Flow of Control of ITC </H3><P>
+<OL><LI> The initiating application (owner) allocates a far memory block using the m_get_far_block call or alternatively explicitly sets a far pointer table entry (e.g.  to a buffer in the owner's default data segment).  The owner locates the desired app to link with by issuing a m_get_tcb call and examining the TCB table (see the section above).  By examining the associated TCB entry, the owner can determine if the desired slave app is currently suspended.  </LI><P>
+<LI> If the app is currently open go to step 4.  If the app is currently closed, The owner issues a DO_LAUNCH event request ( m_action call with do_event entry set to DO_LAUNCH) indicating the desired app to start.  The slave app initializes itself (including registering its far pointer table) and prior to issuing any display output, does an m_get_run_status call.  Sysmgr will then return the tasks's run status and (as appropriate) the corresponding owner task handle.  The slave app if it detects it is being launched as a slave, must then issue a DO_SWAP event request to return to the owner app.  </LI><P>
+<LI> Control returns to the owner app through a E_SWAP event type.  </LI><P>
+<LI> The owner initializes the corresponding event structure entries (slave app id and local offset to far pointer link) and (optionally) formats the contents of the linked buffer.  The owner then returns to sysmgr through a DO_IC_INIT event call.  Sysmgr uses information passed in the structure to link up the two applications.  Note that sysmgr automatically selects an available entry from the slave app's far pointer table.  </LI><P>
+<LI> Sysmgr returns to the suspended slave app (or existing compliant app if already loaded) through an E_IC_INIT event type.  The local offset to the slave's far pointer table is passed as part of the event structure.  The slave app uses the information passed to it to associate an entry in its far pointer table to the linked buffer.  The slave app optionally processes the shared block.  After processing the shared block, control returns back to the owner app through a DO_SWAP event.  </LI><P>
+<LI> The owner app is activated through an E_SWAP event type.  The owner app optionally processes the shared block.  After processing the shared block, control can return back to the slave app through a DO_SWAP event.  </LI><P>
+<LI> The slave app is activated through an E_SWAP event type.  The process can continue in this manner until the owner app closes the channel by issuing a DO_IC_CLOSE event.  </LI><P>
+<LI> The slave app is then activated through an E_IC_CLOSE event type.  If the slave app was launched by the owner app, the slave app must close itself by issuing a DO_FINI event - control will then return to the owner app through an E_NONE event type.If the slave app was already loaded, it will issue a DO_SWAP event to return back to the owner app.  </LI><P>
+<P>
+</BODY>
+</HTML>

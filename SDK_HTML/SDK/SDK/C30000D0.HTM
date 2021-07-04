@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 83h: Get/Set Page Map </TITLE></HEAD>
+<BODY>
+<H3>AH = 83h: Get/Set Page Map </H3><P>
+This function is composed of four subfunctions which perform general saving and restoring of the page mapping state.  The state is saved to or restored from a save array provided in the calling program.  One of these subfunctions is used to determine the required length for the array.  <P>
+These functions are intended to be used to save or restore the HP palmtop's page map state as a unit; the internal representation of the page map state should not be manipulated.  <P>
+<B>AX = 8300h: Get Page Map Subfunction</B> <BR>
+<UL><LI>Input: AX = 8300h <BR>
+ES:DI = pointer to destination save array <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success <P>
+</UL>
+<UL><LI>Registers modified: AH </LI><P>
+</UL><B>AX = 8301h: Set Page Map Subfunction</B> <BR>
+<UL><LI>Input: AX = 8301h <BR>
+DS:SI = pointer to source save array <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success <P>
+</UL>
+<UL><LI>Registers modified: AH </LI><P>
+</UL><B>AX = 8302: Get and Set Page Map Subfunction</B> <BR>
+<UL><LI>Input: AX = 8302h <BR>
+ES:DI = pointer to destination save array <BR>
+DS:SI = pointer to source save array <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success <BR>
+</UL>
+<UL><LI>Registers modified: AH </LI><P>
+</UL>
+</UL><B>AX = 8303 Get Size of Page Map Save Array Subfunction</B> <BR>
+<UL><LI>Input: AX = 8303h <P></UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success <BR>
+AL = Save array size in bytes <P>
+</UL>
+<UL><LI>Registers modified: AH </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Resource Services </TITLE></HEAD>
+<BODY>
+<H1>Resource Services </H1>
+The System Manager's Resource services are used to implement language-independent applications.  Each application should have a set of resource image files, one for each of the languages supported by the product, to maintain all text displayed by the application.  Developers should use the Lotus Resource Editor to build resource images (see the Resource Editor Handbook) to maintain the values and to create header files with the mappings between symbolic names and indices.  <P>
+The base name of an image file contains two components.  The first part contains up to six characters which match the name of the application.  The last two characters of the base name contain the language code.  The extension for all resource images is .RI.  Applications should call the appropriate International Configuration service to determine the current system-wide language setting.  <P>
+An application must construct the appropriate image file name in preparation for a call to <A HREF="c70000dd.htm">map_resource_file()</A>, which should be made during initialization.  This service will map the image into a fixed location in the system address, which will remain constant whenever the application is active.  <P>
+To obtain a pointer to an individual item, an application must call <A HREF="c70000da.htm">get_resource_ptr()</A>.  The argument to this function is a unique two-byte handle.  The Resource Editor provides a means of generating header files (for both C and Assembly Languages) used to maintain manifest constants for these handles.  <P>
+Most of these services are implemented only for the built-in applications.  They operate on certain data structures built by the ROM Image Builder (RIB) and are found only in primary ROM.  <P>
+Label representations are entered into the JQBTAUS.RS file, in an order corresponding to the scancode table in KSCANDAT.ASM.  Labels for the shifted states and for the base labels are entered separately.  <P>
+<H2><A HREF="c70000d9.htm">Call Descriptions </A></H2><P>
+</BODY>
+</HTML>

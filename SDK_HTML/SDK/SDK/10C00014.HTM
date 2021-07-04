@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Lookup Table </TITLE></HEAD>
+<BODY>
+<H3>Lookup Table </H3><P>
+This table gives the disk address and type of every record in the database.  If it is absent (and the LookupSeek in the header is 0), then the database engine will recreate on opening by stepping through the file.  It is therefore not crucial that it is present.  <P>
+<pre>
+Offset  Name             Type          Description 
+------  ---------------  ------------  -----------
+0...5   Record Header    recordheader  See <a href="10C00003.HTM">recordheader</a> structure above.
+                                       0x1f 0x??  0x??  0x??  0x00 0x00 
+6...n   Lookup Entries   packedlookup  Lookup entries for disk records 
+</pre>
+This record is always the last record in the database (if present).  If it is there, it is followed by a small table called the TypeFirst table that has no record header.  This table gives the beginning lookup entries for each group of record types.  The correct lookup entry to use for Record Type X, Record Number Y is given by looking at Lookup Entry [TypeFirst[X] + Y].  <P>
+<pre>
+Offset  Name             Type          Description 
+------  ---------------  ------------  -----------
+0...63  TypeFirst Table  int [32]      First lookup entry for record types 0...31.  
+</pre>
+
+</BODY>

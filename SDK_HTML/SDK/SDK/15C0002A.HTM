@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Memory </TITLE></HEAD>
+<BODY>
+<H3>System Memory</H3>
+The BitBlt coprocessor requires two 16-kbyte blocks of system memory, the frame buffer and the font table.  These blocks are also used by the display controller.  Unlike the display controller, BitBlt does not require these blocks to reside in system DRAM.  The blocks are set up by registers within the memory controller.  BitBlt generates addresses modulo 16384 so that overflows remain within its 16-KB block.<P>
+The display controller only requires the font table when it is in a text mode.  BitBlt only works with a graphics mode frame buffer.  This allows them to share the font table without contention.<P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_write_printer </TITLE></HEAD>
+<BODY>
+<H3>m_write_printer </H3>
+This call sends the string pointed to by <I>bp</I> to the printer.  The string is expected to be composed of CP850 characters and of length <I>len</I>.  Any special sequences required to produce the specified characters on output (as determined by the active character translation table) are processed during this routine.  
+<PRE><UL>
+<LI>Syntax:      int m_write_printer(bp, len) </LI>
+<LI>Parameters:  unsigned char far *bp - Pointer to the buffer containing the string of 
+                                     CP850 characters to be printed </LI>
+             If any translations are required, they will be performed before 
+             transmission. unsigned int - len Length of string to be printed </LI>
+<LI>Returns:     Number of characters sent to the printer </LI>
+<LI>Comments:    The length of the source string should be compared to the return value 
+             to verify the success of an m_write_printer call. If the return value is
+             less than the source string length, the application should call 
+             <A HREF="c70000c3.htm">m_close_printer</A> immediately to abort the print request. The System Manager
+             does not flag an error if a mismatch in these two values occurs.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

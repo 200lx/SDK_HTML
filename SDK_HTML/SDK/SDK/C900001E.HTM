@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MenuPopDown </TITLE></HEAD>
+<BODY>
+<H3>MenuPopDown </H3><P>
+MenuPopDown is a list of menu choices similar to a listbox in appearance.  MenuPopDown creates the pulldown directly underneath the top level choice and any cascading menu pulldown levels.  The application does not fill in these window structures nor create the windows, but it does indirectly allocate storage space for MenuPopDowns when it allocates the LHAPIBLOCK structure.  The LHAPI system initializes MenuPopDowns when a MENU key or ALT key press is intercepted.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>PLHCLASS Class: If Class = NULL, the window gets filled in by LHAPI.  If Class is non-NULL, the PopDown's Class field remains untouched by LHAPI, allowing an application to provide subclasses of menus or popup menus.  </LI><P>
+<LI>int x,y,w,h: The MenuPopUp handler automatically sets x,y,w,and h on a CREATE message.  </LI><P>
+<LI>PLHRES Title: Not used.  </LI><P>
+<LI>PLHDATA Data: Data points to the LHMENU structure that defines the menu items and the appropriate action for each menu item.  </LI><P>
+<LI>UINT LogicalSize: LogicalSize is set during a window CREATE message.  </LI><P>
+<LI>UINT Style: Style is set during a window CREATE message.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object handler.  </LI><P>
+<LI>PLHMENU Menu: Not used.  </LI><P>
+<LI>UINT Selection: Selection gives the currently selected item within the menu.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>KEYSTROKE: The following keys are recognized: </LI><BR>
+<UL>
+<LI>ENTER activates the current menu selection.  If the selection is another menu--if the Style byte for that item has set MENU_POPUP-- and this is the first cascading pulldown menu, the MenuPopDown handler creates another (tertiary) pulldown menu.  Otherwise, the MenuPopDown handler dispatches the routine pointed to by the handler, either through a direct function call, a message send, or an automatic window creation.  See MENU_SENDMSG and MENU_CREATEWND in LHAPI.H.  <P>
+<LI>UpArrow or DownArrow moves the cursor to the next/prior submenu item.  <P>
+<LI>A letter moves the cursor to the menu item with the corresponding underscored letter (it's mnemonic), then &quot;does&quot; that item (creates a dialog or executes an action).  <P>
+<LI>ESC destroys the MenuPopUp window.  <P>
+<LI>MenuPopDown ignores the Menu key.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: MenuPopDown draws the MenuPopUp with a shadow underneath and to the right.  For details on the Styles interpreted by the MenuPopUp handler, see LHAPI.H.  </LI><P>
+<LI>CREATE: MenuPopDown sets x,y,w,h to appear underneath the appropriate MenuBar choice and adjusted the variables to fit on the screen.  MenuPopDown sets the STYLE_SAVEUNDER bit in the Style field and sets the Title field to NULL.  </LI><P>
+<LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+<LI>APPEAR: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

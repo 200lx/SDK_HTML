@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Loading a Special TSR </TITLE></HEAD>
+<BODY>
+<H3>Loading a Special TSR </H3><P>
+Special TSR's may be loaded in three ways: <P>
+<UL><LI>Automatically loaded at system manager initialization.  A file having an extension of &quot;.TSR&quot; located in either the default path or C:\_DAT will automatically be loaded into static RAM.  </LI><P>
+<LI>Invoked through a system manager <B>m_load_handler</B> call by a compliant app.  The compliant app passes the file specification of the Special TSR to the system manger.  System manager loads and initializes it.  </LI><P>
+<LI>Explicitly loaded by a system manager compliant app.  A compliant app first reserves memory through a <B>m_get_static_block</B> call.  The compliant app then must copy code into the reserved static area and perform all necessary initializations.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

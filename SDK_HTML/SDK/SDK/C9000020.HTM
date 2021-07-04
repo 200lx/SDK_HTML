@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DialogBox </TITLE></HEAD>
+<BODY>
+<H3>DialogBox </H3><P>
+DialogBox creates a user input box that pops up over the screen and contains one or more dialog controls (Edit, ListBox, etc.).  Dialog boxes are used whenever the program needs to obtain information from the user.  They support a standard CUA interface method for selecting a field, traversing the fields, and acting upon the entered information.  The dialog box appears as a white box with a black border and a gray shadow with all of the dialog control fields are contained within it.  <P>
+An entire dialog consists of a DialogBox window and an array of child windows defining the various controls within the dialog.  The DialogBox window is the ultimate parent of all of the dialog controls and is responsible for the movement among the controls, termination of the dialog, and other operations global to the dialog.  The dialog controls make the actual connections to the data being operated on in the dialog.  <P>
+LHAPI has an internal limit of 50 controls per dialog.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: x, y, w, and h define the position and size of the dialog box screen area, including the window border and shadowed region, if any.  See Style below.  </LI><P>
+<LI>PLHRES Title: Title gives the title of the dialog box.  DialogBox displays the title in a rectangle above the dialog controls in the FONT_SMALL font and in reverse video when the dialog box has the focus.  The DialogBox handler automatically centers the title in the rectangular title region.  </LI><P>
+<LI>PLHDATA Data: Data points to the DialogBox control field array, which is an array of LHWINDOW structures.  Each window structure in the array defines one &quot;field&quot; (control) in the dialog box.  </LI><P>
+Note that the LHWINDOW structures for all of the radio buttons in the same group must be contiguous with one another in this array and must immediately follow the structure for the GroupBox window.  Also, a ComboBox's list must follow the actual ComboBox in the array, even if the ComboBox's Menu is pointing to it.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: LogicalSize defines the number of controls in the DialogBox, including any GroupBox windows.  LogicalSize also defines the number of LHWINDOW structures in the control field array pointed to by the Data field.  </LI><P>
+<LI>UINT Style: The STYLE_NOSHADOW Style bit suppresses the display of a shadow.  </LI><P>
+STYLE_PUSHB_WIDTH forces all pushbuttons in the dialog to take on the width of the longest pushbutton.  The longest pushbutton is computed to be wide enough to completely fit that pushbutton's title.  <P>
+DLG_PRESELECT allows the dialog creator to set focus to a field other than the first.  To do this, set the Dialog's Selection field to the index of the field you want with focus, and set the DLG_PRESELECT style.  After the dialog is created, your selected field will have focus.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by the Object handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object handler.  </LI><P>
+<LI>PLHMENU Menu: Not used.  </LI><P>
+<LI>UINT Selection Used internally by the DialogBox handler, to index the control currently with focus.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>KEYSTROKE: The following keys are recognized: </LI><BR>
+<UL>
+<LI>Tab/Enter or BackTab moves the focus to the next or previous field in the dialog.  Note that this function treats radio button groups as one field.  Also note that fields with the Style bit STYLE_NOFOCUS are skipped when the window chain is searched.  <P>
+<LI>Up/Left Arrow, Down/Right Arrow: If the current window is a RadioButton, the focus moves to the previous/next radio button in the group, and automatically selects that button.  Otherwise, the keys cause a &quot;thud&quot; sound to be made.  Any control that passes these keys up to the GroupBox (not just RadioButtons) cause this response.  If you don't want this behavior, then you should point the control's parent at (or subclass to) the dialog, not the group box.  <P>
+<LI>Alt+Letter moves the focus to the Dialog control with the corresponding underscored letter (mnemonic) if that field doesn't have the Style bit STYLE_NOFOCUS set).  <P>
+<LI>Esc destroys the dialog, and returns the focus to the parent window (the window that had the focus when the Dialog was CREATEd).  <P>
+<LI>DialogBox ignores the Menu key.  <P>
+<LI>DialogBox passes all other keys to the Object class handler.  <P>
+</UL>
+</UL>
+<UL><LI>DRAW: DialogBox draws the dialog box.  The DialogBox handler responds to the Data parameter bits DRAW_FRAME and DRAW_TITLE.  </LI><P>
+<LI>CREATE: Before creating any windows, the DialogBox handler does the following: </LI><BR>
+</UL><OL><LI> The DialogBox handler sets the Parent of the dialog to the window currently with the focus.  This action insures that the the DialogBox handler will remember the window to reset the focus to when the dialog box is later destroyed.  </LI><P>
+<LI> If the Dialog box style has STYLE_PUSHB_WIDTH set, the DialogBox calculates the length of the longest pushbutton.  For all the windows, if the window is a pushbutton (indicated by STYLE_PUSHBUTTON in the child window's style long), the length of the pushbutton is calculated, and all the pushbuttons are sized to the length of the longest one.  </LI><P>
+<LI> Sets up the default pushbutton, by marking the STATUS_DEF_PUSHBUTTON bit in that window's status byte.  The default pushbutton is the one that will be executed if the user presses enter, and is defined as the first pushbutton that has ENTER as the hotkey (i.e.  that window's LogicalSize==13).  </LI><P>
+<LI>Then the DialogBox handler loops through the all the controls in the Dialog control array and: </LI><P>
+<LI>If the Parent of the child window is set to NULL, DialogBox sets the parent to the dialog box window.  </LI><P>
+<LI>DialogBox sets the STYLE_LEAF bit in the Style field of the child's window structure.  Note: Because of this, if a window control does not want the STYLE_LEAF bit set, it must clear it as part of its CREATE processing.  </LI><P>
+<LI>The DialogBox handler CREATEs the window.  </LI><P>
+</OL><UL><LI>DESTROY: The DialogBox handler loops through the Dialog control array and sets the Parent field to NULL if it is equal to the current dialog box window.  Then, the child windows are destroyed with DESTROY, DESTROY_NODRAW.  Then, the focus is restored to the DialogBox's parent field (which was set on the CREATE to point to the old focus window).  </LI><P>
+<I>Warning Will Robinson!  </I>A common error in LHAPI programming is to have the focus window pointing to nowhere (either an invalid window or more likely, NULL).  This will look like the machine is locked up, but really the keystrokes just aren't seen.  If you see this happening on canceling a DialogBox, make sure you haven't trampled the DialogBoxes parent field, or that the Focus was non-null before the DialogBox was created.  <P>
+</UL>
+<UL><LI>SETFOCUS: DialogBox sets the CurrentDlg field in the LHAPIBLOCK structure to point to the dialog box being given the focus.  The DialogBox window handler sends itself a DRAW, DRAW_TITLE message and draws the window title in reverse video.  DialogBox then deflects the focus to the first dialog control which can receive it.  </LI><P>
+<LI>LOSEFOCUS: The DialogBox handler sets CurrentDlg field in the LHAPIBLOCK structure to NULL.  (A new dialog will reset CurrentDlg--this field is important for LHAPI to track focus selection.) The DialogBox window handler sends itself a DRAW, DRAW_TITLE message and draws the window title in reverse video.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+<LI>APPEAR: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

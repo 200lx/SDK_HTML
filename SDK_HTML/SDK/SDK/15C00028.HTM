@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>BitBlt Registers </TITLE></HEAD>
+<BODY>
+<H3>BitBlt Registers</H3>
+These registers are accessible at I/O location 0023h when the index register at I/O
+location 0022h contains the index of that register.  These registers are cleared by a
+chip reset.<P>
+
+<PRE>
+Index   Bits    Mode    Description
+==========================================================================================
+-30h    7- 0    R/W     SrcPtrLow - source pointer low byte
+------------------------------------------------------------------------------------------
+-31h    4-0     R/W     SrcPtrHi - source pointer high byte
+                        The source pointer is loaded with the word address of the first
+                        word of the character in the font table to be transferred to the
+                        frame buffer.  Writing the -31h location also initiates the
+                        transfer.  This register-pair is clobbered by the transfer.
+------------------------------------------------------------------------------------------
+-32h    7-0     R/W     DstPtrLow - destination pointer low byte
+------------------------------------------------------------------------------------------
+-33h    4-0     R/W     DstPtrHi - destination pointer high byte
+                        The destination pointer is loaded with the word address of the
+                        word in the frame buffer that contains the pixel where the
+                        upper-leftmost pixel of the character is to be transferred.  A
+                        transfer will modify this register-pair to point to the next
+                        character position to the right.
+------------------------------------------------------------------------------------------
+-34h    2-0     R/W     DstBitOff - destination bit offset
+                        This register multiplied by two is the pixel offset into the word
+                        pointed to by the destination pointer.  This register combined
+                        with the destination pointer forms a complete pixel address for
+                        the upper-leftmost pixel of the character to be transferred.  A
+                        transfer will modify this register to point to the next character
+                        position to the right.
+------------------------------------------------------------------------------------------
+-35h    2-0     R/W     ChrW - character width
+                        This register multiplied by two is the horizontal size in pixels
+                        of the source character.  A zero value means 16 pixels.  This
+                        register is not modified by the transfer.
+------------------------------------------------------------------------------------------
+-36h    4-0     R/W     ChrH - character height
+                        Vertical size in pixels of the source character.  A zero value
+                        means 32 pixels.  This register is not modified by the transfer.
+------------------------------------------------------------------------------------------
+-37h                    BitBltMode - bitblt mode and status register
+                        This register is not modified by the transfer.
+------------------------------------------------------------------------------------------
+        5       R       BitBltBusy
+                        This read-only bit will return the pending status of a BITBLT
+                        transfer.  Writing location -31h will set this bit.  This bit will
+                        remain set until BITBLT gains control of the bus.
+------------------------------------------------------------------------------------------
+        4       R/W     InsaneFTF - select insane font table format
+                        When set, the format of the font table is the same at that used by
+                        the display controller.  The pixel information is stored by
+                        character, then by scan line.  All of the pixels for any given
+                        scan line for all of the 256 possible characters are stored in a
+                        block of 256 words.  When this bit is clear, the pixel information
+                        is stored by scan line, then by character.  All of the pixels for
+                        a given character are stored together.
+------------------------------------------------------------------------------------------
+        3-0     R/W     XferMode - transfer mode selection
+                        These bits select one of 16 possible operations to be performed
+                        between the source pixels and the destination pixels.  Most of
+                        them make sense.  Some of them might even be useful.  See the
+                        table below.
+------------------------------------------------------------------------------------------
+<PRE>
+
+<PRE>
+                        ----------------------------------------
+                                1100    Source Input
+                                1010    Destination Input
+                        ========================================
+                        Mode    Result  Description
+                        ========================================
+                        0000    0000    Clear
+                        ----------------------------------------
+                        0001    0001    Logical NOR
+                        ----------------------------------------
+                        0010    0010
+                        ----------------------------------------
+                        0011    0011    Complement source
+                        ----------------------------------------
+                        0100    0100
+                        ----------------------------------------
+                        0101    0101    Complement destination
+                        ----------------------------------------
+                        0110    0110    Logical exclusive-OR
+                        ----------------------------------------
+                        0111    0111    Logical NAND
+                        ----------------------------------------
+                        1000    1000    Logical AND
+                        ----------------------------------------
+                        1001    1001    Logical exclusive-NOR
+                        ----------------------------------------
+                        1010    1010    No change
+                        ----------------------------------------
+                        1011    1011
+                        ----------------------------------------
+                        1100    1100    Write source
+                        ----------------------------------------
+                        1101    1101
+                        ----------------------------------------
+                        1110    1110    Logical OR
+                        ----------------------------------------
+                        1111    1111    Set
+                        ----------------------------------------
+</PRE>
+</BODY>
+</HTML>

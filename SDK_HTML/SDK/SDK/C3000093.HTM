@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 61h: Set/Read Annunciator Control </TITLE></HEAD>
+<BODY>
+<H3>AH = 61h: Set/Read Annunciator Control </H3><P>
+This function sets or reads the RAM Byte variable [AnnFlags] which provides Annunciator Control.  The HP palmtop BIOS supports 3 annunciators: SHF, Fn, and CapsLock.  The SHF annunciator represents the logical OR of the Left and Right Shift States.  <P>
+Only the two high-order bits of [AnnFlags] are accessible with this service.  When set, Bit 7 (The high-order bit) will disable the display of annunciators.  If Bit 7 is not set, Bit 6 controls positioning of the annunciators.  The only 2 positioning options supported are the lower left and right corners of the display.  <P>
+The annunciators are on only in the light sleep low-power state provided by Int 15h, Fcn 41h (invoked by certain Int 16h functions).  On exit from light sleep, the annunciators are turned off.  The effect is that in normal applications with the annunciators active, they will be rapidly cycling on and off with a high duty cycle in the ON state (thus appearing solid).  This permits the annunciators to be displayed in normal DOS applications without display contention.  <P>
+The annunciators can also be controlled from the keyboard through the [ON][=] keyboard sequence.  <P>
+<UL><LI>Input: AH = 61h <BR>
+AL = Selection: <BR>
+Bit 7 = 1 Disable Annunciator Display <BR>
+Bit 6 = 1 Right Corner Position (0=Left Corner) <BR>
+Bit 5 = 1 Write Annunciator Control (0=Read) <P>
+</UL>
+<UL><LI>Output: If Read, AL[7;6] = Annunciator Control <BR>
+Else, New Annunciator Control established from AL[7;6] <P>
+</UL>
+<UL><LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

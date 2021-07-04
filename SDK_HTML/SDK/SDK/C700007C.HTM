@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_seek </TITLE></HEAD>
+<BODY>
+<H3>m_seek </H3>
+This call sets the current position in the file associated with <I>fp</I>. 
+<PRE><UL>
+<LI>Syntax:      int far m_seek(FCB far *fp, int mode, long seek) </LI>
+<LI>Parameters:  FCB far *fp - Pointer to the file 
+             int mode - Type of seek to perform: 
+
+                 Beginning - 0 - from the start of file 
+                 Current   - 1 - from the current position 
+                 End       - 2 - from the end of file 
+  
+             long seek - Signed byte offset of where to set the position, relative 
+                         to the value of mode </LI>
+<LI>Returns:     0 - if successful 
+             Any other value indicates an error condition.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

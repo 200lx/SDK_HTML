@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Configuration Registers </TITLE></HEAD>
+<BODY>
+<H3>Configuration Registers</H3>
+<PRE>
+Index   R/W Mode    Description
+==========================================================================================
+-40h    R/W         bit 7 = 1 enable pulldown on GPIO[1]
+                    bit 6 = 1 enable pullup on GPIO[1]
+                    bits 5-4 = 00 GPIO[1] is general purpose input
+                             = 01 GPIO[1] is general purpose output
+                             = 10 GPIO[1] is control pin
+                             = 11 illegal
+                    bit 3 = 1 enable pulldown on GPIO[0]
+                    bit 2 = 1 enable pullup on GPIO[0]
+                    bits 1-0 = 00 GPIO[0] is general purpose input
+                             = 01 GPIO[0] is general purpose output
+                             = 10 GPIO[0] is control pin
+                             = 11 illegal
+------------------------------------------------------------------------------------------
+-41h    R/W         bits 7-4 GPIO[3] configuration (see -40h)
+                    bits 3-0 GPIO[2] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-42h    R/W         bits 7-4 GPIO[5] configuration (see -40h)
+                    bits 3-0 GPIO[4] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-43h    R/W         bits 7-4 GPIO[7] configuration (see -40h)
+                    bits 3-0 GPIO[6] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-44h    R/W         bits 7-4 GPIO[9] configuration (see -40h)
+                    bits 3-0 GPIO[8] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-45h    R/W         bits 7-4 GPIO[11] configuration (see -40h)
+                    bits 3-0 GPIO[10] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-46h    R/W         bits 7-4 GPIO[13] configuration (see -40h)
+                    bits 3-0 GPIO[12] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-47h    R/W         bits 7-4 GPIO[15] configuration (see -40h)
+                    bits 3-0 GPIO[14] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-48h    R/W         bits 7-4 GPIO[17] configuration (see -40h)
+                    bits 3-0 GPIO[16] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-49h    R/W         bits 7-4 GPIO[19] configuration (see -40h)
+                    bits 3-0 GPIO[18] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-4Ah    R/W         bits 7-4 GPIO[21] configuration (see -40h)
+                    bits 3-0 GPIO[20] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-4Bh    R/W         bits 7-4 GPIO[23] configuration (see -40h)
+                    bits 3-0 GPIO[22] configuration (see -40h)
+------------------------------------------------------------------------------------------
+-4D     R/W         bit 7 unused
+                    bits 6-4 = 001 select NMI interrupt for GPIO[24]
+                             = nnn select IRQ[nnn] interrupt for GPIO[24] (nnn=2-3,5-7)
+                    bit 3 = 1 enable pulldown on GPIO[24]
+                    bit 2 = 1 enable pullup on GPIO[24]
+                    bit 1 unused
+                    bit 0 = 0 GPIO[24] is general purpose input
+                          = 1 GPIO[24] is general purpose output
+------------------------------------------------------------------------------------------
+-4E     R/W         bits 7-0 GPIO[25] configuration (see -4D)
+------------------------------------------------------------------------------------------
+-4F     R/W         bits 7-0 GPIO[26] configuration (see -4D)
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

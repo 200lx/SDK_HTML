@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DrawNChars </TITLE></HEAD>
+<BODY>
+<H3>DrawNChars </H3><P>
+This function similar to DrawText, except that MaxChars specifies the maximum number of characters in the text string to display.  If the total string length is greater than MaxChars, only the first MaxChars characters will be displayed.  <P>
+<UL><LI>Syntax: UINT DISTANCE DrawNChars(int x, int y, char _far *Buffer, UINT Style,UINT Font, UINT MaxChars) </LI><P>
+<LI>Parameters: </LI>
+</UL>
+<PRE>
+    int x                   Horizontal location of the starting character.  
+    int y                   Vertical location of the starting character.  
+    char _far *Buffer       Pointer to buffer containing the string to be displayed.  
+    UINT Style              Style for the text.  
+    UINT Font               Font for the text.  
+    UINT MaxChars           Maximum number of characters in the text string to display.  
+</PRE>
+<UL><LI>Returns: The width of the displayed string, in pixels.  </LI><P>
+<LI>Comments: The supported drawing styles are: </LI>
+</UL>
+<PRE>
+    DRAW_NORMAL.        The charactersare drawn as black on a white background.  
+    DRAW_INVERSE.       The characters are drawn as white on a black background.  
+    DRAW_UNDERLINE.     The characters are drawn underlined.  
+    DRAW_GRAY.          The characters are drawn in &quot;gray&quot;, i.e. a checkerboard
+                        mask is ANDed over the characters.  
+    DRAW_AMPERSAND.     Any &quot;&amp;&quot;s in the string underline the following character
+</PRE>
+The supported font values are 
+<PRE>
+    FONT_DEFAULT.       The current font setting.  
+    FONT_SMALL.         The 8x8 font.  
+    FONT_NORMAL.        The 10x11 font.  
+    FONT_LARGE.         The 16x12 font.  
+</PRE>
+<P>
+</BODY>
+</HTML>

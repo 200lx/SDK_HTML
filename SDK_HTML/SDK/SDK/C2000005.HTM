@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>HP100LX/200LX Memory Map </TITLE></HEAD>
+<BODY>
+<H1>HP100LX/200LX Memory Map </H1><P>
+<A HREF="image/__dg0201.gif">HP 100LX/200LX Memory Map</A><P>
+
+NRCE, and NRAS [0] through NRAS[3] are separate chips.  They are accessed by mapping portions of them into memory banks starting at C000 (the areas in gray).  Each chip has its own ID; you need to provide the appropriate chip ID to the Hornet mapping registers.  See INT 63H for more details.  <P>
+The PCMCIA card in the slot is accessed as NCS [0].  For a RAM card, it is mapped into bank memory and manipulated by the DOS disk drivers (the same as the rest of system RAM).  For other cards, only the Attribute memory is mapped into real address space.  Details on accessing the rest of the card via I/O addresses varies on a card per card basis.  <P>
+<A HREF="image/__dg0202.gif">Memory Address Ranges</A><P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 08h: Read Character and Attribute at Cursor Position </TITLE></HEAD>
+<BODY>
+<H3>AH = 08h: Read Character and Attribute at Cursor Position </H3><P>
+If the video mode is Text, this function returns the character and attribute bytes at the current cursor location.  If the display is in graphics mode, it attempts a match on the bit pattern against the resident 8x8 byte wide font.  If a match is found, it will return the character (no attribute), otherwise it returns AL=0.  In text modes that support multiple pages, characters may be fetched from pages not currently in the display.  <P>
+<UL><LI>Input: AH = 08h <BR>
+BH = Page (0-7) <BR>
+</UL>
+<UL><LI>Output: AH = Attribute <BR>
+AL = Character <BR>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

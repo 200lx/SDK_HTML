@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DRAW Submessages </TITLE></HEAD>
+<BODY>
+<H3>DRAW Submessages </H3><P>
+DRAW is a bitmask value passed in the Data parameter.  To display multiple regions of the window, OR the bit values for the desired window regions together.  To prevent a region from being drawn, AND out the particular bit representing that region.  Note that not all DRAW_ regions make sense for all windows.  <P>
+<UL><LI>DRAW_TITLE: This submessage draws the window title.  (0x0001 = 0000 0000 0000 0001) </LI><P>
+<LI>DRAW_FKEYS: This submessage draws the function keys bar.  This sub-message is managed entirely by the Object class handler.  It is sent by Object when a different window receives the focus.  (0x0002 = 0000 0000 0000 0010) </LI><P>
+<LI>DRAW_CLIENT: This submessage draws the entire window client area or workspace.  (0x0004 = 0000 0000 0000 0100) </LI><P>
+<LI>DRAW_CLIENT_UPDATE: This submessage draws that portion of the window client area which is after the current cursor position (as defined by the Selection field in the LHWINDOW structure).  This message is used, for instance, when text in an edit window is deleted or inserted.  In this case, the deleted/inserted text should be removed/added to the edit buffer before this message is sent.  (0x0008 = 0000 0000 0000 1000) </LI><P>
+<LI>DRAW_CLIENT_CHAR: For edit windows, this submessage draws only the character at the current cursor position.  (0x0010 = 0000 0000 0001 0000) </LI><P>
+<LI>DRAW_FRAME: This submessage outlines the window by displaying the window frame.  (0x0020 = 0000 0000 0010 0000) </LI><P>
+<LI>DRAW_CURSOR: This submessage shows the window's cursor.  (0x0040 = 0000 0000 0100 0000) </LI><P>
+<LI>DRAW_USER: Any applicaton defined areas should be bits starting at DRAW_USER.  (0x0100 = 0000 0001 0000 0000) </LI><P>
+<LI>DRAW_ALL: This submessage is a mask for all regions of the window (DRAW_CLIENT_UPDATE and DRAW_CLIENT_CHAR are not included, since these are subsets of DRAW_CLIENT).  This message is automatically sent by the Object class handler when a window is created.  (0xFFE7 = 1111 1111 1110 0111) </LI><P>
+</UL><P>
+</BODY>
+</HTML>

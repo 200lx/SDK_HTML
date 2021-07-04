@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Write Enable/Protect Registers </TITLE></HEAD>
+<BODY>
+<H3>Write Enable/Protect Registers</H3>
+The bits of the Write Enable register serve as the write enable bits for all the external
+chip selects.  NRCE and NCS[1:0] default to zero (protected) while NRAS[3:0] default to
+one (enabled).  This results in a default value of 1Eh following a reset.  Software is
+responsible for determining the state of the write protect switch on cards connected to
+NCS[1:0] since bits [6:5] do not directly reflect the status of the write protect switch
+on the cards.  Software must determine the current status of the write protect switch on
+the plug-in cards and then write those values into the Write Enable register.  If bits
+[6:5] are clear, the cards are write-protected regardless of the setting of the write
+protect switch on the cards.  If bits [6:5] are set, the cards are still protected if
+their write protect switch is set.  Note that the Write Enable bits will not enable or
+disable I/O writes.  They only enable or disable memory writes.  I/O writes are always
+enabled.  The Write Enable bits should be set for RAM and cleared for ROM.<P>
+<PRE>
+Index   Name                    Bits    Comments
+==========================================================================================
+-86h    Write Enable Register   [7]     unused
+                                [6]     Write enable of NCS[1]
+                                [5]     Write enable of NCS[0]
+                                [4]     Write enable for NRAS[3]
+                                [3]     Write enable for NRAS[2]
+                                [2]     Write enable for NRAS[1]
+                                [1]     Write enable for NRAS[0]
+                                [0]     Write enable for NRCE
+------------------------------------------------------------------------------------------
+</PRE>
+In addition, it is possible to write protect upper portions of the CPU address space
+which fall below the 640K boundary (CPU addresses below A0000h).  The Write Protect
+register contains the upper 8 MSBs of the CPU address space (CPU address bits [19:12])
+above which memory is write protected.  This allows memory to be protected in 4-KB
+blocks.  The upper limit of the protected CPU address space is hard-wired by Hornet to be
+9FFFFh.  Thus all CPU address space above the value in the Write Protect register a nd
+below 9FFFFh inclusive is write protected.  In order to disable this feature, a value of
+A0h must be written to the Write Protect register.  Values in the range of A1h through
+FFh inclusive should not be written into the Write Protect register.  Following a reset,
+A0h is the default value in the register.<P>
+<PRE>
+Index   Name                    Value   Comments
+==========================================================================================
+-87h    Write Protect Register  A0h     8 MSBs of CPU address (address bits [19:12])
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

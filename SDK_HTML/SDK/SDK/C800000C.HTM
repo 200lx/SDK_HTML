@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Service Overview </TITLE></HEAD>
+<BODY>
+<H1>Service Overview </H1><P>
+There are many function calls associated with LHAPI Services, including: <P>
+Global LHAPI Control Functions include <P>
+<UL><LI>InitializeLHAPI First time initialization by applications to point to a LHAPIBLOCK structure allocated by the application.  </LI><P>
+<LI>DeactivateLHAPI Application tells LHAPI that it is switching out.  </LI><P>
+<LI>ReactivateLHAPI Reestablishes the LHAPIBLOCK data structure after being switched back in.  </LI><P>
+<LI>UninitializeLHAPI Application tells LHAPI it is terminating.  </LI><P>
+<LI>GetLHAPIBlockPtr Returns the offset address of the currently defined LHAPIBLOCK structure.  </LI><P>
+</UL>Messaging functions include <P>
+<UL><LI>SendAllMsg Sends the specified message to all windows in the active application.  </LI><P>
+<LI>SendFocusMsg Sends the specified message to the focus window.  </LI><P>
+<LI>SendMsg Sends the specified message to the specified window.  </LI><P>
+<LI>SubclassMsg Sends the specified message to the specified window using a different class handler than the one specified in the LHWINDOW structure.  </LI><P>
+</UL>Menu functions include <P>
+<UL><LI>ResetAlt Resets an internal flag so that the Object class will not generate a &lt;Menu&gt; KEYSTROKE message if it sees an &lt;Alt&gt; release keystroke.  Normally only called internally by LHAPI.  </LI><P>
+</UL>Focus functions include <P>
+<UL><LI>GetFocus Returns a pointer to the current window with focus.  </LI><P>
+</UL>Error Handling functions include <P>
+<UL><LI>SetError Saves the specifed value in ErrorNum in the LHAPIBLOCK structure.  </LI><P>
+<LI>GetError Returns ErrorNum.  </LI><P>
+<LI>ClearError Clears both the ErrorNum and the Handler field in the LHAPIBLOCK structure.  </LI><P>
+<LI>SetErrorHandler Sets the Handler for Error.  </LI><P>
+<LI>GetErrorHandler Gets current error handler.  </LI><P>
+</UL>LHAPI specialized text display routines include <P>
+<UL><LI>DrawText Draws text on the screen.  </LI><P>
+<LI>DrawNChars Similar to DrawText, but specifies the maximum characters to display.  </LI><P>
+<LI>DrawChar Displays a single character in the specified Draw style and font.  </LI><P>
+<LI>DrawFKeys Displays the function-key labels for a window.  </LI><P>
+</UL>LHAPI Graphics functions include <P>
+<UL><LI>Rectangle Displays a rectangle.  </LI><P>
+<LI>Panel Draws a rectangle with a black border and white inside.  </LI><P>
+<LI>Outline Outlines a rectangle in black.  </LI><P>
+<LI>ShadowBox Draws a Panel box with a shadow to the right and underneath.  </LI><P>
+<LI>ClearRect Clears a section of the screen to white.  </LI><P>
+<LI>Line Draws a line.  </LI><P>
+<LI>RegisterFont Registers the given font as one of those which will be used by the application.  </LI><P>
+<LI>SetDefaultFont Sets the default font.  </LI><P>
+<LI>GetDefaultFont Returns the current default font.  </LI><P>
+<LI>SetCurrentFont Sets the current system font.  </LI><P>
+<LI>GetCurrentFont Returns the currently defined system font.  </LI><P>
+<LI>SetMenuFont Sets the system font to be used for the menus.  </LI><P>
+<LI>SetGlobalClipping Sets the master clipping against which all local clip regions are clipped.  </LI><P>
+<LI>SetLocalClipping Sets clipping region within a particular window.  </LI><P>
+<LI>GetLocalClipping Returns the currently defined local clipping region.  </LI><P>
+<LI>IntersectLocalClipping Sets the Local clipping region to the intersection of the specified rectangular region and the currently defined Local clipping region.  </LI><P>
+<LI>ShowSymbol Displays a special symbol at the given location.  </LI><P>
+<LI>ResetVideo Resets the internal LHAPI video state variables.  </LI><P>
+<LI>SetRepRule Sets the low-level graphics pixel replacement rule.  </LI><P>
+<LI>ResetRepRule Sets the low-level graphics pixel replacement rule to default.  </LI><P>
+<LI>SetHelpKey Sets the application-wide help key.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

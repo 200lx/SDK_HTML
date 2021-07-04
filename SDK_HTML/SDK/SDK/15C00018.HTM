@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>MDA/CGA Registers </TITLE></HEAD>
+<BODY>
+<H3>MDA/CGA Registers</H3>
+These registers are designed to function identically to those in standard IBM MDA and CGA
+adapters.  They may be disabled by a control bit in the display setup register to allow
+the use of an external display adapter instead of this controller.  They are held clear
+if disabled, they become writable if enabled.  If enabled they are mapped in the I/O
+space at either 03B0h-03BFh or at 03D0h-03DFh as determined by the register select bit in
+the display setup register.<P>
+<PRE>
+I/O Address     Bits    R/W     Description
+==========================================================================================
+03B4h/03D4h     4-0     R/W     CRTCindex, the MDA/CGA CRTC index register, indexes one
+                                of the CRTC's internal data registers.  That data
+                                register is then accessible at the CRTC data register
+                                location.  The decoder for this register's location
+                                ignores bits 1 and 2 of the address.  Therefore, this
+                                register is accessible at even I/O addresses from 03B0h
+                                to 03B6h or from 03D0h to 03D6h.
+------------------------------------------------------------------------------------------
+03B5h/03D5h                     This address contains the CRTCdata, the MDA/CGA CRTC data
+                                location.  The CRTC's internal data registers are
+                                accessible at this location when indexed by the index
+                                register.  The CRTCregisters are described later.  The
+                                decoder for this location ignores bits 1 and 2 of the
+                                address.  Therefore, the CRTC data registers are
+                                accessible at odd I/O addresses from 03B1h to 03B7h or
+                                from 03D1h to 03D7h.
+------------------------------------------------------------------------------------------
+03B8h/03D8h                     This is the location of the Mode, the MDA/CGA mode
+                                control register.  This register controls the format of
+                                the display.  In standard MDA or CGA adapters, these bits
+                                are write-only.  This display controller implements them
+                                as read-write so that software can detect changes to the
+                                display mode.  Standard MDA adapters implement bits 0, 3,
+                                and 5.  Standard CGA adapters implement bits 0 through 5.
+                                Bit 6 is an enhancement to allow the underlining and
+                                reverse video character attributes to be used
+                                simultaneously.
+                6       R/W     Bit 6 is EnUndl, the enable underline character attribute.
+                                If this bit is set, bit 3 of the character attribute byte
+                                adds an underline to the character.  Setting this bit
+                                also causes bit 3 to be ignored in color processing.  If
+                                this bit is clear, bit 3 is ignored in black and white
+                                text modes but is used as the foreground intensity bit in
+                                color text modes.  This bit should be cleared for
+                                compatibility.  This bit has no effect in graphics modes.
+                                For more information, see &quot;Text Modes&quot; on <A HREF="15C0001D.HTM">page 15-519</A>.
+                5       R/W     Bit 5 is EnBlink, the enable blink character attribute.
+                                If this bit is set, bit 7 of the character attribute byte
+                                causes a character to blink at 1 Hz.  Setting this bit
+                                also causes bit 7 to be ignored in color processing.  If
+                                this bit is clear, bit 7 is ignored in black and white
+                                text modes but is used as the background intensity bit in
+                                color text modes.  This bit has no effect in graphics
+                                modes.  For more information, see &quot;Text Modes&quot; on 
+                                <A HREF="15C0001D.HTM">page 15-519</A>.
+                4       R/W     HiResGr, bit 4, enables high resolution graphics.  In CGA
+                                graphics modes, this bit selects 640x200 black-and-white
+                                graphics mode when set, and 320x200 4- shade graphics when
+                                clear.  This bit has no effect in text modes or Jaguar
+                                graphics mode.
+                3       R/W     Bit 3, Unblank, unblanks the display.  When this bit is
+                                clear, all pixels in the display are off.  The display
+                                controller stops accessing the frame-buffer memory but
+                                continues to send waveforms to the display module.  When
+                                this bit is set, the display will show the information
+                                stored in the frame buffer.
+                2       R/W     AlphaBW disables text color.  In text modes, this bit
+                                selects black and white text when set and color text when
+                                clear.  It changes the way text attribute bytes are
+                                handled.  This bit has no effect in graphics modes.
+                1       R/W     Bit 1, Graphics, selects graphics mode.  This bit selects
+                                graphics modes when set and text modes when clear.
+                0       R/W     HiResText enables high resolution text.  This bit has no
+                                effect.  Text resolutions are set by register values.
+------------------------------------------------------------------------------------------
+03D9h           -       -       Palette, the CGA palette register is located at this
+                                address.  This register is write only in standard CGA
+                                adapters and defines the colors to be used in graphics
+                                modes.  This register is not implemented by this display
+                                controller.
+------------------------------------------------------------------------------------------
+03BAh/03DAh                     This is the address of Status, the MDA/CGA status
+                                register.  On the original IBM adapters, the sync bits
+                                were used to tell software when it was okay to access the
+                                frame buffer.  If accesses were not made according to the
+                                whims of these bits, the display would flicker or fill
+                                with snow.  This display controller always allows
+                                accesses, so intelligent software should just ignore
+                                them.  They are provided for compatibility with older
+                                software.  The light pen bits are also provided for
+                                compatibility.  Note that their definition is different
+                                depending upon the MDA or CGA selection.
+                3       R       Vsync, the Vertical sync bit, is the inversion of the
+                                signal on the YD pin.  It will be a high duty cycle pulse
+                                at the display vertical refresh frequency.  See &quot;Setup:
+                                Row Time and Frame Rate&quot; on <A HREF="15C0001C.HTM">page 15-516</A> for more
+                                information.
+                2       R       LPswitch, the light pen switch bit, will always read set
+                                at the 03DAh location and will always read clear at the
+                                03BAh location.
+                1       R       LPS, the light pen status bit, will always read zero at
+                                the 03BAh location.  At the 03DAh location, this bit tells
+                                which of locations 03DBh or 03DCh was accessed last.  It
+                                is cleared by a read or write to I/O location 03DBh, and
+                                it is set by a read or write to I/O location 03DCh.  This
+                                bit will also be cleared by reset or if the registers are
+                                disabled.
+                0       R       Hsync, the Horizontal sync bit, is true during the portion
+                                of a row time where data is being clocked to the display
+                                module.  It will be a low duty cycle pulse at the row rate
+                                frequency.  See &quot;Setup: Row Time and Frame Rate&quot; 
+                                on <A HREF="15C0001C.HTM">page 15-516</A> for more information.
+------------------------------------------------------------------------------------------
+03DBh           -       -       ClrLPS, the clear light pen status bit is found at this
+                                address.  A read or write to this location will clear bit
+                                1 of the MDA/CGA status register.
+------------------------------------------------------------------------------------------
+03DCh           -       -       SetLPS, the set light pen status bit is found at this
+                                address.  A read or write to this location will set bit 1
+                                of the MDA/CGA status register.
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

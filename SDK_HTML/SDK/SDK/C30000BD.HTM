@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 06h: Set Alarm </TITLE></HEAD>
+<BODY>
+<H3>AH = 06h: Set Alarm </H3><P>
+This function sets the alarm to generate an Int 4Ah at the specified time.  If the alarm time is before the RTC time, the alarm will become active tomorrow, else it becomes active today.  The user must place a pointer to an appropriate interrupt handling routine in the Int 4Ah vector.  The alarm will be rescheduled to reoccur every 24 hours if not reset using Fcn AH = 07h.  (See Also Fcn 0Ch.) <P>
+<UL><LI>Input: AH = 06h <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <P>
+</UL>
+<UL><LI>Output: AH = 00h </LI><P>
+<LI>Error conditions: Carry Set iff alarm inputs invalid, an alarm is already set, or RTC data is invalid </LI><P>
+<LI>Registers modified: AX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

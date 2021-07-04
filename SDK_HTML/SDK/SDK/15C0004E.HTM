@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Functional Description </TITLE></HEAD>
+<BODY>
+<H3>Functional Description</H3>
+The real-time clock (RTC) timer consists of a 26 bit read/writable counter and a prescaler driven by a 32.768Khz clock.  The RTC is decremented once per second.  The Hornet 32.768KHz crystal oscillator frequency is divided by the 15 bit prescaler to produce the 1Hz timer clock.  This clock is accurate to approximately 2 minutes per month.<P>
+The RTC timer is always enabled to run.  The timer value and prescaler will be cleared when the hornet chip is powered up.  The RTC will be decremented the first time one second later.<P>
+The RTC is accessed at index 08h (least significant) through 0Bh.  Bits 0 and 1 at 0Bh are bits 24 and 25 of the RTC.  The 2 MSBs of 0Bh are used to indicate an upcoming clock and the state of the clock signal.  The four remaining bits at 0Bh are 16, 8, 4 and 2Hz outputs of the pre-divider.  These read only bits provide the ability to measure real time to 1/16 of a second.  Twenty-six bits are provided in order to allow the timer to be set for a wake-up to occur t wo years in advance.  This is an enhancement to previous products that were required to wake-up every 8 hours in order to update the time system.  This enhancement is being made to avoid having to wake-up and operate at storage temperature specifications.<P>
+If RTC interrupts are enabled, an interrupt (IRQ2) will occur anytime the timer's most significant bit (MSB) is a one (i.e.  underflow).  A wakeup will occur prior to the interrupt if the system is in light or deep sleep.  The timer will continue to decrement after underflow.  The maximum time that can be set is (2^26)-1 seconds or 2.128 years.  The MSB of the RTC will become a one if either the RTC decrements below 0, or a one is written to it.  The interrupt that occurs when a one is written to the MSB by software should be treated as spurious and ignored.<P>
+<P>
+</BODY>
+</HTML>

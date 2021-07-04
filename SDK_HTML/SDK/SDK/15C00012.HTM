@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>I/O Address Windows </TITLE></HEAD>
+<BODY>
+<H3>I/O Address Windows</H3>
+
+Hornet has two independently enabled and controlled I/O address windows which define a
+16-bit address decode to achieve a 1-byte resolution of the address space.  The maximum
+size of contiguous I/O address space is 256 bytes per window.<P>
+
+The 16 bits of address (I/O address bits [15:0]) are passed directly to the device
+address bus along with the appropriate chip select during an I/O read or write.  The
+remaining high-order device address bits (address bits [25:16]) are forced low during I/O
+reads and writes.  In addition, NREG is automatically driven low whenever an I/O access
+falls within an enabled I/O window.<P>
+
+If an I/O read or write occurs and the I/O address does not fall within an I/O address
+space defined by an I/O window or if the corresponding I/O window is disabled, no chip
+select is generated.  However, the addresses are still passed onto the device address
+bus.<P>
+
+Each window has two 8-bit registers used to define the starting address of the requested
+I/O address space.  In addition, each window has an 8-bit register which defines the size
+of the I/O address space requested.  The size value must be a power of 2 between 1 and
+256, inclusive.  The size value (in bytes) can be calculated as an 8-bit value as
+follows:<P>
+
+Size register value = Size of Requested I/O Address Space - 1<P>
+
+The specified starting address must start on a boundary which is determined by the size
+of the request I/O space.  For example, if the requested size is 4 bytes, the starting
+address must be on a 4-byte boundary.  If the requested size is 128 bytes, the starting
+address must be on a 128-byte boundary.  Failure to observe this constraint will result
+in I/O accesses being made to incorrect addresses.<P>
+
+Lastly, each window also has a control register which specifies the 3-bit Chip Select
+(CS), an enable bit which allows the associated window to be enabled/disabled, and an
+overlapping I/O address enable bit.  An I/O address window should not be enabled until
+the start address registers and the size register have been initialized.  Both I/O
+address windows are disabled following reset.<P>
+
+If a I/O window has been enabled and placed in the overlapping I/O-address mode, any I/O
+access in the full 64KI/O address space will result in all the I/O address bits being
+passed through to the device address bus along with the appropriate select code.<P>
+
+The 3-bit CS values of the I/O address space should only select from the 2 possible
+external I/O devices given below.  The Hornet hardware, however, does not prevent other
+CS values from being selected; software is responsible for preventing this from
+occurring.  I/O writes to non-I/O devices (i.e., devices not connected to NIOR (GPIO[22])
+or NIOW (GPIO[23])) will result in bus conflicts.  I/O reads to non-I/O devices may
+result in incorrect data.  It should be noted that there is no &quot;safe&quot; def ault
+CS value .  There is no way that Hornet can tell (following a reset) if an I/O device is
+actually plugged into the system.  Therefore, the default CS value is 000 which is an
+invalid value.  Software must ensure that this is changed to a legal value before
+enabling an I/O window.  The CS value is decoded into a chip select as follows:<P>
+
+<PRE>
+CS VALUE    DEVICE SELECTED
+==========================================================================================
+101         NCS[0]- Plug-In slot 0
+------------------------------------------------------------------------------------------
+110         NCS[1]- Plug-In slot 1
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

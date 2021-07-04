@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Programmable I/O Chip Select </TITLE></HEAD>
+<BODY>
+<H3>Programmable I/O Chip Select</H3>
+GPIO[3] can be programmed to output a control signal NIOCS (I/O chip select).  This signal is intended to be used as a chip select for an external I/O device.  The I/O address range at which it is active is defined using the IOCS Mask register and the IOCS Match register.  In order for the NIOCS signal to go active, bits in the match register are required to match the active I/O address if the corresponding bits in the mask register are set.  These registers are addressed as follows: <P>
+<PRE>
+INDEX   MODE    DESCRIPTION
+====================================
+60-61h  R/W     IOCS Mask register
+------------------------------------
+62-63h  R/W     IOCS Match register
+------------------------------------
+</PRE>
+</BODY>
+</HTML>

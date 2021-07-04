@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Application Notes </TITLE></HEAD>
+<BODY>
+<H3>Application Notes </H3><P>
+An application can use entries in a registered far pointer table for maintaining the integrity of pointers to its default data segment items.  The application should reserve the last <I>n</I> entries in the table by setting the NumUserOnly parameter to <I>n</I> The System Manager will not attempt to use these reserved entries.  An application can then pass a near pointer (offset into the far pointer table pointing to the desired entry) referring to a far pointer that actually points to an area within the application's default data segment.  Since the pointer appears in the far pointer table and falls within the allocated memory block for this application, the System Manager will automatically fix up the pointer whenever the application's memory block is moved.  <P>
+A number of calls listed in the INTERFAC.H file do not apply to applications designed for HP palmtop System Manager compliance (they remain listed for compatibility with HP 95LX System Manager).  Do not use the following calls when designing applications for other HP palmtops: <P>
+<UL><LI>m_share.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

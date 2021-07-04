@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 0Ah: Hornet-Specific Hardware Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 0Ah: Hornet-Specific Hardware Interrupt </H1><P>
+The Int 0Ah Service is the hardware IRQ2 handler.  The IRQ2 interrupt line has a potential of 16 separate interrupt sources, requiring the Int 0Ah service to &quot;poll&quot; the sources to determine what should be serviced.  In order to provide flexible interrupt take-over capability, the Int 0Ah service utilizes a jump table in RAM (Irq2VecTbl) for the addresses of the various service routines.  <P>
+The service uses a rotating priority poll to ensure that all services on the IRQ2 interrupt will eventually get serviced (except TIMER1 gets preferential treatment).  The RAM variable LASTIRQ2 identifies the last source serviced on the IRQ2 line and is used to implement the rotating poll.  <P>
+The Int 0Ah Interrupt services the following hardware interrupts: <P>
+<UL><LI>DCI interrupt (Display Cursor Update Request).  </LI><P>
+<LI>RTC interrupt.  </LI><P>
+<LI>TIMER1 interrupt.  </LI><P>
+<LI>RX Pad interrupt.  </LI><P>
+<LI>Ring Detect interrupt.  </LI><P>
+<LI>Keyboard interrupt.  </LI><P>
+<LI>IR interrupt.  </LI><P>
+<LI>ECHG (GPIO[10]) interrupt.  </LI><P>
+<LI>////////// (GPIO[11]) interrupt.  </LI><P>
+<LI>////////// (GPIO[12]) interrupt.  </LI><P>
+<LI>PSF (GPIO[13]) interrupt.  </LI><P>
+<LI>////////// (GPIO[06]) interrupt.  </LI><P>
+<LI>NOAC (GPIO[07]) interrupt.  </LI><P>
+<LI>////////// (GPIO[24]) interrupt.  </LI><P>
+<LI>////////// (GPIO[25]) interrupt.  </LI><P>
+<LI>////////// (GPIO[26]) interrupt.  </LI><P>
+</UL><B>Note:</B> The GPIO lines must be properly configured to generate an IRQ2 interrupt.  A hardware problem in early versions of the Hornet chip prohibits use of GPIO[24], GPIO[25], and GPIO[26] as reliable IRQ2 Interrupt sources.  <P>
+<H2><A HREF="c3000022.htm">Hardware Interrupts </A></H2><P>
+</BODY>
+</HTML>

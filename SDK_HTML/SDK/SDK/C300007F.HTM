@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 49h: Set RS-232 Channel </TITLE></HEAD>
+<BODY>
+<H3>AH = 49h: Set RS-232 Channel </H3><P>
+This function sets the RS-232 Channel to either WIRED or IR.  <P>
+The Fcn 49h and 4Ah services were originally created for the HP 95LX which has a single bit in its Control Register which controlled the power supply for both the IR and Wired Xmit/Receive circuitry.  The HP 95LX Fcn 49h service only selects the channel, and Fcn 4Ah controls power to the common Xmit/Receive circuitry.  The HP palmtop has separate power controls for the IR and Wired Xmit/Receive Circuitry.  In order to be backwards compatible, and to avoid turning on power for both IR and WIRED when only one is needed, the following changes have been made: <P>
+Fcn 49h (palmtop): This service selects the channel (IR or WIRED) as before.  For IR, it also sets the BAUD rate to 2400 (compatible with the HP 95LX), even though the HP palmtop supports higher BAUD Rates.  The HP palmtop's IRFMAT (Hornet -10h) register is set to either 00h (Wired) or 04h (IR).  
+<I>In addition, if either channel is currently powered up, this service ensures that the selected channel is powered up and the non-selected channel is powered down. </I> <P>
+<UL><LI>Input: AH = 49h <BR>
+AL = 0h: WIRED (default) <BR>
+AL = 1h: IR <BR>
+AL &gt; 1h: No Operation <P>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

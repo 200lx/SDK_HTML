@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_trans_printer </TITLE></HEAD>
+<BODY>
+<H3>m_trans_printer </H3>
+This call translates a single CP850 character to the sequence required by the selected printer to produce the equivalent character, and stores the result in the specified buffer.  This routine is provided for use by applications that do their own printer communications.  The specified buffer must be at least 48 bytes long.  
+<PRE><UL>
+<LI>Syntax:         int m_trans_printer(ch, bp) </LI>
+<LI>Parameters:     unsigned char ch A - single CP850 character to be converted according 
+                                     to the active character translation table 
+                unsigned char far *bp - Pointer to a buffer - at least 48 bytes long-to
+                                        hold the character translation result. </LI>
+<LI>Returns:        The number of characters in the buffer 
+                That number will always be greater than zero.  If no translation 
+                occurs, the original character will be placed in the buffer.</LI>
+<LI>Related Calls:  <A HREF="c70000c8.htm">m_init_printer</A> must be issued before this call will be accepted.  </LI>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>System Resets </TITLE></HEAD>
+<BODY>
+<H3>System Resets </H3><P>
+The Hornet chip will be reset when: <P>
+<UL><LI>Power is first applied (Power-On-Reset (POR) circuit), or a logic low level is driven on the NRES pad.  This reset will be held until VDDOK = 1 and VCCOK = 1.  </LI><P>
+<LI>The keyboard circuitry senses that the ON pad, KBI[22], and KBI[23] are all high for a 7.8ms debounce time (ON/SHIFT/CNTRL keys depressed).  </LI><P>
+</UL>A reset will cause the system to: <P>
+<OL><LI> Execute the power-up sequence if asleep, </LI><P>
+<LI> Reset the CPU, and </LI><P>
+<LI> Enter operating mode.  </LI><P>
+</OL><P>
+</BODY>
+</HTML>

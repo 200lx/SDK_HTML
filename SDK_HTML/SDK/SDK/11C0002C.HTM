@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_StoreViewpt </TITLE></HEAD>
+<BODY>
+<H3>DB_StoreViewpt </H3><P>
+This function saves a new viewpoint definition, and marks the associated viewpoint table as bad.  If the viewpoint stored happens to be the current one, a DB_SetCurrentViewpt is executed to keep the viewpoint table in sync.  <P>
+<UL><LI><Pre>Syntax:             DB_StoreViewpt(DBBLOCK *dblk, RECORDNUM viewptnum, 
+                    VIEWPTDEF far *vpd); </LI><P>
+<LI>Error returns are the same as DB_SetCurrentViewpt.  </LI><P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

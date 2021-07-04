@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComRelease </TITLE></HEAD>
+<BODY>
+<H3>ComRelease </H3>
+This function releases exclusive access to a previously acquired communication port.  This routine should be called prior to <A HREF="c7000032.htm">ComClose</A>, otherwise, it will be implicitly called.  It is not an error if the application has no ownership declared and this call is made.  <P>
+ComRelease is only strictly necessary if the port was seized with the exclusive ownership mode specified via a <A HREF="c7000030.htm">ComAcquire</A> call, but application writers are requested to follow a ComAcquire/ComRelease regimen for application consistency.  <P>
+Note that since the ComAcquire call does not nest, a single ComRelease will &quot;match&quot; any number of ComAcquire calls.  ComRelease does not close the communication port, so the handle remains valid.  <P>
+<PRE><UL>
+<LI>Syntax:      err_t far ComRelease(handle_t Handle) 
+<LI>Parameters:  handle_t Handle The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+<LI>Returns:     E_SUCCESS (0) - Operation successful 
+<LI>Comments:    ComOpen() must first be called in order to get a valid handle to the 
+             communications port.
+</UL></PRE>
+</BODY>
+</HTML>

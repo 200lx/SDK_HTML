@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComSendBytes </TITLE></HEAD>
+<BODY>
+<H3>ComSendBytes </H3>
+ComSendBytes copies application data to transmit buffers and starts the UART transmitter, if necessary.  <P>
+This non-blocking function attempts to copy an application's data to internal communication port transmit buffers, constrained by the setting of the Mode parameter.  It is very likely this function will return before the data copied into the internal buffers are completely transmitted.  If the application needs to know when the data is completely transmitted, the <A HREF="c7000044.htm">ComXmitting</A> call is provided.  <P>
+Note that since System Manager calls can have significant overhead, it is advisable for the application to perform some level of local buffering and not perform character-at-a-time writes to the port's internal buffers.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComSendBytes(handle_t Handle, char far *DataP, int Mode, 
+                                        int far *DataLenP) 
+<LI>Parameters:      int Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.  
+                 char far *DataP - Far pointer to the buffer containing the data to 
+                                   be sent int Mode A flag which specifies the mode 
+                                   in which the data must be accepted by the 
+                                   communication driver: 
+
+                                   COM_CTL_WHOLE specifies that the application 
+                                   wants all of the data to be copied into the 
+                                   transmit buffer in one operation; partial sends are
+                                   not permitted.  This option is useful when sending 
+                                   protocol packets out, or when the application buffer
+                                   must be reusable immediately after the ComSendBytes 
+                                   call completes.  If the data cannot be copied into
+                                   the internal buffer, then this call returns an 
+                                   error, and no data is copied.
+
+                                   Note that if the application specifies this option
+                                   and specifies a buffer length that is larger than 
+                                   the internal transmit buffer length, this call can
+                                   never complete successfully. 
+
+                                   COM_CTL_NORMALpermits partial writes.  
+
+                 DataLenP - Far pointer to an integer which, on entry contains the 
+                            number of bytes available in the application's buffer 
+
+                            On exit, ComSendBytes sets this variable to the actual 
+                            number of bytes copied from the application's buffer.  
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application.  
+<LI>Related Calls:   ComXmitting
+</UL></PRE>
+</BODY>
+</HTML>

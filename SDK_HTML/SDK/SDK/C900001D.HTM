@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Menubar </TITLE></HEAD>
+<BODY>
+<H3>Menubar </H3><P>
+The top level menu bar appears underneath the application's title bar.  The MenuBar creates MenuPopUps when the user selects a top-level item which has a MENU_POPUP style.  <P>
+The application does not fill in these window structures nor create the windows, but it does allocate storage space for them (indirectly) when it allocates the LHAPIBLOCK structure.  The LHAPI system initializes them when a &lt;MENU&gt; key or &lt;ALT&gt; key press is intercepted.  Their content is based on the menu pointer in the window structure which has the focus.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>PLHCLASS Class: If Class = NULL, LHAPI fills in the Menubar.  If Class is non-NULL, the Menubar Class field remains untouched by LHAPI.  This allows an application to provide subclasses of menus or popup menu.  </LI><P>
+<LI>int x,y,w,h: MenuBar handler automatically sets these values on a CREATE message.  </LI><P>
+<LI>PLHRES Title: Not used.  </LI><P>
+<LI>PLHDATA Data: Data points to the menu definition, which is an array of LHMENU structures.  Each structure defines one menu item and consists of title, handler, hotkey, and style (see lhapi.h for actual details of the field meanings).  </LI><P>
+<LI>UINT LogicalSize: Set during a CREATE message.  </LI><P>
+<LI>UINT Style: Set during a CREATE message.  </LI><P>
+<LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Not used.  </LI><P>
+<LI>UINT Selection: Selection defines the currently selected item within the menu.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages </B><P>
+<UL><LI>KEYSTROKE: The following keys are recognized: </LI><BR>
+<UL>
+<LI>DownArrow or Enter activates the currently selected menu item.  If it is another menu (the Style field for that item's menu structure has MENU_POPUP set), MenuBar creates a pull-down menu, otherwise MenuBar dispatches the routine pointed to by Handler field.  The dispatch may consist of a direct function call, a message send, or an automatic window creation (see MENU_SENDMSG and MENU_CREATEWND in lhapi.h).  <P>
+<LI>LeftArrow or RightArrow moves the cursor to the next/prior top menubar item.  <P>
+<LI>Letter or Alt+Letter moves the cursor to the menu item with the corresponding underscored letter (mnemonic) and &quot;does&quot; that item (pulls down a submenu or executes the menu action).  <P>
+<LI>ESC destroys the MenuBar.  <P>
+<LI>MenuBar ignores the Menu key.  <P>
+</UL></UL>
+<UL><LI>DRAW: The MenuBar handler draws the MenuBar with a shadow underneath and to the right.  For details on the Styles interpreted by the MenuBar, see LHAPI.H.  </LI><P>
+<LI>CREATE: MenuBar sets x,y,w,and h to appear underneath the application's title bar, across the entire width of the screen.  MenuBar sets the STYLE_SAVEUNDER bit in the Style field, and sets the Menu field to NULL.  </LI><P>
+<LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+<LI>APPEAR: Passed to the Object class handler.  </LI><P>
+<LI>DISAPPEAR: Passed to the Object class handler.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

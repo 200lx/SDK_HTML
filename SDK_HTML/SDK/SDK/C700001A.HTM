@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_close_cb </TITLE></HEAD>
+<BODY>
+<H3>m_close_cb </H3>
+releases the clipboard for access by other applications and resets the usage flag to 
+allow other applications to claim the clipboard.
+<PRE><UL>
+<LI>Syntax:         int far m_close_cb()
+<LI>Parameters:     None 
+<LI>Returns:        CB_OK - if clipboard is successfully released
+                CB_NOT_OPEN - if clipboard access is denied
+                CB_REP_OPEN - if the current representation is not finished
+<LI>Related Calls:  <A HREF="c700001e.htm">m_open_cb</A>
+<LI>Comments:       This call must be made for other applications to gain access to the 
+                clipboard
+</UL></PRE>
+</BODY>
+</HTML>

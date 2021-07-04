@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Graphics Video Modes </TITLE></HEAD>
+<BODY>
+<H3>Graphics Video Modes </H3><P>
+In Graphics Video modes, the pixel data in the display must be &quot;decoded&quot; into ASCII character data to accomplish the printing.  The standard BIOS technique (Int 10h, Fcn 08h, which is described on <BR><A HREF="C300004D.HTM">page 3-69</A>) is used, which depends on 8x8 character data appearing at &quot;standard&quot; positions in the graphics display.  The HP palmtop supports multi-sized fonts for character data and provides support (BitBlt) for writing this data into graphics displays at non-standard positions.  This feature is used by the built-in applications to create optimal displays.  As a result, the text data will generally not be successfully decoded by Int 10h, Fcn 08h and will not be recognized as text.  For this reason, the BIOS Print Screen function will not generally be too useful in the built-in applications.  <P>
+</BODY>
+</HTML>

@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>The APM Specification </TITLE></HEAD>
+<BODY>
+<H3>The APM Specification </H3><P>
+At the time of the HP palmtop development the Advanced Power Management (APM) specification from Intel and Microsoft was at version 1.0.  <P>
+Some experiments were made implementing the full APM specification and using the DOS Power driver.  While this worked, it did not seem to be a good replacement for ad hoc power management techniques which steal light sleep during keyboard checks.  For one thing, POWER.EXE added considerable overhead to the timer tick handler.  <P>
+However, there was some value in broadcasting suspend and resume events so that APM aware applications could prepare for power down.  This limited support for APM is described in the next section.  <P>
+<P>
+</BODY>
+</HTML>

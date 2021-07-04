@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 0Eh: Get the Current Alarm Setting </TITLE></HEAD>
+<BODY>
+<H3>AH = 0Eh: Get the Current Alarm Setting </H3><P>
+This function returns the current alarm date and time setting.  It extends function 09h to additionally return the date.  <P>
+<UL><LI>Input: AH = 0Eh </LI><P>
+<LI>Output: AH = Century in BCD <BR>
+AL = Year in BCD <BR>
+BH = Month in BCD <BR>
+BL = Day in BCD <BR>
+CH = Hours in BCD <BR>
+CL = Minutes in BCD <BR>
+DH = Seconds in BCD <BR>
+DL = Status of the alarm: <BR>
+00h: The alarm is not enabled.  <BR>
+01h: The alarm is enabled but will not power on the system.  <BR>
+02h: The alarm is enabled and will power on the system.  <P>
+</UL>
+<UL><LI>Error conditions: Carry Set iff RTC data invalid, or Alarm data invalid </LI><P>
+<LI>Registers modified: AX, BX, CX, DX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

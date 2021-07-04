@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>GPIO19 and Card Reset </TITLE></HEAD>
+<BODY>
+<H3>GPIO19 and Card Reset</H3>
+GPIO19 is special in that it is intended to be used as the &quot;Card Reset&quot; signal for PCMCIA cards.  GPIO19 has special hardware to tri-state it during reset but also needs some special handling by software.  If GPIO19 is used as the PCMCIA card reset (CRST) signal, the following guidelines should be followed: <P>
+<UL>
+<LI>CRST should be tri-stated on entry into deep sleep and on entry into backup.  In this state we are ready for powerup.  [Powerup = exit from deep sleep or backup].<P>
+<LI>CRST should be tri-stated whenever there is no card present.  In this state we are ready for a hot insertion.<P>
+<LI>CRST should be driven high starting 1ms or more after powerup if a card is present.  After a 10us (minimum) high time, it should be driven low.<P>
+<LI>CRST should be driven high starting 1ms or more after a card is hot inserted.  After a 10us high time, it should be driven low.<P>
+<LI>The card chip enable (NCS[1:0]) should not be activated for a minimum of 20 mS following the end of reset.<P>
+</UL>
+</BODY>
+</HTML>

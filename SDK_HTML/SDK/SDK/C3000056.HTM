@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Nonstandard Video Services </TITLE></HEAD>
+<BODY>
+<H3>Nonstandard Video Services </H3><P>
+Most of the nonstandard services are associated with the unique aspects of the hardware Display controller.  <P>
+Some of the features deal with the bit maps that will be used to provide fast textual output to the display in CGA Graphics and Text Modes.  In text modes, the Display Controller uses a software supplied font that must be loaded into RAM in a particular format.  <P>
+In graphics modes, the software must specify a bit map table to use the BitBlt hardware.  The built-in applications typically require two or more such tables at a given time.  The bit maps are downloaded into RAM (15% speed efficiency for BitBlt if bit map in RAM) during the initialization or re-entry phase of the application.  Thereafter the downloaded font tables, and symbol bit maps are readily available for the services that require them.  <P>
+The bitmap loader used to download built-in fonts and symbol tables may also be used for custom fonts and/or symbol tables.  Once loaded, these may be used in the same manner as the built-in bitmaps.  <P>
+<H2><A HREF="c3000057.htm">AH = D0h: Text Zoom </A></H2><P>
+<H2><A HREF="c3000058.htm">AH = D1h: Load Bitmap Data </A></H2><P>
+<H2><A HREF="c3000059.htm">AH = D2h: Remove (POP) Bitmap Data </A></H2><P>
+<H2><A HREF="c300005a.htm">AH = D3h: Activate Bitmap </A></H2><P>
+<H2><A HREF="c300005b.htm">AH = D4h: Reset Bit Map Stack (Unload All) </A></H2><P>
+<H2><A HREF="c300005c.htm">AH = D5h: Get Bitmap Data Status </A></H2><P>
+<H2><A HREF="c300005d.htm">AH = D6h: Get Bitmap </A></H2><P>
+<H2><A HREF="c300005e.htm">AH = D7h: BitBlt Graphics Write String </A></H2><P>
+<H2><A HREF="c300005f.htm">AH = D8h: Load Byte-Wide Font </A></H2><P>
+<H2><A HREF="c3000060.htm">AH = D9h: Display Context Size/Save/Restore </A></H2><P>
+<H2><A HREF="c3000061.htm">AH = DAh: Get/Set CodePage </A></H2><P>
+<H2><A HREF="c3000062.htm">AH = DBh: Get ROMFONTS </A></H2><P>
+<H2><A HREF="c3000063.htm">Graphics Cursor Functions: AX = DCxxh; xx = 00-08 </A></H2><P>
+<H2><A HREF="c3000064.htm">AH = DFh: Get Video Index </A></H2><P>
+</BODY>
+</HTML>

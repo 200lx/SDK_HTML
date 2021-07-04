@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = C0h: Return Pointer to System Description Table </TITLE></HEAD>
+<BODY>
+<H3>AH = C0h: Return Pointer to System Description Table </H3><P>
+This function returns a pointer to the System Description table (SDT) for the HP palmtop.  <P>
+<UL><LI>Input: AH = C0h </LI><P>
+<LI>Output: AH = 00h <BR>
+ES:BX = Pointer to the System Description Table <P>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AH, BX, ES, FLAGS </LI><P>
+</UL>The SDT provides an eight byte description of the BIOS capabilities: <P>
+<A HREF="image/__dg0325.gif">Graphic</A><P>
+(*)-The parameter byte describes certain hardware and BIOS features:<BR>
+<A HREF="image/__dg0316.gif">Graphic</A><P>
+The HP palmtop returns 38h as its parameter byte.  This indicates that it does not use DMA channel 3 and does not have a cascaded interrupt controller.  It does have a real-time clock, supports the Keyboard-Translation-Hook function, and the Wait-For-Event Function.  <P>
+<P>
+</BODY>
+</HTML>

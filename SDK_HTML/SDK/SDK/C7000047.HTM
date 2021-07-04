@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Structures </TITLE></HEAD>
+<BODY>
+<H3>Structures </H3>
+Alarms are managed as a list, sorted in increasing order by time of alarm.  The array of alarm structures specifies the time, sound, repeat factor for each alarm.  <P>
+Date, time, and alarm information is maintained in the following structures: 
+<PRE>
+#define NALARM_MSG_LEN   36 
+#define NALARM_EXTRA_LEN  4 
+
+typedef struct { 
+     int       na_year;            /*Year (as returned by DOS)*/ 
+     char      na_month;           /*Month (as returned by DOS)*/ 
+     char      na_date;            /*Day of month (as returned by DOS)*/ 
+     char      na_hour;            /*Time of alarm, hours*/ 
+     char      na_minute;          /*Time of alarm, minutes*/ 
+     char      na_second;          /*Time of alarm, seconds*/ 
+     char      na_pad;             /*(place holder for pack)*/ 
+     char      na_sound;           /*Alarm sound*/ 
+     char      na_message[NALARM_MSG_LEN];      
+                                   /*Message displayed when alarm goes off*/ 
+     char      na_special;         /*App's own use for sub-class.  Passed back */ 
+                                   /*to app through event notification */ 
+
+     union      { 
+     unsigned int        na_extral[2]; 
+     char                na_extrac[NALARM_EXTRA_LEN]; 
+                                     /*App's own use for specific data.  Passed */ 
+                                     /*back to app through event notification */
+     char                na_old;     /*old style alarm indicator*/ 
+     unsigned long int   na_tot_secs; 
+                                     /*Total secs since 1-1-80 @12:00am*/ 
+     char                na_owner;   /*Task id of the owner*/ 
+     } NEWALARM; 
+
+#define ALARM_FORCE     1 
+#define ALARM_IF_EARLY  2 
+#define ALARM_IF_CLEAR  4 
+
+#define DATE_ONLY       0 
+#define TIME_ONLY       1 
+#define DATE_N_TIME     2 
+#define DAY_N_DATE      3 
+#define SUPP_AMPM       0x10 
+#define SUPP_SECOND     0x20 
+#define SHOW_YEAR       0x40 
+#define FOUR_DIGIT_YEAR 0x80 
+
+typedef struct { 
+     char      dt_order;    /* Month-day-year order, see below */ 
+     char      dt_dsep;     /* Date separator */ 
+     char      dt_tsep;     /* Time separator */ 
+     char      dt_24hr;     /* Non-zero =&gt; 24-hour time */ 
+} DTINFO; 
+
+typedef struct { 
+     int       dt_year; 
+     char      dt_month; 
+     char      dt_date; 
+     char      dt_day; 
+     char      dt_hour; 
+     char      dt_minute; 
+     char      dt_second; 
+     char      dt_hundreth; 
+} DTM;
+ 
+typedef struct { 
+     char      t_hundreth;   /* 0 - 99 */ 
+     char      t_second;     /* 0 - 59 */ 
+     char      t_minute;     /* 0 - 59 */ 
+     char      t_hour;       /* 0 - 23 */ 
+} TIME; 
+</PRE>
+A number of calls listed in the INTERFAC.H file do not apply to applications designed for HP palmtop System Manager compliance, but remain listed for compatibility with HP 95LX System Manager.  Do not use the following calls when designing applications for other HP palmtops: <P>
+<UL>
+<LI>m_alarm </LI>
+<LI>m_day_trig.  </LI>
+<LI>m_get_settings.  </LI>
+<LI>m_posttime.  </LI>
+<LI>m_set_daterule.  </LI>
+<LI>m_set_settings.  </LI>
+<LI>m_set_timerule.  </LI>
+</UL>
+</BODY>
+</HTML>

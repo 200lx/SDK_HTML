@@ -1,0 +1,267 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Setup </TITLE></HEAD>
+<BODY>
+<H3>Setup</H3>
+This section describes global setup options.  The issues involved here are display
+environment, compatibility, display type, frame rate, contrast, speed selection, and
+system RAM allocation.<P>
+
+<B>Setup: Display Environment</B><BR>
+This display controller can be used standalone, it can be disabled for using an external
+display adapter, it may be used in addition to an external display adapter, or it may be
+used in parallel with an external adapter.<P>
+The environment is controlled by a portion of the DspSetUp register.  The DspEnable bit
+enables or disables the MDA/CGA registers and the frame buffer.  The CGAMode bit selects
+between the MDA and CGA register sets and sets the location of the frame buffer.<P>
+To use this display controller as a standalone display, its registers and frame buffer
+need to be enabled with the DspEnable bit.  The CGAMode bit then controls the
+compatibility.<P>
+To disable this display controller and use an external adapter, this controller's
+registers and frame buffer need to be disabled.  The external adapter's frame buffer and
+optional BIOS ROM need to be mapped to the appropriate places in the CPU's address space.
+Note that a software driver would have to be provided for an external MDA or CGA adapter.
+External EGA or VGA adapters have their own video BIOS ROMS.<P>
+When using an external adapter in addition to using this controller, the register and
+frame buffer spaces of the external adapter must not conflict with those of the internal
+display controller.  For this display controller, this is controlled by the CGAMode bit
+of the DspSetUp register.<P>
+To use an external adapter in parallel with this controller, the register and frame
+buffer spaces should be set to overlap.  Writes to the registers or frame buffer of the
+internal controller will also occur on corresponding locations of the external adapter.
+Reads from these locations would be taken from the internal adapter's registers.  A
+software driver would have to be provided to keep the two displays in the same mode with
+compatible memory models.<P>
+
+<B>Setup: Compatibility</B><BR>
+This display controller is capable of emulating MDA, CGA, or HP 95LX display modes.  This
+is controlled by the CGAMode and JagGrMode bits of the DspSetUp register.  For MDA or CGA
+emulation, select between them with the CGAMode bit and disable 95LX graphics by clearing
+the JagGrMode bit.  For HP 95LX emulation, select MDA emulation for text modes and MDA
+emulation with Jaguar graphics for graphics modes.<P>
+
+<B>Setup: Display type</B><BR>
+This display controller supports two types of display module.  This first type, called a
+normal display module, is refreshed continuously from the frame buffer.  The second type
+is called a RAM display module.  It contains its own RAM on the module and can be
+refreshed from it.  If given data and data clocks along with the row and vertical sync
+clocks, the RAM display will update its RAM from the given data.  If the data and data
+clocks are withheld, the RAM display will refresh from its own RAM.  Refreshing in this
+fashion should reduce the amount of power required by the total display system.<P>
+The update-on-change mode (UCmode) bit of the DspSetUp register is used to enable
+refreshing for a RAM display module.  If set, the display module RAM is updated from the
+frame buffer only when the CPU makes an access to the frame buffer.  It is also updated
+twice each second to make sure that blinking cursors and characters really do blink.<P>
+Note that this feature cannot be used with frame-rate shaded modes or flashing cursors.<P>
+
+<B>Setup: Row Time and Frame Rate</B><BR>
+The refresh rate of the display is controlled by the RowTime register.  The timer clock
+of 1.193182 MHz is divided by one plus the contents of this register to set the rate for
+updating adjacent lines of the display.  This rate is divided by the number of lines in
+the display to determine the refresh rate (or frame rate).  The frame rate needs to be
+set to 50-60 Hz for black and white displays and 90-120 Hz for frame-rate shaded color
+displays.  The higher rates are preferred but will use more power.  The contrast may
+need to be adjusted after changing the frame rate.  The RowTime register values for a few
+frame rates on a 200 line display are given in the following table:<P>
+
+
+<U>Row and Frame Rates Versus Row/Time Register</U><BR>
+Row/Time register value<P>
+<PRE>
+        Decimal Hex     Row rate    Frame rate
+        =======================================
+        118d    76h     10.027 kHz  50.13 Hz
+        ---------------------------------------
+        98d     62h     12.052      60.26
+        ---------------------------------------
+        65d     41h     18.079      90.39
+        ---------------------------------------
+        49d     31h     23.864      119.32
+        ---------------------------------------
+</PRE>
+
+<B>Setup: Contrast Control</B><BR>
+The Contrast Control Voltage (CCV) generator is a simple 5-bit pulse-width modulator.
+The output is a sequence of 32 ones and zeros that repeats at 1024 Hz.  The number of
+ones in the sequence is set by the value in the Contrast register.  The average duty
+cycle (and the average voltage) of the waveform will then be proportional to that value.
+This output waveform (driven onto the CCV pad) should be low-pass filtered to generate
+the analog voltage which controls the display contrast.  To save power, this r egister
+should be set to zero when the display is off.  The waveform and duty cycles on the CCV
+pin for various values of the Contrast register are given in this table:<P>
+
+
+
+<U>Waveform and Duty cycle versus Contrast register value</U><P>
+<PRE>
+Contrast    Waveform                            Duty Cycle
+===========================================================
+00000       00000000000000000000000000000000    0.000%
+-----------------------------------------------------------
+00001       00000000000000001000000000000000    3.125
+-----------------------------------------------------------
+00010       00000000100000000000000010000000    6.250
+-----------------------------------------------------------
+00011       00000000100000001000000010000000    9.375
+-----------------------------------------------------------
+00100       00001000000010000000100000001000    12.500
+-----------------------------------------------------------
+00101       00001000000010001000100000001000    15.625
+-----------------------------------------------------------
+00110       00001000100010000000100010001000    18.750
+-----------------------------------------------------------
+00111       00001000100010001000100010001000    21.875
+-----------------------------------------------------------
+01000       00100010001000100010001000100010    25.000
+-----------------------------------------------------------
+01001       00100010001000101010001000100010    28.125
+-----------------------------------------------------------
+01010       00100010101000100010001010100010    31.250
+-----------------------------------------------------------
+01011       00100010101000101010001010100010    34.375
+-----------------------------------------------------------
+01100       00101010001010100010101000101010    37.500
+-----------------------------------------------------------
+01101       00101010001010101010101000101010    40.625
+-----------------------------------------------------------
+01110       00101010101010100010101010101010    43.750
+-----------------------------------------------------------
+01111       00101010101010101010101010101010    46.875
+-----------------------------------------------------------
+10000       01010101010101010101010101010101    50.000
+-----------------------------------------------------------
+10001       01010101010101011101010101010101    53.125
+-----------------------------------------------------------
+10010       01010101110101010101010111010101    56.250
+-----------------------------------------------------------
+10011       01010101110101011101010111010101    59.375
+-----------------------------------------------------------
+10100       01011101010111010101110101011101    62.500
+-----------------------------------------------------------
+10101       01011101010111011101110101011101    65.625
+-----------------------------------------------------------
+10110       01011101110111010101110111011101    68.750
+-----------------------------------------------------------
+10111       01011101110111011101110111011101    71.875
+-----------------------------------------------------------
+11000       01110111011101110111011101110111    75.000
+-----------------------------------------------------------
+11001       01110111011101111111011101110111    78.125
+-----------------------------------------------------------
+11010       01110111111101110111011111110111    81.250
+-----------------------------------------------------------
+11011       01110111111101111111011111110111    84.375
+-----------------------------------------------------------
+11100       01111111011111110111111101111111    87.500
+-----------------------------------------------------------
+11101       01111111011111111111111101111111    90.625
+-----------------------------------------------------------
+11110       01111111111111110111111111111111    93.750
+-----------------------------------------------------------
+11111       01111111111111111111111111111111    96.875
+-----------------------------------------------------------
+</PRE>
+
+
+The duty cycle of the square wave on the CCV pin is given as:<P>
+<UL>duty_cycle = Contrast / 32</UL>
+where Contrast is the contents of the Contrast register.  The analog voltage generated by
+the low-pass filter can be calculated as:<P>
+<UL>V(CCV) = Vdd * duty_cycle </UL>
+where Vdd is the voltage of the logic power supply.<P>
+The relationship between the Contrast register value and the actual displayed contrast is
+difficult to quantify.  It is determined by many factors in the power-supply and display
+module.  However, software should assume that this external circuitry is designed such
+that low values of CCV result in light-on-light displays, high values result in
+dark-on-dark displays, and something in between will result in optimum contrast and
+viewing angle.<P>
+
+<B>Setup: Speed Selection</B><BR>
+The DspSpd register is used to select the frequencies of two clocks that the display
+controller uses.  The first clock (DotClk) is the column clock that is sent to the
+display module.  The second clock (DspClk) sets the access speed for the display
+controller's accesses to the frame buffer and font buffer.  The DspSpd register selects
+frequency dividers that are applied to the HFO clock.  The frequency of the HFO clock is
+the high frequency crystal oscillator's output divided by two.<P>
+Bits 3-2 of the DspSpd register select the divider ratio for DotClk.  Increasing values
+select divider ratios of 6, 4, 3, and 2; respectively.  The DotClk frequency for a given
+DspSpd selection and HFO frequency are given as follows:<P>
+
+
+<U>Frequency of DotClk versus DotClk bits</U><P>
+<PRE>
+HFO             DotClk bits in DspSpd register
+Frequency       00              01              10              11
+==========================================================================================
+5.369318 MHz    0.894886 MHz    1.3423295 MHz   1.789773 MHz    2.684659 MHz
+------------------------------------------------------------------------------------------
+7.918387        1.319731        1.979597        2.639462        3.959194
+------------------------------------------------------------------------------------------
+10.738636       1.789773        2.684659        3.579545        5.369318
+------------------------------------------------------------------------------------------
+15.836775       2.639463        3.959194        5.278925        7.918388
+------------------------------------------------------------------------------------------
+</PRE>
+Bits 1-0 of the DspSpd register select the divider ratio for DspClk.  Increasing values
+select divider ratios of 3, 2, 1.5, and 1.0; respectively.  The DspClk frequency for a
+given DspSpd selection and HFO frequency are given as follows:<P>
+
+<U>Frequency of DspClk versus DspClk bits</U><P>
+<PRE>
+HFO             DspClk bits in DspSpd register
+Frequency       00              01              10              11
+==========================================================================================
+5.369318 MHz    1.789773 MHz    2.684659 MHz    3.579545 MHz    5.369318 MHz
+------------------------------------------------------------------------------------------
+7.918387        2.639462        3.959194        5.278925        7.918387
+------------------------------------------------------------------------------------------
+10.738636       3.579545        5.369318        7.159091        10.738636
+------------------------------------------------------------------------------------------
+15.836775       5.278925        7.918388        10.557850       15.836775
+------------------------------------------------------------------------------------------
+</PRE>
+DotClk should be set to a frequency between 2.5-3.0 MHz.  DspClk should be set to either
+5 or 8 MHz depending upon the speed of the system DRAM's.  A 8 MHz production Cougar will
+use a DspSpd register value of 0Bh for a DotClk frequency of 2.639462 MHz and a DspClk
+frequency of 7.918387 MHz.<P>
+
+<B>Setup: System RAM Allocation</B><BR>
+This display controller requires that a 16-KB block of RAM be allocated for the frame
+buffer while the display is enabled and unblanked.  Text modes require that another 16-KB
+block be allocated for the font buffer.  These blocks are allocated by registers in the
+memory controller.  This display controller requires that the blocks be located in one of
+the NRAS (DRAM) devices on a 16-KB boundary.  This display controller generates 13-bit
+word addresses for both the frame buffer and font buffer.  These address es are generated
+modulo 16384d (4000h) so that overflows remain within the 16-KB block.<P>
+While the display system is enabled, the frame buffer is accessible in the CPU address
+space at either the MDA or CGA frame buffer location, but not both.  The frame buffer may
+also be accessed via the memory controller's bank switcher.  The font buffer is only
+accessible via the bank switcher.  If this display system is disabled (with the DspEnable
+bit in the DspSetUp register), the frame buffer and font buffer are only be accessible
+via the bank switcher.<P>
+
+<B>Setup: Power Up and Power Down</B><BR>
+
+Display modules require that waveforms be applied before the high voltage is applied.
+Therefore, software should go through the following sequence when powering up the
+display:<P>
+<OL>
+<LI>Set up the display environment, compatibility, and mode.</LI><P>
+<LI>Enable the waveforms but keep the display blanked.</LI><P>
+<LI>Enable the display power supply.</LI><P>
+<LI>Build the contents of the display.</LI><P>
+<LI>Wait for the power supply to warm up.</LI><P>
+<LI>Unblank the display.</LI><P>
+</OL>
+Turning the display off requires that waveforms be held on the display until the power
+supply can decay.  The wait times will depend upon the response of the display power
+supply and the requirements of the display module.<P>
+The enable power supply, enable waveform generation, and unblank display functions are
+controlled by separate bits.  The bit that controls the power supply will be one of the
+GPIO bits.  It is referred to as the DVEN (display voltage enable) bit.  The bit that
+enables waveform generation is the DON bit in the system control register.  Note that the
+DspEnable bit in the DspSetUp register can also disable waveforms.  The bit that blanks
+the display is the Unblank bit in the MDA/CGA mode register.<P>
+</BODY>
+</HTML>

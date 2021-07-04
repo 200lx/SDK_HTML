@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Service Request Structure </TITLE></HEAD>
+<BODY>
+<H3>Service Request Structure </H3><P>
+<PRE>
+SVC_request           db           ?  
+</PRE>
+Set by handler to indicate that a request is pending.  A non-zero value indicates that the handler requires servicing.  A greater value means a higher priority.  The priority only has meaning if there are multple service request pending.  <P>
+<PRE>
+SVC_app_index         db           ?  
+</PRE>
+TCB entry # associated to linked application.  This value is used by system manager to invoke the compliant app.  The application can get its assigned TCB entry by making a m_current_task() call.  The application is notified through an event type of E_REQUEST.  Typically the application will be running as a background task.  An application can determine it's current run mode by issuing a m_get_run_mode() call.  <P>
+<PRE>
+SVC_user_ptr          dd           ?  
+</PRE>
+General purpose usage.  Usually points to a buffer to be processed by the application (input).  This address is passed on to the linked app via an E_REQUEST, through a special structure entry (Event.e_svc_user_ptr).  <P>
+<PRE>
+SVC_user_type         dd           ?  
+</PRE>
+General purpose usage.  May be used to pass a command to an application.  This address is passed on to the linked app via an E_REQUEST, through a special structure entry (Event.e_svc_user_type).  <P>
+<PRE>
+SVC_user_id           db           4 dup(?)
+</PRE>
+Identifiying signature set by service handler.  First 3 chars should describe service.  Last char could indicate version.  User locates desired service through m_locate_SVC( char *service_type[4]).  A &quot;?&quot; indicates a wild card character.  A successful match returns a far pointer to the corresponding service entry.  <P>
+<PRE>
+SVC_user_entry        dd           ?  
+</PRE>
+Set by handler during initialization.  Points to a user (app) call entry point.  This entry point must handle at least the above six call types (link, unlink, hook, unhook, request complete, unload).  The app will pass a far pointer accessable at BP+6.  The first byte is the command.  <P>
+<PRE>
+SVC_safe_entry        dd           ?  
+</PRE>
+Set by handler during initialization.  Points to a DOS or system manager safe call entry point.  Enables special handlers to make DOS and system manager calls at &quot;safe&quot; times.  Handler sets up service request flags as for app scheduling, except the SVC_appp_index is set to 0ffh.  <P>
+<PRE>
+SVC_used              db           ?  
+</PRE>
+Set and cleared by system manager indicates that entry is used.  <P>
+<PRE>
+SVC_status            db           ?  
+</PRE>
+Set by system manager.  Under certain conditions a request may fail.  The failure code is stored here.  <P>
+<P>
+</BODY>
+</HTML>

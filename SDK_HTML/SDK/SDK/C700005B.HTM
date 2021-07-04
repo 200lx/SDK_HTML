@@ -1,0 +1,191 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Event Management Services </TITLE></HEAD>
+<BODY>
+<H1>Event Management Services </H1>
+The System Manager's Event Management Services are used to manage event communication between the application and the System Manager.  An event is considered to be any external activity which may have an effect on the system, application state, or processing.  This definition includes keystrokes, alarms, context changes, and power state changes.  <P>
+To facilitate better structuring of user applications, the m_action call is used to enable activation of any event type request through a single call and the do_event entry in the EVENT structure.  The calling application sets this entry prior to making an event request through <A HREF="c700005d.htm">m_action</A>.  All event calls are made through a single procedure entry point; the specific event is designated by the value of the enumerated data structure element do_event.  <P>
+The System Manager modifys the value of do_event set by the calling application.  After processing the m_action call, do_event is set to DO_EVENT.  This eliminates the need for the application to continually reset the action desired; most of the time the application will be getting events from the System Manager.  <P>
+The following structure data is reproduced from EVENT.H: 
+<PRE> 
+enum event_kind { 
+     E_NONE,                  /* no events available */ 
+     E_KEY,                   /* keystroke available */ 
+     E_BREAK,                 /* CNTRL_BREAK encountered */ 
+     E_ACTIV,                 /* reactivation event, always follows E_DEACT */ 
+     E_DEACT,                 /* about to sleep, next event request is delayed */ 
+     E_TERM,                  /* forced closure of application */ 
+     E_BRIDGE,                /* 123 bridge service request, only ret.  to 123 */ 
+     E_GROW,                  /* request to 123 to grow */ 
+     E_SHRINK,                /* request to 123 to shrink */ 
+     E_ALARM_EXP,             /* application's alarm has expired */ 
+     E_ALARM_DAY,             /* daily chance to set an alarm */ 
+     E_TIMECHANGE,            /* system date or time has been changed */ 
+     E_SWAP,                  /* swap back to app from link*/ 
+     E_IC_INIT,               /* init IC communications */ 
+     E_IC_CLOSE,              /* close channel */ 
+     E_REFRESH,               /* refresh sent to foreground app */ 
+     E_SERVICE,               /* Request from async process (int handler) */ 
+     E_ALARM_EXP_NOT_CURRENT  /* Alarm event was not current foregnd */ 
+}; 
+
+enum edo_event { 
+     DO_EVENT,              /* get event */ 
+     DO_YIELD,              /* give up foreground */ 
+     DO_FINI,               /* terminate task */ 
+     DO_NO_EVENT,           /* return even if no event */ 
+     DO_NO_FINI,            /* refuse to close when asked */ 
+     DO_BRIDGE,             /* do brigde services */ 
+     DO_IC_INIT,            /* set up comm channel */ 
+     DO_IC_CLOSE,           /* close comm channel */ 
+     DO_SWAP,               /* swap to linked task */ 
+     DO_LAUNCH,             /* launch a new system manger compliant task */ 
+     DO_EXEC,               /* Launch a DOS program */ 
+     DO_DOS_CLOSE,          /* Close DOS task request */ 
+     DO_REFRESH,            /* Request foreground app to refresh the screen */ 
+     DO_SERVICE_COMPLETE,   /* Task has completed background process */ 
+     DO_REQUEST_FOREGROUND, /* Request to make this task foreground */ 
+     DO_CLOSE_APP,          /* Request a particular app to be closed */ 
+     DO_EXEC_FULL,          /* Launch a DOS program with full control*/ 
+     DO_EXIT_SYSMGR,        /* Close all apps &amp; exit to DOS */ 
+     DO_MOVE_TO_END         /* Move current app to end of q */ 
+                            /*      (but in front of task0      */ 
+}; 
+
+typedef struct { 
+     enum event_kind kind; 
+     unsigned int data;           /* ASCII (CP 850) translation of keystroke */ 
+     unsigned char scan;          /* scan code from BIOS */ 
+     unsigned char shifts;        /* shifts register, when function returns */ 
+                                  /* not necessarily when key struck */ 
+     unsigned int lics;           /* LICS translation of keystroke */ 
+     unsigned int fkey_num;       /* function key number for 123 only */ 
+     void far * bridge;           /* pointer to 123 bridge data structure */ 
+     enum edo_event do_event;     /* User set event type */ 
+     unsigned int return_status;  /* Return status from call */ 
+} EVENT_NORM; 
+
+/* DO_LAUNCH */ 
+
+typedef struct { 
+     enum event_kind kindie;       /* Place holder */ 
+     unsigned int e_dummy;         /* Place holder */ 
+     unsigned char e_launch_task;  /* TCB task entry # to launch */ 
+     unsigned char e_launch_type;  /* Type of launch request */ 
+} EVENT_L; 
+
+/* DO_EXEC */ 
+
+typedef struct { 
+     enum event_kind exec_kind;   /* Place holder */ 
+     unsigned int exec_dummy;     /* Place holder */ 
+     void far *exec_struc_ptr;    /* Ptr to EXEC structure */ 
+
+} EVENT_EXECF; 
+
+typedef struct { 
+     char far *ex_file_spec;      /* Full path to file spec (ASCIIZ)*/ 
+     char far *ex_command_line;   /* Command line text */ 
+     unsigned int ex_DOSsizek;    /* #Kbytes needed for task (0=use default)*/ 
+     unsigned int ex_pause;       /* Pause before returning (0=No pause)*/ 
+     unsigned int ex_lock;        /* Inhibit task switches (0=Allow)*/ 
+} EXEC_STRUCT; 
+
+typedef struct { 
+     enum event_kind kindex;      /* Place holder */ 
+     unsigned int e_exdummy;      /* Place holder */ 
+     char far *e_exec_file_ptr;   /* Full path of programto EXEC */ 
+     char far *e_cmd_tail_ptr;    /* Command tail */ 
+     unsigned char e_task_id;     /* TCB entry of DOS task */ 
+} EVENT_EXEC; 
+
+/* DO_IC_INIT */ 
+
+typedef struct { 
+     enum event_kind kindic;      /* Place holder */ 
+     unsigned int e_icdummy;      /* Place holder */ 
+     void far **e_icdata_ptr;     /* Near ptr to Far ptr entry */ 
+     unsigned char e_link_task;   /* Task to link to (TCB entry) */ 
+     void far **e_slave_offset;   /* Slave task pointer table off */ 
+} EVENT_IC; 
+
+typedef struct { 
+     enum event_kind kindsvc;            /* Place holder */ 
+     unsigned int e_svcdummy;            /* Place holder */ 
+     unsigned char far *e_svc_user_ptr;  /* General purpose use */ 
+     unsigned char e_svc_user_type;      /* General purpose use */ 
+} EVENT_SERVICE; 
+
+/* E_ALARM_EXP */ 
+
+typedef struct { 
+     enum event_kind kindalm;       /* Place holder */ 
+     unsigned int e_alm_special;    /* User alarm type */ 
+     unsigned char e_almdummy[3];   /* Place holder */ 
+     unsigned char e_almcurtask;    /* Task id that was current */ 
+     unsigned int e_alm_extra[2];   /* User bytes */ 
+} EVENT_ALARM; 
+
+typedef union 
+{ 
+     EVENT_NORM; 
+     EVENT_L; 
+     EVENT_IC; 
+     EVENT_EXEC; 
+     EVENT_SERVICE; 
+     EVENT_ALARM; 
+     EVENT_EXECF; 
+}EVENT; 
+
+/* Asynchronous task scheduling structure */ 
+
+typedef struct { 
+unsigned char SVC_request;      /* Flag set by handler (ff=highest priority) */ 
+unsigned char SVC_app_index;    /* TCB entry to invoke (ff=special callback) */ 
+void far *SVC_user_ptr;         /* Genl param passed thru E_SERVICE event to app*/ 
+unsigned char SVC_user_type;    /* Genl param passed thru E_SERVICE event to app*/ 
+unsigned char SVC_user_id[4];   /* Id signature set by service originator */ 
+void far *SVC_user_entry;       /* Entry point for app service originator calls */ 
+void far *SVC_safe_entry;       /* Ent pnt for safe svc handler DOS &amp; sysm calls*/ 
+unsigned char SVC_used;         /* Flag ind entry avail.  Set/reset by sysmgr */ 
+unsigned int SVC_status;        /* Status of request set by sysmgr */ 
+}S_SERVICE; 
+
+/* Field usages by event_kind 
+
+              TYPE           FIELDS USED 
+           --------------------------------- 
+             E_NONE             shifts 
+             E_KEY              data,scan,fkey_num,lics,shifts 
+             E_BREAK            none 
+             E_ACTIV            none 
+             E_DEACT            none 
+             E_TERM             none 
+             E_BRIDGE           bridge 
+             E_GROW             data 
+             E_SHRINK           data 
+             E_ALARM_EXP        data,bridge 
+             E_ALARM_DAY        none 
+             E_TIMECHANGE       bridge (-&gt; timechange structure) 
+*/
+</PRE> 
+A number of calls listed in the INTERFAC.H file do not apply to applications designed for HP palmtop System Manager compliance (they remain listed for compatibility with HP 95LX System Manager).  Do not use the following calls when designing applications for other HP palmtops: <P>
+<UL><LI>m_bridge_serv.  </LI><BR>
+<LI>m_event.  </LI><BR>
+<LI>m_nevent.  </LI><BR>
+<LI>m_setshifts.  </LI><BR>
+</UL>The following calls to initiate an action with the System Manager should be made by using the proper do_event identifier with the <A HREF="c700005d.htm">m_action</A> function call, instead of using an individual function call.  Note that on coming back from the m_action, you should be prepared to get an event you need to deal with, the same way you get events when you call m_action with do_event = DO_EVENT.  <P>
+<UL><LI>m_launch should be event.do_event = DO_LAUNCH; /* ...  set rest of fields in event */ m_action(&amp;event); </LI><P>
+<LI>m_ic_init should be event.do_event = DO_IC_INIT;   /* ...  set rest of fields in event */ m_action(&amp;event); </LI><P>
+<LI>m_ic_close should be event.do_event = DO_IC_CLOSE; /* ...  set rest of fields in event */ m_action(&amp;event0; </LI><P>
+<LI>m_swap should be event.do_event = DO_SWAP;         /* ...  set rest of fields in event */ m_action(&amp;event); </LI><P>
+<LI>m_do_exec should be event.do_event = DO_EXEC;      /* ...  set rest of fields in event */ m_action(&amp;event); </LI><P>
+<LI>m_do_DOS_close should be event.do_event = DO_DOS_CLOSE; m_action(&amp;event); </LI><P>
+<LI>m_fini should be event.do_event = DO_FINI; m_action(&amp;event); </LI><P>
+<LI>m_yield should be event.do_event = DO_YIELD; m_action(&amp;event); </LI><P>
+<LI>m_nofini should be event.do_event=DO_NO_FINI; m_action(&amp;event); </LI><P>
+<LI>m_nevent should be event.do_event = DO_NO_EVENT; m_action(&amp;event); </LI><P>
+</UL><H2><A HREF="c700005c.htm">Call Descriptions </A></H2><P>
+</BODY>
+</HTML>

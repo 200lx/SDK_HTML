@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 4Bh: Update BIOS Time </TITLE></HEAD>
+<BODY>
+<H3>AH = 4Bh: Update BIOS Time </H3><P>
+When the HP palmtop enters very low-power mode (deep sleep) the heartbeat timer0 is stopped, but the RTC timer continues to run.  When HP palmtop is awakened the elapsed time on the RTC is used to update the double word register (LOTIME, HITIME) in BIOS RAM that records the number of 18.2 Hz ticks since midnight.  This value is the &quot;BIOS Time&quot;.  The RTC is first read and checked for a valid value.  If the RTC contains an illegal value (such as seconds count more than 59), the BIOS Time is cleared to 0 and the service returns with CF=1.  Otherwise, the time value from the RTC is converted to the number of 18.2 Hz ticks since midnight.  This value is stored as the BIOS Time, and the service returns with CF=0.  <P>
+<UL><LI>Input: AH = 4Bh </LI><P>
+<LI>Output: CF=0 if successful <BR>
+CF=1 if failed <P>
+</UL>
+<UL><LI>Registers modified FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

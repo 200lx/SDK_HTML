@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Registers </TITLE></HEAD>
+<BODY>
+<H3>Registers</H3>
+Control of the ADC is provided in the ADC control register located at index 12h.  This register is defined as follows:<P>
+<PRE>
+Bit     Value   Mode    Description
+==========================================================================================
+[0]     0       R/W     ADCE        ADC enable; 1=enabled; should be disabled when not
+                                    in use to save power.
+------------------------------------------------------------------------------------------
+[1:2]   00      R/W     CNS[0:1]    Channel select bits.
+                                    00 = ADC[0], system batteries
+                                    01 = ADC[1], backup battery
+                                    10 = ADC[2], reference voltage
+                                    11 = VSS
+------------------------------------------------------------------------------------------
+[3]     -       R       TOHI        Comparator output; high when DAC output value is
+                                    above analog input
+------------------------------------------------------------------------------------------
+[4]     -       R       BSY         Busy bit; a/d convertor is in the middle of a
+                                    conversion.
+------------------------------------------------------------------------------------------
+[5:7]   -       -       unused
+------------------------------------------------------------------------------------------
+</PRE>
+The value input to the DAC is written to the DAC value register located at 13h.  This is a 6-bit value, the 2 MSBs are unused.  Writing the value register causes a comparison to occur.  This comparison will take up to 62uS.<P>
+</BODY>
+</HTML>

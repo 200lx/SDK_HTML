@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 04h: Read RTC Date </TITLE></HEAD>
+<BODY>
+<H3>AH = 04h: Read RTC Date </H3><P>
+This function reads the date from the real-time clock.  <P>
+<UL><LI>Input: AH = 04h </LI><P>
+<LI>Output: AH = 00h <BR>
+CH = Century in BCD: <BR>
+     19h if 20th century <BR>
+     20h if 21st century <RB>
+CL = Year in BCD <BR>
+DH = Month in BCD <BR>
+DL = Day in BCD <P>
+</UL>
+<UL><LI>Error conditions: Carry Set if the RTC data is invalid, <BR>
+otherwise Carry Clear <P>
+</UL>
+<UL><LI>Registers modified: AX, CX, DX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>A Note on C Language Function Prototypes </TITLE></HEAD>
+<BODY>
+<H3>A Note on C Language Function Prototypes </H3><P>
+The header files do not contain function prototypes for the services.  Instead, INTERFAC.H contains macro definitions that expand System Manager service calls into calls to a single service dispatch routine.  <P>
+If a service is accidentally called with the incorrect number of parameters, it will not match the macro and the compiler will issue a warning about too few actual parameters for the macro.  <P>
+However, a service that is accidentally called with an incorrect argument type, but with the correct number of parameters, may not be caught by the compiler due to the lack of a function prototype.  <P>
+All pointers in System Manager service calls are Far pointers.  However, the service macros contain casts of pointer arguments to far pointers.  Consequently, near pointers can be used for data in cases where the compiler can supply the segment value due to the cast.  <P>
+A number of calls listed in the INTERFAC.H file do not apply to applications designed for HP palmtop System Manager compliance (they remain listed for compatibility with HP 95LX System Manager).  Do not use the following calls when designing applications for HP palmtops other than the HP 95LX: <P>
+<UL><LI>All SC_MENU calls (superceded by LHAPI calls).  </LI><P>
+<LI>All SC_SCREEN calls (superceded by LHAPI calls).  </LI><P>
+<LI>All SC_EDIT calls (superceded by LHAPI calls).  </LI><P>
+<LI>app_name.  </LI><P>
+<LI>bridge_serv.  </LI><P>
+<LI>ComAnswer.  </LI><P>
+<LI>ComCommand.  </LI><P>
+<LI>ComConfigure.  </LI><P>
+<LI>ComDial.  </LI><P>
+<LI>ComGet.  </LI><P>
+<LI>ComGetModem.  </LI><P>
+<LI>ComHangUp.  </LI><P>
+<LI>ComInit.  </LI><P>
+<LI>ComSet.  </LI><P>
+<LI>ComSetDtr.  </LI><P>
+<LI>ComStatus.  </LI><P>
+<LI>drawbox.  </LI><P>
+<LI>m_com_timer_addr.  </LI><P>
+<LI>m_com_timer_count_addr.  </LI><P>
+<LI>m_common_open.  </LI><P>
+<LI>m_day_trig.  </LI><P>
+<LI>m_errmsg.  </LI><P>
+<LI>m_event.  </LI><P>
+<LI>m_fini.  </LI><P>
+<LI>m_help_display.  </LI><P>
+<LI>m_help_getmetrics.  </LI><P>
+<LI>m_help_init.  </LI><P>
+<LI>m_help_key.  </LI><P>
+<LI>m_help_term.  </LI><P>
+<LI>m_init.  </LI><P>
+<LI>m_set_daterule.  </LI><P>
+<LI>m_set_settings.  </LI><P>
+<LI>m_set_timerule.  </LI><P>
+<LI>m_setshifts.  </LI><P>
+<LI>m_share.  </LI><P>
+<LI>m_spawnarg.  </LI><P>
+<LI>message.  </LI><P>
+<LI>msg_off.  </LI><P>
+<LI>message_3.  </LI><P>
+<LI>showname.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

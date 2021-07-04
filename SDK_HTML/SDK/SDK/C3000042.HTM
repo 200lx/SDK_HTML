@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bitmap Storage in RAM </TITLE></HEAD>
+<BODY>
+<H3>Bitmap Storage in RAM </H3><P>
+The BIOS Font Services use a dedicated 16-KB buffer (Bitmap buffer) for the loaded Bitmap data.  This buffer is not mapped into the CPU address space.  Another resource used is an 7-level, 10-byte wide stack used to maintain information about the loaded bitmap data.  This stack resides in the BIOS Extended Data Segment (9000h:BMSTK).  A Stack pointer (BMSP) is also maintained in the same area.  The map below assumes a standard 1M RAM memory consisting of 2-512 KB chips.  <P>
+<PRE>
+          ------------------
+
+                ....
+ 
+          ------------------
+             Bitmap Buffer
+          ------------------
+             Frame Buffer 
+          ------------------
+                Bank 9
+          ------------------
+                Bank 8
+          ------------------
+                NRAS[1]
+</PRE>
+<BR>
+In text modes, the bitmap data for the font required by the Display Controller is loaded starting on a 256-word page in the Bitmap buffer.  The BIOS video service Int 10h, Fcn 00h loads the required font(s) when the display mode is changed to a text mode.  Generally the buffer will contain three font sizes (8x8, 10x11, and 16x12) to support fast zooming.  <P>
+In graphics modes, the full 16K Byte Bitmap buffer is available for bitmap and special symbol table storage.  Any bitmap data present from a prior text mode may also be used.  <P>
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Bitmap Storage in ROM </TITLE></HEAD>
+<BODY>
+<H3>Bitmap Storage in ROM </H3><P>
+The ROMFONT Structure that stores the bitmap data supporting the various font sizes and code pages requires 29,626 bytes.  It contains 5 pointers, 6 index tables, and 4 symbol tables (4 font sizes).  Each symbol table contains 360 = 128 + 232 unique symbols representing the characters common to all code pages (chrs 0 - 127), and the union of the characters in the last half (chrs 128-255) of the 6 supported code pages.  <P>
+The bitmap for each character in one of the four tables is formatted as 2*h consecutive bytes where h is the character cell height in pixels.  The data is stored in the table in this word-wide contiguous format.  The word-wide nature makes all four font and special symbol tables compatible in width and also represents a small gain in download speed efficiency.  The least significant byte in each word is leftmost in the display.  The most significant bit in each byte appears leftmost in the display.  <P>
+The first 128 bit maps in each of the four tables correspond to the common characters in positions 0-127 in the code page tables.  The bit maps which follow these in each table represent the union of all of the remaining character symbols in positions 128-255 in the six supported code pages.  These bit maps will be in no particular order, but will be accessed through the use of an index table supplied for each code page.  This represents a substantial gain in ROM storage efficiency.  For each of the six code pages, a 128x2 byte index table is provided to access the bit maps for characters in the lower half of the code page.  A value of 280 in position 3 (the fourth index in the table) means that the bit map for character 131 = 128+3 in the code page is located at an offset of 280(2*h) bytes in the font table.  This offset varies for the four font tables (because h varies), but the index applies to all font tables.  Note that this index table is only required when the font is loaded into the Bitmap buffer, not when the data is later accessed.  <P>
+A similar structure (SYMBOLS) follows in the same word-wide, h-deep format.  A header supplies information used by the download procedure (Cell Width, Cell Height, # Symbols, char mapping info, ..).  <P>
+<P>
+</BODY>
+</HTML>

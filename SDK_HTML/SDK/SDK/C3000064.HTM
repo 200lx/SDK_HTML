@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = DFh: Get Video Index </TITLE></HEAD>
+<BODY>
+<H3>AH = DFh: Get Video Index </H3><P>
+This function is similar to the standard Function 0Fh, but it will also distinguish the various supported Zoom Text Modes on the HP palmtop.  It returns an index (0-15) indicating the current state of the display, and a pointer to a ROM Table (XCRTPRM) that was used to initialize the Hornet Display Controller during the Int 10h, Fcn 00h service.  The table contains values that are written to Hornet indexed registers (HDR REGS), standard CRTC indexed registers (CRTC REGS), and to the BIOS RAM (ROMDAT REGS).  Each of the 16 rows in this table corresponds to an index value, and contains 25 bytes of data.  <P>
+<UL><LI>Input: AH = DFh </LI><P>
+<LI>Output: BH = Index (0-15: Current video state) <BR>
+ES:SI --&gt; XCRTPRM Table <BR>
+</UL>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX, BH, SI, ES </LI>
+</UL><BR>
+<PRE>
+Mode/Zoom    Display    Color     Description            Index    Offset 
+=========================================================================
+0    *       40x25      B&amp;W       CGA Low Res Text       0        0
+-------------------------------------------------------------------------
+1    *       40x25      Color     CGA Low Res Text       1        1*25 
+-------------------------------------------------------------------------
+2    2       80x25      B&amp;W       CGA Hi Res Text        2        2*25 
+-------------------------------------------------------------------------
+3    3       80x25      Color     CGA Hi Res Text        3        3*25 
+-------------------------------------------------------------------------
+4    *       320x200    Color     CGA Low Res Graphics   4        4*25 
+-------------------------------------------------------------------------
+5    *       320x200    B&amp;W       CGA Low Res Graphics   5        5*25 
+-------------------------------------------------------------------------
+6    *       640x200    B&amp;W       CGA Hi Res Graphics    6        6*25 
+-------------------------------------------------------------------------
+7    7       40x16      B&amp;W       MDA Zoom Text          7        7*25 
+-------------------------------------------------------------------------
+20h  *       240x128    B&amp;W       HP 95LX MDA Graphics   8        8*25 
+-------------------------------------------------------------------------
+7    21h     40x16      B&amp;W       MDA Text               9        9*25 
+-------------------------------------------------------------------------
+2    80h     64x18      B&amp;W       CGA Zoom Text          10       10*25 
+-------------------------------------------------------------------------
+3    81h     64x18      Color     CGA Zoom Text          11       11*25 
+-------------------------------------------------------------------------
+2    82h     40x25      B&amp;W       CGA Zoom Text          12       12*25 
+-------------------------------------------------------------------------
+3    83h     40x25      Color     CGA Zoom Text          13       13*25 
+-------------------------------------------------------------------------
+2    84h     40x16      B&amp;W       CGA Zoom Text          14       14*25 
+-------------------------------------------------------------------------
+3    85h     40x16      Color     CGA Zoom Text          15       15*25 
+-------------------------------------------------------------------------
+</PRE>
+The following table shows the format of each of the 16 rows in the XCRTPRM table.  <P>
+The XCRTPRM table contains data that is written into standard CRTC registers (CRTC), Indexed Hornet Data Registers (HDR), and normal BIOS RAM (ROMDAT).  The format of each row in this table is shown below: <BR>
+<PRE>
+Offset   Byte(s)   Description               Destination     Address 
+=========================================================================
+-HDR REGS-
+-------------------------------------------------------------------------
+00       1         Display Setup             DspSetUp        (20h) 
+-------------------------------------------------------------------------
+01       1         Row Time Control          DspRowTime      (22h) 
+-------------------------------------------------------------------------
+02       1         Horizontal Displayed      HorzDsp         (24h) 
+-------------------------------------------------------------------------
+03       1         Character Width           ChrWidth        (25h) 
+-------------------------------------------------------------------------
+04       1         Row Size Adjust           RowOff          (26h) 
+-------------------------------------------------------------------------
+05       1         Font Offset; .5KB units   FontOff         (27h) 
+-------------------------------------------------------------------------
+06       1         Vertical Displayed        VertDsp         (28h) 
+-------------------------------------------------------------------------
+07       1         Maximum Scan Line         MaxScan         (29h) 
+-------------------------------------------------------------------------
+08       1         Vertical Total Adjust     VertAdj         (2Ah) 
+-------------------------------------------------------------------------
+09       1         Underline Scan Line       Underline       (2Bh) 
+-------------------------------------------------------------------------
+10       1         Shade Register            ShadeReg        (2Ch) 
+-------------------------------------------------------------------------
+-CRTC REGS- 
+-------------------------------------------------------------------------
+11       1         Cursor Scan Line Start                     0Ah 
+-------------------------------------------------------------------------
+12       1         Cursor Scan Line End                       0Bh 
+-------------------------------------------------------------------------
+13       1         Display Start (Hi)                         0Ch 
+-------------------------------------------------------------------------
+14       1         Display Start (Lo)                         0Dh 
+-------------------------------------------------------------------------
+15       1         Cursor Location (Hi)                       0Eh 
+-------------------------------------------------------------------------
+16       1         Cursor Location (Lo)                       0Fh 
+-------------------------------------------------------------------------
+-ROMDAT REGS-  
+-------------------------------------------------------------------------
+17       1         Mode Select Reg Copy      MSRCOPY          (40:65h) 
+-------------------------------------------------------------------------
+18       1         #Screen Rows - 1          CRTROW           (40:84h) 
+-------------------------------------------------------------------------
+19       2         Page Size (Screen Len)    SCRNLEN          (40:4Ch) 
+-------------------------------------------------------------------------
+21       2         Screen Width              SCRNWID          (40:4Ah) 
+-------------------------------------------------------------------------
+23       2         Cursor Type               CURTYPE          (40:60h) 
+-------------------------------------------------------------------------
+</PRE>
+<P>
+</BODY>
+</HTML>

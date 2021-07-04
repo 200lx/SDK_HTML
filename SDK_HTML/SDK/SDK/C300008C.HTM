@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 6000h: Measure System Battery Voltage </TITLE></HEAD>
+<BODY>
+<H3>AX = 6000h: Measure System Battery Voltage </H3><P>
+This function measures the voltage of the main System Batteries.  The return value in AX is in the range from 0-63.  The CARRY flag is used to indicate reliability of the returned value.  A return value of 63 represents 3.3 volts and 0 represents 1.57 volts.  The actual voltage V can be obtained from the returned value v by <P>
+     V = [(3.3-1.57)/63]*v + 1.57 <P>
+The value v returned is the adjusted average of 8 samples.  Each sample is obtained using successive approximation and the hardware DAC.  The samples are recorded in an 11-cell histogram centered at the 1st measurement (except the histogram position is justified to the 1.57 and 3.3 volt endpoints as necessary).  Each cell is 0.02746 volts, providing a voltage range of 0.302 volts in the histogram.  If any of the 8 samples were outside the histogram, the CARRY flag is set to indicate questionable reliability (noisy battery voltage for example).  It is worth noting that NiCad and alkaline batteries have different characteristics and that the battery voltage is not always a reliable indication of remaining battery capacity.  <P>
+<UL><LI>Input: AX = 6000h </LI><P>
+<LI>Output: AX = Measured value (0-63) <BR>
+CARRY set iff one or more samples is &quot;Out-Of-Range&quot; <P>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

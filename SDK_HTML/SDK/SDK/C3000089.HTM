@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 4Fh: Keyboard Translation Hook </TITLE></HEAD>
+<BODY>
+<H3>AH = 4Fh: Keyboard Translation Hook </H3><P>
+The Keyboard Hardware interrupt service routine, Int 09h, calls function 4Fh once for each scancode received.  It does so immediately after fetching the scancode from I/O Port 60h, and before any processing is performed.  The hook is provided so that an application can take over the function 4Fh hook to perform special processing or translation of the key.  If the application service routine clears the carry before it returns to the Int 09h routine, the Int 09h routine will discard the scancode.  If the carry is set, the Int 09h routine will continue with its normal processing.  When the Int 9h Keyboard Interrupt service routine issues an Int 15h function 4Fh, the stack frame is set as shown below upon entry to the 4Fh function: 
+<PRE>
+              ------------------------
+              Saved Flags 
+              ------------------------
+              Saved CS 
+              ------------------------
+              Saved IP from Int 9h 
+              ------------------------
+              Saved AX 
+              ------------------------
+              Saved BX 
+              ------------------------
+              Saved CX 
+              ------------------------
+              Saved DX 
+              ------------------------
+              Saved SI 
+              ------------------------
+              Saved DI 
+              ------------------------
+              Saved DS 
+              ------------------------
+              Saved ES 
+              ------------------------
+              Saved Flags 
+              ------------------------
+              Saved CS 
+              ------------------------
+              Saved IP (from Int 15h)
+              ------------------------ 
+</PRE>
+<UL><LI>Input: AH = 4Fh <BR>
+AL = Scancode obtained from I/O port 60h <BR>
+DS = 40h (from Int 09h) <P>
+</UL>
+<UL><LI>Output: None </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL>The default handler for Int 15h, Fcn 4Fh installed by the BIOS at power-up is just an IRET.  <P>
+<P>
+</BODY>
+</HTML>

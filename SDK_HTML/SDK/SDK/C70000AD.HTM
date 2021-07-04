@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_QuickKeyCheck </TITLE></HEAD>
+<BODY>
+<H3>m_QuickKeyCheck </H3>
+This call enables an application to peek ahead at the next key in the keyboard buffer without having to do an m_action call from the main event loop.  No task-swapping is performed in this call and it is significantly faster than the m_action call.  <P>
+For example, this call could be made within a subsystem that performs a long operation.  It would not have to interrupt the operation unless the return was non-zero.  
+<PRE><UL>
+<LI>Syntax:         int far m_QuickKeyCheck(void) </LI>
+<LI>Parameters:     None </LI>
+<LI>Returns:        0 = No key available 
+                If not 0, the application should make an m_action call as quickly as 
+                possible: 
+                0ffffh = Alarm request or special handler request
+                BREAK_PENDING = CTRL-BREAK has been pressed.
+                SHIFT_STATE_CHANGE = Num, Caps, or Scroll state change
+                All other = Actual key that is waiting to be processed </LI>
+<LI>Related Calls:  <A HREF="c700005d.htm">m_action</A>.  </LI>
+<LI>Comments:       This function does not use the BIOS int 16h service.  It looks 
+                directly at the default keyboard input buffer pointers.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = D9h: Display Context Size/Save/Restore </TITLE></HEAD>
+<BODY>
+<H3>AH = D9h: Display Context Size/Save/Restore </H3><P>
+This function has three subfunctions that provide the capability to save, and later restore, the current display context (display data, display mode, graphics cursor state, etc.).  The context is saved and restored from a buffer supplied by the caller and must be at least as large as the size specified by the Size subfunction.  The Save and Restore subfunctions do not use Int 10h, Fcn 00h (or other Int 10h services).  Instead, the raw data is saved and restored directly.  During the restore, the display is turned off to avoid &quot;hardware insanity&quot; while the registers used by the display controller are modified.  Restore will conditionally turn on the (display state at time of Save) at the end of the Restore.  <P>
+The data saved and restored falls into several groups: <P>
+<UL><LI>BIOS RAM data, Segment 40h </LI><P>
+<LI>Font data (Bitmap Buffer(16K), PC default font(1K) chrs[128-255]) </LI><P>
+<LI>Display data buffer (16K) </LI><P>
+<LI>Graphics cursor data, Segment 9000h </LI><P>
+<LI>Hornet (Hardware) registers </LI><P>
+<LI>Standard CRTC registers </LI><P>
+<LI>Display &quot;On/Off&quot; State </LI><P>
+</UL><B>AX = D900h: Get Display Context Size</B><P>
+This function returns the size of the buffer that will be required to save the current display context.  <P>
+
+<UL><LI>Input: AX = D900h </LI><P>
+<LI>Output: AX = Size of Required Buffer (Bytes) </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL>
+<B>AX = D901h: Save Display Context</B> <P>
+Given a supplied buffer, this function saves the current display data in the buffer.  As a precaution (see the note below), the size of the buffer must be supplied and is checked by this function.  <P>
+<B>Note:</B> The size may be context dependent.  This provides protection against a context change that occurs between the call to SIZE and the call to SAVE.  <P>
+<UL><LI>Input: AX = D901h <BR>
+BX = Size of supplied Buffer (Bytes) <BR>
+ES:BP --&gt; Start of Supplied Buffer <BR>
+</UL>
+<UL><LI>Output:CARRY CLEAR, Display Context saved in buffer <BR>
+CARRY SET, Error (Size does not match required size) <BR>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI><P>
+</UL>
+<B>AX = D902h: Restore Display Context </B><P>
+Given a buffer previously loaded with data from a SAVE call (D902h), this function restores display context using the buffer data.  <P>
+Note that if the display was off at the time of the SAVE call, the display will be off after the RESTORE.  <P>
+<UL><LI>Input: AX = D902h <BR>
+ES:BP --&gt; Start of Supplied Buffer <BR>
+</UL>
+<UL><LI>Output: Display Context restored from buffer data </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

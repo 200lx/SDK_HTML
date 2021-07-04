@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_api_error </TITLE></HEAD>
+<BODY>
+<H3>m_get_api_error </H3>
+This function returns the last failed function identifier.  When a request to dispatch a 
+function fails because the function is not implemented, the System Manager updates to 
+hold the function identifier.  Note that only the last failed function identifier is 
+saved.
+<PRE><UL>
+<LI><B>Syntax:</B>         int m_get_api_error()
+<LI><B>Parameters:</B>     None
+<LI><B>Returns:</B>        Last failed function identifier
+                API_NO_FAILED_FUNCTION (-1) - if no failed functions
+</UL></PRE>
+</BODY>
+</HTML>

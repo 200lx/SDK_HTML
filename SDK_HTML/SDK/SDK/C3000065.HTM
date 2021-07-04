@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 11h: Equipment Check Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 11h: Equipment Check Interrupt </H1><P>
+The BIOS returns a copy of its internal equipment list in the AX register.  The list is compiled in the RAM word variable DEVFLG (40:10).  <P>
+<UL><LI>Input: AH = 11h </LI><P>
+<LI>Output: AX: (See Below) </LI><P>
+</UL><A HREF="image/__dg0311.gif"><B>Graphic</B></A><P>
+<A HREF="image/__dg0312.gif"><B>Graphic</B></A><P>
+<UL><LI>Error conditions: None </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><B>Notes: </B><P>
+<UL><LI>The plug-in card port is considered a flexible disk drive.  </LI><P>
+<LI>The default DEVFLG value on power up is AX = 0261h.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

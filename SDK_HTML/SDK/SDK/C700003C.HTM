@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComQryErr </TITLE></HEAD>
+<BODY>
+<H3>ComQryErr </H3>
+This function queries line errors.  <P>
+ComQryErr is used to sample the specified port's sticky error bits.  Since the communication driver doesn't provide access to the UART's error bits on a character by character basis, the port's sticky error bits accumulate UART errors for all characters being received.  Any characters received with a UART error (except for the &quot;overrun&quot; case) are simply buffered as any normal character.  The application can then sample the error bits for an entire block of characters.  <P>
+The sticky error bits are cleared whenever the port ownership changes, or immediately after the ComQryErr call has successfully sampled them.
+<PRE><UL>
+<LI>Syntax:      int far ComQryErr(handle_t Handle) 
+<LI>Parameters:  handle_t Handle - The handle returned via a successful <A HREF="c700003a.htm">ComOpen</A>.
+<LI>Returns:     UART _ERROR_MASK - if successful 
+<LI>Comments:    ComOpen() must first be called in order to get a valid handle to the 
+             communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

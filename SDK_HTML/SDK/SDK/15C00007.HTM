@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Start Addresses </TITLE></HEAD>
+<BODY>
+<H3>Start Addresses</H3>
+The start addresses for NRCE and NRAS[0] are fixed as shown in the table below.
+The start address of NRAS[1] is determined by the size of NRAS[0].  As a result,
+Hornet assumes that NRAS[0] and NRAS[1] access contiguous blocks of memory.<P>
+<PRE>
+Signal  Value           Comments
+=====================================================
+NRCE    F0000h/A0000h   ROM start
+-----------------------------------------------------
+NRCE    B4000h/BC000h   ROM start
+-----------------------------------------------------
+NRAS[0] 00000h          NRAS[0] start
+-----------------------------------------------------
+NRAS[1] xxxxxh          NRAS[1] start determined by
+                        size register of NRAS[0]
+-----------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

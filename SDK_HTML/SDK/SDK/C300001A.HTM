@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Scancode Conversion Tables </TITLE></HEAD>
+<BODY>
+<H3>Scancode Conversion Tables </H3><P>
+Int 09h translates scancodes to ASCII character codes or other hexadecimal codes as shown in the tables below.  The first table shows scancodes generated and character codes produced when the Fn function is OFF.  The second table shows similar results when the Fn function is ON.  For each scancode, the tables give the equivalent character codes for each keyboard state: normal, shifted, [Ctrl] active, and [Alt] active.  <P>
+It is important to emphasize here that the tables show Int 09h inputs and outputs, not the Int 16h outputs.  The Int 16h outputs depend on whether the &quot;old&quot; (00h, 01h) or the &quot;new&quot; extended (10h, 11h) functions are called.  The old Int 16h functions will discard many of the character codes listed in the table.  The new Int 16h functions will generally return the values in the table, but in some cases will first translate the table value.  For example, the keycode for [ALT][ESC] is 01/F0h.  This keycode is discarded by Int 16h, Fcn 00h and is translated to 01/00h by Int 16h, Fcn 10h.  <P>
+<B>Note:</B> Some shifted characters on the HP palmtop are non-shifted on standard IBM keyboards and vice-versa.  Some examples follow.  <P>
+<UL><LI>The Bracket keys, [ ], are shifted on the HP palmtop and non-shifted on IBM PCs.  </LI><P>
+<LI>The Multiplication key, *, is unshifted on the HP palmtop, but shift-8 on IBM PCs.  </LI><P>
+</UL>On these non-compatible key mappings, the key processing routine forces compatibility by sending appropriate Shift-Make or Shift-Break scancodes to the Int 09h handler before and after the ScanCode for the key.  <P>
+As an example, on a standard IBM keyboard the user would press and then release the &quot;[&quot; key to obtain the code for a left bracket.  The Int 09h code would receive two scancodes corresponding to the Make and then Break of the key.  To obtain the same function on the HP palmtop, the user presses and releases the Left Shift key and then presses and releases the [7] key.  On the HP palmtop, this action results in six scancodes being sent to the Int 09h code: <P>
+<UL><LI>The Left Shift key is pressed.  </LI><P>
+<LI>2Ah - Left Shift Make is sent to Int 09h.  </LI><P>
+<LI>The Left Shift key is released (sticky Shift, No Shift Break Sent).  </LI><P>
+<LI>The 7 key is pressed.  </LI><P>
+<LI>AAh - Left Shift Break is sent to Int 09h (PC Compatibility).  </LI><P>
+<LI>1Ah - Left Bracket Make is sent to Int 09h.  </LI><P>
+<LI>The 16 bit Code 1A/5B is written into the Key buffer.  </LI><P>
+<LI>2Ah - Left Shift Make is sent to Int 09h (PC Compatibility).  </LI><P>
+<LI>AAh - Left Shift Break is sent to Int 09h (Delayed).  </LI><P>
+<LI>9Ah - Left Bracket Break is sent to Int 09h.  </LI><P>
+</BODY>
+</HTML>

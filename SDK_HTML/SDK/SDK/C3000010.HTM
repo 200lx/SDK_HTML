@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Int 09h: Keyboard Translate Interrupt </TITLE></HEAD>
+<BODY>
+<H1>Int 09h: Keyboard Translate Interrupt </H1><P>
+Most PCs have special hardware that performs keyboard scanning and debounce.  When a key is pressed, the hardware places the resulting Keyboard scancode in I/O port 60h and generates an Int 09h keyboard interrupt.  The IRQ1 (Int 09h) service routine processes the scancode, producing a 16-bit keycode which is placed in a key buffer.  <P>
+<H2><A HREF="c3000011.htm">Pre-Processing (Before Int 09h) </A></H2><P>
+<H2><A HREF="c3000012.htm">Hotkey Sequences </A></H2><P>
+<H2><A HREF="c3000013.htm">Special Fn Key </A></H2><P>
+<H2><A HREF="c3000014.htm">NumPad vs.  Digits </A></H2><P>
+<H2><A HREF="c3000015.htm">A Brief Int 09h Overview </A></H2><P>
+</BODY>
+</HTML>

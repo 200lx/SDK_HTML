@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AX = 0FF01h: Initialize RAM Disk (Drive C) </TITLE></HEAD>
+<BODY>
+<H3>AX = 0FF01h: Initialize RAM Disk (Drive C) </H3><P>
+This function initializes the RAM disk (drive C).  <P>
+<UL><LI>Input: AX = 0FF01h <BR>
+DL = 1h <BR>
+BX = Number of 1K byte blocks to allocate to the RAM disk <BR>
+The value actually used will not be less than the size of disk than can be stored in bank mapped RAM.  <BR>
+CL = Number of root directory sectors (16 dir entries/sector) (0 = use default of 4 sectors) <BR>
+CH = init data sectors flag (1= clear to 0's, 0= leave alone) <P>
+</UL>
+<UL><LI>Output: BX = -1h if insufficient memory to create disk of requested size <BR>
+BX = remaining user memory in 1K byte units, if successful <BR>
+</UL>
+<UL><LI>Error conditions: As given in BX </LI><P>
+<LI>Registers modified: AX, BX, STATUS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

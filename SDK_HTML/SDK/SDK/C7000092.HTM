@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_alloc </TITLE></HEAD>
+<BODY>
+<H3>m_alloc </H3>
+This call attempts to expand the data space occupied by the application by <I>exp_size</I> bytes.
+<PRE><UL>
+<LI>Syntax:         char * m_alloc(unsigned int exp_size) </LI>
+<LI>Parameters:     unsigned int exp_size - Amount of space (in bytes) to expand the data 
+                                         space (rounded to the next multiple of 16) </LI>
+<LI>Returns:        0 - for failure
+                Failure may be caused by a request which would grow the applications 
+                total data space beyond 64K or by an exhaustion of system memory.  
+                Offset (near address in AX) of the new buffer - if successful</LI>
+<LI>Related Calls:  <A HREF="c7000093.htm">m_alloc_large</A></LI>
+<LI>Comments:       If <I>exp_size</I> is not a multiple of 16 (the size of a paragraph), it will 
+                be rounded up to the next multiple.  
+                On first call, the new block will follow the stack of application.  
+                On subsequent calls, new blocks will immediately follow previous 
+                allocation.
+                Do not call after making calls to <A HREF="c70000a0.htm">m_get_far_block</A>.</LI>
+                <A HREF="image/__dg0701.gif">Memory Stack</A>
+</UL></PRE>
+</BODY>
+</HTML>

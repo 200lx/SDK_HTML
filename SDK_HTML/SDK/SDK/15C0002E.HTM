@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Extending the Capabilities of BitBlt </TITLE></HEAD>
+<BODY>
+<H3>Extending the Capabilities of BitBlt</H3>
+<B>Clipping</B><BR>
+BitBlt does not do anything unique to support clipping.  However, software can still use the BitBlt to speed up clipped transfers as follows:<P>
+<OL>
+<LI>If the clipped region is on the right side of the character, the horizontal size register can be modified to clip the transfer.<P>
+<LI>If the clipped region is on the bottom of the character, the vertical size register can be modified to clip the transfer.<P>
+<LI>If the clipped region is on the top of the character, the source pointer can be moved to point to the unclipped portion of the character.  The destination pointer should be adjusted to point to where this new top of character should be placed.<P>
+<LI>If the clipped region is on the left of the character, the character can be copied to a workspace.  There each scan line of the character is shifted or rotated to move the unclipped portion of the character to the left of the character cell.  The horizontal size register should be adjusted downwards to account for the reduced width.  After the clipped character is built, BITBLT can be used to copy the character out.<P>
+</OL>
+
+<B>Low resolution graphics</B><BR>
+BitBlt can also be used to draw characters in low-resolution graphics modes.  The character should be copied to a workspace and expanded to two bits per pixel.  The color information is then added to the pattern.  Then BitBlt can be used to copy the character out.<P>
+Note that BitBlt directly supports transfers of only 16-bits in width.  This corresponds to a font width of only 8-bits in low resolution graphics modes.  Wider fonts can be supported by building the character in vertical slices, then using BitBlt to copy the pieces out.<P>
+
+<B>Larger Characters</B><BR>
+Characters taller and/or wider than the limits imposed by BitBlt can be supported by dividing the characters vertically and/or horizontally.  The font table would then contain a sub-table for each piece of the character set.  Software would then draw a complete character by making several calls to BitBlt.<P>
+
+<B>Larger Character sets</B><BR>
+The 16-kbyte limitation imposed by the font table does not restrict the number of characters that a character set can have.  Character sets with more than 256 characters can be built by utilizing the font table pointer in the Memory Controller as an index to several sub-tables, each of which has 256 characters.  Care should be taken to insure that a character does not cross a 16-kbyte boundary.  Addresses will roll over to the beginning of the 16-byte block instead of crossing over into the next block.<P>
+<P>
+</BODY>
+</HTML>

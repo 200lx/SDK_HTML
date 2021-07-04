@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>CREATE Submesssages </TITLE></HEAD>
+<BODY>
+<H3>CREATE Submesssages </H3><P>
+<UL><LI>CREATE_NORMAL (0): The window is created normally, that is, it is is not sent a SETFOCUS message by the Object class handler.  </LI><P>
+<LI>CREATE_FOCUS (1): The Object handler will automatically send a SETFOCUS message to the window after it is created.  If the tertiary-message (the Extra parameter of the window handler inputs) is not SETFOCUS_NOLOSE, then the previous focus window will be sent a LOSEFOCUS message before the new window is sent the APPEAR message.  This is to allow, for instance, the previous focus window to redraw part of it's window area in order to show that it no longer has the focus before the new window is drawn, thereby preventing the possibility that part of the new window will be overwritten by the previous focus window.  The possible values for the Extra parameter of the CREATE message are the same as the SETFOCUS submessages (see the SETFOCUS submessages description for more information about these sub-messages).  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

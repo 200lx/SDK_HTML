@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>GPIO Configuration Registers </TITLE></HEAD>
+<BODY>
+<H3>GPIO Configuration Registers</H3>
+The configuration registers are used to specify the function of each GPIO pad.  These registers are intended to be used by the configuration code only and the values loaded are assumed to be constant for a given machine type.  In XCPU mode, most of these registers have no effect and configuration is accomplished by external circuitry.  Only the GPIO[24:26] configuration registers remain operational in XCPU mode.<P>
+Two pads are configured in each configuration byte (odd pads in the high order nibble, even pads in the low).  GPIO[24:26] require a second byte to select the interrupt destination.  The GPIO configuration registers are defined as follows:<P>
+
+<PRE>
+GPIO    INDEX   DESCRIPTION
+==========================================================================================
+0-23    40-4Bh  bit 7        = 1  enable pulldown (odd GPIO)
+                bit 6        = 1  enable pullup (odd GPIO)
+                bits 5-4     = 00 general purpose input (odd GPIO)
+                             = 01 general purpose output (odd GPIO)
+                             = 10 control output (odd GPIO)
+                             = 11 illegal
+                bit 3        = 1  enable pulldown (even GPIO)
+                bit 2        = 1  enable pullup (even GPIO)
+                bits 1-0     = 00 general purpose input (even GPIO)
+                             = 01 general purpose output (even GPIO)
+                             = 10 control output (even GPIO)
+                             = 11 illegal
+24-26   4D-4Fh  bit 7             unused
+                bits 6-4     = 001 select NMI interrupt
+                             = nnn select IRQ[nnn] interrupt (nnn=2-3,5-7)
+                bit 3        = 1   enable pulldown
+                bit 2        = 1   enable pullup
+                bit 1              unused
+                bit 0        = 0   general purpose input
+                             = 1   general purpose output
+------------------------------------------------------------------------------------------
+</PRE>
+
+<B>Note:</B> GPIO[24:26] should not be configured to interrupt on the IRQ[2] level.  The built-in IRQ[2] interrupt handler does not provide support for GPIO[24:26] interrupts.<P>
+<P>
+</BODY>
+</HTML>

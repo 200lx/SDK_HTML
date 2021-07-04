@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 4Dh: Return Model-Specific Information </TITLE></HEAD>
+<BODY>
+<H3>AH = 4Dh: Return Model-Specific Information </H3><P>
+Returns model-specific information.  <P>
+<UL><LI>Input: AH = 4Dh <BR>
+AL = D4h <P>
+</UL>
+<UL><LI>Output: BH = 'H' <BR>
+BL = 'P' <BR>
+CH = Family type (1) <BR>
+CL = Model type (2) (HP 95LX=1) <BR>
+DH = Submodel Number (HP100LX=0, Reserved=1, HP200LX=2) <BR>
+DL = Code Revision <P>
+</UL>
+<UL><LI>Registers modified: AX, BX, CX, DX </LI><P>
+</UL>The value returned in DL agrees with the &quot;BIOS ROM Version&quot; byte in the System Description Table (See Int 15h, Fcn C0h on <A HREF="C3000095.HTM">page 3-111</A>).  <P>
+<P>
+</BODY>
+</HTML>

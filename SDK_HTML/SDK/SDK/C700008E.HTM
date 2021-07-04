@@ -1,0 +1,11 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Caveats </TITLE></HEAD>
+<BODY>
+<H3>Caveats </H3><P>
+The application must first register the appropriate table with the System Manager.  The table must be large enough to handle all of the application's memory block allocations.  A full table will result in an error return from a get_block call, as explained in <A HREF="c70000a0.htm">m_get_far_block</A> and in <A HREF="c70000a4.htm">m_get_static_block</A>.  <P>
+If used, an HP 95LX System Manager memory allocate/deallocate call (e.g., to expand or shrink the default data segment) must be made prior to any new allocate/deallocate calls.  While a memory block obtained by registered far pointer table calls is active, 95LX-style calls should not be made.  <P>
+<P>
+</BODY>
+</HTML>

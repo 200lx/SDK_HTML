@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>UninitializeLHAPI </TITLE></HEAD>
+<BODY>
+<H3>UninitializeLHAPI </H3><P>
+The application tells LHAPI it is terminating.  <P>
+<B>A note of practicality: </B>There is an unfortunate circumstance that appears again and again in system manager programming.  An application recieves a E_TERM event either from the user closing the application through the low-memory closeout box, or by selecting the application for closing from the Application Manager.  When an application recieves this E_TERM event, it is expected to close down gracefully.  Part of a truely polite closedown would be calling &quot;UninitializeLHAPI&quot;, but one of the side-effects of this is to send all windows a TERMINATE message.  The catch is that your application hasn't gotten a E_ACTIV event, so you probably haven't reestablished the LHAPI block with ReactivateLHAPI.  What happens in this case is that LHAPI thinks the LHAPI block is at the segment of your application but the offset of the last active application (whoops).  Needless to say, good things don't come from this (most normally lock-ups, but sometimes funny-looking &quot;Bullwinkle&quot; screens).  Calling ReactivateLHAPI, though will redisplay all windows and create a lot of screen flash--pretty unpleasant looking, since your app is supposed to be dying quietly.  <P>
+There is a relatively simple solution to this: don't ever call UninitializeLHAPI.  All it really does is send all open windows a TERMINATE message.  None of the built-in LHAPI classes respond to this message.  As far as future compatibility goes, none of the built-in applications call UninitializeLHAPI either!  I personally guarantee that not calling UninitializeLHAPI will not have bad side-effects, now or for as long as I maintain the code :-) <P>
+<UL><LI>Syntax: void DISTANCE UninitializeLHAPI(void) </LI><P>
+<LI>Parameters: None </LI><P>
+<LI>Returns: None </LI><P>
+</UL><P>
+</BODY>
+</HTML>

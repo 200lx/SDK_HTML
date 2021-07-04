@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>COMMAND Submesssages </TITLE></HEAD>
+<BODY>
+<H3>COMMAND Submesssages </H3><P>
+These values are usually set as the command code in PushButton LHWINDOW structures in order to get the DialogBox handler to recognize common actions.  To get LHAPI to send COMMAND messages by &quot;clicking&quot; pushbuttons, you must set the PUSHB_SENDMSG style for those pushbuttons.  <P>
+<UL><LI>CMD_DONE (0): This submessage is only recognized by the DialogBox handler, in which case it will automatically send the dialogbox window a (KEYSTROKE, F10, 0) message.  </LI><P>
+<LI>CMD_ESC (1): This submessage is only recognized by the DialogBox handler to automatically DESTROY itself.  </LI><P>
+<LI>CMD_DIALOGFOCUS (2): This submessage is only recognized by the DialogBox handler to set the focus to the dialog control corresponding to the field value specified in the Extra parameter.  </LI><P>
+<LI>CMD_PUSHB_ACTIVATE (3): This submessage is sent to PushButton windows to have them activate themselves and perform the application-specified action.  </LI><P>
+<LI>CMD_USER (256): Any applicaton-defined submessages should have values starting at CMD_USER.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

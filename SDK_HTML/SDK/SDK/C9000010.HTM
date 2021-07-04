@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>StaticText </TITLE></HEAD>
+<BODY>
+<H3>StaticText </H3><P>
+StaticText is a text label.  This would be used for labeling the screen in places other than user-editable fields.  Most other window subclasses provide their own screen labels.  <P>
+<B>Window Structure Details </B><P>
+<UL><LI>int x,y,w,h: </LI><BR>
+x and y give the coordinates (x,y) to start displaying the text.  <P>
+</UL>
+<UL><LI>PLHRES Title: </LI><BR>
+Title defines the label to be displayed to the left of the StaticText.  StaticText only supports single-line labels.  <P>
+</UL>
+<UL><LI>PLHDATA Data: </LI><BR>
+Data points to the text buffer which will be appended to the title string before the window is drawn.  This allows a StaticText window to have a static resource portion and a dynamic variable portion.  An example of this would be in the File..Open dialog box where the Directory: C:\TEMP\ text window displays both static and dynamic strings.  If this field is NULL, no string will be appended to the window title.  <P>
+</UL>
+<UL><LI>UINT LogicalSize: </LI><BR>
+LogicalSize indicates the maximum size, in characters, of the text buffer pointed to by the Data field.  <P>
+</UL>
+<UL><LI>UINT Style: </LI><BR>
+Style bits associated with DrawText can be used here, including DRAW_INVERT, DRAW_UNDERLINE, DRAW_GRAY, DRAW_TAB_TERM and DRAW_AMPERSAND.  For a complete definition of these, see the LHAPI function DrawText().  <P>
+Style bits specific to the StaticText dialog are TEXT_CENTER and TEXT_RIGHT which control justification of the text within the window.  <P>
+</UL>
+<UL><LI>PLHWINDOW Parent: Used by the Object class handler.  </LI><P>
+<LI>PLHFKEYS FKeys: Used by the Object class handler.  </LI><P>
+<LI>PLHMENU Menu: Used by the Object class handler.  </LI><P>
+<LI>UINT Selection: Not used.  </LI><P>
+<LI>UINT WindowTop: Not used.  </LI><P>
+</UL><B>Messages</B> <P>
+<UL><LI>DRAW: </LI><BR>
+The StaticText handler draws the text string pointed to by the Title field, then draws the string pointed to by the Data field.  StaticText draws a blank rectangle following the displayed strings to the end of the window, as defined by the w field.  This prevents any previous part of the Data field string from remaining on the screen when changes are made to it.  <P>
+</UL>
+<UL><LI>CREATE: </LI><BR>
+StaticText sets the style bits STYLE_NOFOCUS and STYLE_LEAF.  <P>
+</UL>
+<UL><LI>APPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, the StaticText handler converts the size of the StaticText window (w,h) from the specified text character size to the corresponding display unit size.  <P>
+</UL>
+<UL><LI>DISAPPEAR: </LI><BR>
+If STYLE_WHCHAR is being used, the StaticText handler convertsthe size of the StaticText window (w,h) back from the previously calculated display unit size to the original text character size.  <P>
+</UL>
+<UL><LI>KEYSTROKE: Passed to the Object class handler.  </LI><P>
+<LI>SETFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>LOSEFOCUS: Passed to the Object class handler.  </LI><P>
+<LI>NULLEVENT: Passed to the Object class handler.  </LI><P>
+<LI>DESTROY: Passed to the Object class handler.  </LI><P>
+<LI>TERMINATE: Passed to the Object class handler.  </LI><P>
+<LI>ACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>DEACTIVATE: Passed to the Object class handler.  </LI><P>
+<LI>NOTIFY: Passed to the Object class handler.  </LI><P>
+<LI>COMMAND: Passed to the Object class handler.  </LI><P>
+</BODY>
+</HTML>

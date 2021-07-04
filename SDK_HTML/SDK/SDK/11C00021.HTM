@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Order </TITLE></HEAD>
+<BODY>
+<H3>DB_Order </H3><P>
+This function acts like the C string compare functions: returns -1 if
+<I>rec1</I>&lt;<I>rec2</I>, returns 1 if <I>rec1</I>&gt;<I>rec2</I>, and returns 0 if
+<I>rec1</I>=<I>rec2</I>.  Note that both records must be loaded and in memory to use this function.  The comparisons are made by examining the current sort definition which gives the order of the sort keys.  Comparisons are based on the field types.  <P>
+<UL><LI><Pre>Syntax:             int DB_Order(DBBLOCK *dblk, RECORDNUM recnum1,
+                    char far *rec1, RECORDNUM recnum2, char far *rec2); </LI><P>
+<LI>Returns:            -1             rec1 is less than rec2 <P>
+                    0              rec1 is equal to rec2 <P>
+                    1              rec1 is greater than rec2 <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

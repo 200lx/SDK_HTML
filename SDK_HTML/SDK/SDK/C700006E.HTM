@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_getdir </TITLE></HEAD>
+<BODY>
+<H3>m_getdir </H3>
+This call builds in <I>bp</I> the current directory for the specified drive.  The returned path includes the drive designator (e.g., &quot;c:&quot;).
+<PRE><UL>
+<LI>Syntax:      int far m_get_dir(char drive, char far *bp, int far *lenp) </LI>
+<LI>Parameters:  char drive - Drive specification 
+             char far *bp - Pointer to the buffer to store returned path information
+             int *lenp - Length of the string returned in bp </LI>
+<LI>Returns:     0 - if successful </LI>
+             Any other value indicates an error condition. </LI>
+</UL></PRE>
+</BODY>
+</HTML>

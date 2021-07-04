@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_ModifyViewpt </TITLE></HEAD>
+<BODY>
+<H3>DB_ModifyViewpt </H3><P>
+This function either adds (MVP_ADD), removes (MVP_DELETE), or keeps but potentially reshuffles (MVP_MODIFY) an item in the current viewpt table.  This function checks the record against the current viewpoint filter to see if it should stay, and resorts it into the list.  The record must be read into memory into the
+<I>src</I> buffer.  <P>
+<UL><LI><Pre>Syntax:             DB_ModifyViewpt(DBBLOCK *dblk, RECORDNUM recordnum, 
+                    void far *src, int action); </LI><P>
+<LI>Returns:            DB_OK          Item was added/modified.  <P>
+                    DB_VPABSENT    Warning--item is no longer in the viewpoint.  <P>
+                    DB_MEMORY      Not enough memory is available to modify the 
+                                   viewpoint table.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

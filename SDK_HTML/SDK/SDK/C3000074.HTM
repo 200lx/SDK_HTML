@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 02h: Receive One Character </TITLE></HEAD>
+<BODY>
+<H3>AH = 02h: Receive One Character </H3><P>
+This function returns the character received by the serial port.  The sequence of operations performed is <P>
+<UL><LI>01h is written to the Modem Control Register (DTR on, RTS off).  </LI><P>
+<LI>Loop waiting for xx1xxxxxb (DSR) in the Modem Status Register.  </LI><P>
+<LI>Loop waiting for xxxxxxx1b (Data Ready) in the Line Status Register.  </LI><P>
+<LI>Reset display timeout counter (Avoid Auto-Turn Off).  </LI><P>
+<LI>Input char from the Receive Buffer.  </LI><P>
+</UL>Either of the above loops can result in a timeout error.  <P>
+<UL><LI>Input: AH = 02h <BR>
+DX = Port# (0 = Built-In Serial Port).  <P>
+</UL>
+<UL><LI>Output: AH = LSR (except: Only bits 1,2,3,4, and 7 are returned.) <BR>
+AL = Char received (valid only if AH = 0) <P>
+</UL>
+<UL><LI>Error conditions: If AH[7]=1, a timeout error has occurred and all other data is invalid.  If AH[7]=0, but AH is non-zero, a transmission error has occurred, and the character in AL should be discarded.  </LI><P>
+<LI>Registers modified: AX </LI><P>
+</UL><P>
+</BODY>
+</HTML>

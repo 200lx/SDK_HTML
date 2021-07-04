@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_set_DOS_hot_key </TITLE></HEAD>
+<BODY>
+<H3>m_set_DOS_hot_key </H3>
+<PRE><UL>
+<LI>Syntax:      m_set_DOS_hot_key(int hotkey) </LI>
+<LI>Parameters:  hotkey is the scan code replacing Ctrl+123 that you want to launch 
+                    DOS with.  </LI>
+<LI>Comments:    DOS is normally loaded by a special task called DOSTASK.  DOSTASK is 
+             attached in the System Managers Task Control Block array to Ctrl+123.
+             m_set_DOS_hot_key only changes the hot key that the System Manager uses
+             to swap back to an already active DOS session.  To change the initial 
+             launch key as well, you would need to change DOSTASK's hotkey in the 
+             System Manager's Task Control Block as well.  
+
+             The scan code for Ctrl+123 is 0xC200.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

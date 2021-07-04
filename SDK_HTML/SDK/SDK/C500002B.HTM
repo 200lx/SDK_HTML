@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Task-Switching Events </TITLE></HEAD>
+<BODY>
+<H3>Task-Switching Events </H3><P>
+When calling an event service, an active application must always be prepared to receive a suspension event.  When such an event is received, the application should do whatever is necessary to prepare to deactivate.  Generally, the list of necessary actions can be limited to releasing any claims on system resources (such as open files), excluding actions generally associated with shutdown, such as updating data files.  <P>
+The application must then make another request for an event.  Control will not be returned to the application until the user quits the preempting application or explicitly requests the suspended application, at which point the System Manager will respond to the request with a reactivation event.  <P>
+The application must redraw its screen when it receives a reactivation event.  The System Manager does not save the screen buffer when switching tasks.  Applications should generally have a means of redisplaying all of the elements on the screen from the primary data, other than saving a copy of the screen buffer.  This method should be efficient in terms of RAM usage.  If necessary, the application can save the state of the video buffer when it receives a suspension event, but it will have to preallocate a buffer to store the data.  <P>
+The System Manager may also return a termination event at any time.  The application is required to respond to this event as if the user issued a quit command, with any user-interface variation needed to make clear what is happening.  For example, if the editor is being shut down and its buffer has been modified, the user should be prompted to save the file.  When responding to an externally-induced termination message, there should be some variation to indicate to the user which application is doing the prompting.  <P>
+If possible, when the application shuts down via a termination event, the application can save its state information in a file.  When it is subsequently reactivated, the initialization code of the application can inspect the file and put the application back into its previous state.  This will make the forced termination transparent to the user.  <P>
+<P>
+</BODY>
+</HTML>

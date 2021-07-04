@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 81h: Unlock Card Port </TITLE></HEAD>
+<BODY>
+<H3>AH = 81h: Unlock Card Port </H3><P>
+This function unlocks a card port which has been previously locked by function 80h.  Prior to unlocking, all the mapped pages of the port must be unmapped.  <P>
+This function is intended to be used by the XIP loader's exit processing so that the card port will be available for use by other programs.  <P>
+<UL><LI>Input: AH = 81h <BR>
+DX = port number to unlock <P>
+</UL>
+<UL><LI>Output: AH = Completion Status <BR>
+00h = Success (No Error) <BR>
+A0h = Error - Invalid port number <BR>
+A1h = Error - Port not locked <BR>
+A3h = Error - Port has mapped pages <P>
+</UL>
+<UL><LI>Error conditions: As given in AH </LI><P>
+<LI>Registers modified: AH </LI><P>
+</UL><P>
+</BODY>
+</HTML>

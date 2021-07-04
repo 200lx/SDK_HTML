@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Special TSR Guidlines </TITLE></HEAD>
+<BODY>
+<H3>Special TSR Guidlines </H3><P>
+A normal system manager application cannot hook interrupts, since its code can be swapped in and out of memory &quot;at will&quot; by the system manager.  Sometimes it is necessary for an application to hook interrupts, and also desirable for it to be system manager compliant to inherit the 100LX/200LX user interface.  The bridge between the two is filled by Special TSR's.  A Special TSR is essentially a System Manager compliant TSR that is loaded into a fixed area of memory in the System Manager.  Since the memory does not get swapped out or moved, the Special TSR is free to hook hardware or software interrupts.  The Special TSR communicates with the outside world via interrupts, and an EXM application communicates with the Special TSR to recieve notification of those events.  <P>
+A special area of System Manager RAM called the Static RAM area is set aside for Special TSR's (or for other fixed memory blocks).  The minimum size of the Static RAM area is controlled by the user, since that area removes RAM from the total RAM used by application code or for data.  The Static RAM area can grow larger than specified by the user if there is not a fixed memory block pinning it.  The other two things in the System Manager that must be at fixed addresses are EXM code segments and DOS boxes.  These will start immediately after the Static RAM area when created, effectively locking the size of the Static area to its current size.  The size of the Static area will never be less than the size specified by the user, however.  <P>
+Examples of applications that load Special TSRs or interrupt handlers into static RAM are the redirector application on the 100LX, Palmtop Quicken on the 200LX, and the StarLink Pager application.  <P>
+This section defines protocol and behavior requisites for use by system manager compliant apps for the purpose of establishing a link between Special TSR's and their corresponding compliant apps.  With the exception of portions of the system manager/comm services, this is the only mechanism guaranteed to be accessable at all times while still enabling hot-key swapping from app to app.  Special TSR's can also be used to replace, augment, or add new system wide functionality.  <P>
+<H2><A HREF="c5000016.htm">Loading a Special TSR </A></H2><P>
+<H2><A HREF="c5000017.htm">Special TSR - System Manager Interface </A></H2><P>
+<H2><A HREF="c5000018.htm">Required handler functions </A></H2><P>
+<H2><A HREF="c5000019.htm">Service Request Structure </A></H2><P>
+<H2><A HREF="c500001a.htm">Example Code for an Application Calling a Special TSR </A></H2><P>
+<H2><A HREF="c500001b.htm">Example Special TSR Handler Stub </A></H2><P>
+<H2></H2><P>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Software Control </TITLE></HEAD>
+<BODY>
+<H3>Software Control</H3>
+The output register bits are written at index 00h (KB[0-7]), 01h (KB[8-15]), and 02h (KB[16-21]).  The input register bits are read at index 00h (KB[0-7]), 01h (KB[8-15]), and 03h (KB[16-23]).  The status of the ON key is read as bit 0 of register address 03h.  This bit is latched after the ON key is released.  Reading the ON key status bit when the key is released will clear the bit after is read.<P>
+A keyboard precharge will occur after any of the keyboard output registers are written.  The precharge drives all keyboard lines low, inputs and outputs.  This precharge lasts until ended by a write to index 03h.<P>
+When all keys are up, the keyboard should be placed into standby mode.  To do this, software should set the output register bit for all output lines.  Lines that have a 0 in the output register can cause an interrupt when the input goes high.  Once in standby mode, an interrupt will occur when a key is pressed.  Interrupts will also occur when all input lines return to zero.<P>
+After a key is pressed, a keyboard scan must be executed.  To do this, each output bit must be driven high one at a time and the state of the input register checked at each bit.  After identifying the key, software must write the proper key code into the key code register (I/O address 60h) and then generate an Int 09h.  This scheme provides a PC-compatible keyboard without the expense of scanning the keyboard in hardware.<P>
+The keyboard must be continually scanned at a determined interval until all keys have been released.  This must be done to determine if more keys have been depressed or if a key has been released.  If a key has been pressed or released, a proper interrupt must be generated as before.  After all keys are released, the keyboard again can be placed in Standby mode.<P>
+Keyboard interrupts must be enabled by setting bit 6 of 061h in the PPI.<P>
+<P>
+</BODY>
+</HTML>

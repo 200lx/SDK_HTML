@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_Open </TITLE></HEAD>
+<BODY>
+<H3>DB_Open </H3><P>
+This function opens an existing database file.  Opening a file initiates the following actions: <P>
+<OL><LI>  If the file is marked read only, the DOS read only bit is cleared.  </LI><P>
+<LI>  The lookup table and last used viewpoint are read from the disk.  If they do not exist (most probably because the machine was rebooted while a database was open), they are created.  </LI><P>
+<LI>  The field definitions (if any) are loaded.  </LI><P>
+<LI>  The Undo point is set.  See &quot;DB_Undo&quot; on <A HREF="11C00017.HTM">page 11-430</A> for more information.  </LI><P>
+<LI>  If the system sort order may have changed, all viewpoint tables are invalidated.  This causes the first swap to each new viewpoint to be recomputed; they will be read in off of the disk afterwards.  The new sort hash is stored in the file.  See &quot;Localization, Sorting, and Omnibook Files&quot; on <A HREF="11C00036.HTM">page 11-441</A> for more details.  </LI><P>
+<LI>  If the file is an OmniBook file, then in addition to Step 5, the file is translated.  The translation affects Upper ASCII characters (128.  .  .255) in most records, and they are mapped from the Windows ANSI CodePage to CodePage 850.  This process may take a while.  In addition to converting to CodePage 850, all viewpoint definitions are flagged as &quot;General&quot; since the HP Omnibook and Palmtop FISL Card parsing routines are incompatible.  The database engine sets the flag DB_WASTRANSLATED to indicate a translation has taken place if the application needs to translate its own record types.  </LI><P>
+<LI>  Opening passworded files will take two DB_Opens: opening the first time (and passing NULL as the password) will return with a DB_PASSWORDFAILED error.  If this error is returned, the user should be prompted for a password, and the DB_Open() function re-attempted, passing the new password.  DB_PASSWORDFAILED will be returned until the correct password is used.  </LI><P>
+</OL>A DB_MAYBEINUSE error will be returned if the database file has been opened by another application and not yet closed.  This error prevents multiple applications from accessing the same database file at the same time.  This error can also occur if the database was open when the machine was rebooted.  The user should be prompted for action (either continue or abort).  To continue, the DB_Reset() function needs to be called, and the DB_Open() must be reissued.  <P>
+See comments in &quot;DB_Create&quot; on <A HREF="11C00004.HTM">page 11-422</A> for the FieldCallBack and ROMCallBack functions.  <P>
+<UL><LI><Pre>Syntax:             int DB_Open(DBBLOCK *dblk, char *filename, char filetype, 
+                    int (far *FieldCallBack)(), char *password, int ROMCount,
+                    int (far *ROMCallBack)());</Pre> </LI><P>
+
+<LI><Pre>Returns:            DB_OK          Database was opened.  <P>
+                    DB_OPEN        File cannot be opened.  (File does not 
+                                   exist, bad name, no DOS handles, etc..) <P>
+                    DB_MEMORY      Not enough memory to open the file.  <P>
+                    DB_WRITE       Bad media, not enough disk space.  <P>
+                    DB_PROTECTED   File is on protected media.  <P>
+                    DB_READ        Cannot read from file.  <P>
+                    DB_SEEK        Cannot seek within file, file may be 
+                                   corrupt.  <P>
+                    DB_SIGNATURE   File is not a database file.  <P>
+                    DB_FILETYPE    Type of file is different than expected.  <P>
+                    DB_MAYBEINUSE  See above description of this error.  A 
+                                   call to DB_Reset is required to open the 
+                                   file.  <P>
+                    DB_PASSWORDFAILED The password is invalid.  <P>
+                    DB_RELEASE     The database engine in the machine cannot 
+                                   open a file created by a later release 
+                                   database.  The release only changes if the
+                                   low-level file format (i.e., non-application
+                                   specific) differs.  The current release is 
+                                   1.02 (0x0102).<Pre></LI><P>
+<LI><Pre>May Move Memory:    Yes </Pre></LI><P>
+</UL><P>
+</BODY>
+</HTML>

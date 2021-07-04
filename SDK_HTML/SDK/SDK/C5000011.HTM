@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Second Code Module--Slave App ("B") </TITLE></HEAD>
+<BODY>
+<H1>Second Code Module--Slave App (&quot;B&quot;) </H1>
+<PRE>
+static int init( void ) 
+{ 
+unsigned char app_status, app_link; 
+int junkit; 
+int _far **icblock_ptr; 
+int i; 
+int error; 
+/* register far* table */ 
+     m_reg_far( dereftable,50,0); 
+     run_status = m_get_run_mode(); 
+     app_status = (unsigned char) run_status; 
+     app_link = (unsigned char) (run_status &gt;&gt; 8); 
+     /* Have we been invoked in background ?  */ 
+     if(app_status == TASK_STS_RETURN) 
+          { 
+          /* Return from launch */ 
+          Init_Event.do_event = DO_SWAP; 
+          m_action(&amp;Init_Event); 
+          /* ic init event */ 
+          while (Init_Event.kind != E_IC_INIT) 
+               { 
+               error = Init_Event.kind; 
+               Init_Event.do_event = DO_EVENT; 
+               m_event( &amp;Init_Event); 
+               } 
+     /* copy pointer to local far pointer entry for reference */ 
+     /* Store far pointer in local table */ 
+     icblock_ptr = Init_Event.e_slave_offset; 
+      /* Make sure we can access passed block */ 
+     for (i=0;i&lt;0x100;i++) 
+          { 
+          if( (*icblock_ptr)[i] != i) 
+               { 
+               error = i; 
+               break; 
+                    }
+               } 
+/* We are looking at passed block now change something and return to 
+owner */ 
+          (*icblock_ptr)[0] = 0x44; 
+     /* Return to Owner */ 
+          Init_Event.do_event = DO_SWAP; 
+          m_action(&amp;Init_Event); 
+          error = Init_Event.kind; 
+          if( error = E_IC_CLOSE) 
+               { 
+               Init_Event.do_event = DO_FINI; 
+               m_action(&amp;Init_Event); 
+               } 
+          /* We should never get to here */ 
+          error = 34; 
+     } /* if appstatus */ 
+     return(1); 
+} 
+</PRE>
+
+</BODY>
+</HTML>

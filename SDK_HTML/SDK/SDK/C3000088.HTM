@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = 4Eh: Light Sleep Control In Int 16h, Fcns {01h,11h} </TITLE></HEAD>
+<BODY>
+<H3>AH = 4Eh: Light Sleep Control In Int 16h, Fcns {01h,11h} </H3><P>
+This function enables or disables light sleep in Int 16h, Fcns {01h,11h} key tests.  If light sleep is disabled, the display time out (Auto-Timeout) is also disabled.  This function should be used with caution since the light sleep disabled state is power consumptive if light sleep (and more importantly, Auto-Timeout) is disabled indefinitely.  <P>
+<UL><LI>Input: AH = 4Eh <BR>
+AL = 00h, light sleep disabled, display time out disabled.  <BR>
+AL = 01h, light sleep enabled <BR>
+AL &gt; 01h - NOP <P>
+</UL>
+<UL><LI>Output: Light sleep enabled or disabled depending on value of AL at entry.  This function sets bit 0 of 40h:LteSlpFL to NOT(AL).  </LI><P>
+<LI>Registers modified: None </LI><P>
+</UL><B>Notes: </B><P>
+<UL><LI>If light sleep is disabled, the Int 16h functions 01h and 11h are designed to skip the call to Int 15h, Function 4100h (skip light sleep).  Due to a minor bug, the call will still be made if any annunciators (SHF, Fn, or CAPS Lock) are on.  </LI><P>
+<LI>The Timer0 Service routine checks LteSlpFL[0].  If light sleep is disabled, the Auto-Timeout counter TimOutCnt is reset from TimOutVal.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

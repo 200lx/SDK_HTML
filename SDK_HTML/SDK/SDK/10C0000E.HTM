@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Category </TITLE></HEAD>
+<BODY>
+<H3>Category </H3><P>
+Category holds all the categories for the database.  A null terminated string, with semicolons separating each category.  The maximum size of the string is 256 bytes.  <P>
+<pre>
+Offset  Name            Type          Description 
+------  --------------  ------------  -----------
+0...5   Record Header   RecordHeader  See <a href="10C00003.HTM">RecordHeader</a> structure above.
+                                      0x05 0x??  0x??  0x??  0x00 0x00 
+6....   CategoryString  chars         e.g.  "Fred;Jolly" 
+</pre>
+</BODY>

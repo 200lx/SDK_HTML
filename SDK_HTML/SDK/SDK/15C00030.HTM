@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Keyboard Overview </TITLE></HEAD>
+<BODY>
+<H3>Keyboard Overview</H3>
+The keyboard input and output lines are arranged over a grid of collapsible dome keys.  At the start of a key scan, both input and output lines are precharged low under software control.  After precharge, the input lines are resistively pulled low.  The output lines are driven high if a one is present in the corresponding bit of the keyboard output register, otherwise they are resistively pulled low.  A line is configured as an output if there is a one in the corresponding bit of the keyboard output register , otherwise it is an input.<P>
+When a single key is pressed, an input line is shorted to an output line.  If this output line is high, the input line will be driven high and the corresponding bit of the keyboard input register will read one.<P>
+Software can determine if any keys are down by a read of the keyboard input registers with all keyboard output lines high.  If a key is down, it can be identified by scanning the keyboard with one keyboard output line high at a time.<P>
+Three lines, ON, KBI22 and KBI23, are dedicated as inputs, and can be read at any time.  These lines have weak pulldowns and are not precharged.  They are connected to VDD if the corresponding key is depressed.  If all three are depressed for 15-23ms, a hardware reset will occur.<P>
+If more than one key in the keyboard matrix is held down at the same time output lines may be shorted together.  The resistive pulldown technique prevents this from causing high current conditions since KB lines only drive low during precharge.  Any 2 keys held down at the same time can be identified by the keyboard scan.  If 3 keys are held down at the same time it may be impossible for software to identify these keys.  The state of dedicated keys can be read regardless of the number of ke ys held down.<P>
+If interrupts are enabled, and there is a transition from all inputs low to one or more inputs high or a transition from one or more inputs high to all inputs low, then an interrupt will occur.  This includes the dedicated inputs, KBI22/KBI23 and ON key.  Interrupts should be disabled when scanning since output lines will be treated as inputs when a 0 is written in to the corresponding output register bit.<P>
+<P>
+</BODY>
+</HTML>

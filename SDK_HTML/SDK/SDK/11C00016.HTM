@@ -1,0 +1,16 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_FlushFile </TITLE></HEAD>
+<BODY>
+<H3>DB_FlushFile </H3><P>
+This function closes and reopens the DOS file to make sure the file is completely updated on disk.  If the database file has not been flushed, a reboot may lose data.  To have the database be able to survive user rebooting, this should be periodically called in the Event loop.  <P>
+<UL><LI><Pre>Syntax:             int DB_FlushFile(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          Flush was successful or no flush was 
+                                   required (no modifications have been made 
+                                   since last flush).  <P>
+                    DB_CLOSE       The DOS file handle could not be closed.  <P>
+<LI>May Move Memory:    No </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

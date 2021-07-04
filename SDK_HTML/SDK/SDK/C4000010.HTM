@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>NMI Deep Sleep Entry </TITLE></HEAD>
+<BODY>
+<H3>NMI Deep Sleep Entry </H3><P>
+The entry into deep sleep due to the NMI Low Power interrupt is an exception to the orderly process described above.  In this case there is very little timing margin available to get the unit turned off before RAM integrity is compromised.  There is insufficient time to compute checksums, save the CPU registers, wait for a Timer0 tick, etc.  The unit is placed in the deep sleep state by the Low Power handler as quickly as possible.  If the NMI Low Power Interrupt does occur, the deep sleep wakeup response (after installation of a fresh set of batteries or the AC adaptor) is a Warmstart.  Plug-in card access can utilize considerable power (depending on card type).  Because it is desirable to avoid WarmStart, special steps are taken by the plug-in card management code in an effort to avoid the NMI Low Power Interrupt during card access.  If the main batteries are marginal, these steps can result in the unit being placed immediately in the software shutdown state.  <P>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComOpen </TITLE></HEAD>
+<BODY>
+<H3>ComOpen </H3>
+This function must be called by an application before it can use a communications port.  The call opens a communication port, pre-allocates and initializes the System Manager resources needed; clears the transmit and receive buffers; and, if successful, returns a &quot;handle&quot; to the application to use for all subsequent port activity.  <P>
+There is the possibility that ComOpen could fail due to a lack of System Manager resources is one cause, so the application should be able to handle this condition. 
+<PRE><UL>
+<LI>Syntax:          err_t far ComOpen(handle_t far *Handlep, int PortId) 
+<LI>Parameters:      handle_t far *Handlep - Far pointer to a handle_t variable which will
+                                         receive a &quot;handle&quot; to the communication port
+                                         which must be provided on all subsequent com 
+                                         driver functions 
+                 int PortId - Identifier specifying the communication port to open 
+
+                              COM_LINE_1 (COM1) and COM_LINE_2 (COM2) for the HP 
+                              palmtop
+                              COM_LINE_4 (COM4) for the connectivity pack 
+<LI>Returns:         0 - for success </LI><P>
+                 E_IVCHN - if communication port number requested is out of range, 
+                           or if port is not configured 
+                 ComOpen may also fail because of System Manager resource shortages 
+                 (ERESOURCE), or because a port (an alternate) was not properly defined
+                 (no hardware addresses or IRQ: EBADPORT), or because an illegal 
+                 parameter was supplied (EINVALID).  
+<LI>Related Calls:   The <A HREF="c7000030.htm">ComAcquire</A> call must be made to acquire use of the port after it 
+                 is opened.
+</UL></PRE>
+</BODY>
+</HTML>

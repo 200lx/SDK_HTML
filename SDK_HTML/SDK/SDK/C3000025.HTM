@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>TIMER1 Interrupt </TITLE></HEAD>
+<BODY>
+<H3>TIMER1 Interrupt </H3><P>
+TIMER1 is a resource that is used to perform periodic system maintenance as well as keyboard service.  It is the TIMER1 service (when used for keyboard processing) that calls the Int 09h hardware interrupt (by writing to the appropriate bit in a specific Hornet register), indicating that a new key is down or up.  See Int 09h on <A HREF="C3000010.HTM">page 3-31</A> for additional detail.  The system maintenance tasks performed include periodic battery measurements, start/stop/rate control of the recharger, and reduction of the display timeout to a maximum of 1 minute if the batteries are low.  <P>
+</BODY>
+</HTML>

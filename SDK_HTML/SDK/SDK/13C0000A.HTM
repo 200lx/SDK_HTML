@@ -1,0 +1,186 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Socket Services 1.01 </TITLE></HEAD>
+<BODY>
+<H3>Socket Services 1.01 </H3><P>
+The HP palmtop contains an implementation of Socket Services 1.01.  <P>
+From Socket Services viewpoint, the HP palmtop has one adapter (number 0) and the adapter has one socket (number 1), which is the PCMCIA card slot.  Socket Services has no knowledge of other devices in the system such as System ROM.  This means that there are necessarily some special considerations.  For example, the GetWindow function cannot return the true window state if the window is currently mapped to System ROM since System ROM is not a socket.  <P>
+The Socket Services Status Change Callback goes to its client, CardBIOS.  Since Socket Services is not designed to have multiple clients, it is recommended that applications register as clients of CardBIOS to obtain card change events.  See the CICDEMO program discussed below.  <P>
+It is expected that CICDEMO will provide a sufficent illustration of Socket Services usage for most application's needs.  However, complete Socket Services 1.01 documentation is available upon request (note that it is no longer available from the PCMCIA).  <P>
+Here are some notes on selected HP100LX/HP200LX Socket Services functions (all this information is available by calling the appropriate Socket Services Inquire functions): <P>
+<H3>Inquire Adapter</H3><P>
+<PRE>
+Number of Windows                                11
+Number of Sockets                                1
+Number of EDCs                                   0
+Capabilities: Indicators                         0
+Power Management                                 0
+Data Bus Width                                   1
+Status Change Interrupt                          1
+SCI Software Sharable                            0
+SCI Hardware Sharable                            0
+SC IRQ Level                                     16 (NMI), (The correct IRQ level is 6; 
+                                                            but the function returns 16)
+Get/Set Adapter
+Attributes:
+Reduce Power Consumption                                             Preserved
+Preserve State Information                                           Preserved
+Enable Status Change Interrupt                                       Supported
+Software Share SCI                                                   Ignored
+Hardware Share SCI                                                   Ignored
+
+Inquire Window for Window Numbers 0 through 8 (memory windows)
+Capabilities:
+Common Memory                                                        1
+Attribute Memory                                                     1
+I/O Space                                                            0
+EISA I/O Mappable                                                    0
+Separate Enable for EISA Common Space                                0
+Assignable Sockets                                                   1
+EISA A15 through A12                                                 0
+Supported Access Speeds:
+WAIT line monitoring                                                 1
+100 ns                                                               1
+150 ns                                                               0
+200 ns                                                               1
+250 ns                                                               0
+300 ns                                                               1
+600 ns                                                               1
+Memory Window Characteristics Table:
+Capabilities:
+Programmable Base Address                                            0
+Programmable Window Size                                             0
+Window Disable/Enable Supported                                      1
+Eight-bit Data Bus Supported                                         1
+Sixteen-bit Data Bus Supported                                       0
+Requires Base Address Alignment on Size Boundary                     0
+Power of Two Size Granularity                                        0
+Requires Card Offset Alignment on Size Boundary                      0
+Paging Hardware Available                                            0
+Paging Hardware Shared                                               0
+Page Disable/Enable Supported                                        0
+I/0 Window Characteristics Table                                     None
+
+Window Number   Base Address   Window Size             Required Card Offset Alignment
+0               D0 (D000)      4 (16K bytes)           4 (16K byte boundary)
+1               D4 (D400)      4 (16K bytes)           4 (16K byte boundary)
+2               D8 (D800)      4 (16K bytes)           4 (16K byte boundary)
+3               DC (DC00)      4 (16K bytes)           4 (16K byte boundary)
+4               E0 (E000)      4 (16K bytes)           4 (16K byte boundary)
+5               E0 (E400)      4 (16K bytes)           4 (16K byte boundary)
+6               E0 (E800)      4 (16K bytes)           4 (16K byte boundary)
+7               E0 (EC00)      4 (16K bytes)           4 (16K byte boundary)
+8               C0 (C000)      16 (64K bytes)          16 (64K byte boundary)
+
+Inquire Window for Window Numbers 9 and 10 (I/O windows)
+Capabilities
+Common Memory                                          0
+Attribute Memory                                       0
+I/O Space                                              1
+EISA I/O Mappable                                      0
+Separate Enable for EISA Common Space                  0
+Assignable Sockets                                     1
+EISA A15 through A12                                   0
+Supported Access Speeds:
+WAIT line monitoring                                   1
+100 ns                                                 0
+150 ns                                                 0
+200 ns                                                 1
+250 ns                                                 0
+300 ns                                                 1
+600 ns                                                 1
+Memory Window Characteristics Table: None
+I/0 Window Characteristics Table:
+Capabilities:
+Programmable Base Address                              1
+Programmable Window Size                               1
+Window Disable/Enable Supported                        1
+Eight-bit Data Bus Supported                           1
+Sixteen-bit Data Bus Supported                         0
+Requires Base Address Alignment on Size Boundary       0
+Power of Two Size Granularity                          1
+Minimum Base Address                                   0x0000
+Maximum Base Address                                   0xFFFF
+Minimum Window Size                                    1
+Maximum Window Size                                    256
+Required Window Size Granularity                       1
+
+Inquire Socket
+Capabilities:
+Card Change                                            1
+Card Lock                                              0
+Insert Card                                            0
+Eject Card                                             0
+Hardware Indicators:
+Busy Status                                            0
+Write Protect Status                                   0
+Battery Status                                         0
+Card Lock Status                                       0
+XIP Status                                             0
+Socket Characteristics Table:
+Supported Card Types:
+Memory Card                                            1
+I/O Card                                               1
+Steerable IRQ Levels                                   3, 5, 6, 7
+Additional Steerable IRQ Levels                        none
+Power Management Table (two entries):
+5.0 volts                                              Vcc, Vpp1, Vpp2
+12.0 volts                                             Vpp1, Vpp2
+
+
+</PRE>
+Notes: <P>
+<UL><LI>Vpp1 and Vpp2 must always be the same.  </LI><P>
+<LI>Only Ready Change and Card Detect Change interrupts are currently available.  The Cougar hardware also supports interrupts from Battery Low or Dead change, but these are not being enabled.  The card battery state is read every 15 seconds at the same time the main and backup batteries are measured.  If the card battery is low or dead, a message is displayed.  </LI><P>
+<LI>When a socket is configured as Memory and the Ready Change interrupt is enabled, this interrupt comes in on IRQ6.  </LI><P>
+<LI>When the built-in applications are active, ALL of the 9 memory windows are in use for XIP code and data.  The term System Manager will be used for the built-in applications.  </LI><P>
+The XIP code and data are mapped in from the System ROM.  The System ROM is not controlled by Socket Services, but is instead accessed by proprietary memory mapping functions on Int 63h.  <P>
+In order for the System Manager and memory cards to coexist, all utilities which access a memory card must save and restore the window(s) so that from the System Manager's point of view, the System Manager has exclusive use of the windows.  <P>
+No program on the 100LX/200LX, including the System Manager, is allowed to store a hardware interrupt handler in a memory window.  Thus, code such as disk drivers which do temporary mapping from a memory card, do NOT need to worry about interrupts during the time the window mapping is changed.  <P>
+CardBIOS takes care of saving and restoring window mappings so it is recommended that CardBIOS be used to read/write cards whenever possible.  It is hoped that this will cover the need to configure I/O cards.  <P>
+</UL>
+<UL><LI>Neither of the two I/O windows are normally in use on the HP100LX/200LX.  Hence, they are for exclusive use of plug-in I/O cards.  </LI><P>
+The natural address to use for a UART card is 2F8h (COM2).  <P>
+I/O addresses used by built-in Cougar hardware or the automatic test system, and hence should be avoided for plug-in cards, are: <P>
+</UL>
+<PRE>
+    20h - 21h      Interrupt controller
+    22h            Hornet index register
+    23h            Hornet data register
+    28h            CPU power control
+    29h            reserved                 
+    2Ch            reserved
+    2Dh            reserved                 
+    40h - 43h      Programmable Interval Timer
+    60h - 62h      Programmable Peripheral Interface
+    300h - 307h    Possible test system parallel port
+    308h - 30Fh    Possible test system UART            
+    310h - 317h    Possible test system parallel port
+    318h - 31Fh    Possible test system UART            
+    348h - 34Fh    Possible test system UART
+    358h - 35Fh    Possible test system UART
+    3B0h - 3BFh    Display
+    3D0h - 3DFh    Display
+    3F8h - 3FFh    Built-in UART (COM1)
+</PRE>
+<P>
+<UL><LI>Cougar's plug-in card bus is 8 bits.  The IOIS16 pin is not used.  </LI><P>
+<LI>The correspondence between wait states and access speed is: </LI><P>
+<PRE>
+    Access Speed                   Wait States               Estimated time (8mH) 
+    100 ns1                        0                         117.5 ns 
+    200 ns                         1                         242.5 ns 
+    300 ns                         2                         367.5 ns 
+    WAIT line monitoring2          3                         492.5 ns 
+    600 ns                         4                         617.5 ns 
+</PRE>
+1 Due to a hardware limitation, the wait states must be at least 1 for an I/O access.  Hence, the 100 ns speed is not supported for I/O cards.  <P>
+2 Due to a hardware limitation, WAIT line monitoring does not work with fewer than 3 wait states.  Thus, if WAIT line monitoring is requested, Socket Services will set 3 wait states.  With 3 or more wait states, WAIT line monitoring will be active.  <P>
+</UL>
+<UL><LI>The HP palmtop's wait states are associated with a chip enable (e.g., the plug-in card or System ROM) rather than being associated with a window.  Hence, some extra work is done in Socket Services to attempt to avoid the potential problem where there are two windows open on the same chip enable and the two windows want different access speeds.  Basically, it remembers what is requested, but it never sets fewer wait states than other enabled windows on the same chip enable.  </LI><P>
+<LI>The Input Acknowledge (INPACK) signal is not used.  </LI><P>
+<LI>The 5 volt supply is OFF in suspend mode.  It is always ON otherwise.  </LI><P>
+</UL><P>
+</BODY>
+</HTML>

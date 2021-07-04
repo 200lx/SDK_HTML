@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>GPIO Operational Registers </TITLE></HEAD>
+<BODY>
+<H3>GPIO Operational Registers</H3>
+The following register set is designed to be utilized during normal operation.  In normal mode, all except the first of these registers reside on chip.  In XCPU mode, all except the last of these registers are implemented off chip.  <P>
+<PRE>
+INDEX   MODE    DESCRIPTION
+==========================================================================================
+50h     -       Reserved for an optional off chip I/O register This register always
+                accesses the external data bus.
+------------------------------------------------------------------------------------------
+51h     R/W     GPIO data register for GPIO[0:7] Reading this location returns the pad
+                levels.  Note that the read value is determined by the actual level at the
+                pad, not the level being driven (e.g.  a pad shorted to ground will always
+                read zero).  Writing this location sets the drive levels.  Note: The write
+                value will only be driven out if the pad is configured as a general
+                purpose output.
+------------------------------------------------------------------------------------------
+52h     R/W     GPIO data register for GPIO[8:15] Reading this location returns the pad
+                levels.  Writing this location sets the drive levels.
+------------------------------------------------------------------------------------------
+53h     R/W     GPIO data register for GPIO[16:23] Reading this location returns the pad
+                levels.  Writing this location sets the drive levels.
+------------------------------------------------------------------------------------------
+54h     R/W     GPIO interrupt enable register Setting a bit (high) in this register will
+                enable interrupts on the corresponding GPIO pad.  Bits 0-5 correspond to
+                GPIO[8:13].  Bits 6-7 correspond to GPIO[6:7].
+------------------------------------------------------------------------------------------
+55h     R/W     GPIO interrupt sense register Setting a bit (high) in this register will
+                configure the corresponding GPIO[8:13,6:7] pad to interrupt on a high
+                level.  Clearing a bit (low) will configure the corresponding
+                GPIO[8:13,6:7] pad to interrupt on a low level.
+------------------------------------------------------------------------------------------
+56h     R/W     ISR register (interrupt source register) Used to identify and acknowledge
+                shared interrupts.  Bits in the ISR will be set when the corresponding
+                GPIO[8:13,6:7] pad requests an interrupt.  Another interrupt on the same
+                IRQ will not occur until the bit has been cleared by writing a zero.
+                Writing a 1 to an ISR bit will have no effect.  To avoid missing
+                interrupts all bits that are not to be affected should be written to a
+                one.
+------------------------------------------------------------------------------------------
+57h     -       Reserved The IA[0:3] signals are held high if one of the first 7
+                operational register is not selected.
+------------------------------------------------------------------------------------------
+58h     R/W     GPIO[24:26] data register; always internal; 5 MSBs unused
+------------------------------------------------------------------------------------------
+59h     R/W     GPIO[24:26] interrupt enable register; always internal; 5 MSBs unused
+------------------------------------------------------------------------------------------
+5Ah     R/W     GPIO[24:26] interrupt sense register; always internal; 5 MSBs unused
+------------------------------------------------------------------------------------------
+5Bh     R/W     GPIO[24:26] interrupt source register; always internal; 5 MSBs unused
+------------------------------------------------------------------------------------------
+5C-5Fh  -       unused
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

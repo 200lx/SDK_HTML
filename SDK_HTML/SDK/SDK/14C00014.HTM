@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Operational Registers </TITLE></HEAD>
+<BODY>
+<H3>Operational Registers</H3>
+<PRE>
+Index   R/W Mode    Description
+==========================================================================================
+-50     -           bits 7-0 optional off chip I/O register
+------------------------------------------------------------------------------------------
+-51     R/W         bits 7-0 GPIO[0:7] data
+------------------------------------------------------------------------------------------
+-52     R/W         bits 7-0 GGPIO[8:15] data
+------------------------------------------------------------------------------------------
+-53     R/W         bits 7-0 GPIO[16:23] data
+------------------------------------------------------------------------------------------
+-54     R/W         bit 7 = 1 enable GPIO[7] interrupt
+                    bit 6 = 1 enable GPIO[6] interrupt
+                    bit 5 = 1 enable GPIO[13] interrupt
+                    bit 4 = 1 enable GPIO[12] interrupt
+                    bit 3 = 1 enable GPIO[11] interrupt
+                    bit 2 = 1 enable GPIO[10] interrupt
+                    bit 1 = 1 enable GPIO[9] interrupt
+                    bit 0 = 1 enable GPIO[8] interrupt
+------------------------------------------------------------------------------------------
+-55     R/W         bits 7-0 = 0 the corresponding GPIO[8:12,5:7] pin set to interrupt on
+                                 low level, see index -54 for bit mapping
+------------------------------------------------------------------------------------------
+-56     R           bits 7-0 = 1 interrupt has occurred on the corresponding
+                                 GPIO[8:13,6:7] pin, see index -54 for bit mapping
+        W           bits 7-0 = 0 clear interrupt for corresponding GPIO[8:13,6:7] pin
+                             = 1 no effect
+------------------------------------------------------------------------------------------
+-57     R/W         bits 7-0 reserved
+------------------------------------------------------------------------------------------
+-58     R/W         bits 7-3 unused
+                    bits 2-0 GPIO[24:26] data
+------------------------------------------------------------------------------------------
+-59     R/W         bits 7-3 unused
+                    bits 2-0 = 1 enable interrupts for the corresponding GPIO[24:26] pin
+------------------------------------------------------------------------------------------
+-5A     R/W         bits 7-3 unused
+                    bits 2-0 = 0 the corresponding GPIO[24:26] pin set to interrupt
+                                 on low level
+                             = 1 the corresponding GPIO[24:26] pin set to interrupt
+                                 on high level
+------------------------------------------------------------------------------------------
+-5B     R/W         bits 7-3 unused
+        R           bits 2-0 = 1 interrupt has occurred on the corresponding GPIO[24:26]
+                                 pin
+        W           bits 2-0 = 0 clear interrupt for corresponding GPIO[24:26] pin
+                             = 1 no effect
+------------------------------------------------------------------------------------------
+</PRE>
+</BODY>
+</HTML>

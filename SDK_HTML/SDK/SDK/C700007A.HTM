@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_rename </TITLE></HEAD>
+<BODY>
+<H3>m_rename </H3>
+This function renames the file specified by <I>bp1</I> to the filename information contained in <I>bp2</I>.
+<PRE><UL>
+<LI>Syntax:      int far m_rename(char far *bp1, int len1, int sys1, char far *bp2,
+                              int len2, int sys2) </LI>
+<LI>Parameters:  char far *bp1 - Pointer to filename of file to be renamed
+             int len1 - Length of filename referenced by <I>bp1</I> 
+             int sys1 - If <I>sys1</I> is non-zero, the System Manager will create the 
+                        path from the system directory.
+             char far *bp2 - Pointer to the filename to be used to rename file 
+                             referenced by <I>bp1</I>.
+             int len2 - Length of the filename referenced by <I>bp2</I> 
+             int sys2 - If <I>sys2</I> is non-zero, the System Manager will create the path 
+                        from the system directory.</LI>
+<LI>Returns:     0 - if successful
+             Any other value indicates an error condition.  </LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>User-defined Field types (FieldCallBack) </TITLE></HEAD>
+<BODY>
+<H3>User-defined Field types (FieldCallBack) </H3><P>
+FieldCallBack is the method used by the database engine to support field types not natively used by the database.  To do this, the application creates fields with their own field types (starting at USER_FIELD).  Those fields are automatically registered as callback fields.  The application additionally must provide a function on opening/creating the database that knows how to deal with the additional types.  This function is the FieldCallBack.  The FieldCallBack function must have the following prototype: <P>
+<Pre>                    int far CallBack(DBBLOCK *dblk,int action, int buffersize, 
+                    int intarg, void far *ptrarg1, void far *ptrarg2);
+</Pre><P>
+Although the DBBLOCK is passed to the callback, it should be used for reading database structures only.  <I>The CallBack function is not allowed to make any calls to the database
+engine</I>.  The database engine will use the callback with the following calling sequences: <P>
+1.  CallBack(dblk, USERTYPE_TOSTRING, buffersize, userfieldtype, userptr, buffer); <P>
+This function is used to convert the user defined fields into a string.  <I>userfieldtype</I> identifies the field type,
+<I>userptr</I> is a pointer to the user field in a data record, <I>buffer</I> points to a ram buffer allocated by the Engine to hold the ASCIIZ string, and
+<I>buffersize</I> is the maximum size of the buffer.  <P>
+Under no circumstances should the callback copy more than <I>buffersize</I> bytes into the buffer; if the string is too large, it should be truncated.  The return value is ignored.  <P>
+2.  CallBack(dblk,USERTYPE_FROMSTRING, userptrbufsize, (int near *)size, buffer, userptr); <P>
+This function is used to convert a string into some user defined field type.  <I>buffer</I> points to the ASCIIZ string to convert, and
+<I>userptr</I> points to the buffer to place the converted type.  <I>userptrbufsize</I> is the size of the buffer at userptr: if the string cannot be converted, the callback should return DB_SYNTAX.  If the callback cannot fit the converted result into the buffer at
+<I>userptr</I>, the callback should return DB_MEMORY.  Otherwise, the function should return the type of the data that was converted, and place the size of the converted type in the int pointed at by
+<I>size</I>.  Under no circumstances should the callback copy more than <I>userptrbufsize</I> bytes into the buffer.  <P>
+3.  CallBack(dblk,USERTYPE_COMPARE, 0, userfieldtype, userptr1, userptr2); <P>
+This function is used to compare two user defined fields.  <I>userfieldtype</I> is used to identify the field type for both user-defined fields. 
+<I>userptr1</I> and <I>userptr2</I> point to the those fields in (perhaps) two different data records.  The value returned should be 1 if
+*<I>userptr1</I>&gt;*<I>userptr2</I>, -1 if *<I>userptr1</I>&lt;*<I>userptr2</I>, and 0 if
+*<I>userptr1</I>==*<I>userptr2</I> (just like C's strcmp).  <P>
+4.  CallBack(dblk,USERTYPE_CONTAINS, 0, userfieldtype, userptr, buffer); <P>
+This function is used to see if a string is contained in the user type.  This is provided in case the user field has some special meaning for the CONTAINS relation (e.g.  the user type is a set).  The number returned should be 0 if the string at buffer is not contained in
+<I>userptr</I>, else the returned value should be &gt;0.  <P>
+A return value of DB_COMPLEX indicates to the database engine that the CallBack does not provide the CONTAINS relation; in this case, the database engine simply uses USERTYPE_TOSTRING to convert the type to a string and does a string search.  Note that since the database uses a limited size buffer to convert the string, very large fields should support their own CONTAINS.  <P>
+5.  ROM CallBack.  <P>
+ROMCallBack is another method of expanding the database, by providing data records that do not physically exist in the file.  The ROM method can be applicable to other types of not-saved or calculated records with the following limitations: <P>
+<UL><LI>The ROM records must be data records, use contiguous record numbers, and the record numbers must start at 0.  Viewpointing may still resort the records as necessary.  </LI><P>
+<LI>The number of ROM records must be known before the file is opened, and cannot be changed dynamically.  </LI><P>
+<LI>The ROM records cannot be deleted, but can be overwritten by RAM records.  </LI><P>
+<LI>The database acts if deleted records below the ROM record count are &quot;showing&quot; through to the ROM records; If a record is added below the ROM record count, it blocks the ROM record from showing.  </LI><P>
+<LI>The prototype for the ROM callback function must look like this: </LI><P>
+</UL><Pre>                    int far ROMCallBack(DBBLOCK *dblk, int n, char far *dest, 
+                    int bufsize, int *sizeread); </Pre><P>
+The WorldTime application uses the ROM record feature of the database engine.  The callback should fill the buffer up to the requested amount of information, and should return the number of bytes written.  <P>
+<P>
+</BODY>
+</HTML>

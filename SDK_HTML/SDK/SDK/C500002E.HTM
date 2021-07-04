@@ -1,0 +1,10 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>Termination </TITLE></HEAD>
+<BODY>
+<H3>Termination </H3><P>
+Following appropriate input from the user (selection of Quit from a menu, for example) or instruction from the System Manager (return of a terminate event), the application calls m_action(DO_FINI) or m_fini(), which are roughly equivalent to exit() in a normal DOS application.  The System Manager releases the memory used by the application and reactivates the application on top of the application stack.  This will be the most recently used application that has not been terminated.  The bottom item on the application stack will always be the &quot;topcard&quot; screen, which simply displays a PCX file and the user's name, rank, and serial number.  <P>
+<P>
+</BODY>
+</HTML>

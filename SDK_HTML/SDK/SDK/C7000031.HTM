@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ComBreak </TITLE></HEAD>
+<BODY>
+<H3>ComBreak </H3>
+This function sends line break to the specified port and clears the Output flow control.  ComBreak sends 
+a &quot;long break&quot; as defined in (to be specified).  A break is often used as an &quot;attention&quot; 
+signal for terminal servers or to cycle through line speeds on a UNIX system.  
+<PRE><UL>
+<LI>Syntax:          err_t far ComBreak(handle_t Handle, int Length) 
+<LI>Parameters:      handle_t Handle The handle, returned via a successful ComOpen 
+                 int Length Length of break in milliseconds 
+<LI>Returns:         0 - if successful 
+                 Any other value indicates an error condition.  
+                 ENOTYOURS - The specified port has not been acquired by the calling 
+                             application. 
+<LI>Comments:        <A HREF="c700003a.htm">ComOpen()</A> must first be called in order to get a valid handle to the 
+                 communications port.  
+</UL></PRE>
+</BODY>
+</HTML>

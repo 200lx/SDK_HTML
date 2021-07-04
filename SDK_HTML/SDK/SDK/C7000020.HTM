@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_reset_cb </TITLE></HEAD>
+<BODY>
+<H3>m_reset_cb </H3>
+This function clears the contents of the clipboard and establishes the current application,
+specified by the string <I>author</I>, as the creator of clipboard contents.  Applications
+should attempt to use a unique string for this value.  m_reset_cb resets the size of the
+clipboard to 8 KB.  
+<PRE><UL>
+<LI>Syntax:         int far m_reset_cb(char far *author)
+<LI>Parameters:     char far *author - Author name to be set in clipboard header
+<LI>Returns:        CB_OK - if successful
+                CB_NOT_OPEN - if clipboard was not in use.
+                CB_ALLOC - if memory management services cannot reset clipboard size
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_WriteRecord </TITLE></HEAD>
+<BODY>
+<H3>DB_WriteRecord </H3><P>
+DB_WriteRecord writes a record to the disk.  The record is written as the
+<I>recordnum</I>-th record of recordtype.  If the record number written to is above the maximum number of records of that type, the record is written to the next available spot, not to that absolute record number.  The record is written to the returned number.  As an example, writing data record 10 to a database that contains only 3 data records will write the information to record number 3 (0-2 is three records, 3 is the next record), and the function will return 3.  <P>
+If <I>viewptindex</I> is a NULL pointer, no viewpoint information is returned.  Otherwise, the integer pointed to by
+<I>viewptindex</I> is set to the <I>viewptindex</I> of that record.  The viewpoint index of the record is the index into the viewpoint table where the record was inserted.  The insertion point is affected by the current filter and sort.  If the record does not belong in the current viewpoint, the viewpoint index returned is DB_VPABSENT.  <P>
+The record is marked as modified for reconciliation, and the selection state is cleared.  <P>
+<UL><LI><Pre>Syntax:             int DB_WriteRecord(DBBLOCK *dblk, char recordtype, 
+                    RECORDNUM recordnum, void far *src,unsigned int recsize,
+                    int *viewptindex); </LI><P>
+<LI>Returns:            0.  .  .32767  Record was written.  <P>
+                    DB_WRITE       Disk is full; media is bad.  <P>
+                    DB_READ        Cannot read the disk.  <P>
+                    DB_SEEK        File is probably corrupt.  <P>
+                    DB_LARGEVIEWPT The lookup table or viewpoint table has
+                                   reached the internal database limit.  <P>
+                    DB_MEMORY      Not enough memory to expand the lookup
+                                   table or viewpoint table.  <P>
+                    DB_DELETED     Record is deleted.  You cannot write to
+                                   a deleted record if an undo would 
+                                   reinstate that record.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>

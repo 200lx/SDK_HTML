@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>AH = DAh: Get/Set CodePage </TITLE></HEAD>
+<BODY>
+<H3>AH = DAh: Get/Set CodePage </H3><P>
+This service provides the capability to get or set the CodePage variable that is examined by the BIOS during soft font loading.  <P>
+The choices for built-in code pages are: <P>
+<BR>
+<PRE>
+       Code Page: 437h   850h          852h    860h      863h           865h 
+       ------------------------------------------------------------------------
+       Country  : US     Multilingual  Slavic  Portugal  Canada-French  Norway
+</PRE>
+<UL><LI>Input: AH = DAh <BR>
+AL = Direction (0 = Get, Else = Set) <BR>
+BX = CodePage (If AL#0) <BR>
+</UL>
+<UL><LI>Output: If Get, AX = CodePage <BR>
+Else, CodePage set from BX <BR>
+</UL>
+<UL><LI>Registers modified: AX, FLAGS </LI><P>
+</UL><P>
+</BODY>
+</HTML>

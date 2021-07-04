@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_free_api_class </TITLE></HEAD>
+<BODY>
+<H3>m_get_free_api_class </H3>
+returns the first available class number (0h - 7Fh), if found, in the specified 
+ClassGroup.
+<PRE><UL>
+<LI>Syntax:         int m_get_free_api_class(unsigned ClassGroup)
+<LI>Parameters:     unsigned ClassGroup - Declared as a manifest constant (in interfac.h).
+<LI>Returns:        The first available class number (0h - 7Fh) in the specified 
+                ClassGroup
+                ERROR_INVALID_CLASS_TYPE (-1) - if the ClassGroup number is invalid
+                ERROR_NO_FREE_CLASS - if no free class is found
+<LI>Comments:       Class numbers 0h - 7Fh, are divided into 4 groups:
+                    Resource Library Services     (00h - 2Fh)
+                    Drivers                       (30h - 3Fh)
+                    System Manager Services       (40h - 6Fh)
+                    Application Specific Services (70h - 7Fh)
+                ClassGroup is declared as a manifest constant (in INTERFAC.H).
+</UL></PRE>
+</BODY>
+</HTML>

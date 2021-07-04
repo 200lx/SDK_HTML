@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>ITC Example Code </TITLE></HEAD>
+<BODY>
+<H3>ITC Example Code </H3><P>
+The following example illustrates the use of the intertask communication functionality.  The flow of control goes as follows: <P>
+<OL><LI> App &quot;A&quot; registers its far pointer table.  (Not shown here for brevity) </LI><P>
+<LI> Locates the desired app with which to communicate.  </LI><P>
+<LI> Launches the desired app if not already loaded.  </LI><P>
+<LI> Establishes a communication channel.  </LI><P>
+<LI> Swaps control to app &quot;B&quot; enabling processing of the shared buffer.  </LI><P>
+<LI> App &quot;B&quot; swaps back to app &quot;A&quot;.  </LI><P>
+</OL>This code is not meant to be a treatise on coding practices!  It is given solely to illustrate the mechanics behind ITC.  <P>
+<P>
+</BODY>
+</HTML>

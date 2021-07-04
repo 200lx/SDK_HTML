@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>m_get_SVC_entry </TITLE></HEAD>
+<BODY>
+<H3>m_get_SVC_entry </H3>
+This function gets a pointer to an S_SERVICE entry.  
+<PRE><UL>
+<LI>Syntax:          m_get_SVC_entry(far *entry_address, far *global_flag) </LI>
+<LI>Parameters:      far *entry_address - Pointer to location to post SVC entry address 
+                 far *global_flag </LI>
+<LI>Returns:         0 - if entry is assigned successfully 
+                 ERROR_SERVICE_TABLE_FULL - Service table full</LI>
+<LI>Related Calls:   <A HREF="c7000099.htm">m_free_SVC_entry</A> frees an S_SERVICE entry.
+                 <A HREF="c70000aa.htm">m_locate_SVC</A> locates a specific S_SERVICE entry.</LI>
+</UL></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<!-- This document was built using HyperWriter Professional by NTERGAID Inc. -->
+<TITLE>DB_CardChanged </TITLE></HEAD>
+<BODY>
+<H3>DB_CardChanged </H3><P>
+This function is used to detect a card change event and restore the database handle accordingly, or if the card has changed, shut down the database.  DB_CardChanged must be used to properly access databases that are resident on a card, since turning the unit on and off also generates DOS media changed events.  See the example event loop on <A HREF="11C0003B.HTM">page 11-444</A> for more information.  <P>
+<UL><LI><Pre>Syntax: int DB_CardChanged(DBBLOCK *dblk); </LI><P>
+<LI>Returns:            DB_OK          No card change or card change detected and
+                                   corrected or database not open.  <P>
+                    See DB_Reactivate for list of additional errors.  <P>
+<LI>May Move Memory:    Yes </LI><P>
+</Pre></UL><P>
+</BODY>
+</HTML>
